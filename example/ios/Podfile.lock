@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - surveykit (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - surveykit (from `.symlinks/plugins/surveykit/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  surveykit:
+    :path: ".symlinks/plugins/surveykit/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  surveykit: 0249aaeb5c7bcbba457d0b76a06525acc008e229
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.10.1
