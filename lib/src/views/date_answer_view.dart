@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:surveykit/src/answer_format/date_answer_format.dart';
-import 'package:surveykit/src/controller/survey_controller.dart';
-import 'package:surveykit/src/result/question/date_question_result.dart';
-import 'package:surveykit/src/steps/predefined_steps/question_step.dart';
-import 'package:surveykit/src/views/widget/step_view.dart';
+import 'package:survey_kit/src/answer_format/date_answer_format.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/result/question/date_question_result.dart';
+import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class DateAnswerView extends StatefulWidget {
   final QuestionStep questionStep;

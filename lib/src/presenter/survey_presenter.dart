@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/navigator/task_navigator.dart';
-import 'package:surveykit/src/presenter/survey_event.dart';
-import 'package:surveykit/src/presenter/survey_state.dart';
-import 'package:surveykit/src/result/question_result.dart';
-import 'package:surveykit/src/result/step_result.dart';
-import 'package:surveykit/src/result/survey/survey_result.dart';
-import 'package:surveykit/src/steps/step.dart';
-import 'package:surveykit/src/steps/identifier/step_identifier.dart';
+import 'package:survey_kit/src/navigator/task_navigator.dart';
+import 'package:survey_kit/src/presenter/survey_event.dart';
+import 'package:survey_kit/src/presenter/survey_state.dart';
+import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/result/step_result.dart';
+import 'package:survey_kit/src/result/survey/survey_result.dart';
+import 'package:survey_kit/src/steps/step.dart';
+import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 
 //TO DO: Extract gathering of the results into another class
 class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {

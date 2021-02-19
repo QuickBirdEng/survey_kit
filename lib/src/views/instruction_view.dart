@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:surveykit/src/controller/survey_controller.dart';
-import 'package:surveykit/src/result/step/instruction_step_result.dart';
-import 'package:surveykit/src/steps/predefined_steps/instruction_step.dart';
-import 'package:surveykit/src/views/widget/step_view.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/result/step/instruction_step_result.dart';
+import 'package:survey_kit/src/steps/predefined_steps/instruction_step.dart';
+import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class InstructionView extends StatelessWidget {
   final InstructionStep instructionStep;

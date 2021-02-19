@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/navigator/rules/conditional_navigation_rule.dart';
-import 'package:surveykit/src/navigator/rules/direct_navigation_rule.dart';
-import 'package:surveykit/src/navigator/rules/navigation_rule.dart';
-import 'package:surveykit/src/navigator/task_navigator.dart';
-import 'package:surveykit/src/result/question_result.dart';
-import 'package:surveykit/src/steps/step.dart';
-import 'package:surveykit/src/task/navigable_task.dart';
-import 'package:surveykit/src/task/task.dart';
+import 'package:survey_kit/src/navigator/rules/conditional_navigation_rule.dart';
+import 'package:survey_kit/src/navigator/rules/direct_navigation_rule.dart';
+import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
+import 'package:survey_kit/src/navigator/task_navigator.dart';
+import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/step.dart';
+import 'package:survey_kit/src/task/navigable_task.dart';
+import 'package:survey_kit/src/task/task.dart';
 
 class NavigableTaskNavigator extends TaskNavigator {
   NavigableTaskNavigator(Task task) : super(task);

@@ -3,7 +3,7 @@
 # Run `pod lib lint surveykit.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'surveykit'
+  s.name             = 'survey_kit'
   s.version          = '0.0.1'
   s.summary          = 'A flutter plugin to create nice surveys.'
   s.description      = <<-DESC

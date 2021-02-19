@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:surveykit/src/presenter/survey_event.dart';
-import 'package:surveykit/src/presenter/survey_presenter.dart';
-import 'package:surveykit/src/result/question_result.dart';
+import 'package:survey_kit/src/presenter/survey_event.dart';
+import 'package:survey_kit/src/presenter/survey_presenter.dart';
+import 'package:survey_kit/src/result/question_result.dart';
 
 class SurveyController {
   final QuestionResult Function() resultFunction;

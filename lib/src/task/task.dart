@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/steps/step.dart';
-import 'package:surveykit/src/task/identifier/task_identifier.dart';
+import 'package:survey_kit/src/steps/step.dart';
+import 'package:survey_kit/src/task/identifier/task_identifier.dart';
 
 abstract class Task {
   TaskIdentifier id;

@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/answer_format/answer_format.dart';
+import 'package:survey_kit/src/answer_format/answer_format.dart';
 
 class ScaleAnswerFormat implements AnswerFormat {
   final double maximumValue;

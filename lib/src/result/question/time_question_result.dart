@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/steps/identifier/identifier.dart';
-import 'package:surveykit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/identifier/identifier.dart';
+import 'package:survey_kit/src/result/question_result.dart';
 
 class TimeQuestionResult extends QuestionResult<TimeOfDay> {
   TimeQuestionResult({

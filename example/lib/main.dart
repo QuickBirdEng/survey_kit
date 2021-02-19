@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:surveykit/survey_kit.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 void main() {
   runApp(MyApp());

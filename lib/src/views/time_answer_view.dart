@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/answer_format/time_answer_formart.dart';
-import 'package:surveykit/src/controller/survey_controller.dart';
-import 'package:surveykit/src/result/question/time_question_result.dart';
-import 'package:surveykit/src/steps/predefined_steps/question_step.dart';
-import 'package:surveykit/src/views/widget/time_picker.dart';
-import 'package:surveykit/src/views/widget/step_view.dart';
+import 'package:survey_kit/src/answer_format/time_answer_formart.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/result/question/time_question_result.dart';
+import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/widget/time_picker.dart';
+import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class TimeAnswerView extends StatefulWidget {
   final QuestionStep questionStep;

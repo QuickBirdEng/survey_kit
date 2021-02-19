@@ -1,9 +1,9 @@
 import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/result/question_result.dart';
-import 'package:surveykit/src/steps/step.dart';
-import 'package:surveykit/src/task/task.dart';
+import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/step.dart';
+import 'package:survey_kit/src/task/task.dart';
 
 abstract class TaskNavigator {
   final Task task;

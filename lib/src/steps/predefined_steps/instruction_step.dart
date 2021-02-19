@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/result/question_result.dart';
-import 'package:surveykit/src/steps/step.dart';
-import 'package:surveykit/src/steps/identifier/step_identifier.dart';
-import 'package:surveykit/src/views/instruction_view.dart';
+import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/step.dart';
+import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
+import 'package:survey_kit/src/views/instruction_view.dart';
 
 class InstructionStep extends Step {
   final String title;

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:surveykit/src/controller/survey_controller.dart';
-import 'package:surveykit/src/steps/step.dart' as surveystep;
+import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/steps/step.dart' as surveystep;
 
 class StepView extends StatelessWidget {
   final surveystep.Step step;

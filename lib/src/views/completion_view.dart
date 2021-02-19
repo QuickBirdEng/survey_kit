@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lottie/lottie.dart';
-import 'package:surveykit/src/controller/survey_controller.dart';
-import 'package:surveykit/src/result/step/completion_step_result.dart';
-import 'package:surveykit/src/steps/predefined_steps/completion_step.dart';
-import 'package:surveykit/src/views/widget/step_view.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/result/step/completion_step_result.dart';
+import 'package:survey_kit/src/steps/predefined_steps/completion_step.dart';
+import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class CompletionView extends StatelessWidget {
   final CompletionStep completionStep;
@@ -45,7 +45,7 @@ class CompletionView extends StatelessWidget {
                 height: 150.0,
                 child: Lottie.asset(
                   'assets/fancy_checkmark.json',
-                  package: 'surveykit',
+                  package: 'survey_kit',
                   repeat: false,
                 ),
               ),

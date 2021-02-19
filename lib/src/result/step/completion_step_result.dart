@@ -1,5 +1,5 @@
-import 'package:surveykit/src/steps/identifier/identifier.dart';
-import 'package:surveykit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/identifier/identifier.dart';
+import 'package:survey_kit/src/result/question_result.dart';
 
 class CompletionStepResult extends QuestionResult {
   CompletionStepResult(

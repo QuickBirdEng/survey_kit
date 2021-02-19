@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/answer_format/multiple_choice_answer_format.dart';
-import 'package:surveykit/src/answer_format/text_choice.dart';
-import 'package:surveykit/src/controller/survey_controller.dart';
-import 'package:surveykit/src/views/widget/selection_list_tile.dart';
-import 'package:surveykit/src/result/question/multiple_choice_question_result.dart';
-import 'package:surveykit/src/steps/predefined_steps/question_step.dart';
-import 'package:surveykit/src/views/widget/step_view.dart';
+import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
+import 'package:survey_kit/src/answer_format/text_choice.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
+import 'package:survey_kit/src/result/question/multiple_choice_question_result.dart';
+import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
   final QuestionStep questionStep;

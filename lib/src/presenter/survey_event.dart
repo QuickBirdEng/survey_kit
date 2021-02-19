@@ -1,4 +1,4 @@
-import 'package:surveykit/src/result/question_result.dart';
+import 'package:survey_kit/src/result/question_result.dart';
 
 abstract class SurveyEvent {
   const SurveyEvent();

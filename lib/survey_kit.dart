@@ -1,4 +1,4 @@
-library suvery_kit;
+library survery_kit;
 
 export 'src/survey_kit.dart';
 

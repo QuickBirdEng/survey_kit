@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:surveykit/src/steps/step.dart';
-import 'package:surveykit/src/task/task.dart';
-import 'package:surveykit/src/task/identifier/task_identifier.dart';
+import 'package:survey_kit/src/steps/step.dart';
+import 'package:survey_kit/src/task/task.dart';
+import 'package:survey_kit/src/task/identifier/task_identifier.dart';
 
 class OrderedTask extends Task {
   OrderedTask({

@@ -1,4 +1,4 @@
-import 'package:surveykit/src/answer_format/answer_format.dart';
+import 'package:survey_kit/src/answer_format/answer_format.dart';
 
 class TextAnswerFormat implements AnswerFormat {
   final int maxLines;

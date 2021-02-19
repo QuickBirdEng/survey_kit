@@ -198,7 +198,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0-nullsafety.1"
-  surveykit:
+  survey_kit:
     dependency: "direct main"
     description:
       path: ".."
