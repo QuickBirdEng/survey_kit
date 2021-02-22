@@ -1,6 +1,6 @@
 # SurveyKit: Create beautiful surveys with Flutter (inspired by [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html))
 
-Do you want to display a questionnaire to get the opinion of your users? A survey for a medical trial? A series of instructions in a manual-like style? <br/>
+Do you want to display a questionnaire to get the opinion of your users? A survey for a medical trial? A series of instructions in a manual-like style?   
 SurveyKit is an Flutter library that allows you to create exactly that.
 
 Thematically it is built to provide a feeling of a professional research survey. The library aims to be visually clean, lean and easily configurable.
@@ -82,8 +82,8 @@ InstructionStep(
     buttonText: 'Start survey',
 );
 ```
-The `title` is the general title of the Survey you want to conduct. <br/>
-The `text` is, in this case, the introduction text which should give an introduction, about what the survey is about.<br/>
+The `title` is the general title of the Survey you want to conduct.   
+The `text` is, in this case, the introduction text which should give an introduction, about what the survey is about.  
 The `buttonText` specifies the text of the button, which will start the survey.
 All of these properties have to be resource Ids.
 
@@ -95,8 +95,8 @@ CompletionStep(
     buttonText: 'Submit survey',
 );
 ```
-The `title` is the general title of the Survey you want to conduct, same as for the `InstructionStep`. <br/>
-The `text` is here should be something motivational: that the survey has been completed successfully. <br/>
+The `title` is the general title of the Survey you want to conduct, same as for the `InstructionStep`.   
+The `text` is here should be something motivational: that the survey has been completed successfully.   
 The `buttonText` specifies the text of the button, which will end the survey.
 All of these properties have to be resource Ids.
 
@@ -110,8 +110,8 @@ QuestionStep(
     ),
 );
 ```
-The `title` same as for the `InstructionStep` and `CompletionStep`. <br/>
-The `text` the actual question you want to ask. Depending on the answer type of this, you should set the next property.<br/>
+The `title` same as for the `InstructionStep` and `CompletionStep`.   
+The `text` the actual question you want to ask. Depending on the answer type of this, you should set the next property.  
 The `answerFormat` specifies the type of question (the type of answer to the question) you want to ask. Currently there these types supported:
 -   `TextAnswerFormat`
 -   `IntegerAnswerFormat`
@@ -140,7 +140,7 @@ var task = NavigableOrderedTask(steps: steps)
 ````
 The `NavigableOrderedTask` allows you to specify navigation rules.<br>
 There are two types of navigation rules:
-<br/>
+  
 With the `DirectStepNavigationRule` you say that after this step, another specified step should follow.
 ```dart
 task.addNavigationRule(
@@ -150,7 +150,7 @@ task.addNavigationRule(
   ),
 );
 ```
-<br><br/>
+<br>  
 With the `MultipleDirectionStepNavigationRule` you can specify the next step, depending on the answer of the step.
 ```dart
 task.addNavigationRule(
@@ -172,7 +172,7 @@ task.addNavigationRule(
 ```
 
 ### Evaluate the results
-When the survey is finished, you get a callback. No matter of the `FinishReason`, you always get all results gathered until now. <br/>
+When the survey is finished, you get a callback. No matter of the `FinishReason`, you always get all results gathered until now.   
 The `SurveyResult` contains a list of `StepResult`s and the `FinishReason`. The `StepResult` contains a list of `QuestionResult`s.
 ```dart
  SurveyKit(
@@ -263,23 +263,23 @@ If you want to create a complete custom view you should use the SurveyController
 This is an overview of which features [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html) provides and which ones are already supported by [SurveyKit on Android](https://github.com/quickbirdstudios/SurveyKit).
 The goal is to make all three libraries match in terms of their functionality.
 
-| Steps	                    | iOS ResearchKit        | Android SurveyKit| Flutter SurveyKit| 
-| :------------------------ | :---:                  | :---:	       | :---:             | 
-| Instruction               | ✅                     | ✅             | ✅                  | 
-| Single selection          | ✅                     | ✅             | ✅                  | 
-| Multi selection           | ✅                     | ✅             | ✅                  | 
-| Boolean answer            | ✅                     | ✅             | ✅                  | 
-| Text answer (unlimited)   | ✅                     | ✅             | ✅                  | 
-| Text answer (limited)     | ✅                     | ✅             | ✅                  | 
-| Text answer (validated)   | ✅                     | ✅             | ✅                  | 
-| Scale answer              | ✅                     | ✅             | ✅                  | 
-| Numeric answer            | ✅                     | ✅             | ✅                  | 
-| Time of day               | ✅                     | ✅             | ✅                  | 
-| Date selection            | ✅                     | ✅             | ✅                  |  
-| Value picker              | ✅                     | ✅             | ❌                  | 
-| Image choice              | ✅                     | ✅             | ❌                  | 
-| Email answer              | ✅                     | ✅             | ❌                  | 
-| Location answer           | ✅                     | ✅             | ❌                  | 
+| Steps	                    | iOS ResearchKit        | Android SurveyKit| Flutter SurveyKit   | 
+| :------------------------ | :---:                  | :---:	          | :---:               | 
+| Instruction               | ✅                     | ✅                | ✅                  | 
+| Single selection          | ✅                     | ✅                | ✅                  | 
+| Multi selection           | ✅                     | ✅                | ✅                  | 
+| Boolean answer            | ✅                     | ✅                | ✅                  | 
+| Text answer (unlimited)   | ✅                     | ✅                | ✅                  | 
+| Text answer (limited)     | ✅                     | ✅                | ✅                  | 
+| Text answer (validated)   | ✅                     | ✅                | ✅                  | 
+| Scale answer              | ✅                     | ✅                | ✅                  | 
+| Numeric answer            | ✅                     | ✅                | ✅                  | 
+| Time of day               | ✅                     | ✅                | ✅                  | 
+| Date selection            | ✅                     | ✅                | ✅                  |  
+| Value picker              | ✅                     | ✅                | ❌                  | 
+| Image choice              | ✅                     | ✅                | ❌                  | 
+| Email answer              | ✅                     | ✅                | ❌                  | 
+| Location answer           | ✅                     | ✅                | ❌                  | 
 
 # 👤 Author
 This Flutter library is created with 💙 by [QuickBird Studios](https://quickbirdstudios.com/).
@@ -287,7 +287,7 @@ This Flutter library is created with 💙 by [QuickBird Studios](https://quickbi
 # ❤️ Contributing
 Open an issue if you need help, if you found a bug, or if you want to discuss a feature request.
 
-Open a PR if you want to make changes to Flutter SurveyKit.
+Open a PR if you want to make changes to SurveyKit.
 
 # 📃 License
-Flutter SurveyKit is released under an MIT license. See [License](LICENSE) for more information.
+SurveyKit is released under an MIT license. See [License](LICENSE) for more information.
