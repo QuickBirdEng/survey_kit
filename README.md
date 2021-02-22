@@ -150,7 +150,7 @@ task.addNavigationRule(
   ),
 );
 ```
-<br>  
+  
 With the `MultipleDirectionStepNavigationRule` you can specify the next step, depending on the answer of the step.
 ```dart
 task.addNavigationRule(
