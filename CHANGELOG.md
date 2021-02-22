@@ -1,3 +1,8 @@
+# 0.0.2
+
+- README updates
+- Added additional licence information
+
 # 0.0.1
 
 Initial Version of the library.
