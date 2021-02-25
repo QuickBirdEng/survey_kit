@@ -1,8 +1,4 @@
-# 0.0.3
-
-- Update README
-
-# 0.0.2
+# 0.0.2 - 0.0.4
 
 - README updates
 - Added additional licence information
