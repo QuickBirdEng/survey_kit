@@ -1,5 +1,5 @@
 <p align="center">
-<img src="example/assets/surveykit_logo.png?raw=true" width="500">
+<img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/surveykit_logo.png?raw=true" width="500">
 </p>
 
 # SurveyKit: Create beautiful surveys with Flutter (inspired by [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html))
@@ -22,7 +22,7 @@ This is an early version and work in progress. Do not hesitate to give feedback,
 
 | | | | | | 
 | :---: | :---: | :---: | :---: | :---: |
-| <img src="example/assets/step_01_ios.png?raw=true" width="200"> | <img src="example/assets/step_02_ios.png?raw=true" width="200"> | <img src="example/assets/step_03_ios.png?raw=true" width="200"> | <img src="example/assets/step_04_ios.png?raw=true" width="200"> | <img src="example/assets/step_05_ios.png?raw=true" width="200"> |
+| <img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/step_01_ios.png?raw=true" width="200"> | <img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/step_02_ios.png?raw=true" width="200"> | <img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/step_03_ios.png?raw=true" width="200"> | <img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/step_04_ios.png?raw=true" width="200"> | <img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/step_05_ios.png?raw=true" width="200"> |
 
 ## 📚 Overview: Creating Research Surveys
 - [What SurveyKit does for you](#what-surveykit-does-for-you)
