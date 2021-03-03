@@ -1,3 +1,7 @@
+<p align="center">
+<img src="example/assets/surveykit-logo.png?raw=true" width="500">
+</p>
+
 # SurveyKit: Create beautiful surveys with Flutter (inspired by [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html))
 
 Do you want to display a questionnaire to get the opinion of your users? A survey for a medical trial? A series of instructions in a manual-like style?   
