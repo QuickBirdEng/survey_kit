@@ -15,7 +15,7 @@ This is an early version and work in progress. Do not hesitate to give feedback,
 # Examples
 ###### Flow
 <p align="center">
-<img src="example/assets/survey-kit-demo.gif?raw=true" width="350">
+<img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/survey-kit-demo.gif?raw=true" width="350">
 </p>
 
 ###### Screenshots
