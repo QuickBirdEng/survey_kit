@@ -272,7 +272,7 @@ This is an overview of which features [iOS ResearchKit Surveys](http://researchk
 The goal is to make all three libraries match in terms of their functionality.
 
 <p> 
-<img src="example/assets/survey-kit-features.png?raw=true">
+<img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/survey-kit-features.png?raw=true">
 </p>
   
 
