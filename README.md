@@ -271,24 +271,9 @@ If you want to create a complete custom view you should use the SurveyController
 This is an overview of which features [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html) provides and which ones are already supported by [SurveyKit on Android](https://github.com/quickbirdstudios/SurveyKit).
 The goal is to make all three libraries match in terms of their functionality.
 
-
-| Steps                     | iOS ResearchKit   | Android SurveyKit | Flutter SurveyKit   | 
-| :-----------------------  | :--------------:  | :--------------:  | :-----------------: | 
-| Instruction               | ✅                | ✅                | ✅                   | 
-| Single selection          | ✅                | ✅                | ✅                   | 
-| Multi selection           | ✅                | ✅                | ✅                   | 
-| Boolean answer            | ✅                | ✅                | ✅                   | 
-| Text answer (unlimited)   | ✅                | ✅                | ✅                   | 
-| Text answer (limited)     | ✅                | ✅                | ✅                   | 
-| Text answer (validated)   | ✅                | ✅                | ✅                   | 
-| Scale answer              | ✅                | ✅                | ✅                   | 
-| Numeric answer            | ✅                | ✅                | ✅                   | 
-| Time of day               | ✅                | ✅                | ✅                   | 
-| Date selection            | ✅                | ✅                | ✅                   |  
-| Value picker              | ✅                | ✅                | ❌                   | 
-| Image choice              | ✅                | ✅                | ❌                   | 
-| Email answer              | ✅                | ✅                | ❌                   | 
-| Location answer           | ✅                | ✅                | ❌                   |   
+<p> 
+<img src="example/assets/survey-kit-features.png?raw=true">
+</p>
   
 
 # 👤 Author
