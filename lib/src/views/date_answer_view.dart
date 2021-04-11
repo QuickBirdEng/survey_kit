@@ -11,10 +11,10 @@ import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class DateAnswerView extends StatefulWidget {
-  final QuestionStep questionStep;
-  final DateQuestionResult result;
+  final QuestionStep? questionStep;
+  final DateQuestionResult? result;
 
-  const DateAnswerView({Key key, this.questionStep, this.result})
+  const DateAnswerView({Key? key, this.questionStep, this.result})
       : super(key: key);
 
   @override
@@ -24,14 +24,14 @@ class DateAnswerView extends StatefulWidget {
 class _DateAnswerViewState extends State<DateAnswerView> {
   final DateFormat _dateFormat = DateFormat('E, MMM d');
   final DateTime _startDate = DateTime.now();
-  DateAnswerFormat _dateAnswerFormat;
-  DateTime _result;
+  late DateAnswerFormat _dateAnswerFormat;
+  DateTime? _result;
 
   @override
   void initState() {
     super.initState();
-    _dateAnswerFormat = widget.questionStep.answerFormat as DateAnswerFormat;
-    _result ??= DateTime.now();
+    _dateAnswerFormat = widget.questionStep!.answerFormat as DateAnswerFormat;
+    _result = widget.result?.result ?? DateTime.now();
   }
 
   void _handleDateChanged(DateTime date) {
@@ -45,15 +45,15 @@ class _DateAnswerViewState extends State<DateAnswerView> {
       controller: SurveyController(
         context: context,
         resultFunction: () => DateQuestionResult(
-          id: widget.questionStep.id,
+          id: widget.questionStep!.id,
           startDate: _startDate,
           endDate: DateTime.now(),
-          valueIdentifier: _result.toIso8601String(),
+          valueIdentifier: _result?.toIso8601String() ?? 'none',
           result: _result,
         ),
       ),
       title: Text(
-        widget.questionStep.title,
+        widget.questionStep!.title,
         style: TextStyle(
           fontSize: 28.0,
         ),
@@ -63,7 +63,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
           Padding(
             padding: const EdgeInsets.only(bottom: 32.0),
             child: Text(
-              widget.questionStep.text,
+              widget.questionStep!.text,
               style: TextStyle(
                 fontSize: 18.0,
               ),
@@ -93,7 +93,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
                 left: 8.0,
                 bottom: 8.0,
                 child: Text(
-                  _dateFormat.format(_result),
+                  _dateFormat.format(_result!),
                   style: TextStyle(
                     fontSize: 28.0,
                     color: Colors.white,
@@ -107,9 +107,9 @@ class _DateAnswerViewState extends State<DateAnswerView> {
           width: double.infinity,
           height: 300.0,
           child: CalendarDatePicker(
-            firstDate: _dateAnswerFormat.minDate,
-            lastDate: _dateAnswerFormat.maxDate,
-            initialDate: _result,
+            firstDate: _dateAnswerFormat.minDate!,
+            lastDate: _dateAnswerFormat.maxDate!,
+            initialDate: _result!,
             currentDate: _result,
             onDateChanged: (DateTime value) => _handleDateChanged(value),
           ),
@@ -126,7 +126,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
         mode: CupertinoDatePickerMode.date,
         minimumDate: _dateAnswerFormat.minDate,
         //We have to add an hour to to met the assert maxDate > initDate
-        maximumDate: _dateAnswerFormat.maxDate.add(
+        maximumDate: _dateAnswerFormat.maxDate!.add(
           Duration(hours: 1),
         ),
         initialDateTime: _dateAnswerFormat.defaultDate,

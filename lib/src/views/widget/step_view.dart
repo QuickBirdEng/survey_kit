@@ -6,7 +6,7 @@ import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/steps/step.dart' as surveystep;
 
 class StepView extends StatelessWidget {
-  final surveystep.Step step;
+  final surveystep.Step? step;
   final Widget title;
   final Widget child;
   final SurveyController controller;
@@ -14,10 +14,10 @@ class StepView extends StatelessWidget {
   final bool isValid;
 
   const StepView({
-    @required this.step,
-    @required this.child,
-    @required this.title,
-    @required this.controller,
+    required this.step,
+    required this.child,
+    required this.title,
+    required this.controller,
     this.isValid = true,
     this.canBack = true,
   });
@@ -26,13 +26,13 @@ class StepView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Platform.isAndroid) {
       return Scaffold(
-        appBar: _androidAppBar(context),
+        appBar: _androidAppBar(context) as PreferredSizeWidget?,
         resizeToAvoidBottomInset: false,
         body: _content(context),
       );
     } else {
       return CupertinoPageScaffold(
-        navigationBar: _iosAppBar(context),
+        navigationBar: _iosAppBar(context) as ObstructingPreferredSizeWidget?,
         child: _content(context),
         resizeToAvoidBottomInset: false,
       );
@@ -120,7 +120,7 @@ class StepView extends StatelessWidget {
                           }
                         : null,
                     child: Text(
-                      step.buttonText.toUpperCase(),
+                      step!.buttonText.toUpperCase(),
                       style: TextStyle(
                         color: isValid
                             ? Theme.of(context).primaryColor

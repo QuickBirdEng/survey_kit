@@ -9,7 +9,7 @@ class CompletionView extends StatelessWidget {
   final CompletionStep completionStep;
   final DateTime _startDate = DateTime.now();
 
-  CompletionView({@required this.completionStep});
+  CompletionView({required this.completionStep});
 
   @override
   Widget build(BuildContext context) {

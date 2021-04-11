@@ -67,11 +67,11 @@ class _MyAppState extends State<MyApp> {
                 textStyle: MaterialStateProperty.resolveWith(
                   (Set<MaterialState> state) {
                     if (state.contains(MaterialState.disabled)) {
-                      return Theme.of(context).textTheme.button.copyWith(
+                      return Theme.of(context).textTheme.button!.copyWith(
                             color: Colors.grey,
                           );
                     }
-                    return Theme.of(context).textTheme.button.copyWith(
+                    return Theme.of(context).textTheme.button!.copyWith(
                           color: Colors.cyan,
                         );
                   },
@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
             textButtonTheme: TextButtonThemeData(
               style: ButtonStyle(
                 textStyle: MaterialStateProperty.all(
-                  Theme.of(context).textTheme.button.copyWith(
+                  Theme.of(context).textTheme.button!.copyWith(
                         color: Colors.cyan,
                       ),
                 ),
@@ -185,14 +185,14 @@ class _MyAppState extends State<MyApp> {
       ],
     );
     task.addNavigationRule(
-      forTriggerStepIdentifier: task.steps[6].id,
+      forTriggerStepIdentifier: task.steps![6].id,
       navigationRule: ConditionalNavigationRule(
         resultToStepIdentifierMapper: (input) {
           switch (input) {
             case "Yes":
-              return task.steps[0].id;
+              return task.steps![0].id;
             case "No":
-              return task.steps[7].id;
+              return task.steps![7].id;
             default:
               return null;
           }

@@ -9,11 +9,11 @@ import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class BooleanAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
-  final BooleanQuestionResult result;
+  final BooleanQuestionResult? result;
 
   const BooleanAnswerView({
-    @required this.questionStep,
-    @required this.result,
+    required this.questionStep,
+    required this.result,
   });
 
   @override
@@ -21,9 +21,9 @@ class BooleanAnswerView extends StatefulWidget {
 }
 
 class _BooleanAnswerViewState extends State<BooleanAnswerView> {
-  BooleanAnswerFormat _answerFormat;
-  BooleanResult _result;
-  DateTime _startDate;
+  late BooleanAnswerFormat _answerFormat;
+  late BooleanResult _result;
+  late final DateTime _startDate;
 
   @override
   void initState() {

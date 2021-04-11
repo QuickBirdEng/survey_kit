@@ -1,9 +1,9 @@
 import 'package:uuid/uuid.dart';
 
 class Identifier {
-  String id;
+  late final String id;
 
-  Identifier({String id}) {
+  Identifier({String? id}) {
     if (id == null) {
       id = Uuid().v4();
       return;

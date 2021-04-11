@@ -8,11 +8,11 @@ import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class ScaleAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
-  final ScaleQuestionResult result;
+  final ScaleQuestionResult? result;
 
   const ScaleAnswerView({
-    @required this.questionStep,
-    @required this.result,
+    required this.questionStep,
+    required this.result,
   });
 
   @override
@@ -20,9 +20,9 @@ class ScaleAnswerView extends StatefulWidget {
 }
 
 class _ScaleAnswerViewState extends State<ScaleAnswerView> {
-  ScaleAnswerFormat _scaleAnswerFormat;
-  double _sliderValue;
-  DateTime _startDate;
+  late ScaleAnswerFormat _scaleAnswerFormat;
+  double? _sliderValue;
+  late DateTime _startDate;
 
   @override
   void initState() {
@@ -73,7 +73,7 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
                 Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Text(
-                    _sliderValue.toInt().toString(),
+                    _sliderValue!.toInt().toString(),
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
@@ -100,7 +100,7 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
                       ),
                     ),
                     Slider.adaptive(
-                      value: _sliderValue,
+                      value: _sliderValue!,
                       onChanged: (double value) {
                         setState(() {
                           _sliderValue = value;

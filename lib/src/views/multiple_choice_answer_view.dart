@@ -10,11 +10,11 @@ import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
-  final MultipleChoiceQuestionResult result;
+  final MultipleChoiceQuestionResult? result;
 
   const MultipleChoiceAnswerView({
-    @required this.questionStep,
-    @required this.result,
+    required this.questionStep,
+    required this.result,
   });
 
   @override
@@ -22,9 +22,9 @@ class MultipleChoiceAnswerView extends StatefulWidget {
 }
 
 class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
-  var _multipleChoiceAnswer;
+  late var _multipleChoiceAnswer;
   List<TextChoice> _selectedChoices = [];
-  DateTime _startDateTime;
+  late DateTime _startDateTime;
 
   @override
   void initState() {
