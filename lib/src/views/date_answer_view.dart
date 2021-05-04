@@ -11,11 +11,14 @@ import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class DateAnswerView extends StatefulWidget {
-  final QuestionStep? questionStep;
+  final QuestionStep questionStep;
   final DateQuestionResult? result;
 
-  const DateAnswerView({Key? key, this.questionStep, this.result})
-      : super(key: key);
+  const DateAnswerView({
+    Key? key,
+    required this.questionStep,
+    required this.result,
+  }) : super(key: key);
 
   @override
   _DateAnswerViewState createState() => _DateAnswerViewState();
@@ -30,7 +33,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
   @override
   void initState() {
     super.initState();
-    _dateAnswerFormat = widget.questionStep!.answerFormat as DateAnswerFormat;
+    _dateAnswerFormat = widget.questionStep.answerFormat as DateAnswerFormat;
     _result = widget.result?.result ?? DateTime.now();
   }
 
@@ -45,7 +48,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
       controller: SurveyController(
         context: context,
         resultFunction: () => DateQuestionResult(
-          id: widget.questionStep!.id,
+          id: widget.questionStep.id,
           startDate: _startDate,
           endDate: DateTime.now(),
           valueIdentifier: _result?.toIso8601String() ?? 'none',
@@ -53,7 +56,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
         ),
       ),
       title: Text(
-        widget.questionStep!.title,
+        widget.questionStep.title,
         style: TextStyle(
           fontSize: 28.0,
         ),
@@ -63,7 +66,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
           Padding(
             padding: const EdgeInsets.only(bottom: 32.0),
             child: Text(
-              widget.questionStep!.text,
+              widget.questionStep.text,
               style: TextStyle(
                 fontSize: 18.0,
               ),

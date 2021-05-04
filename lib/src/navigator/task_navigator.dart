@@ -16,10 +16,10 @@ abstract class TaskNavigator {
 
   Step? nextInList(Step? step) {
     final currentIndex =
-        task.steps!.indexWhere((element) => element.id == step!.id);
-    return (currentIndex + 1 > task.steps!.length - 1)
+        task.steps.indexWhere((element) => element.id == step?.id);
+    return (currentIndex + 1 > task.steps.length - 1)
         ? null
-        : task.steps![currentIndex + 1];
+        : task.steps[currentIndex + 1];
   }
 
   Step? peekHistory() {

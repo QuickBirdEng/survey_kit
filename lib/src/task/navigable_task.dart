@@ -9,7 +9,7 @@ class NavigableTask extends Task {
 
   NavigableTask({
     TaskIdentifier? id,
-    List<Step>? steps,
+    List<Step> steps = const [],
   }) : super(id: id, steps: steps);
 
   void addNavigationRule(
@@ -19,6 +19,6 @@ class NavigableTask extends Task {
   }
 
   NavigationRule? getRuleByStepIdentifier(StepIdentifier? stepIdentifier) {
-    return navigationRules[stepIdentifier!];
+    return navigationRules[stepIdentifier];
   }
 }

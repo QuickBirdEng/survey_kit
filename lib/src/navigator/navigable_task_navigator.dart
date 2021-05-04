@@ -20,7 +20,7 @@ class NavigableTaskNavigator extends TaskNavigator {
     }
     switch (rule.runtimeType) {
       case DirectNavigationRule:
-        return task.steps!.firstWhere((element) =>
+        return task.steps.firstWhere((element) =>
             element.id ==
             (rule as DirectNavigationRule).destinationStepIdentifier);
       case ConditionalNavigationRule:
@@ -52,15 +52,14 @@ class NavigableTaskNavigator extends TaskNavigator {
     if (nextStepIdentifier == null) {
       return nextInList(step);
     }
-    return task.steps!
-        .firstWhere((element) => element.id == nextStepIdentifier);
+    return task.steps.firstWhere((element) => element.id == nextStepIdentifier);
   }
 
   @override
   Step? firstStep() {
     final previousStep = peekHistory();
     return previousStep == null
-        ? task.steps!.first
+        ? task.steps.first
         : nextStep(step: previousStep, questionResult: null);
   }
 }

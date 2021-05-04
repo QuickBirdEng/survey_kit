@@ -11,11 +11,14 @@ import 'package:survey_kit/src/views/widget/time_picker.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class TimeAnswerView extends StatefulWidget {
-  final QuestionStep? questionStep;
+  final QuestionStep questionStep;
   final TimeQuestionResult? result;
 
-  const TimeAnswerView({Key? key, this.questionStep, this.result})
-      : super(key: key);
+  const TimeAnswerView({
+    Key? key,
+    required this.questionStep,
+    required this.result,
+  }) : super(key: key);
 
   @override
   _TimeAnswerViewState createState() => _TimeAnswerViewState();
@@ -29,7 +32,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
   @override
   void initState() {
     super.initState();
-    _timeAnswerFormat = widget.questionStep!.answerFormat as TimeAnswerFormat;
+    _timeAnswerFormat = widget.questionStep.answerFormat as TimeAnswerFormat;
     _result = widget.result?.result ??
         _timeAnswerFormat.defaultValue ??
         TimeOfDay.fromDateTime(
@@ -44,7 +47,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
       controller: SurveyController(
         context: context,
         resultFunction: () => TimeQuestionResult(
-          id: widget.questionStep!.id,
+          id: widget.questionStep.id,
           startDate: _startDate,
           endDate: new DateTime.now(),
           valueIdentifier: _result.toString(),
@@ -52,7 +55,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
         ),
       ),
       title: Text(
-        widget.questionStep!.title,
+        widget.questionStep.title,
         style: Theme.of(context).textTheme.headline5,
         textAlign: TextAlign.center,
       ),
@@ -61,7 +64,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
           Padding(
             padding: const EdgeInsets.only(bottom: 14.0),
             child: Text(
-              widget.questionStep!.text,
+              widget.questionStep.text,
               style: TextStyle(
                 fontSize: 18.0,
               ),

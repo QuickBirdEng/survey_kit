@@ -15,13 +15,13 @@ class OrderedTaskNavigator extends TaskNavigator {
   @override
   Step? previousInList(Step? step) {
     final currentIndex =
-        task.steps!.indexWhere((element) => element.id == step!.id);
-    return (currentIndex - 1 < 0) ? null : task.steps![currentIndex - 1];
+        task.steps.indexWhere((element) => element.id == step?.id);
+    return (currentIndex - 1 < 0) ? null : task.steps[currentIndex - 1];
   }
 
   @override
   Step? firstStep() {
     final previousStep = peekHistory();
-    return previousStep == null ? task.steps!.first : nextInList(previousStep);
+    return previousStep == null ? task.steps.first : nextInList(previousStep);
   }
 }
