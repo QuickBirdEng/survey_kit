@@ -6,7 +6,7 @@ import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/steps/step.dart' as surveystep;
 
 class StepView extends StatelessWidget {
-  final surveystep.Step? step;
+  final surveystep.Step step;
   final Widget title;
   final Widget child;
   final SurveyController controller;
@@ -120,7 +120,7 @@ class StepView extends StatelessWidget {
                           }
                         : null,
                     child: Text(
-                      step!.buttonText.toUpperCase(),
+                      step.buttonText.toUpperCase(),
                       style: TextStyle(
                         color: isValid
                             ? Theme.of(context).primaryColor
