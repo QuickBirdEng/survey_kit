@@ -22,7 +22,7 @@ class SelectionListTile extends StatelessWidget {
           child: ListTile(
             leading: Text(
               text,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
+              style: Theme.of(context).textTheme.headline5?.copyWith(
                     color: isSelected
                         ? Theme.of(context).primaryColor
                         : Colors.black,

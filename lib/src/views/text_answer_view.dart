@@ -37,9 +37,9 @@ class _TextAnswerViewState extends State<TextAnswerView> {
     _startDate = DateTime.now();
   }
 
-  void _checkValidation(String? text) {
+  void _checkValidation(String text) {
     setState(() {
-      _isValid = text!.isNotEmpty;
+      _isValid = text.isNotEmpty;
     });
   }
 

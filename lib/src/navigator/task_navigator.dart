@@ -12,7 +12,7 @@ abstract class TaskNavigator {
 
   Step? firstStep();
   Step? nextStep({required Step step, QuestionResult? questionResult});
-  Step? previousInList(Step? step);
+  Step? previousInList(Step step);
 
   Step? nextInList(Step? step) {
     final currentIndex =

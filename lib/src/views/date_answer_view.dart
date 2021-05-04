@@ -96,7 +96,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
                 left: 8.0,
                 bottom: 8.0,
                 child: Text(
-                  _dateFormat.format(_result!),
+                  _result != null ? _dateFormat.format(_result!) : '',
                   style: TextStyle(
                     fontSize: 28.0,
                     color: Colors.white,
@@ -110,9 +110,14 @@ class _DateAnswerViewState extends State<DateAnswerView> {
           width: double.infinity,
           height: 300.0,
           child: CalendarDatePicker(
-            firstDate: _dateAnswerFormat.minDate!,
-            lastDate: _dateAnswerFormat.maxDate!,
-            initialDate: _result!,
+            firstDate: _dateAnswerFormat.minDate ??
+                DateTime.now().add(Duration(days: 365 * DateTime.now().year)),
+            lastDate: _dateAnswerFormat.maxDate ??
+                DateTime.now().add(Duration(days: 365 * 100)),
+            initialDate: _result ??
+                _dateAnswerFormat.defaultDate ??
+                _dateAnswerFormat.maxDate ??
+                DateTime.now(),
             currentDate: _result,
             onDateChanged: (DateTime value) => _handleDateChanged(value),
           ),
@@ -129,7 +134,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
         mode: CupertinoDatePickerMode.date,
         minimumDate: _dateAnswerFormat.minDate,
         //We have to add an hour to to met the assert maxDate > initDate
-        maximumDate: _dateAnswerFormat.maxDate!.add(
+        maximumDate: _dateAnswerFormat.maxDate?.add(
           Duration(hours: 1),
         ),
         initialDateTime: _dateAnswerFormat.defaultDate,

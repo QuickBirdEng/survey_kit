@@ -22,7 +22,7 @@ class ScaleAnswerView extends StatefulWidget {
 class _ScaleAnswerViewState extends State<ScaleAnswerView> {
   late final DateTime _startDate;
   late final ScaleAnswerFormat _scaleAnswerFormat;
-  double? _sliderValue;
+  late double _sliderValue;
 
   @override
   void initState() {
@@ -73,7 +73,7 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
                 Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Text(
-                    _sliderValue!.toInt().toString(),
+                    _sliderValue.toInt().toString(),
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
@@ -100,7 +100,7 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
                       ),
                     ),
                     Slider.adaptive(
-                      value: _sliderValue!,
+                      value: _sliderValue,
                       onChanged: (double value) {
                         setState(() {
                           _sliderValue = value;

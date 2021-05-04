@@ -13,9 +13,9 @@ class OrderedTaskNavigator extends TaskNavigator {
   }
 
   @override
-  Step? previousInList(Step? step) {
+  Step? previousInList(Step step) {
     final currentIndex =
-        task.steps.indexWhere((element) => element.id == step?.id);
+        task.steps.indexWhere((element) => element.id == step.id);
     return (currentIndex - 1 < 0) ? null : task.steps[currentIndex - 1];
   }
 
