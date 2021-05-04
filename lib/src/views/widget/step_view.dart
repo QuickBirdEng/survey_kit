@@ -26,20 +26,20 @@ class StepView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Platform.isAndroid) {
       return Scaffold(
-        appBar: _androidAppBar(context) as PreferredSizeWidget?,
+        appBar: _androidAppBar(context),
         resizeToAvoidBottomInset: false,
         body: _content(context),
       );
     } else {
       return CupertinoPageScaffold(
-        navigationBar: _iosAppBar(context) as ObstructingPreferredSizeWidget?,
+        navigationBar: _iosAppBar(context),
         child: _content(context),
         resizeToAvoidBottomInset: false,
       );
     }
   }
 
-  Widget _androidAppBar(BuildContext context) {
+  AppBar _androidAppBar(BuildContext context) {
     return AppBar(
       elevation: 0.0,
       leading: canBack
@@ -71,7 +71,7 @@ class StepView extends StatelessWidget {
     );
   }
 
-  Widget _iosAppBar(BuildContext context) {
+  CupertinoNavigationBar _iosAppBar(BuildContext context) {
     return CupertinoNavigationBar(
       leading: canBack
           ? CupertinoNavigationBarBackButton(
