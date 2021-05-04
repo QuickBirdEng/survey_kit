@@ -21,10 +21,11 @@ class IntegerAnswerView extends StatefulWidget {
 }
 
 class _IntegerAnswerViewState extends State<IntegerAnswerView> {
-  late IntegerAnswerFormat _integerAnswerFormat;
-  late TextEditingController _controller;
+  late final IntegerAnswerFormat _integerAnswerFormat;
+  late final TextEditingController _controller;
+  late final DateTime _startDate;
+
   bool _isValid = false;
-  late DateTime _startDate;
 
   @override
   void initState() {

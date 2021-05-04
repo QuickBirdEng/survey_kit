@@ -21,10 +21,11 @@ class TextAnswerView extends StatefulWidget {
 }
 
 class _TextAnswerViewState extends State<TextAnswerView> {
-  late TextAnswerFormat _textAnswerFormat;
+  late final TextAnswerFormat _textAnswerFormat;
+  late final DateTime _startDate;
+
   late final TextEditingController _controller;
   bool _isValid = false;
-  late final DateTime _startDate;
 
   @override
   void initState() {

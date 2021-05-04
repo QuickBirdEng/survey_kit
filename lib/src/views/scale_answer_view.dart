@@ -20,9 +20,9 @@ class ScaleAnswerView extends StatefulWidget {
 }
 
 class _ScaleAnswerViewState extends State<ScaleAnswerView> {
-  late ScaleAnswerFormat _scaleAnswerFormat;
+  late final DateTime _startDate;
+  late final ScaleAnswerFormat _scaleAnswerFormat;
   double? _sliderValue;
-  late DateTime _startDate;
 
   @override
   void initState() {

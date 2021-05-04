@@ -22,9 +22,9 @@ class SingleChoiceAnswerView extends StatefulWidget {
 }
 
 class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView> {
-  late SingleChoiceAnswerFormat _singleChoiceAnswerFormat;
+  late final DateTime _startDate;
+  late final SingleChoiceAnswerFormat _singleChoiceAnswerFormat;
   TextChoice? _selectedChoice;
-  late DateTime _startDate;
 
   @override
   void initState() {

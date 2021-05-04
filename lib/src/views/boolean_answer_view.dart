@@ -21,9 +21,9 @@ class BooleanAnswerView extends StatefulWidget {
 }
 
 class _BooleanAnswerViewState extends State<BooleanAnswerView> {
-  late BooleanAnswerFormat _answerFormat;
-  late BooleanResult _result;
+  late final BooleanAnswerFormat _answerFormat;
   late final DateTime _startDate;
+  BooleanResult? _result;
 
   @override
   void initState() {

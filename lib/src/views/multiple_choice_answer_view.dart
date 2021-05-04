@@ -22,9 +22,10 @@ class MultipleChoiceAnswerView extends StatefulWidget {
 }
 
 class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
-  late var _multipleChoiceAnswer;
+  late final DateTime _startDateTime;
+  late final MultipleChoiceAnswerFormat _multipleChoiceAnswer;
+
   List<TextChoice> _selectedChoices = [];
-  late DateTime _startDateTime;
 
   @override
   void initState() {
