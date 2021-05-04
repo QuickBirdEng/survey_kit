@@ -9,11 +9,11 @@ import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class TextAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
-  final TextQuestionResult result;
+  final TextQuestionResult? result;
 
   const TextAnswerView({
-    @required this.questionStep,
-    @required this.result,
+    required this.questionStep,
+    required this.result,
   });
 
   @override
@@ -21,17 +21,18 @@ class TextAnswerView extends StatefulWidget {
 }
 
 class _TextAnswerViewState extends State<TextAnswerView> {
-  TextAnswerFormat _textAnswerFormat;
-  TextEditingController _controller;
+  late final TextAnswerFormat _textAnswerFormat;
+  late final DateTime _startDate;
+
+  late final TextEditingController _controller;
   bool _isValid = false;
-  DateTime _startDate;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _controller.text = widget.result?.result;
-    _checkValidation(_controller?.text);
+    _controller.text = widget.result?.result ?? '';
+    _checkValidation(_controller.text);
     _textAnswerFormat = widget.questionStep.answerFormat as TextAnswerFormat;
     _startDate = DateTime.now();
   }
@@ -44,7 +45,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -58,8 +59,8 @@ class _TextAnswerViewState extends State<TextAnswerView> {
           id: widget.questionStep.id,
           startDate: _startDate,
           endDate: DateTime.now(),
-          valueIdentifier: _controller?.text,
-          result: _controller?.text,
+          valueIdentifier: _controller.text,
+          result: _controller.text,
         ),
       ),
       title: Text(

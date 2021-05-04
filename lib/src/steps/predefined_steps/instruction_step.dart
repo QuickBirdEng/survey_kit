@@ -11,13 +11,13 @@ class InstructionStep extends Step {
   InstructionStep({
     bool isOptional = false,
     String buttonText = 'Next',
-    StepIdentifier id,
-    @required this.title,
-    @required this.text,
+    StepIdentifier? id,
+    required this.title,
+    required this.text,
   }) : super(id: id, isOptional: isOptional, buttonText: buttonText);
 
   @override
-  Widget createView({@required QuestionResult questionResult}) {
+  Widget createView({required QuestionResult? questionResult}) {
     return InstructionView(
       instructionStep: this,
     );

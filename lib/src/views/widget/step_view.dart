@@ -14,10 +14,10 @@ class StepView extends StatelessWidget {
   final bool isValid;
 
   const StepView({
-    @required this.step,
-    @required this.child,
-    @required this.title,
-    @required this.controller,
+    required this.step,
+    required this.child,
+    required this.title,
+    required this.controller,
     this.isValid = true,
     this.canBack = true,
   });
@@ -39,7 +39,7 @@ class StepView extends StatelessWidget {
     }
   }
 
-  Widget _androidAppBar(BuildContext context) {
+  AppBar _androidAppBar(BuildContext context) {
     return AppBar(
       elevation: 0.0,
       leading: canBack
@@ -71,7 +71,7 @@ class StepView extends StatelessWidget {
     );
   }
 
-  Widget _iosAppBar(BuildContext context) {
+  CupertinoNavigationBar _iosAppBar(BuildContext context) {
     return CupertinoNavigationBar(
       leading: canBack
           ? CupertinoNavigationBarBackButton(

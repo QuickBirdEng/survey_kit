@@ -10,11 +10,11 @@ import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class SingleChoiceAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
-  final SingleChoiceQuestionResult result;
+  final SingleChoiceQuestionResult? result;
 
   const SingleChoiceAnswerView({
-    @required this.questionStep,
-    @required this.result,
+    required this.questionStep,
+    required this.result,
   });
 
   @override
@@ -22,9 +22,9 @@ class SingleChoiceAnswerView extends StatefulWidget {
 }
 
 class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView> {
-  SingleChoiceAnswerFormat _singleChoiceAnswerFormat;
-  TextChoice _selectedChoice;
-  DateTime _startDate;
+  late final DateTime _startDate;
+  late final SingleChoiceAnswerFormat _singleChoiceAnswerFormat;
+  TextChoice? _selectedChoice;
 
   @override
   void initState() {

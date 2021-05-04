@@ -7,9 +7,9 @@ class SelectionListTile extends StatelessWidget {
   final bool isSelected;
 
   const SelectionListTile({
-    Key key,
-    @required this.text,
-    @required this.onTap,
+    Key? key,
+    required this.text,
+    required this.onTap,
     this.isSelected = false,
   }) : super(key: key);
 
@@ -22,7 +22,7 @@ class SelectionListTile extends StatelessWidget {
           child: ListTile(
             leading: Text(
               text,
-              style: Theme.of(context).textTheme.headline5.copyWith(
+              style: Theme.of(context).textTheme.headline5?.copyWith(
                     color: isSelected
                         ? Theme.of(context).primaryColor
                         : Colors.black,

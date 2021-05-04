@@ -1,14 +1,13 @@
-import 'package:flutter/widgets.dart';
 import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/task/identifier/task_identifier.dart';
 
 abstract class Task {
-  TaskIdentifier id;
+  late final TaskIdentifier id;
   final List<Step> steps;
 
   Task({
-    TaskIdentifier id,
-    @required this.steps,
+    TaskIdentifier? id,
+    this.steps = const [],
   }) {
     if (id == null) {
       id = TaskIdentifier();

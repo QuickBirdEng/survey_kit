@@ -14,12 +14,12 @@ import 'package:survey_kit/src/task/task.dart';
 
 class SurveyKit extends StatefulWidget {
   final Task task;
-  final ThemeData themeData;
+  final ThemeData? themeData;
   final Function(SurveyResult) onResult;
 
   const SurveyKit({
-    @required this.task,
-    @required this.onResult,
+    required this.task,
+    required this.onResult,
     this.themeData,
   });
 
@@ -28,7 +28,7 @@ class SurveyKit extends StatefulWidget {
 }
 
 class _SurveyKitState extends State<SurveyKit> {
-  TaskNavigator _taskNavigator;
+  late TaskNavigator _taskNavigator;
 
   @override
   void initState() {

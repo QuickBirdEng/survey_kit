@@ -10,14 +10,14 @@ class CompletionStep extends Step {
 
   CompletionStep({
     bool isOptional = false,
-    @required StepIdentifier id,
+    required StepIdentifier id,
     String buttonText = 'End Survey',
-    @required this.title,
-    @required this.text,
+    required this.title,
+    required this.text,
   }) : super(id: id, isOptional: isOptional, buttonText: buttonText);
 
   @override
-  Widget createView({@required QuestionResult questionResult}) {
+  Widget createView({required QuestionResult? questionResult}) {
     return CompletionView(completionStep: this);
   }
 }

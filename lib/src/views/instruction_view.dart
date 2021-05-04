@@ -8,7 +8,7 @@ class InstructionView extends StatelessWidget {
   final InstructionStep instructionStep;
   final DateTime _startDate = DateTime.now();
 
-  InstructionView({@required this.instructionStep});
+  InstructionView({required this.instructionStep});
 
   @override
   Widget build(BuildContext context) {

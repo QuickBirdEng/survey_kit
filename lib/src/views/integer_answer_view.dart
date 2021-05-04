@@ -9,11 +9,11 @@ import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class IntegerAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
-  final IntegerQuestionResult result;
+  final IntegerQuestionResult? result;
 
   const IntegerAnswerView({
-    @required this.questionStep,
-    @required this.result,
+    required this.questionStep,
+    required this.result,
   });
 
   @override
@@ -21,10 +21,11 @@ class IntegerAnswerView extends StatefulWidget {
 }
 
 class _IntegerAnswerViewState extends State<IntegerAnswerView> {
-  IntegerAnswerFormat _integerAnswerFormat;
-  TextEditingController _controller;
+  late final IntegerAnswerFormat _integerAnswerFormat;
+  late final TextEditingController _controller;
+  late final DateTime _startDate;
+
   bool _isValid = false;
-  DateTime _startDate;
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -59,8 +60,8 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
           id: widget.questionStep.id,
           startDate: _startDate,
           endDate: DateTime.now(),
-          valueIdentifier: _controller?.text ?? '',
-          result: int.tryParse(_controller?.text) ??
+          valueIdentifier: _controller.text,
+          result: int.tryParse(_controller.text) ??
               _integerAnswerFormat.defaultValue ??
               null,
         ),

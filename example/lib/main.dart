@@ -67,11 +67,11 @@ class _MyAppState extends State<MyApp> {
                 textStyle: MaterialStateProperty.resolveWith(
                   (Set<MaterialState> state) {
                     if (state.contains(MaterialState.disabled)) {
-                      return Theme.of(context).textTheme.button.copyWith(
+                      return Theme.of(context).textTheme.button?.copyWith(
                             color: Colors.grey,
                           );
                     }
-                    return Theme.of(context).textTheme.button.copyWith(
+                    return Theme.of(context).textTheme.button?.copyWith(
                           color: Colors.cyan,
                         );
                   },
@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
             textButtonTheme: TextButtonThemeData(
               style: ButtonStyle(
                 textStyle: MaterialStateProperty.all(
-                  Theme.of(context).textTheme.button.copyWith(
+                  Theme.of(context).textTheme.button?.copyWith(
                         color: Colors.cyan,
                       ),
                 ),

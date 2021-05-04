@@ -12,10 +12,13 @@ import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class TimeAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
-  final TimeQuestionResult result;
+  final TimeQuestionResult? result;
 
-  const TimeAnswerView({Key key, this.questionStep, this.result})
-      : super(key: key);
+  const TimeAnswerView({
+    Key? key,
+    required this.questionStep,
+    required this.result,
+  }) : super(key: key);
 
   @override
   _TimeAnswerViewState createState() => _TimeAnswerViewState();
@@ -23,14 +26,15 @@ class TimeAnswerView extends StatefulWidget {
 
 class _TimeAnswerViewState extends State<TimeAnswerView> {
   final DateTime _startDate = DateTime.now();
-  TimeAnswerFormat _timeAnswerFormat;
-  TimeOfDay _result;
+  late TimeAnswerFormat _timeAnswerFormat;
+  late TimeOfDay? _result;
 
   @override
   void initState() {
     super.initState();
     _timeAnswerFormat = widget.questionStep.answerFormat as TimeAnswerFormat;
-    _result = _timeAnswerFormat.defaultValue ??
+    _result = widget.result?.result ??
+        _timeAnswerFormat.defaultValue ??
         TimeOfDay.fromDateTime(
           DateTime.now(),
         );
@@ -76,9 +80,12 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
   Widget _androidTimePicker() {
     return Container(
       width: double.infinity,
-      height: 400.0,
-      child: TimePicker(
-        initialTime: _result,
+      height: 450.0,
+      child: TimePickerDialog(
+        initialTime: _result ??
+            TimeOfDay.fromDateTime(
+              DateTime.now(),
+            ),
         timeChanged: (TimeOfDay time) {
           setState(() {
             _result = time;
@@ -91,7 +98,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
   Widget _iosTimePicker() {
     return Container(
       width: double.infinity,
-      height: 400.0,
+      height: 450.0,
       child: CupertinoDatePicker(
         mode: CupertinoDatePickerMode.time,
         onDateTimeChanged: (DateTime newTime) {

@@ -12,10 +12,13 @@ import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class DateAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
-  final DateQuestionResult result;
+  final DateQuestionResult? result;
 
-  const DateAnswerView({Key key, this.questionStep, this.result})
-      : super(key: key);
+  const DateAnswerView({
+    Key? key,
+    required this.questionStep,
+    required this.result,
+  }) : super(key: key);
 
   @override
   _DateAnswerViewState createState() => _DateAnswerViewState();
@@ -24,14 +27,14 @@ class DateAnswerView extends StatefulWidget {
 class _DateAnswerViewState extends State<DateAnswerView> {
   final DateFormat _dateFormat = DateFormat('E, MMM d');
   final DateTime _startDate = DateTime.now();
-  DateAnswerFormat _dateAnswerFormat;
-  DateTime _result;
+  late final DateAnswerFormat _dateAnswerFormat;
+  DateTime? _result;
 
   @override
   void initState() {
     super.initState();
     _dateAnswerFormat = widget.questionStep.answerFormat as DateAnswerFormat;
-    _result ??= DateTime.now();
+    _result = widget.result?.result ?? DateTime.now();
   }
 
   void _handleDateChanged(DateTime date) {
@@ -48,7 +51,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
           id: widget.questionStep.id,
           startDate: _startDate,
           endDate: DateTime.now(),
-          valueIdentifier: _result.toIso8601String(),
+          valueIdentifier: _result?.toIso8601String() ?? 'none',
           result: _result,
         ),
       ),
@@ -93,7 +96,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
                 left: 8.0,
                 bottom: 8.0,
                 child: Text(
-                  _dateFormat.format(_result),
+                  _result != null ? _dateFormat.format(_result!) : '',
                   style: TextStyle(
                     fontSize: 28.0,
                     color: Colors.white,
@@ -107,9 +110,14 @@ class _DateAnswerViewState extends State<DateAnswerView> {
           width: double.infinity,
           height: 300.0,
           child: CalendarDatePicker(
-            firstDate: _dateAnswerFormat.minDate,
-            lastDate: _dateAnswerFormat.maxDate,
-            initialDate: _result,
+            firstDate: _dateAnswerFormat.minDate ??
+                DateTime.now().add(Duration(days: 365 * DateTime.now().year)),
+            lastDate: _dateAnswerFormat.maxDate ??
+                DateTime.now().add(Duration(days: 365 * 100)),
+            initialDate: _result ??
+                _dateAnswerFormat.defaultDate ??
+                _dateAnswerFormat.maxDate ??
+                DateTime.now(),
             currentDate: _result,
             onDateChanged: (DateTime value) => _handleDateChanged(value),
           ),
@@ -126,7 +134,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
         mode: CupertinoDatePickerMode.date,
         minimumDate: _dateAnswerFormat.minDate,
         //We have to add an hour to to met the assert maxDate > initDate
-        maximumDate: _dateAnswerFormat.maxDate.add(
+        maximumDate: _dateAnswerFormat.maxDate?.add(
           Duration(hours: 1),
         ),
         initialDateTime: _dateAnswerFormat.defaultDate,

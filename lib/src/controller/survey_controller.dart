@@ -9,8 +9,8 @@ class SurveyController {
   final BuildContext context;
 
   SurveyController({
-    @required this.resultFunction,
-    @required this.context,
+    required this.resultFunction,
+    required this.context,
   });
 
   void nextStep() {
