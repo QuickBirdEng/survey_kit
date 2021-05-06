@@ -1,8 +1,13 @@
 import 'package:survey_kit/src/answer_format/answer_format.dart';
 
 class DateAnswerFormat implements AnswerFormat {
+  /// Default date which will be preselected on datepicker opening
   final DateTime? defaultDate;
+
+  /// Lowest date which can be selected via the datepicker
   final DateTime? minDate;
+
+  /// Highest date which can be selected via the datepicker
   final DateTime? maxDate;
 
   DateAnswerFormat({
