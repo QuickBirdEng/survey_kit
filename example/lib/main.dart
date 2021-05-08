@@ -172,8 +172,8 @@ class _MyAppState extends State<MyApp> {
           title: 'When was your last holiday?',
           answerFormat: DateAnswerFormat(
             minDate: DateTime.utc(1970),
-            maxDate: DateTime.now(),
             defaultDate: DateTime.now(),
+            maxDate: DateTime.now(),
           ),
         ),
         CompletionStep(
