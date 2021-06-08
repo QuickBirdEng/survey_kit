@@ -46,7 +46,6 @@ class _DateAnswerViewState extends State<DateAnswerView> {
 
   @override
   Widget build(BuildContext context) {
-    final platform = Theme.of(context).platform;
     return StepView(
       step: widget.questionStep,
       resultFunction: () => DateQuestionResult(
