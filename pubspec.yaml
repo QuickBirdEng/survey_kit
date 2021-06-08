@@ -15,8 +15,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^7.0.0
+  flutter_platform_widgets: ^1.9.0
   intl: ^0.17.0
   lottie: ^1.0.1
+  provider: ^5.0.0
   uuid: ^3.0.4
   collection: ^1.15.0
 

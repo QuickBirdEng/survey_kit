@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:survey_kit/src/answer_format/time_answer_formart.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/result/question/time_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/time_picker.dart';
@@ -44,15 +44,12 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      controller: SurveyController(
-        context: context,
-        resultFunction: () => TimeQuestionResult(
-          id: widget.questionStep.id,
-          startDate: _startDate,
-          endDate: new DateTime.now(),
-          valueIdentifier: _result.toString(),
-          result: _result,
-        ),
+      resultFunction: () => TimeQuestionResult(
+        id: widget.questionStep.id,
+        startDate: _startDate,
+        endDate: DateTime.now(),
+        valueIdentifier: _result.toString(),
+        result: _result,
       ),
       title: Text(
         widget.questionStep.title,
@@ -71,7 +68,10 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
               textAlign: TextAlign.center,
             ),
           ),
-          Platform.isAndroid ? _androidTimePicker() : _iosTimePicker(),
+          PlatformWidget(
+            material: (_, __) => _androidTimePicker(),
+            cupertino: (context, platform) => _iosTimePicker(),
+          ),
         ],
       ),
     );
