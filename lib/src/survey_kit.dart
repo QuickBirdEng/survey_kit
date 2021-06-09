@@ -15,9 +15,17 @@ import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
 
 class SurveyKit extends StatefulWidget {
+  /// [Task] for the configuraton of the survey
   final Task task;
+
+  /// [ThemeData] to override the Theme of the subtree
   final ThemeData? themeData;
+
+  /// Function which is called after the results are collected
   final Function(SurveyResult) onResult;
+
+  /// [SurveyController] to override the navigation methods
+  /// onNextStep, onBackStep, onCloseSurvey
   final SurveyController? surveyController;
 
   const SurveyKit({
