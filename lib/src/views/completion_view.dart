@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lottie/lottie.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/result/step/completion_step_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/completion_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
@@ -15,13 +14,10 @@ class CompletionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return StepView(
       step: completionStep,
-      controller: SurveyController(
-        context: context,
-        resultFunction: () => CompletionStepResult(
-          completionStep.id,
-          _startDate,
-          DateTime.now(),
-        ),
+      resultFunction: () => CompletionStepResult(
+        completionStep.id,
+        _startDate,
+        DateTime.now(),
       ),
       title: Text(
         completionStep.title,

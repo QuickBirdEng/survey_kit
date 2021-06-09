@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
 import 'package:survey_kit/src/result/question/boolean_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
@@ -37,19 +36,16 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      controller: SurveyController(
-        context: context,
-        resultFunction: () => BooleanQuestionResult(
-          id: widget.questionStep.id,
-          startDate: _startDate,
-          endDate: DateTime.now(),
-          valueIdentifier: _result == BooleanResult.POSITIVE
-              ? _answerFormat.positiveAnswer
-              : _result == BooleanResult.NEGATIVE
-                  ? _answerFormat.negativeAnswer
-                  : '',
-          result: _result,
-        ),
+      resultFunction: () => BooleanQuestionResult(
+        id: widget.questionStep.id,
+        startDate: _startDate,
+        endDate: DateTime.now(),
+        valueIdentifier: _result == BooleanResult.POSITIVE
+            ? _answerFormat.positiveAnswer
+            : _result == BooleanResult.NEGATIVE
+                ? _answerFormat.negativeAnswer
+                : '',
+        result: _result,
       ),
       title: Text(
         widget.questionStep.title,

@@ -1,17 +1,18 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/result/question/date_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class DateAnswerView extends StatefulWidget {
+  /// [QuestionStep] which includes the [DateAnswerFormat]
   final QuestionStep questionStep;
+
+  /// [DateQuestionResult] which boxes the result
   final DateQuestionResult? result;
 
   const DateAnswerView({
@@ -27,14 +28,16 @@ class DateAnswerView extends StatefulWidget {
 class _DateAnswerViewState extends State<DateAnswerView> {
   final DateFormat _dateFormat = DateFormat('E, MMM d');
   final DateTime _startDate = DateTime.now();
-  late final DateAnswerFormat _dateAnswerFormat;
+  late DateAnswerFormat _dateAnswerFormat;
   DateTime? _result;
 
   @override
   void initState() {
     super.initState();
     _dateAnswerFormat = widget.questionStep.answerFormat as DateAnswerFormat;
-    _result = widget.result?.result ?? DateTime.now();
+    _result = widget.result?.result ??
+        _dateAnswerFormat.defaultDate ??
+        DateTime.now();
   }
 
   void _handleDateChanged(DateTime date) {
@@ -45,15 +48,12 @@ class _DateAnswerViewState extends State<DateAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      controller: SurveyController(
-        context: context,
-        resultFunction: () => DateQuestionResult(
-          id: widget.questionStep.id,
-          startDate: _startDate,
-          endDate: DateTime.now(),
-          valueIdentifier: _result?.toIso8601String() ?? 'none',
-          result: _result,
-        ),
+      resultFunction: () => DateQuestionResult(
+        id: widget.questionStep.id,
+        startDate: _startDate,
+        endDate: DateTime.now(),
+        valueIdentifier: _result?.toIso8601String() ?? 'none',
+        result: _result,
       ),
       title: Text(
         widget.questionStep.title,
@@ -73,7 +73,10 @@ class _DateAnswerViewState extends State<DateAnswerView> {
               textAlign: TextAlign.center,
             ),
           ),
-          Platform.isAndroid ? _androidDatePicker() : _iosDatePicker(),
+          PlatformWidget(
+            material: (_, __) => _androidDatePicker(),
+            cupertino: (context, platform) => _iosDatePicker(),
+          ),
         ],
       ),
     );
@@ -96,7 +99,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
                 left: 8.0,
                 bottom: 8.0,
                 child: Text(
-                  _result != null ? _dateFormat.format(_result!) : '',
+                  _dateFormat.format(_result!),
                   style: TextStyle(
                     fontSize: 28.0,
                     color: Colors.white,
@@ -110,14 +113,14 @@ class _DateAnswerViewState extends State<DateAnswerView> {
           width: double.infinity,
           height: 300.0,
           child: CalendarDatePicker(
-            firstDate: _dateAnswerFormat.minDate ??
-                DateTime.now().add(Duration(days: 365 * DateTime.now().year)),
-            lastDate: _dateAnswerFormat.maxDate ??
-                DateTime.now().add(Duration(days: 365 * 100)),
-            initialDate: _result ??
-                _dateAnswerFormat.defaultDate ??
-                _dateAnswerFormat.maxDate ??
-                DateTime.now(),
+            firstDate: _dateAnswerFormat.minDate ?? DateTime.utc(1900),
+            lastDate: _dateAnswerFormat.maxDate?.add(
+                  Duration(hours: 1),
+                ) ??
+                DateTime.now().add(
+                  Duration(hours: 1),
+                ),
+            initialDate: _result ?? DateTime.now(),
             currentDate: _result,
             onDateChanged: (DateTime value) => _handleDateChanged(value),
           ),
@@ -135,8 +138,11 @@ class _DateAnswerViewState extends State<DateAnswerView> {
         minimumDate: _dateAnswerFormat.minDate,
         //We have to add an hour to to met the assert maxDate > initDate
         maximumDate: _dateAnswerFormat.maxDate?.add(
-          Duration(hours: 1),
-        ),
+              Duration(hours: 1),
+            ) ??
+            DateTime.now().add(
+              Duration(hours: 1),
+            ),
         initialDateTime: _dateAnswerFormat.defaultDate,
         onDateTimeChanged: (DateTime value) {
           setState(() {

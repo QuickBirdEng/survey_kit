@@ -15,75 +15,85 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: SurveyKit(
-          onResult: (SurveyResult result) {
-            print(result.finishReason);
-          },
-          task: getSampleTask(),
-          themeData: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.fromSwatch(
-              primarySwatch: Colors.cyan,
-            ).copyWith(
-              onPrimary: Colors.white,
-            ),
-            primaryColor: Colors.cyan,
-            backgroundColor: Colors.white,
-            appBarTheme: const AppBarTheme(
-              color: Colors.white,
-              iconTheme: IconThemeData(
-                color: Colors.cyan,
-              ),
-              textTheme: TextTheme(
-                button: TextStyle(
-                  color: Colors.cyan,
-                ),
-              ),
-            ),
-            iconTheme: const IconThemeData(
-              color: Colors.cyan,
-            ),
-            outlinedButtonTheme: OutlinedButtonThemeData(
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(
-                  Size(150.0, 60.0),
-                ),
-                side: MaterialStateProperty.resolveWith(
-                  (Set<MaterialState> state) {
-                    if (state.contains(MaterialState.disabled)) {
-                      return BorderSide(
-                        color: Colors.grey,
-                      );
-                    }
-                    return BorderSide(
-                      color: Colors.cyan,
-                    );
-                  },
-                ),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+        body: Container(
+          color: Colors.white,
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: double.infinity,
+              width: 600,
+              child: SurveyKit(
+                onResult: (SurveyResult result) {
+                  print(result.finishReason);
+                },
+                task: getSampleTask(),
+                themeData: Theme.of(context).copyWith(
+                  colorScheme: ColorScheme.fromSwatch(
+                    primarySwatch: Colors.cyan,
+                  ).copyWith(
+                    onPrimary: Colors.white,
                   ),
-                ),
-                textStyle: MaterialStateProperty.resolveWith(
-                  (Set<MaterialState> state) {
-                    if (state.contains(MaterialState.disabled)) {
-                      return Theme.of(context).textTheme.button?.copyWith(
-                            color: Colors.grey,
-                          );
-                    }
-                    return Theme.of(context).textTheme.button?.copyWith(
-                          color: Colors.cyan,
-                        );
-                  },
-                ),
-              ),
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: ButtonStyle(
-                textStyle: MaterialStateProperty.all(
-                  Theme.of(context).textTheme.button?.copyWith(
+                  primaryColor: Colors.cyan,
+                  backgroundColor: Colors.white,
+                  appBarTheme: const AppBarTheme(
+                    color: Colors.white,
+                    iconTheme: IconThemeData(
+                      color: Colors.cyan,
+                    ),
+                    textTheme: TextTheme(
+                      button: TextStyle(
                         color: Colors.cyan,
                       ),
+                    ),
+                  ),
+                  iconTheme: const IconThemeData(
+                    color: Colors.cyan,
+                  ),
+                  outlinedButtonTheme: OutlinedButtonThemeData(
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                        Size(150.0, 60.0),
+                      ),
+                      side: MaterialStateProperty.resolveWith(
+                        (Set<MaterialState> state) {
+                          if (state.contains(MaterialState.disabled)) {
+                            return BorderSide(
+                              color: Colors.grey,
+                            );
+                          }
+                          return BorderSide(
+                            color: Colors.cyan,
+                          );
+                        },
+                      ),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      textStyle: MaterialStateProperty.resolveWith(
+                        (Set<MaterialState> state) {
+                          if (state.contains(MaterialState.disabled)) {
+                            return Theme.of(context).textTheme.button?.copyWith(
+                                  color: Colors.grey,
+                                );
+                          }
+                          return Theme.of(context).textTheme.button?.copyWith(
+                                color: Colors.cyan,
+                              );
+                        },
+                      ),
+                    ),
+                  ),
+                  textButtonTheme: TextButtonThemeData(
+                    style: ButtonStyle(
+                      textStyle: MaterialStateProperty.all(
+                        Theme.of(context).textTheme.button?.copyWith(
+                              color: Colors.cyan,
+                            ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -172,8 +182,8 @@ class _MyAppState extends State<MyApp> {
           title: 'When was your last holiday?',
           answerFormat: DateAnswerFormat(
             minDate: DateTime.utc(1970),
-            maxDate: DateTime.now(),
             defaultDate: DateTime.now(),
+            maxDate: DateTime.now(),
           ),
         ),
         CompletionStep(

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/result/step/instruction_step_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/instruction_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
@@ -22,13 +21,10 @@ class InstructionView extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
       ),
-      controller: SurveyController(
-        context: context,
-        resultFunction: () => InstructionStepResult(
-          instructionStep.id,
-          _startDate,
-          DateTime.now(),
-        ),
+      resultFunction: () => InstructionStepResult(
+        instructionStep.id,
+        _startDate,
+        DateTime.now(),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
