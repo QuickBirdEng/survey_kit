@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:survey_kit/src/answer_format/scale_answer_format.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/result/question/scale_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
@@ -36,15 +35,12 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      controller: SurveyController(
-        context: context,
-        resultFunction: () => ScaleQuestionResult(
-          id: widget.questionStep.id,
-          startDate: _startDate,
-          endDate: DateTime.now(),
-          valueIdentifier: _sliderValue.toString(),
-          result: _sliderValue,
-        ),
+      resultFunction: () => ScaleQuestionResult(
+        id: widget.questionStep.id,
+        startDate: _startDate,
+        endDate: DateTime.now(),
+        valueIdentifier: _sliderValue.toString(),
+        result: _sliderValue,
       ),
       title: Text(
         widget.questionStep.title,

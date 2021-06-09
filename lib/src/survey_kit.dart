@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
 import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
@@ -13,14 +15,24 @@ import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
 
 class SurveyKit extends StatefulWidget {
+  /// [Task] for the configuraton of the survey
   final Task task;
+
+  /// [ThemeData] to override the Theme of the subtree
   final ThemeData? themeData;
+
+  /// Function which is called after the results are collected
   final Function(SurveyResult) onResult;
+
+  /// [SurveyController] to override the navigation methods
+  /// onNextStep, onBackStep, onCloseSurvey
+  final SurveyController? surveyController;
 
   const SurveyKit({
     required this.task,
     required this.onResult,
     this.themeData,
+    this.surveyController,
   });
 
   @override
@@ -51,29 +63,36 @@ class _SurveyKitState extends State<SurveyKit> {
   Widget build(BuildContext context) {
     return Theme(
       data: widget.themeData ?? Theme.of(context),
-      child: BlocProvider(
-        create: (BuildContext context) => SurveyPresenter(
-          taskNavigator: _taskNavigator,
-        ),
-        child: BlocBuilder<SurveyPresenter, SurveyState>(
-          builder: (BuildContext context, SurveyState state) {
-            if (state is PresentingSurveyState) {
-              return state.currentStep.createView(
-                questionResult: state.result,
+      child: MultiProvider(
+        providers: [
+          Provider<TaskNavigator>.value(value: _taskNavigator),
+          Provider<SurveyController>.value(
+              value: widget.surveyController ?? SurveyController())
+        ],
+        child: BlocProvider(
+          create: (BuildContext context) => SurveyPresenter(
+            taskNavigator: _taskNavigator,
+          ),
+          child: BlocBuilder<SurveyPresenter, SurveyState>(
+            builder: (BuildContext context, SurveyState state) {
+              if (state is PresentingSurveyState) {
+                return state.currentStep.createView(
+                  questionResult: state.result,
+                );
+              }
+              if (state is SurveyResultState) {
+                widget.onResult.call(state.result);
+                SchedulerBinding.instance?.addPostFrameCallback(
+                  (_) {
+                    Navigator.pop(context);
+                  },
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(),
               );
-            }
-            if (state is SurveyResultState) {
-              widget.onResult.call(state.result);
-              SchedulerBinding.instance?.addPostFrameCallback(
-                (_) {
-                  Navigator.pop(context);
-                },
-              );
-            }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+            },
+          ),
         ),
       ),
     );

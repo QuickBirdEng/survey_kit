@@ -69,11 +69,7 @@ class _TimePickerFragmentContext {
     required this.onHourDoubleTapped,
     required this.onMinuteDoubleTapped,
     required this.use24HourDials,
-  })   : assert(selectedTime != null),
-        assert(mode != null),
-        assert(onTimeChange != null),
-        assert(onModeChange != null),
-        assert(use24HourDials != null);
+  });
 
   final TimeOfDay selectedTime;
   final _TimePickerMode mode;
@@ -95,10 +91,7 @@ class _TimePickerHeader extends StatelessWidget {
     required this.onMinuteDoubleTapped,
     required this.use24HourDials,
     required this.helpText,
-  })   : assert(selectedTime != null),
-        assert(mode != null),
-        assert(orientation != null),
-        assert(use24HourDials != null);
+  });
 
   final TimeOfDay selectedTime;
   final _TimePickerMode mode;
@@ -258,9 +251,7 @@ class _HourMinuteControl extends StatelessWidget {
     required this.onTap,
     required this.onDoubleTap,
     required this.isSelected,
-  })   : assert(text != null),
-        assert(onTap != null),
-        assert(isSelected != null);
+  });
 
   final String text;
   final GestureTapCallback onTap;
@@ -956,9 +947,7 @@ class _Dial extends StatefulWidget {
     required this.use24HourDials,
     required this.onChanged,
     required this.onHourSelected,
-  })   : assert(selectedTime != null),
-        assert(mode != null),
-        assert(use24HourDials != null);
+  });
 
   final TimeOfDay selectedTime;
   final _TimePickerMode mode;
@@ -1358,9 +1347,7 @@ class _TimePickerInput extends StatefulWidget {
     required this.autofocusHour,
     required this.autofocusMinute,
     required this.onChanged,
-  })   : assert(initialSelectedTime != null),
-        assert(onChanged != null),
-        super(key: key);
+  }) : super(key: key);
 
   /// The time initially selected when the dialog is shown.
   final TimeOfDay initialSelectedTime;
@@ -1765,7 +1752,6 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField> {
         ),
         hintStyle: widget.style
             .copyWith(color: colorScheme.onSurface.withOpacity(0.36)),
-        // TODO(rami-a): Remove this logic once https://github.com/flutter/flutter/issues/54104 is fixed.
         errorStyle: const TextStyle(
             fontSize: 0.0,
             height: 0.0), // Prevent the error text from appearing.
@@ -1777,7 +1763,6 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField> {
     // Otherwise, remove the hint text when focused because the centered cursor
     // appears odd above the hint text.
     //
-    // TODO(rami-a): Once https://github.com/flutter/flutter/issues/67571 is
     // resolved, remove the window check for semantics being enabled on web.
     final String? hintText = MediaQuery.of(context).accessibleNavigation ||
             ui.window.semanticsEnabled
@@ -1838,8 +1823,7 @@ class TimePickerDialog extends StatefulWidget {
     this.confirmText = '',
     this.helpText = '',
     this.initialEntryMode = TimePickerEntryMode.dial,
-  })  : assert(initialTime != null),
-        super(key: key);
+  }) : super(key: key);
 
   final Function(TimeOfDay time) timeChanged;
 
@@ -1874,7 +1858,6 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
     super.initState();
     _selectedTime = widget.initialTime;
     _entryMode = widget.initialEntryMode;
-    _autoValidate = false;
   }
 
   @override
@@ -1888,7 +1871,6 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
   late TimePickerEntryMode _entryMode;
   _TimePickerMode _mode = _TimePickerMode.hour;
   _TimePickerMode? _lastModeAnnounced;
-  late bool _autoValidate;
   bool? _autofocusHour;
   bool? _autofocusMinute;
 
@@ -1928,7 +1910,6 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
     setState(() {
       switch (_entryMode) {
         case TimePickerEntryMode.dial:
-          _autoValidate = false;
           _entryMode = TimePickerEntryMode.input;
           break;
         case TimePickerEntryMode.input:
@@ -2008,12 +1989,7 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
   void _handleOk() {
     if (_entryMode == TimePickerEntryMode.input) {
       final FormState form = _formKey.currentState!;
-      if (!form.validate()) {
-        setState(() {
-          _autoValidate = true;
-        });
-        return;
-      }
+
       form.save();
     }
     Navigator.pop(context, _selectedTime);
@@ -2182,7 +2158,6 @@ class _TimePickerDialogState extends State<TimePickerDialog> {
       case TimePickerEntryMode.input:
         picker = Form(
           key: _formKey,
-          autovalidate: _autoValidate,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

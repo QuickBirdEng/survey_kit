@@ -1,45 +1,49 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/steps/step.dart' as surveystep;
+import 'package:survey_kit/survey_kit.dart';
+import 'package:provider/provider.dart';
 
 class StepView extends StatelessWidget {
   final surveystep.Step step;
   final Widget title;
   final Widget child;
-  final SurveyController controller;
+  final QuestionResult Function() resultFunction;
   final bool canBack;
   final bool isValid;
+  final SurveyController? controller;
 
   const StepView({
     required this.step,
     required this.child,
     required this.title,
-    required this.controller,
+    required this.resultFunction,
+    this.controller,
     this.isValid = true,
     this.canBack = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
-      return Scaffold(
-        appBar: _androidAppBar(context),
+    final surveyController = controller ?? context.read<SurveyController>();
+    return PlatformScaffold(
+      material: (context, platform) => MaterialScaffoldData(
+        appBar: _androidAppBar(surveyController, context),
         resizeToAvoidBottomInset: false,
-        body: _content(context),
-      );
-    } else {
-      return CupertinoPageScaffold(
-        navigationBar: _iosAppBar(context),
-        child: _content(context),
+        body: _content(surveyController, context),
+      ),
+      cupertino: (context, platform) => CupertinoPageScaffoldData(
+        navigationBar: _iosAppBar(surveyController, context),
+        body: _content(surveyController, context),
         resizeToAvoidBottomInset: false,
-      );
-    }
+      ),
+    );
   }
 
-  AppBar _androidAppBar(BuildContext context) {
+  AppBar _androidAppBar(
+      SurveyController surveyController, BuildContext context) {
     return AppBar(
       elevation: 0.0,
       leading: canBack
@@ -48,7 +52,7 @@ class StepView extends StatelessWidget {
                 Icons.arrow_back,
               ),
               onPressed: () {
-                controller.stepBack();
+                surveyController.stepBack(context, resultFunction);
               },
             )
           : Container(),
@@ -62,23 +66,23 @@ class StepView extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            onPressed: () {
-              controller.closeSurvey();
-            },
+            onPressed: () =>
+                surveyController.closeSurvey(context, resultFunction),
           ),
         ),
       ],
     );
   }
 
-  CupertinoNavigationBar _iosAppBar(BuildContext context) {
+  CupertinoNavigationBar _iosAppBar(
+      SurveyController surveyController, BuildContext context) {
     return CupertinoNavigationBar(
       leading: canBack
           ? CupertinoNavigationBarBackButton(
               color: Theme.of(context).primaryColor,
               previousPageTitle: 'Back',
               onPressed: () {
-                controller.stepBack();
+                surveyController.stepBack(context, resultFunction);
               },
             )
           : Container(),
@@ -89,14 +93,12 @@ class StepView extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        onTap: () {
-          controller.closeSurvey();
-        },
+        onTap: () => surveyController.closeSurvey(context, resultFunction),
       ),
     );
   }
 
-  Widget _content(BuildContext context) {
+  Widget _content(SurveyController surveyController, BuildContext context) {
     return SizedBox.expand(
       child: Container(
         color: Theme.of(context).backgroundColor,
@@ -115,9 +117,8 @@ class StepView extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 32.0),
                   child: OutlinedButton(
                     onPressed: isValid
-                        ? () {
-                            controller.nextStep();
-                          }
+                        ? () =>
+                            surveyController.nextStep(context, resultFunction)
                         : null,
                     child: Text(
                       step.buttonText.toUpperCase(),

@@ -5,15 +5,63 @@ import 'package:survey_kit/src/presenter/survey_presenter.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 
 class SurveyController {
-  final QuestionResult Function() resultFunction;
-  final BuildContext context;
+  /// Defines what should happen if the next step is called
+  /// Default behavior is:
+  /// ```dart
+  /// BlocProvider.of<SurveyPresenter>(context).add(
+  ///    NextStep(
+  ///      resultFunction.call(),
+  ///    ),
+  /// );
+  /// ```
+  final Function(
+    BuildContext context,
+    QuestionResult Function() resultFunction,
+  )? onNextStep;
+
+  /// Defines what should happen if the previous step is called
+  /// Default behavior is:
+  /// ```dart
+  /// BlocProvider.of<SurveyPresenter>(context).add(
+  ///    StepBack(
+  ///      resultFunction.call(),
+  ///    ),
+  /// );
+  /// ```
+  final Function(
+    BuildContext context,
+    QuestionResult Function() resultFunction,
+  )? onStepBack;
+
+  /// Defines what should happen if the survey should be closed
+  /// Default behavior is:
+  /// ```dart
+  /// BlocProvider.of<SurveyPresenter>(context).add(
+  ///    CloseSurvey(
+  ///      resultFunction.call(),
+  ///    ),
+  /// );
+  /// Navigator.pop(context);
+  /// ```
+  final Function(
+    BuildContext context,
+    QuestionResult Function() resultFunction,
+  )? onCloseSurvey;
 
   SurveyController({
-    required this.resultFunction,
-    required this.context,
+    this.onNextStep,
+    this.onStepBack,
+    this.onCloseSurvey,
   });
 
-  void nextStep() {
+  void nextStep(
+    BuildContext context,
+    QuestionResult Function() resultFunction,
+  ) {
+    if (onNextStep != null) {
+      onNextStep!(context, resultFunction);
+      return;
+    }
     BlocProvider.of<SurveyPresenter>(context).add(
       NextStep(
         resultFunction.call(),
@@ -21,7 +69,14 @@ class SurveyController {
     );
   }
 
-  void stepBack() {
+  void stepBack(
+    BuildContext context,
+    QuestionResult Function() resultFunction,
+  ) {
+    if (onStepBack != null) {
+      onStepBack!(context, resultFunction);
+      return;
+    }
     BlocProvider.of<SurveyPresenter>(context).add(
       StepBack(
         resultFunction.call(),
@@ -29,7 +84,14 @@ class SurveyController {
     );
   }
 
-  void closeSurvey() {
+  void closeSurvey(
+    BuildContext context,
+    QuestionResult Function() resultFunction,
+  ) {
+    if (onCloseSurvey != null) {
+      onCloseSurvey!(context, resultFunction);
+      return;
+    }
     BlocProvider.of<SurveyPresenter>(context).add(
       CloseSurvey(
         resultFunction.call(),

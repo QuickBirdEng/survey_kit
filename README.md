@@ -244,15 +244,12 @@ class CustomStep extends Step {
   Widget createView({@required QuestionResult questionResult}) {
       return StepView(
             step: widget.questionStep,
-            controller: SurveyController(
-              context: context,
-              result: () => CustomResult(
+            result: () => CustomResult(
                 id: id,
                 startDate: DateTime.now(),
                 endDate: DateTime.now(),
                 valueIdentifier: 'custom'//Identification for NavigableTask,
                 result: 'custom_result',
-              ),
             ),
             title: Text('Title'),
             child: Container(), //Add your view here
@@ -262,10 +259,10 @@ class CustomStep extends Step {
 ```
 
 
-If you want to create a complete custom view you should use the SurveyController with its three methods:
-* nextStep()
-* stepBack()
-* closeSurvey()
+If you want to create a complete custom view or just override the navigation behavior you should use the SurveyController with its three methods:
+* onNextStep()
+* onStepBack()
+* onCloseSurvey()
 
 # 🍏vs🤖 : Comparison of Flutter SurveyKit, [SurveyKit on Android](https://github.com/quickbirdstudios/SurveyKit) to [ResearchKit on iOS](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html)
 This is an overview of which features [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html) provides and which ones are already supported by [SurveyKit on Android](https://github.com/quickbirdstudios/SurveyKit).

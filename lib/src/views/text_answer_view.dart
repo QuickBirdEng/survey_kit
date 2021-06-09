@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:survey_kit/src/answer_format/text_answer_format.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/result/question/text_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
@@ -53,15 +53,12 @@ class _TextAnswerViewState extends State<TextAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      controller: SurveyController(
-        context: context,
-        resultFunction: () => TextQuestionResult(
-          id: widget.questionStep.id,
-          startDate: _startDate,
-          endDate: DateTime.now(),
-          valueIdentifier: _controller.text,
-          result: _controller.text,
-        ),
+      resultFunction: () => TextQuestionResult(
+        id: widget.questionStep.id,
+        startDate: _startDate,
+        endDate: DateTime.now(),
+        valueIdentifier: _controller.text,
+        result: _controller.text,
       ),
       title: Text(
         widget.questionStep.title,
@@ -84,16 +81,19 @@ class _TextAnswerViewState extends State<TextAnswerView> {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 100.0,
-            child: TextField(
+            height: 50.0,
+            child: PlatformTextField(
+              material: (_, __) => MaterialTextFieldData(
+                decoration: textFieldInputDecoration(
+                  hint: _textAnswerFormat.hint,
+                ),
+              ),
+              cupertino: (_, __) => CupertinoTextFieldData(),
               controller: _controller,
               textAlign: TextAlign.center,
               onChanged: (String text) {
                 _checkValidation(text);
               },
-              decoration: textFieldInputDecoration(
-                hint: _textAnswerFormat.hint,
-              ),
             ),
           ),
         ],

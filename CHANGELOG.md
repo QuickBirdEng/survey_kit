@@ -1,7 +1,10 @@
 # 0.0.10
 
 - BREAKING: Migrated to null-safety
-- Upgrade Dart SDK constraints to >=2.12.0-0 <3.0.0
+- BREAKING: Upgrade Dart SDK constraints to >=2.12.0-0 <3.0.0
+- BREAKING: Expose SurveyController to add the possiblity to override the navigation (StepBack, NextStep and CloseSurvey)
+- Flutter SurveyKit can now also be used with Web, MacOS, Linux and Windows (Not optimized)
+- Updated platform dependend widgets to flutter_platform_widgets
 
 # 0.0.2 - 0.0.8
 

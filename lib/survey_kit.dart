@@ -70,3 +70,5 @@ export 'src/views/time_answer_view.dart';
 export 'src/views/decoration/input_decoration.dart';
 export 'src/views/widget/selection_list_tile.dart';
 export 'src/views/widget/step_view.dart';
+
+export 'src/controller/survey_controller.dart';

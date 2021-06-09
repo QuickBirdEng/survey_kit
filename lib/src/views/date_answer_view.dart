@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/result/question/date_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
@@ -46,18 +46,14 @@ class _DateAnswerViewState extends State<DateAnswerView> {
 
   @override
   Widget build(BuildContext context) {
-    final platform = Theme.of(context).platform;
     return StepView(
       step: widget.questionStep,
-      controller: SurveyController(
-        context: context,
-        resultFunction: () => DateQuestionResult(
-          id: widget.questionStep.id,
-          startDate: _startDate,
-          endDate: DateTime.now(),
-          valueIdentifier: _result?.toIso8601String() ?? 'none',
-          result: _result,
-        ),
+      resultFunction: () => DateQuestionResult(
+        id: widget.questionStep.id,
+        startDate: _startDate,
+        endDate: DateTime.now(),
+        valueIdentifier: _result?.toIso8601String() ?? 'none',
+        result: _result,
       ),
       title: Text(
         widget.questionStep.title,
@@ -77,9 +73,10 @@ class _DateAnswerViewState extends State<DateAnswerView> {
               textAlign: TextAlign.center,
             ),
           ),
-          platform == TargetPlatform.iOS
-              ? _iosDatePicker()
-              : _androidDatePicker(),
+          PlatformWidget(
+            material: (_, __) => _androidDatePicker(),
+            cupertino: (context, platform) => _iosDatePicker(),
+          ),
         ],
       ),
     );
