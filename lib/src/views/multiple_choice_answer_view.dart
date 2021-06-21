@@ -12,9 +12,10 @@ class MultipleChoiceAnswerView extends StatefulWidget {
   final MultipleChoiceQuestionResult? result;
 
   const MultipleChoiceAnswerView({
+    Key? key,
     required this.questionStep,
     required this.result,
-  });
+  }): super(key: key);
 
   @override
   _MultipleChoiceAnswerView createState() => _MultipleChoiceAnswerView();

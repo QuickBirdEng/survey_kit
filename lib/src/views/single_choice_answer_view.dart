@@ -12,9 +12,10 @@ class SingleChoiceAnswerView extends StatefulWidget {
   final SingleChoiceQuestionResult? result;
 
   const SingleChoiceAnswerView({
+    Key? key,
     required this.questionStep,
     required this.result,
-  });
+  }) : super(key: key);
 
   @override
   _SingleChoiceAnswerViewState createState() => _SingleChoiceAnswerViewState();
