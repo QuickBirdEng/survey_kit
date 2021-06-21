@@ -44,44 +44,53 @@ class QuestionStep extends Step {
 
   @override
   Widget createView({required QuestionResult? questionResult}) {
+    final key = ObjectKey(this.id.id);
     switch (answerFormat.runtimeType) {
       case IntegerAnswerFormat:
         return IntegerAnswerView(
+          key: key,
           questionStep: this,
           result: questionResult as IntegerQuestionResult?,
         );
       case TextAnswerFormat:
         return TextAnswerView(
+          key: key,
           questionStep: this,
           result: questionResult as TextQuestionResult?,
         );
       case SingleChoiceAnswerFormat:
         return SingleChoiceAnswerView(
+          key: key,
           questionStep: this,
           result: questionResult as SingleChoiceQuestionResult?,
         );
       case MultipleChoiceAnswerFormat:
         return MultipleChoiceAnswerView(
+          key: key,
           questionStep: this,
           result: questionResult as MultipleChoiceQuestionResult?,
         );
       case ScaleAnswerFormat:
         return ScaleAnswerView(
+          key: key,
           questionStep: this,
           result: questionResult as ScaleQuestionResult?,
         );
       case BooleanAnswerFormat:
         return BooleanAnswerView(
+          key: key,
           questionStep: this,
           result: questionResult as BooleanQuestionResult?,
         );
       case DateAnswerFormat:
         return DateAnswerView(
+          key: key,
           questionStep: this,
           result: questionResult as DateQuestionResult?,
         );
       case TimeAnswerFormat:
         return TimeAnswerView(
+          key: key,
           questionStep: this,
           result: questionResult as TimeQuestionResult?,
         );
