@@ -20,7 +20,7 @@ class SelectionListTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14.0),
           child: ListTile(
-            leading: Text(
+            title: Text(
               text,
               style: Theme.of(context).textTheme.headline5?.copyWith(
                     color: isSelected
