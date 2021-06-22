@@ -11,9 +11,10 @@ class BooleanAnswerView extends StatefulWidget {
   final BooleanQuestionResult? result;
 
   const BooleanAnswerView({
+    Key? key,
     required this.questionStep,
     required this.result,
-  });
+  }) : super(key: key);
 
   @override
   _BooleanAnswerViewState createState() => _BooleanAnswerViewState();

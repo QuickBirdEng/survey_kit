@@ -12,9 +12,10 @@ class TextAnswerView extends StatefulWidget {
   final TextQuestionResult? result;
 
   const TextAnswerView({
+    Key? key,
     required this.questionStep,
     required this.result,
-  });
+  }): super(key: key);
 
   @override
   _TextAnswerViewState createState() => _TextAnswerViewState();

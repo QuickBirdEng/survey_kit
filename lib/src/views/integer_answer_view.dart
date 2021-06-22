@@ -12,9 +12,10 @@ class IntegerAnswerView extends StatefulWidget {
   final IntegerQuestionResult? result;
 
   const IntegerAnswerView({
+    Key? key,
     required this.questionStep,
     required this.result,
-  });
+  }) : super(key: key);
 
   @override
   _IntegerAnswerViewState createState() => _IntegerAnswerViewState();
