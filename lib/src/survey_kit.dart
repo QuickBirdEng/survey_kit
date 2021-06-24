@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
@@ -73,19 +72,18 @@ class _SurveyKitState extends State<SurveyKit> {
           create: (BuildContext context) => SurveyPresenter(
             taskNavigator: _taskNavigator,
           ),
-          child: BlocBuilder<SurveyPresenter, SurveyState>(
+          child: BlocConsumer<SurveyPresenter, SurveyState>(
+            listenWhen: (previous, current) => previous != current,
+            listener: (context, state) async {
+              if (state is SurveyResultState) {
+                widget.onResult.call(state.result);
+                Navigator.of(context).pop();
+              }
+            },
             builder: (BuildContext context, SurveyState state) {
               if (state is PresentingSurveyState) {
                 return state.currentStep.createView(
                   questionResult: state.result,
-                );
-              }
-              if (state is SurveyResultState) {
-                widget.onResult.call(state.result);
-                SchedulerBinding.instance?.addPostFrameCallback(
-                  (_) {
-                    Navigator.pop(context);
-                  },
                 );
               }
               return Center(
