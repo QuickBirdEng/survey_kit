@@ -41,7 +41,6 @@ class SurveyController {
   ///      resultFunction.call(),
   ///    ),
   /// );
-  /// Navigator.pop(context);
   /// ```
   final Function(
     BuildContext context,
@@ -97,6 +96,5 @@ class SurveyController {
         resultFunction.call(),
       ),
     );
-    Navigator.pop(context);
   }
 }
