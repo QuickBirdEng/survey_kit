@@ -15,7 +15,7 @@ class TextAnswerView extends StatefulWidget {
     Key? key,
     required this.questionStep,
     required this.result,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   _TextAnswerViewState createState() => _TextAnswerViewState();
@@ -33,14 +33,17 @@ class _TextAnswerViewState extends State<TextAnswerView> {
     super.initState();
     _controller = TextEditingController();
     _controller.text = widget.result?.result ?? '';
-    _checkValidation(_controller.text);
     _textAnswerFormat = widget.questionStep.answerFormat as TextAnswerFormat;
+    _checkValidation(_controller.text);
     _startDate = DateTime.now();
   }
 
   void _checkValidation(String text) {
     setState(() {
-      _isValid = text.isNotEmpty;
+      if (_textAnswerFormat.validationRegEx != null) {
+        RegExp regExp = new RegExp(_textAnswerFormat.validationRegEx!);
+        _isValid = regExp.hasMatch(text);
+      }
     });
   }
 

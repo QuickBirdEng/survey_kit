@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/answer_format/answer_format.dart';
 import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
@@ -28,8 +29,13 @@ import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 import 'package:survey_kit/src/views/time_answer_view.dart';
 
+part 'question_step.g.dart';
+
+@JsonSerializable()
 class QuestionStep extends Step {
+  @JsonKey(defaultValue: '')
   final String title;
+  @JsonKey(defaultValue: '')
   final String text;
   final AnswerFormat answerFormat;
 
@@ -98,6 +104,10 @@ class QuestionStep extends Step {
         throw AnswerFormatNotDefinedException();
     }
   }
+
+  factory QuestionStep.fromJson(Map<String, dynamic> json) =>
+      _$QuestionStepFromJson(json);
+  Map<String, dynamic> toJson() => _$QuestionStepToJson(this);
 }
 
 class AnswerFormatNotDefinedException implements Exception {}

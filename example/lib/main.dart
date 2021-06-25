@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
@@ -20,83 +23,99 @@ class _MyAppState extends State<MyApp> {
           child: Align(
             alignment: Alignment.center,
             child: Container(
-              height: double.infinity,
-              width: 600,
-              child: SurveyKit(
-                onResult: (SurveyResult result) {
-                  print(result.finishReason);
-                },
-                task: getSampleTask(),
-                themeData: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.fromSwatch(
-                    primarySwatch: Colors.cyan,
-                  ).copyWith(
-                    onPrimary: Colors.white,
-                  ),
-                  primaryColor: Colors.cyan,
-                  backgroundColor: Colors.white,
-                  appBarTheme: const AppBarTheme(
-                    color: Colors.white,
-                    iconTheme: IconThemeData(
-                      color: Colors.cyan,
-                    ),
-                    textTheme: TextTheme(
-                      button: TextStyle(
-                        color: Colors.cyan,
-                      ),
-                    ),
-                  ),
-                  iconTheme: const IconThemeData(
-                    color: Colors.cyan,
-                  ),
-                  outlinedButtonTheme: OutlinedButtonThemeData(
-                    style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(
-                        Size(150.0, 60.0),
-                      ),
-                      side: MaterialStateProperty.resolveWith(
-                        (Set<MaterialState> state) {
-                          if (state.contains(MaterialState.disabled)) {
-                            return BorderSide(
-                              color: Colors.grey,
-                            );
-                          }
-                          return BorderSide(
-                            color: Colors.cyan,
-                          );
+                height: double.infinity,
+                width: 600,
+                child: FutureBuilder<Task>(
+                  future: getJsonTask(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData &&
+                        snapshot.data != null) {
+                      final task = snapshot.data!;
+                      return SurveyKit(
+                        onResult: (SurveyResult result) {
+                          print(result.finishReason);
                         },
-                      ),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      textStyle: MaterialStateProperty.resolveWith(
-                        (Set<MaterialState> state) {
-                          if (state.contains(MaterialState.disabled)) {
-                            return Theme.of(context).textTheme.button?.copyWith(
-                                  color: Colors.grey,
-                                );
-                          }
-                          return Theme.of(context).textTheme.button?.copyWith(
-                                color: Colors.cyan,
-                              );
-                        },
-                      ),
-                    ),
-                  ),
-                  textButtonTheme: TextButtonThemeData(
-                    style: ButtonStyle(
-                      textStyle: MaterialStateProperty.all(
-                        Theme.of(context).textTheme.button?.copyWith(
+                        task: task,
+                        themeData: Theme.of(context).copyWith(
+                          colorScheme: ColorScheme.fromSwatch(
+                            primarySwatch: Colors.cyan,
+                          ).copyWith(
+                            onPrimary: Colors.white,
+                          ),
+                          primaryColor: Colors.cyan,
+                          backgroundColor: Colors.white,
+                          appBarTheme: const AppBarTheme(
+                            color: Colors.white,
+                            iconTheme: IconThemeData(
                               color: Colors.cyan,
                             ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+                            textTheme: TextTheme(
+                              button: TextStyle(
+                                color: Colors.cyan,
+                              ),
+                            ),
+                          ),
+                          iconTheme: const IconThemeData(
+                            color: Colors.cyan,
+                          ),
+                          outlinedButtonTheme: OutlinedButtonThemeData(
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                Size(150.0, 60.0),
+                              ),
+                              side: MaterialStateProperty.resolveWith(
+                                (Set<MaterialState> state) {
+                                  if (state.contains(MaterialState.disabled)) {
+                                    return BorderSide(
+                                      color: Colors.grey,
+                                    );
+                                  }
+                                  return BorderSide(
+                                    color: Colors.cyan,
+                                  );
+                                },
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              textStyle: MaterialStateProperty.resolveWith(
+                                (Set<MaterialState> state) {
+                                  if (state.contains(MaterialState.disabled)) {
+                                    return Theme.of(context)
+                                        .textTheme
+                                        .button
+                                        ?.copyWith(
+                                          color: Colors.grey,
+                                        );
+                                  }
+                                  return Theme.of(context)
+                                      .textTheme
+                                      .button
+                                      ?.copyWith(
+                                        color: Colors.cyan,
+                                      );
+                                },
+                              ),
+                            ),
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: ButtonStyle(
+                              textStyle: MaterialStateProperty.all(
+                                Theme.of(context).textTheme.button?.copyWith(
+                                      color: Colors.cyan,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                    return CircularProgressIndicator.adaptive();
+                  },
+                )),
           ),
         ),
       ),
@@ -134,6 +153,7 @@ class _MyAppState extends State<MyApp> {
               'Tell us about yourself and why you want to improve your health.',
           answerFormat: TextAnswerFormat(
             maxLines: 5,
+            validationRegEx: "^(?!\s*\$).+",
           ),
         ),
         QuestionStep(
@@ -210,5 +230,12 @@ class _MyAppState extends State<MyApp> {
       ),
     );
     return task;
+  }
+
+  Future<Task> getJsonTask() async {
+    final taskJson = await rootBundle.loadString('assets/example_json.json');
+    final taskMap = json.decode(taskJson);
+
+    return Task.fromJson(taskMap);
   }
 }
