@@ -7,4 +7,11 @@ class OrderedTask extends Task {
     required TaskIdentifier id,
     required List<Step> steps,
   }) : super(id: id, steps: steps);
+
+  factory OrderedTask.fromJson(Map<String, dynamic> json) => OrderedTask(
+        id: TaskIdentifier.fromJson(json),
+        steps: (json['steps'] as List<Map<String, dynamic>>)
+            .map((step) => Step.fromJson(step))
+            .toList(),
+      );
 }

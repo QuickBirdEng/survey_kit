@@ -1,3 +1,7 @@
+# 0.0.11
+- BREAKING: 'TextAnswerFormat' 'isValid' Function is now just a regular expression
+- Survey can now be created via JSON
+
 # 0.0.10
 
 - BREAKING: Migrated to null-safety
