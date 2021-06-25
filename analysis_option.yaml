@@ -19,6 +19,9 @@
 # Android Studio, and the `flutter analyze` command.
 include: package:extra_pedantic/analysis_options.yaml
 
+exclude:
+    - "**/*.g.dart"
+
 analyzer:
   strong-mode:
     implicit-casts: false

@@ -1,8 +1,10 @@
 # 0.0.11
+- BREAKING: 'TextAnswerFormat' 'isValid' Function is now just a regular expression
+- Survey can now be created via JSON
+
 - BUGFIX: Survey - Navigator is not popped twice
 - BUGFIX: Overflowing of text on ListTile
 - BUGFIX: Added keys to different TextChoice to avoid falsly reapiting answers
-
 
 # 0.0.10
 
