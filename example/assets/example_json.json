@@ -5,11 +5,11 @@
         {
             "type": "conditional",
             "triggerStepIdentifier": {
-                "id": "6"
+                "id": "7"
             },
             "values": {
                 "Yes": "2",
-                "No": "7"
+                "No": "8"
             }
         },
         {
@@ -19,6 +19,15 @@
             },
             "destinationStepIdentifier": {
                 "id": "3"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "2"
+            },
+            "destinationStepIdentifier": {
+                "id": "8"
             }
         }
     ],
@@ -73,7 +82,7 @@
         },
         {
             "id": {
-                "id": "4"
+                "id": "5"
             },
             "type": "question",
             "title": "Select your body type",
@@ -89,7 +98,7 @@
         },
         {
             "id": {
-                "id": "5"
+                "id": "6"
             },
             "type": "question",
             "title": "Known allergies",
@@ -117,7 +126,7 @@
         },
         {
             "id": {
-                "id": "6"
+                "id": "7"
             },
             "type": "question",
             "title": "Done?",
@@ -138,7 +147,7 @@
         },
         {
             "id": {
-                "id": "7"
+                "id": "8"
             },
             "type": "question",
             "title": "When did you wake up?",
@@ -152,7 +161,7 @@
         },
         {
             "id": {
-                "id": "8"
+                "id": "9"
             },
             "type": "question",
             "title": "When was your last holiday?",
@@ -165,7 +174,7 @@
         },
         {
             "id": {
-                "id": "0"
+                "id": "10"
             },
             "type": "completion",
             "text": "Thanks for taking the survey, we will contact you soon!",
