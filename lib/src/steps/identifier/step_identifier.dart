@@ -10,4 +10,7 @@ class StepIdentifier extends Identifier {
   factory StepIdentifier.fromJson(Map<String, dynamic> json) =>
       _$StepIdentifierFromJson(json);
   Map<String, dynamic> toJson() => _$StepIdentifierToJson(this);
+
+  bool operator ==(o) => o is StepIdentifier && id == o.id;
+  int get hashCode => id.hashCode;
 }

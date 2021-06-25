@@ -25,10 +25,9 @@ class NavigableTask extends Task {
   }
 
   factory NavigableTask.fromJson(Map<String, dynamic> json) {
-    Map<StepIdentifier, NavigationRule> navigationRules = {};
+    final Map<StepIdentifier, NavigationRule> navigationRules = {};
     final rules = json['rules'] as List;
     rules.forEach((rule) {
-      print(rule);
       navigationRules.putIfAbsent(
           StepIdentifier.fromJson(rule['triggerStepIdentifier']),
           () => NavigationRule.fromJson(rule as Map<String, dynamic>));
