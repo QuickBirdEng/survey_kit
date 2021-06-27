@@ -271,6 +271,202 @@ The goal is to make all three libraries match in terms of their functionality.
 <p> 
 <img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/survey-kit-features.png?raw=true">
 </p>
+
+
+# 🤖 : Create your Survey over JSON
+In comparison to create your survey programmaticly you are also able to load it via JSON. This gives you the oppertunity to dynamicly configure and deliver different surveys.
+
+To create your survey via JSON is almost as easy as in Dart.
+
+```json
+{
+    "id": "123",
+    "type": "navigable",
+    "rules": [
+        {
+            "type": "conditional",
+            "triggerStepIdentifier": {
+                "id": "7"
+            },
+            "values": {
+                "Yes": "2",
+                "No": "8"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "1"
+            },
+            "destinationStepIdentifier": {
+                "id": "3"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "2"
+            },
+            "destinationStepIdentifier": {
+                "id": "8"
+            }
+        }
+    ],
+    "steps": [
+        {
+            "id": {
+                "id": "1"
+            },
+            "type": "intro",
+            "title": "Welcome to the\nQuickBird Studios\nHealth Survey",
+            "text": "Get ready for a bunch of super random questions!",
+            "buttonText": "Let's go!"
+        },
+        {
+            "id": {
+                "id": "2"
+            },
+            "type": "question",
+            "title": "How old are you?",
+            "answerFormat": {
+                "type": "integer",
+                "defaultValue": 25,
+                "hint": "Please enter your age"
+            }
+        },
+        {
+            "id": {
+                "id": "3"
+            },
+            "type": "question",
+            "title": "Medication?",
+            "text": "Are you using any medication",
+            "answerFormat": {
+                "type": "bool",
+                "positiveAnswer": "Yes",
+                "negativeAnswer": "No",
+                "result": "POSITIVE"
+            }
+        },
+        {
+            "id": {
+                "id": "4"
+            },
+            "type": "question",
+            "title": "Tell us about you",
+            "text": "Tell us about yourself and why you want to improve your health.",
+            "answerFormat": {
+                "type": "text",
+                "maxLines": 5,
+                "validationRegEx": "^(?!\\s*\\$).+"
+            }
+        },
+        {
+            "id": {
+                "id": "5"
+            },
+            "type": "question",
+            "title": "Select your body type",
+            "answerFormat": {
+                "type": "scale",
+                "step": 1,
+                "minimumValue": 1,
+                "maximumValue": 5,
+                "defaultValue": 3,
+                "minimumValueDescription": "1",
+                "maximumValueDescription": "5"
+            }
+        },
+        {
+            "id": {
+                "id": "6"
+            },
+            "type": "question",
+            "title": "Known allergies",
+            "answerFormat": {
+                "type": "multiple",
+                "textChoices": [
+                    {
+                        "text": "Penicillin",
+                        "value": "Penicillin"
+                    },
+                    {
+                        "text": "Latex",
+                        "value": "Latex"
+                    },
+                    {
+                        "text": "Pet",
+                        "value": "Pet"
+                    },
+                    {
+                        "text": "Pollen",
+                        "value": "Pollen"
+                    }
+                ]
+            }
+        },
+        {
+            "id": {
+                "id": "7"
+            },
+            "type": "question",
+            "title": "Done?",
+            "text": "We are done, do you mind to tell us more about yourself?",
+            "answerFormat": {
+                "type": "single",
+                "textChoices": [
+                    {
+                        "text": "Yes",
+                        "value": "Yes"
+                    },
+                    {
+                        "text": "No",
+                        "value": "No"
+                    }
+                ]
+            }
+        },
+        {
+            "id": {
+                "id": "8"
+            },
+            "type": "question",
+            "title": "When did you wake up?",
+            "answerFormat": {
+                "type": "time",
+                "defaultValue": {
+                    "hour": 12,
+                    "minute": 0
+                }
+            }
+        },
+        {
+            "id": {
+                "id": "9"
+            },
+            "type": "question",
+            "title": "When was your last holiday?",
+            "answerFormat": {
+                "type": "date",
+                "minDate": "2015-06-25T04:08:16Z",
+                "maxDate": "2025-06-25T04:08:16Z",
+                "defaultDate": "2021-06-25T04:08:16Z"
+            }
+        },
+        {
+            "id": {
+                "id": "10"
+            },
+            "type": "completion",
+            "text": "Thanks for taking the survey, we will contact you soon!",
+            "title": "Done!",
+            "buttonText": "Submit survey"
+        }
+    ]
+}
+```
+
+You can find the complete example [HERE](https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/example_json.json)
   
 
 # 👤 Author
