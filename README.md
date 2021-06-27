@@ -361,7 +361,6 @@ Just call ```dart Task.fromJson() ``` with your JSON-File or Response. The JSON 
 }
 ```
 
-
 You can find the complete example [HERE](https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/example_json.json)
   
 
