@@ -33,7 +33,7 @@
     ],
     "steps": [
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "1"
             },
             "type": "intro",
@@ -42,7 +42,7 @@
             "buttonText": "Let's go!"
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "2"
             },
             "type": "question",
@@ -54,7 +54,7 @@
             }
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "3"
             },
             "type": "question",
@@ -68,7 +68,7 @@
             }
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "4"
             },
             "type": "question",
@@ -81,7 +81,7 @@
             }
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "5"
             },
             "type": "question",
@@ -97,7 +97,7 @@
             }
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "6"
             },
             "type": "question",
@@ -125,7 +125,7 @@
             }
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "7"
             },
             "type": "question",
@@ -146,7 +146,7 @@
             }
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "8"
             },
             "type": "question",
@@ -160,7 +160,7 @@
             }
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "9"
             },
             "type": "question",
@@ -173,7 +173,7 @@
             }
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "10"
             },
             "type": "completion",

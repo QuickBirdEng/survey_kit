@@ -43,7 +43,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => TimeQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _result.toString(),

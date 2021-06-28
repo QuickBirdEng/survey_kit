@@ -207,7 +207,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         CompletionStep(
-          id: StepIdentifier(id: '321'),
+          stepIdentifier: StepIdentifier(id: '321'),
           text: 'Thanks for taking the survey, we will contact you soon!',
           title: 'Done!',
           buttonText: 'Submit survey',
@@ -215,14 +215,14 @@ class _MyAppState extends State<MyApp> {
       ],
     );
     task.addNavigationRule(
-      forTriggerStepIdentifier: task.steps[6].id,
+      forTriggerStepIdentifier: task.steps[6].stepIdentifier,
       navigationRule: ConditionalNavigationRule(
         resultToStepIdentifierMapper: (input) {
           switch (input) {
             case "Yes":
-              return task.steps[0].id;
+              return task.steps[0].stepIdentifier;
             case "No":
-              return task.steps[7].id;
+              return task.steps[7].stepIdentifier;
             default:
               return null;
           }

@@ -38,7 +38,7 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => BooleanQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _result == BooleanResult.POSITIVE

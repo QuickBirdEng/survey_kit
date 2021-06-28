@@ -56,7 +56,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => IntegerQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,

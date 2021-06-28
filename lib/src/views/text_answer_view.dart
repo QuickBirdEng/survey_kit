@@ -58,7 +58,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => TextQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
