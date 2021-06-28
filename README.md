@@ -273,10 +273,9 @@ The goal is to make all three libraries match in terms of their functionality.
 </p>
 
 
-# 🤖 : Create your Survey over JSON
+# 🤖 : Create your Survey via JSON
 In comparison to create your survey programmaticly you are also able to load it via JSON. This gives you the oppertunity to dynamicly configure and deliver different surveys.
-
-To create your survey via JSON is almost as easy as in Dart.
+To create your survey in JSON is almost as easy as in Dart.
 
 ```json
 {
@@ -286,11 +285,11 @@ To create your survey via JSON is almost as easy as in Dart.
         {
             "type": "conditional",
             "triggerStepIdentifier": {
-                "id": "7"
+                "id": "3"
             },
             "values": {
                 "Yes": "2",
-                "No": "8"
+                "No": "10"
             }
         },
         {
@@ -308,13 +307,13 @@ To create your survey via JSON is almost as easy as in Dart.
                 "id": "2"
             },
             "destinationStepIdentifier": {
-                "id": "8"
+                "id": "10"
             }
         }
     ],
     "steps": [
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "1"
             },
             "type": "intro",
@@ -323,7 +322,7 @@ To create your survey via JSON is almost as easy as in Dart.
             "buttonText": "Let's go!"
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "2"
             },
             "type": "question",
@@ -335,7 +334,7 @@ To create your survey via JSON is almost as easy as in Dart.
             }
         },
         {
-            "id": {
+            "stepIdentifier": {
                 "id": "3"
             },
             "type": "question",
@@ -347,114 +346,9 @@ To create your survey via JSON is almost as easy as in Dart.
                 "negativeAnswer": "No",
                 "result": "POSITIVE"
             }
-        },
+        },    
         {
-            "id": {
-                "id": "4"
-            },
-            "type": "question",
-            "title": "Tell us about you",
-            "text": "Tell us about yourself and why you want to improve your health.",
-            "answerFormat": {
-                "type": "text",
-                "maxLines": 5,
-                "validationRegEx": "^(?!\\s*\\$).+"
-            }
-        },
-        {
-            "id": {
-                "id": "5"
-            },
-            "type": "question",
-            "title": "Select your body type",
-            "answerFormat": {
-                "type": "scale",
-                "step": 1,
-                "minimumValue": 1,
-                "maximumValue": 5,
-                "defaultValue": 3,
-                "minimumValueDescription": "1",
-                "maximumValueDescription": "5"
-            }
-        },
-        {
-            "id": {
-                "id": "6"
-            },
-            "type": "question",
-            "title": "Known allergies",
-            "answerFormat": {
-                "type": "multiple",
-                "textChoices": [
-                    {
-                        "text": "Penicillin",
-                        "value": "Penicillin"
-                    },
-                    {
-                        "text": "Latex",
-                        "value": "Latex"
-                    },
-                    {
-                        "text": "Pet",
-                        "value": "Pet"
-                    },
-                    {
-                        "text": "Pollen",
-                        "value": "Pollen"
-                    }
-                ]
-            }
-        },
-        {
-            "id": {
-                "id": "7"
-            },
-            "type": "question",
-            "title": "Done?",
-            "text": "We are done, do you mind to tell us more about yourself?",
-            "answerFormat": {
-                "type": "single",
-                "textChoices": [
-                    {
-                        "text": "Yes",
-                        "value": "Yes"
-                    },
-                    {
-                        "text": "No",
-                        "value": "No"
-                    }
-                ]
-            }
-        },
-        {
-            "id": {
-                "id": "8"
-            },
-            "type": "question",
-            "title": "When did you wake up?",
-            "answerFormat": {
-                "type": "time",
-                "defaultValue": {
-                    "hour": 12,
-                    "minute": 0
-                }
-            }
-        },
-        {
-            "id": {
-                "id": "9"
-            },
-            "type": "question",
-            "title": "When was your last holiday?",
-            "answerFormat": {
-                "type": "date",
-                "minDate": "2015-06-25T04:08:16Z",
-                "maxDate": "2025-06-25T04:08:16Z",
-                "defaultDate": "2021-06-25T04:08:16Z"
-            }
-        },
-        {
-            "id": {
+            "stepIdentifier": {
                 "id": "10"
             },
             "type": "completion",
