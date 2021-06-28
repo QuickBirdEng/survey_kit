@@ -13,7 +13,7 @@ class ScaleAnswerView extends StatefulWidget {
     Key? key,
     required this.questionStep,
     required this.result,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   _ScaleAnswerViewState createState() => _ScaleAnswerViewState();
@@ -37,7 +37,7 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => ScaleQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _sliderValue.toString(),

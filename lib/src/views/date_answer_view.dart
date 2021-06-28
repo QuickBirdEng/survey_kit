@@ -49,7 +49,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => DateQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _result?.toIso8601String() ?? 'none',

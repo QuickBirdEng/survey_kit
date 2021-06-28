@@ -15,7 +15,7 @@ class CompletionView extends StatelessWidget {
     return StepView(
       step: completionStep,
       resultFunction: () => CompletionStepResult(
-        completionStep.id,
+        completionStep.stepIdentifier,
         _startDate,
         DateTime.now(),
       ),
