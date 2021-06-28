@@ -1,7 +1,9 @@
 # 0.0.11
 - BREAKING: 'TextAnswerFormat' 'isValid' Function is now just a regular expression
 - BREAKING: Renamed Step 'id' to 'stepIdentifier' to make it more clearer for JSON use
+
 - FEATURE: Survey can now be created via JSON
+- FEATURE: Added documentation to the task definition
 
 # 0.0.10
 
