@@ -72,3 +72,7 @@ export 'src/views/widget/selection_list_tile.dart';
 export 'src/views/widget/step_view.dart';
 
 export 'src/controller/survey_controller.dart';
+
+export 'src/task/task_not_defined_exception.dart';
+export 'src/steps/step_not_defined_exception.dart';
+export 'src/navigator/rules/rule_not_defined_exception.dart';
