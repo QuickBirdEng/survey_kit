@@ -1,6 +1,7 @@
 # 0.0.11
 - BREAKING: 'TextAnswerFormat' 'isValid' Function is now just a regular expression
-- Survey can now be created via JSON
+- BREAKING: Renamed Step 'id' to 'stepIdentifier' to make it more clearer for JSON use
+- FEATURE: Survey can now be created via JSON
 
 - BUGFIX: Survey - Navigator is not popped twice
 - BUGFIX: Overflowing of text on ListTile

@@ -42,15 +42,18 @@ class QuestionStep extends Step {
   QuestionStep({
     bool isOptional = false,
     String buttonText = 'Next',
-    StepIdentifier? id,
+    StepIdentifier? stepIdentifier,
     this.title = '',
     this.text = '',
     required this.answerFormat,
-  }) : super(id: id, isOptional: isOptional, buttonText: buttonText);
+  }) : super(
+            stepIdentifier: stepIdentifier,
+            isOptional: isOptional,
+            buttonText: buttonText);
 
   @override
   Widget createView({required QuestionResult? questionResult}) {
-    final key = ObjectKey(this.id.id);
+    final key = ObjectKey(this.stepIdentifier.id);
     switch (answerFormat.runtimeType) {
       case IntegerAnswerFormat:
         return IntegerAnswerView(
