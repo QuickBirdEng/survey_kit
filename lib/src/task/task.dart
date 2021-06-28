@@ -35,4 +35,6 @@ abstract class Task {
     }
     throw TaskNotDefinedException();
   }
+
+  Map<String, dynamic> toJson();
 }

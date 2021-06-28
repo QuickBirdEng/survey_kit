@@ -31,4 +31,6 @@ abstract class Step {
     }
     throw StepNotDefinedException();
   }
+
+  Map<String, dynamic> toJson();
 }

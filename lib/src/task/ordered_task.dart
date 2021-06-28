@@ -1,8 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/task/task.dart';
 import 'package:survey_kit/src/task/identifier/task_identifier.dart';
 
+part 'ordered_task.g.dart';
+
 /// Defines a [Task] which handles its steps in the order of the [steps] list.
+@JsonSerializable(createFactory: false)
 class OrderedTask extends Task {
   OrderedTask({
     required TaskIdentifier id,
@@ -15,4 +19,6 @@ class OrderedTask extends Task {
             .map((step) => Step.fromJson(step))
             .toList(),
       );
+
+  Map<String, dynamic> toJson() => _$OrderedTaskToJson(this);
 }

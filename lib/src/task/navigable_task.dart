@@ -51,4 +51,10 @@ class NavigableTask extends Task {
       navigationRules: navigationRules,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id.toJson(),
+        'steps': steps.map((step) => step.toJson()).toList(),
+        'navigationRules': navigationRules,
+      };
 }
