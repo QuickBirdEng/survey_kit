@@ -2,6 +2,7 @@ import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/task/task.dart';
 import 'package:survey_kit/src/task/identifier/task_identifier.dart';
 
+/// Defines a [Task] which handles its steps in the order of the [steps] list.
 class OrderedTask extends Task {
   OrderedTask({
     required TaskIdentifier id,
