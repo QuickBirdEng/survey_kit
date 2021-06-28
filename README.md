@@ -274,8 +274,9 @@ The goal is to make all three libraries match in terms of their functionality.
 
 
 # 🤖 : Create your Survey via JSON
-In comparison to create your survey programmaticly you are also able to load it via JSON. This gives you the oppertunity to dynamicly configure and deliver different surveys.
+You are also able to load and create your survey via JSON. This gives you the oppertunity to dynamicly configure and deliver different surveys.
 To create your survey in JSON is almost as easy as in Dart.
+Just call ```dart Task.fromJson() ``` with your JSON-File or Response. The JSON should look like this:
 
 ```json
 {
@@ -359,6 +360,7 @@ To create your survey in JSON is almost as easy as in Dart.
     ]
 }
 ```
+
 
 You can find the complete example [HERE](https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/example_json.json)
   
