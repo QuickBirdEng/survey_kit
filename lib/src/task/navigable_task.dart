@@ -4,6 +4,11 @@ import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 import 'package:survey_kit/src/task/task.dart';
 import 'package:survey_kit/src/task/identifier/task_identifier.dart';
 
+/// Definition of task which can handle routing between [Tasks]
+///
+/// The [navigationRules] defines on which Step [StepIdentifier] which next Step
+/// is called. The logic which [Step] is called is defined in the
+/// [NavigationRule]
 class NavigableTask extends Task {
   final Map<StepIdentifier, NavigationRule> navigationRules;
 
@@ -14,12 +19,17 @@ class NavigableTask extends Task {
   })  : this.navigationRules = navigationRules ?? {},
         super(id: id, steps: steps);
 
+  /// Adds a [NavigationRule] to the [navigationRule] Map
+  /// It only adds the [NavigationRule] if none is already set for the
+  /// [StepIdentifier]
   void addNavigationRule(
       {required StepIdentifier forTriggerStepIdentifier,
       required NavigationRule navigationRule}) {
     navigationRules.putIfAbsent(forTriggerStepIdentifier, () => navigationRule);
   }
 
+  /// Gets the [NavigationRule] which is defined for the given [StepIndentifier]
+  /// Returns null if none is defined
   NavigationRule? getRuleByStepIdentifier(StepIdentifier? stepIdentifier) {
     return navigationRules[stepIdentifier];
   }
