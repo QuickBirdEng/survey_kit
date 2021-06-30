@@ -1,3 +1,4 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/task/identifier/task_identifier.dart';
 import 'package:survey_kit/src/task/task_not_defined_exception.dart';
@@ -10,6 +11,7 @@ import 'package:survey_kit/survey_kit.dart';
 ///  * If you want to use JSON override [fromJson] and add your type
 abstract class Task {
   late final TaskIdentifier id;
+  @JsonKey(defaultValue: [])
   final List<Step> steps;
 
   Task({
@@ -37,4 +39,7 @@ abstract class Task {
   }
 
   Map<String, dynamic> toJson();
+
+  bool operator ==(o) => o is Task && o.id == id;
+  int get hashCode => id.hashCode ^ steps.hashCode;
 }
