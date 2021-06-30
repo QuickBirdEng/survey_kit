@@ -17,6 +17,7 @@ import 'package:survey_kit/src/result/question/scale_question_result.dart';
 import 'package:survey_kit/src/result/question/single_choice_question_result.dart';
 import 'package:survey_kit/src/result/question/text_question_result.dart';
 import 'package:survey_kit/src/result/question/time_question_result.dart';
+import 'package:survey_kit/src/steps/predefined_steps/answer_format_not_defined_exception.dart';
 import 'package:survey_kit/src/views/boolean_answer_view.dart';
 import 'package:survey_kit/src/views/date_answer_view.dart';
 import 'package:survey_kit/src/views/integer_answer_view.dart';
@@ -112,5 +113,3 @@ class QuestionStep extends Step {
       _$QuestionStepFromJson(json);
   Map<String, dynamic> toJson() => _$QuestionStepToJson(this);
 }
-
-class AnswerFormatNotDefinedException implements Exception {}
