@@ -31,4 +31,8 @@ class CompletionStep extends Step {
   factory CompletionStep.fromJson(Map<String, dynamic> json) =>
       _$CompletionStepFromJson(json);
   Map<String, dynamic> toJson() => _$CompletionStepToJson(this);
+
+  bool operator ==(o) =>
+      super == (o) && o is CompletionStep && o.title == title && o.text == text;
+  int get hashCode => super.hashCode ^ title.hashCode ^ text.hashCode;
 }
