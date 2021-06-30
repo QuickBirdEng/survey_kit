@@ -1,4 +1,5 @@
 # 0.0.11
+
 - BREAKING: 'TextAnswerFormat' 'isValid' Function is now just a regular expression
 - BREAKING: Renamed Step 'id' to 'stepIdentifier' to make it more clearer for JSON use
 
