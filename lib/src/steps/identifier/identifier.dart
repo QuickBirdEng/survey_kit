@@ -12,4 +12,7 @@ class Identifier {
   factory Identifier.fromJson(Map<String, dynamic> json) =>
       _$IdentifierFromJson(json);
   Map<String, dynamic> toJson() => _$IdentifierToJson(this);
+
+  bool operator ==(o) => o is Identifier && o.id == id;
+  int get hashCode => id.hashCode;
 }
