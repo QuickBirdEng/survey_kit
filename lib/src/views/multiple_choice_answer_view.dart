@@ -15,7 +15,7 @@ class MultipleChoiceAnswerView extends StatefulWidget {
     Key? key,
     required this.questionStep,
     required this.result,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   _MultipleChoiceAnswerView createState() => _MultipleChoiceAnswerView();
@@ -42,7 +42,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => MultipleChoiceQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDateTime,
         endDate: DateTime.now(),
         valueIdentifier:

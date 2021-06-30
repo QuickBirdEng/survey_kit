@@ -69,7 +69,8 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       return _handleSurveyFinished();
     }
 
-    QuestionResult? questionResult = _getResultByStepIdentifier(nextStep.id);
+    QuestionResult? questionResult =
+        _getResultByStepIdentifier(nextStep.stepIdentifier);
 
     return PresentingSurveyState(
       nextStep,
@@ -85,7 +86,7 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
 
     if (previousStep != null) {
       QuestionResult? questionResult =
-          _getResultByStepIdentifier(previousStep.id);
+          _getResultByStepIdentifier(previousStep.stepIdentifier);
 
       return PresentingSurveyState(previousStep, questionResult);
     }
