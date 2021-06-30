@@ -76,3 +76,4 @@ export 'src/controller/survey_controller.dart';
 export 'src/task/task_not_defined_exception.dart';
 export 'src/steps/step_not_defined_exception.dart';
 export 'src/navigator/rules/rule_not_defined_exception.dart';
+export 'src/steps/predefined_steps/answer_format_not_defined_exception.dart';
