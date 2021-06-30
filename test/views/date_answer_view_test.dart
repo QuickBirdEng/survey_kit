@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/date_answer_view.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 void main() {
   DateAnswerView _validDateAnswerView() => DateAnswerView(
@@ -19,12 +22,19 @@ void main() {
         result: null,
       );
 
-  testWidgets('Detects iOS platform and displays correct widget',
+  testWidgets('detects iOS platform and displays correct widget',
       (WidgetTester tester) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     await tester.pumpWidget(
       CupertinoApp(
-        home: _validDateAnswerView(),
+        home: MultiProvider(
+          providers: [
+            Provider<SurveyController>.value(
+              value: SurveyController(),
+            )
+          ],
+          child: _validDateAnswerView(),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -32,13 +42,20 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
-  testWidgets('Detects Android platform and displays correct widget',
+  testWidgets('detects Android platform and displays correct widget',
       (WidgetTester tester) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: _validDateAnswerView(),
+          body: MultiProvider(
+            providers: [
+              Provider<SurveyController>.value(
+                value: SurveyController(),
+              )
+            ],
+            child: _validDateAnswerView(),
+          ),
         ),
       ),
     );
@@ -47,18 +64,25 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
-  testWidgets('Initial date in between first and last date',
+  testWidgets('initial date in between first and last date',
       (WidgetTester tester) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: DateAnswerView(
-            questionStep: QuestionStep(
-              title: 'Your Birthday?',
-              answerFormat: DateAnswerFormat(),
+          body: MultiProvider(
+            providers: [
+              Provider<SurveyController>.value(
+                value: SurveyController(),
+              )
+            ],
+            child: DateAnswerView(
+              questionStep: QuestionStep(
+                title: 'Your Birthday?',
+                answerFormat: DateAnswerFormat(),
+              ),
+              result: null,
             ),
-            result: null,
           ),
         ),
       ),
