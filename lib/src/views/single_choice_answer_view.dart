@@ -41,7 +41,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => SingleChoiceQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _selectedChoice?.text ?? '',

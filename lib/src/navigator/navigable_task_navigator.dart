@@ -14,14 +14,15 @@ class NavigableTaskNavigator extends TaskNavigator {
   Step? nextStep({required Step step, QuestionResult? questionResult}) {
     record(step);
     final navigableTask = task as NavigableTask;
-    NavigationRule? rule = navigableTask.getRuleByStepIdentifier(step.id);
+    NavigationRule? rule =
+        navigableTask.getRuleByStepIdentifier(step.stepIdentifier);
     if (rule == null) {
       return nextInList(step);
     }
     switch (rule.runtimeType) {
       case DirectNavigationRule:
         return task.steps.firstWhere((element) =>
-            element.id ==
+            element.stepIdentifier ==
             (rule as DirectNavigationRule).destinationStepIdentifier);
       case ConditionalNavigationRule:
         return evaluateNextStep(
@@ -52,7 +53,8 @@ class NavigableTaskNavigator extends TaskNavigator {
     if (nextStepIdentifier == null) {
       return nextInList(step);
     }
-    return task.steps.firstWhere((element) => element.id == nextStepIdentifier);
+    return task.steps
+        .firstWhere((element) => element.stepIdentifier == nextStepIdentifier);
   }
 
   @override

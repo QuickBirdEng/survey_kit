@@ -271,6 +271,98 @@ The goal is to make all three libraries match in terms of their functionality.
 <p> 
 <img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/survey-kit-features.png?raw=true">
 </p>
+
+
+# 🤖 : Create your Survey via JSON
+You are also able to load and create your survey via JSON. This gives you the oppertunity to dynamicly configure and deliver different surveys.
+To create your survey in JSON is almost as easy as in Dart.
+Just call ```dart Task.fromJson() ``` with your JSON-File or Response. The JSON should look like this:
+
+```json
+{
+    "id": "123",
+    "type": "navigable",
+    "rules": [
+        {
+            "type": "conditional",
+            "triggerStepIdentifier": {
+                "id": "3"
+            },
+            "values": {
+                "Yes": "2",
+                "No": "10"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "1"
+            },
+            "destinationStepIdentifier": {
+                "id": "3"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "2"
+            },
+            "destinationStepIdentifier": {
+                "id": "10"
+            }
+        }
+    ],
+    "steps": [
+        {
+            "stepIdentifier": {
+                "id": "1"
+            },
+            "type": "intro",
+            "title": "Welcome to the\nQuickBird Studios\nHealth Survey",
+            "text": "Get ready for a bunch of super random questions!",
+            "buttonText": "Let's go!"
+        },
+        {
+            "stepIdentifier": {
+                "id": "2"
+            },
+            "type": "question",
+            "title": "How old are you?",
+            "answerFormat": {
+                "type": "integer",
+                "defaultValue": 25,
+                "hint": "Please enter your age"
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "3"
+            },
+            "type": "question",
+            "title": "Medication?",
+            "text": "Are you using any medication",
+            "answerFormat": {
+                "type": "bool",
+                "positiveAnswer": "Yes",
+                "negativeAnswer": "No",
+                "result": "POSITIVE"
+            }
+        },    
+        {
+            "stepIdentifier": {
+                "id": "10"
+            },
+            "type": "completion",
+            "text": "Thanks for taking the survey, we will contact you soon!",
+            "title": "Done!",
+            "buttonText": "Submit survey"
+        }
+    ]
+}
+```
+
+
+You can find the complete example [HERE](https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/example_json.json)
   
 
 # 👤 Author

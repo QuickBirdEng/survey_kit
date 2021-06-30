@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/answer_format/answer_format.dart';
 import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
@@ -16,6 +17,7 @@ import 'package:survey_kit/src/result/question/scale_question_result.dart';
 import 'package:survey_kit/src/result/question/single_choice_question_result.dart';
 import 'package:survey_kit/src/result/question/text_question_result.dart';
 import 'package:survey_kit/src/result/question/time_question_result.dart';
+import 'package:survey_kit/src/steps/predefined_steps/answer_format_not_defined_exception.dart';
 import 'package:survey_kit/src/views/boolean_answer_view.dart';
 import 'package:survey_kit/src/views/date_answer_view.dart';
 import 'package:survey_kit/src/views/integer_answer_view.dart';
@@ -28,23 +30,31 @@ import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 import 'package:survey_kit/src/views/time_answer_view.dart';
 
+part 'question_step.g.dart';
+
+@JsonSerializable()
 class QuestionStep extends Step {
+  @JsonKey(defaultValue: '')
   final String title;
+  @JsonKey(defaultValue: '')
   final String text;
   final AnswerFormat answerFormat;
 
   QuestionStep({
     bool isOptional = false,
     String buttonText = 'Next',
-    StepIdentifier? id,
+    StepIdentifier? stepIdentifier,
     this.title = '',
     this.text = '',
     required this.answerFormat,
-  }) : super(id: id, isOptional: isOptional, buttonText: buttonText);
+  }) : super(
+            stepIdentifier: stepIdentifier,
+            isOptional: isOptional,
+            buttonText: buttonText);
 
   @override
   Widget createView({required QuestionResult? questionResult}) {
-    final key = ObjectKey(this.id.id);
+    final key = ObjectKey(this.stepIdentifier.id);
     switch (answerFormat.runtimeType) {
       case IntegerAnswerFormat:
         return IntegerAnswerView(
@@ -98,6 +108,8 @@ class QuestionStep extends Step {
         throw AnswerFormatNotDefinedException();
     }
   }
-}
 
-class AnswerFormatNotDefinedException implements Exception {}
+  factory QuestionStep.fromJson(Map<String, dynamic> json) =>
+      _$QuestionStepFromJson(json);
+  Map<String, dynamic> toJson() => _$QuestionStepToJson(this);
+}
