@@ -1,7 +1,7 @@
 # 0.0.11
-- BUGFIX: Survey - Navigator is not popped twice
-- BUGFIX: Overflowing of text on ListTile
-- BUGFIX: Added keys to different TextChoice to avoid falsly reapiting answers
+- BUGFIX: Survey - Navigator is not popped twice on the end of a survey
+- BUGFIX: Overflowing of text on ListTile is fixed
+- BUGFIX: Added keys to different TextChoices to avoid falsely repeating answers
 
 
 # 0.0.10
