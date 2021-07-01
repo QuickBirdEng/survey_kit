@@ -38,6 +38,8 @@ class QuestionStep extends Step {
   final String title;
   @JsonKey(defaultValue: '')
   final String text;
+  @JsonKey(ignore: true)
+  final Widget content;
   final AnswerFormat answerFormat;
 
   QuestionStep({
@@ -46,6 +48,7 @@ class QuestionStep extends Step {
     StepIdentifier? stepIdentifier,
     this.title = '',
     this.text = '',
+    this.content = const SizedBox.shrink(),
     required this.answerFormat,
   }) : super(
             stepIdentifier: stepIdentifier,

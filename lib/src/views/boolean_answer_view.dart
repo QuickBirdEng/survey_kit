@@ -48,11 +48,13 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView> {
                 : '',
         result: _result,
       ),
-      title: Text(
-        widget.questionStep.title,
-        style: Theme.of(context).textTheme.headline5,
-        textAlign: TextAlign.center,
-      ),
+      title: widget.questionStep.title.isNotEmpty
+          ? Text(
+              widget.questionStep.title,
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            )
+          : widget.questionStep.content,
       child: Column(
         children: [
           Padding(

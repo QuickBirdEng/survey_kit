@@ -43,11 +43,13 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
         valueIdentifier: _sliderValue.toString(),
         result: _sliderValue,
       ),
-      title: Text(
-        widget.questionStep.title,
-        style: Theme.of(context).textTheme.headline5,
-        textAlign: TextAlign.center,
-      ),
+      title: widget.questionStep.title.isNotEmpty
+          ? Text(
+              widget.questionStep.title,
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            )
+          : widget.questionStep.content,
       child: Column(
         children: [
           Padding(

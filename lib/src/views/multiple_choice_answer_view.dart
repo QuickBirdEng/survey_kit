@@ -49,11 +49,13 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
             _selectedChoices.map((choices) => choices.text).join(','),
         result: _selectedChoices,
       ),
-      title: Text(
-        widget.questionStep.title,
-        style: Theme.of(context).textTheme.headline5,
-        textAlign: TextAlign.center,
-      ),
+      title: widget.questionStep.title.isNotEmpty
+          ? Text(
+              widget.questionStep.title,
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            )
+          : widget.questionStep.content,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Column(

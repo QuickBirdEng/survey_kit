@@ -65,11 +65,13 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
             null,
       ),
       isValid: _isValid,
-      title: Text(
-        widget.questionStep.title,
-        style: Theme.of(context).textTheme.headline5,
-        textAlign: TextAlign.center,
-      ),
+      title: widget.questionStep.title.isNotEmpty
+          ? Text(
+              widget.questionStep.title,
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            )
+          : widget.questionStep.content,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32.0),
         child: Container(

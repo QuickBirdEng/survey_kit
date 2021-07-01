@@ -55,12 +55,13 @@ class _DateAnswerViewState extends State<DateAnswerView> {
         valueIdentifier: _result?.toIso8601String() ?? 'none',
         result: _result,
       ),
-      title: Text(
-        widget.questionStep.title,
-        style: TextStyle(
-          fontSize: 28.0,
-        ),
-      ),
+      title: widget.questionStep.title.isNotEmpty
+          ? Text(
+              widget.questionStep.title,
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            )
+          : widget.questionStep.content,
       child: Column(
         children: [
           Padding(

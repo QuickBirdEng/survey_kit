@@ -64,11 +64,13 @@ class _TextAnswerViewState extends State<TextAnswerView> {
         valueIdentifier: _controller.text,
         result: _controller.text,
       ),
-      title: Text(
-        widget.questionStep.title,
-        style: Theme.of(context).textTheme.headline5,
-        textAlign: TextAlign.center,
-      ),
+      title: widget.questionStep.title.isNotEmpty
+          ? Text(
+              widget.questionStep.title,
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            )
+          : widget.questionStep.content,
       isValid: _isValid,
       child: Column(
         children: [
