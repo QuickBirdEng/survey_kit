@@ -92,16 +92,16 @@ class _VideoStepViewState extends State<VideoStepView> {
   Widget build(BuildContext context) {
     if (_chewieController != null &&
         _chewieController!.videoPlayerController.value.isInitialized) {
-      if (widget.videoStep.isAutomaticFullscreen) {
+      if (widget.videoStep.isAutomaticFullscreen &&
+          !(_chewieController?.isFullScreen ?? false)) {
         _chewieController?.enterFullScreen();
       }
       return StepView(
-        resultFunction: () async {
+        resultFunction: () {
           final end = DateTime.now();
+          //TODO Add duration of video
           final videoResult = VideoResult(
-              leftVideoAt: _startDate
-                  .add(await _videoPlayerController?.position ?? Duration.zero),
-              stayedInVideo: end);
+              leftVideoAt: _startDate.add(Duration.zero), stayedInVideo: end);
 
           return VideoStepResult(
             id: widget.videoStep.stepIdentifier,
