@@ -52,37 +52,42 @@ class _VideoStepViewState extends State<VideoStepView> {
 
     //It should go automaticly to the next step after the video is finished
     if (videoStep.goToNextPageAfterEnd)
-      _chewieController?.videoPlayerController.addListener(() async {
-        if (_videoPlayerController!.value.position ==
-            _videoPlayerController!.value.duration) {
-          print('Next page');
-          final surveyController = context.read<SurveyController>();
-
-          _chewieController?.exitFullScreen();
-          final end = DateTime.now();
-          final videoResult = VideoResult(
-              leftVideoAt: _startDate
-                  .add(await _videoPlayerController?.position ?? Duration.zero),
-              stayedInVideo: end);
-          surveyController.nextStep(
-            context,
-            () {
-              return VideoStepResult(
-                id: widget.videoStep.stepIdentifier,
-                startDate: _startDate,
-                endDate: DateTime.now(),
-                videoResult: videoResult,
-              );
-            },
-          );
-        }
-      });
+      _chewieController?.videoPlayerController
+          .addListener(() => _videoHasEndedListener());
 
     setState(() {});
   }
 
+  void _videoHasEndedListener() {
+    if (_videoPlayerController!.value.position ==
+        _videoPlayerController!.value.duration) {
+      final surveyController = context.read<SurveyController>();
+
+      _chewieController?.exitFullScreen();
+      final end = DateTime.now();
+      final videoResult = VideoResult(
+          leftVideoAt:
+              Duration(milliseconds: end.millisecond - _startDate.millisecond),
+          stayedInVideo: end);
+      surveyController.nextStep(
+        context,
+        () {
+          return VideoStepResult(
+            id: widget.videoStep.stepIdentifier,
+            startDate: _startDate,
+            endDate: DateTime.now(),
+            videoResult: videoResult,
+          );
+        },
+      );
+    }
+  }
+
   @override
   void dispose() {
+    if (_videoPlayerController?.value.isPlaying ?? false)
+      _videoPlayerController?.pause();
+    _videoPlayerController?.removeListener(() => _videoHasEndedListener);
     _videoPlayerController?.dispose();
     _chewieController?.dispose();
     super.dispose();
@@ -99,9 +104,11 @@ class _VideoStepViewState extends State<VideoStepView> {
       return StepView(
         resultFunction: () {
           final end = DateTime.now();
-          //TODO Add duration of video
           final videoResult = VideoResult(
-              leftVideoAt: _startDate.add(Duration.zero), stayedInVideo: end);
+            leftVideoAt: Duration(
+                milliseconds: end.millisecond - _startDate.millisecond),
+            stayedInVideo: end,
+          );
 
           return VideoStepResult(
             id: widget.videoStep.stepIdentifier,

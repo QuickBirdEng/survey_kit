@@ -18,7 +18,7 @@ class VideoStepResult extends QuestionResult<VideoResult> {
 }
 
 class VideoResult {
-  final DateTime leftVideoAt;
+  final Duration leftVideoAt;
   final DateTime stayedInVideo;
 
   const VideoResult({
