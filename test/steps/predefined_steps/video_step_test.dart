@@ -27,7 +27,7 @@ void main() {
       isAutomaticFullscreen: true,
       isAutoPlay: true,
       isLooping: true,
-      allowMuting: true,
+      allowMuting: false,
       goToNextPageAfterEnd: true,
     );
 
