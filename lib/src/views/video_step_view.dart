@@ -41,21 +41,20 @@ class _VideoStepViewState extends State<VideoStepView> {
     _videoPlayerController =
         VideoPlayerController.network(widget.videoStep.url);
     await _videoPlayerController?.initialize();
+    setState(() {
+      _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController!,
+        autoPlay: videoStep.isAutoPlay,
+        looping: videoStep.isLooping,
+        fullScreenByDefault: videoStep.isAutomaticFullscreen,
+        allowMuting: videoStep.allowMuting,
+      );
 
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController!,
-      autoPlay: videoStep.isAutoPlay,
-      looping: videoStep.isLooping,
-      fullScreenByDefault: videoStep.isAutomaticFullscreen,
-      allowMuting: videoStep.allowMuting,
-    );
-
-    //It should go automaticly to the next step after the video is finished
-    if (videoStep.goToNextPageAfterEnd)
-      _chewieController?.videoPlayerController
-          .addListener(() => _videoHasEndedListener());
-
-    setState(() {});
+      //It should go automaticly to the next step after the video is finished
+      if (videoStep.goToNextPageAfterEnd)
+        _chewieController?.videoPlayerController
+            .addListener(() => _videoHasEndedListener());
+    });
   }
 
   void _videoHasEndedListener() {
@@ -69,28 +68,20 @@ class _VideoStepViewState extends State<VideoStepView> {
           leftVideoAt:
               Duration(milliseconds: end.millisecond - _startDate.millisecond),
           stayedInVideo: end);
-      surveyController.nextStep(
-        context,
-        () {
-          return VideoStepResult(
-            id: widget.videoStep.stepIdentifier,
-            startDate: _startDate,
-            endDate: DateTime.now(),
-            videoResult: videoResult,
-          );
-        },
-      );
+      WidgetsBinding.instance?.addPostFrameCallback((_) => setState(() {
+            surveyController.nextStep(
+              context,
+              () {
+                return VideoStepResult(
+                  id: widget.videoStep.stepIdentifier,
+                  startDate: _startDate,
+                  endDate: DateTime.now(),
+                  videoResult: videoResult,
+                );
+              },
+            );
+          }));
     }
-  }
-
-  @override
-  void dispose() {
-    if (_videoPlayerController?.value.isPlaying ?? false)
-      _videoPlayerController?.pause();
-    _videoPlayerController?.removeListener(() => _videoHasEndedListener);
-    _videoPlayerController?.dispose();
-    _chewieController?.dispose();
-    super.dispose();
   }
 
   @override
