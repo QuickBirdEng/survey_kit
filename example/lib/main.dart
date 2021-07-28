@@ -22,100 +22,97 @@ class _MyAppState extends State<MyApp> {
           color: Colors.white,
           child: Align(
             alignment: Alignment.center,
-            child: Container(
-                height: double.infinity,
-                width: 600,
-                child: FutureBuilder<Task>(
-                  future: getJsonTask(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData &&
-                        snapshot.data != null) {
-                      final task = snapshot.data!;
-                      return SurveyKit(
-                        onResult: (SurveyResult result) {
-                          print(result.finishReason);
-                        },
-                        task: task,
-                        themeData: Theme.of(context).copyWith(
-                          colorScheme: ColorScheme.fromSwatch(
-                            primarySwatch: Colors.cyan,
-                          ).copyWith(
-                            onPrimary: Colors.white,
-                          ),
-                          primaryColor: Colors.cyan,
-                          backgroundColor: Colors.white,
-                          appBarTheme: const AppBarTheme(
-                            color: Colors.white,
-                            iconTheme: IconThemeData(
-                              color: Colors.cyan,
-                            ),
-                            textTheme: TextTheme(
-                              button: TextStyle(
-                                color: Colors.cyan,
-                              ),
-                            ),
-                          ),
-                          iconTheme: const IconThemeData(
+            child: FutureBuilder<Task>(
+              future: getJsonTask(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData &&
+                    snapshot.data != null) {
+                  final task = snapshot.data!;
+                  return SurveyKit(
+                    onResult: (SurveyResult result) {
+                      print(result.finishReason);
+                    },
+                    task: task,
+                    themeData: Theme.of(context).copyWith(
+                      colorScheme: ColorScheme.fromSwatch(
+                        primarySwatch: Colors.cyan,
+                      ).copyWith(
+                        onPrimary: Colors.white,
+                      ),
+                      primaryColor: Colors.cyan,
+                      backgroundColor: Colors.white,
+                      appBarTheme: const AppBarTheme(
+                        color: Colors.white,
+                        iconTheme: IconThemeData(
+                          color: Colors.cyan,
+                        ),
+                        textTheme: TextTheme(
+                          button: TextStyle(
                             color: Colors.cyan,
                           ),
-                          outlinedButtonTheme: OutlinedButtonThemeData(
-                            style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
-                                Size(150.0, 60.0),
-                              ),
-                              side: MaterialStateProperty.resolveWith(
-                                (Set<MaterialState> state) {
-                                  if (state.contains(MaterialState.disabled)) {
-                                    return BorderSide(
+                        ),
+                      ),
+                      iconTheme: const IconThemeData(
+                        color: Colors.cyan,
+                      ),
+                      outlinedButtonTheme: OutlinedButtonThemeData(
+                        style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(
+                            Size(150.0, 60.0),
+                          ),
+                          side: MaterialStateProperty.resolveWith(
+                            (Set<MaterialState> state) {
+                              if (state.contains(MaterialState.disabled)) {
+                                return BorderSide(
+                                  color: Colors.grey,
+                                );
+                              }
+                              return BorderSide(
+                                color: Colors.cyan,
+                              );
+                            },
+                          ),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                          textStyle: MaterialStateProperty.resolveWith(
+                            (Set<MaterialState> state) {
+                              if (state.contains(MaterialState.disabled)) {
+                                return Theme.of(context)
+                                    .textTheme
+                                    .button
+                                    ?.copyWith(
                                       color: Colors.grey,
                                     );
-                                  }
-                                  return BorderSide(
+                              }
+                              return Theme.of(context)
+                                  .textTheme
+                                  .button
+                                  ?.copyWith(
                                     color: Colors.cyan,
                                   );
-                                },
-                              ),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                              ),
-                              textStyle: MaterialStateProperty.resolveWith(
-                                (Set<MaterialState> state) {
-                                  if (state.contains(MaterialState.disabled)) {
-                                    return Theme.of(context)
-                                        .textTheme
-                                        .button
-                                        ?.copyWith(
-                                          color: Colors.grey,
-                                        );
-                                  }
-                                  return Theme.of(context)
-                                      .textTheme
-                                      .button
-                                      ?.copyWith(
-                                        color: Colors.cyan,
-                                      );
-                                },
-                              ),
-                            ),
-                          ),
-                          textButtonTheme: TextButtonThemeData(
-                            style: ButtonStyle(
-                              textStyle: MaterialStateProperty.all(
-                                Theme.of(context).textTheme.button?.copyWith(
-                                      color: Colors.cyan,
-                                    ),
-                              ),
-                            ),
+                            },
                           ),
                         ),
-                      );
-                    }
-                    return CircularProgressIndicator.adaptive();
-                  },
-                )),
+                      ),
+                      textButtonTheme: TextButtonThemeData(
+                        style: ButtonStyle(
+                          textStyle: MaterialStateProperty.all(
+                            Theme.of(context).textTheme.button?.copyWith(
+                                  color: Colors.cyan,
+                                ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return CircularProgressIndicator.adaptive();
+              },
+            ),
           ),
         ),
       ),
