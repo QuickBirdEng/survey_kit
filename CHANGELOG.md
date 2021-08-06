@@ -1,8 +1,9 @@
-# 0.0.11
+# 0.0.12
 - FEATURE: Video-Step
 
 - BUGFIX: isOptional Parameter works now as expected
 - BUGFIX: DefaultSelection in SingleChoiceAnswer now works as expected
+- BUGFIX: Use of TimePicker source
 
 # 0.0.11
 
