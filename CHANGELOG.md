@@ -1,4 +1,10 @@
 # 0.0.11
+- FEATURE: Video-Step
+
+- BUGFIX: isOptional Parameter works now as expected
+- BUGFIX: DefaultSelection in SingleChoiceAnswer now works as expected
+
+# 0.0.11
 
 - BREAKING: 'TextAnswerFormat' 'isValid' Function is now just a regular expression
 - BREAKING: Renamed Step 'id' to 'stepIdentifier' to make it more clearer for JSON use

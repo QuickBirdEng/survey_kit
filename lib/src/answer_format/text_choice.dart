@@ -15,4 +15,7 @@ class TextChoice {
   factory TextChoice.fromJson(Map<String, dynamic> json) =>
       _$TextChoiceFromJson(json);
   Map<String, dynamic> toJson() => _$TextChoiceToJson(this);
+
+  bool operator ==(o) => o is TextChoice && text == o.text && value == o.value;
+  int get hashCode => text.hashCode ^ value.hashCode;
 }

@@ -185,6 +185,7 @@ class _MyAppState extends State<MyApp> {
               TextChoice(text: 'Yes', value: 'Yes'),
               TextChoice(text: 'No', value: 'No'),
             ],
+            defaultSelection: TextChoice(text: 'Yes', value: 'Yes'),
           ),
         ),
         QuestionStep(
