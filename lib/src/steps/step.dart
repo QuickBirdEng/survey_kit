@@ -13,11 +13,11 @@ abstract class Step {
   @JsonKey(defaultValue: 'Next')
   final String buttonText;
 
-  Step(
-      {StepIdentifier? stepIdentifier,
-      this.isOptional = false,
-      this.buttonText = 'Next'})
-      : stepIdentifier = stepIdentifier ?? StepIdentifier();
+  Step({
+    StepIdentifier? stepIdentifier,
+    this.isOptional = false,
+    this.buttonText = 'Next',
+  }) : stepIdentifier = stepIdentifier ?? StepIdentifier();
 
   Widget createView({required QuestionResult? questionResult});
 
@@ -34,9 +34,6 @@ abstract class Step {
     }
     throw StepNotDefinedException();
   }
-  
-  Step({StepIdentifier? id, this.isOptional = false, this.buttonText = 'Next'})
-      : id = id ?? StepIdentifier();
 
   Map<String, dynamic> toJson();
 

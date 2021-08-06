@@ -971,7 +971,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
     _theta = _thetaController
         .drive(CurveTween(curve: standardEasing))
         .drive(_thetaTween)
-      ..addListener(() => setState(() {/* _theta.value has changed */}));
+          ..addListener(() => setState(() {/* _theta.value has changed */}));
   }
 
   late ThemeData themeData;
