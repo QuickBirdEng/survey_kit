@@ -58,6 +58,7 @@ class QuestionStep extends Step {
   @override
   Widget createView({required QuestionResult? questionResult}) {
     final key = ObjectKey(this.stepIdentifier.id);
+
     switch (answerFormat.runtimeType) {
       case IntegerAnswerFormat:
         return IntegerAnswerView(

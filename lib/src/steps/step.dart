@@ -34,6 +34,9 @@ abstract class Step {
     }
     throw StepNotDefinedException();
   }
+  
+  Step({StepIdentifier? id, this.isOptional = false, this.buttonText = 'Next'})
+      : id = id ?? StepIdentifier();
 
   Map<String, dynamic> toJson();
 

@@ -8,7 +8,7 @@ class Identifier {
   final String id;
 
   Identifier({String? id}) : id = id ?? Uuid().v4();
-
+  
   factory Identifier.fromJson(Map<String, dynamic> json) =>
       _$IdentifierFromJson(json);
   Map<String, dynamic> toJson() => _$IdentifierToJson(this);
