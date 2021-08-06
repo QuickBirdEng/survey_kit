@@ -230,7 +230,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.11"
+    version: "0.0.12"
   term_glyph:
     dependency: transitive
     description:
