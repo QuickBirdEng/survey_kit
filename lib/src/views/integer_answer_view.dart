@@ -56,7 +56,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => IntegerQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
@@ -64,12 +64,14 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
             _integerAnswerFormat.defaultValue ??
             null,
       ),
-      isValid: _isValid,
-      title: Text(
-        widget.questionStep.title,
-        style: Theme.of(context).textTheme.headline5,
-        textAlign: TextAlign.center,
-      ),
+      isValid: _isValid || widget.questionStep.isOptional,
+      title: widget.questionStep.title.isNotEmpty
+          ? Text(
+              widget.questionStep.title,
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            )
+          : widget.questionStep.content,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32.0),
         child: Container(

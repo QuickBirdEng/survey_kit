@@ -5,8 +5,9 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:survey_kit/src/answer_format/time_answer_formart.dart';
 import 'package:survey_kit/src/result/question/time_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
-import 'package:survey_kit/src/views/widget/time_picker.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:survey_kit/src/views/widget/time_picker_widget.dart'
+    as surveywidget;
 
 class TimeAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
@@ -43,17 +44,19 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => TimeQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _result.toString(),
         result: _result,
       ),
-      title: Text(
-        widget.questionStep.title,
-        style: Theme.of(context).textTheme.headline5,
-        textAlign: TextAlign.center,
-      ),
+      title: widget.questionStep.title.isNotEmpty
+          ? Text(
+              widget.questionStep.title,
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            )
+          : widget.questionStep.content,
       child: Column(
         children: [
           Padding(
@@ -79,7 +82,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
     return Container(
       width: double.infinity,
       height: 450.0,
-      child: TimePickerDialog(
+      child: surveywidget.TimePickerWidget(
         initialTime: _result ??
             TimeOfDay.fromDateTime(
               DateTime.now(),

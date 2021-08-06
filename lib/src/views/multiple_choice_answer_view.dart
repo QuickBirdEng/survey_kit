@@ -15,7 +15,7 @@ class MultipleChoiceAnswerView extends StatefulWidget {
     Key? key,
     required this.questionStep,
     required this.result,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   _MultipleChoiceAnswerView createState() => _MultipleChoiceAnswerView();
@@ -42,18 +42,20 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
     return StepView(
       step: widget.questionStep,
       resultFunction: () => MultipleChoiceQuestionResult(
-        id: widget.questionStep.id,
+        id: widget.questionStep.stepIdentifier,
         startDate: _startDateTime,
         endDate: DateTime.now(),
         valueIdentifier:
             _selectedChoices.map((choices) => choices.text).join(','),
         result: _selectedChoices,
       ),
-      title: Text(
-        widget.questionStep.title,
-        style: Theme.of(context).textTheme.headline5,
-        textAlign: TextAlign.center,
-      ),
+      title: widget.questionStep.title.isNotEmpty
+          ? Text(
+              widget.questionStep.title,
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            )
+          : widget.questionStep.content,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Column(

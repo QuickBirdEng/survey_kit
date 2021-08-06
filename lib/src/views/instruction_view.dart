@@ -22,7 +22,7 @@ class InstructionView extends StatelessWidget {
         textAlign: TextAlign.center,
       ),
       resultFunction: () => InstructionStepResult(
-        instructionStep.id,
+        instructionStep.stepIdentifier,
         _startDate,
         DateTime.now(),
       ),

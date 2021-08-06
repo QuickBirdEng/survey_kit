@@ -2,13 +2,13 @@
 <img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/surveykit_logo.png?raw=true" width="500">
 </p>
 
-# SurveyKit: Create beautiful surveys with Flutter (inspired by [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html))
+# SurveyKit: Create beautiful surveys with Flutter (inspired by [iOS ResearchKit Surveys](https://researchkit.org/docs/docs/Survey/CreatingSurveys.html))
 
 Do you want to display a questionnaire to get the opinion of your users? A survey for a medical trial? A series of instructions in a manual-like style?   
 SurveyKit is an Flutter library that allows you to create exactly that.
 
 Thematically it is built to provide a feeling of a professional research survey. The library aims to be visually clean, lean and easily configurable.
-We aim to keep the functionality close to [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html). We also created a SurveyKit version for native Android developers, [check it out here](https://github.com/quickbirdstudios/SurveyKit)
+We aim to keep the functionality close to [iOS ResearchKit Surveys](https://researchkit.org/docs/docs/Survey/CreatingSurveys.html). We also created a SurveyKit version for native Android developers, [check it out here](https://github.com/quickbirdstudios/SurveyKit)
 
 This is an early version and work in progress. Do not hesitate to give feedback, ideas or improvements via an issue.
 
@@ -51,10 +51,10 @@ This is an early version and work in progress. Do not hesitate to give feedback,
 -   Gathers results and provides them in a convinient manner to the developer for further use
 -   Gives you complete freedom on creating your own questions
 -   Allows you to customize the style
--   Provides an API and structure that is very similar to [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html)
+-   Provides an API and structure that is very similar to [iOS ResearchKit Surveys](https://researchkit.org/docs/docs/Survey/CreatingSurveys.html)
 
 ## What SurveyKit does not (yet) do for you
-As stated before, this is an early version and a work in progress. We aim to extend this library until it matches the functionality of the [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html).
+As stated before, this is an early version and a work in progress. We aim to extend this library until it matches the functionality of the [iOS ResearchKit Surveys](https://researchkit.org/docs/docs/Survey/CreatingSurveys.html).
 
 # 🏃 Setup  
 To use this plugin, add flutter_surveykit as a dependency in your pubspec.yaml file.
@@ -264,13 +264,105 @@ If you want to create a complete custom view or just override the navigation beh
 * onStepBack()
 * onCloseSurvey()
 
-# 🍏vs🤖 : Comparison of Flutter SurveyKit, [SurveyKit on Android](https://github.com/quickbirdstudios/SurveyKit) to [ResearchKit on iOS](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html)
-This is an overview of which features [iOS ResearchKit Surveys](http://researchkit.org/docs/docs/Survey/CreatingSurveys.html) provides and which ones are already supported by [SurveyKit on Android](https://github.com/quickbirdstudios/SurveyKit).
+# 🍏vs🤖 : Comparison of Flutter SurveyKit, [SurveyKit on Android](https://github.com/quickbirdstudios/SurveyKit) to [ResearchKit on iOS](https://researchkit.org/docs/docs/Survey/CreatingSurveys.html)
+This is an overview of which features [iOS ResearchKit Surveys](https://researchkit.org/docs/docs/Survey/CreatingSurveys.html) provides and which ones are already supported by [SurveyKit on Android](https://github.com/quickbirdstudios/SurveyKit).
 The goal is to make all three libraries match in terms of their functionality.
 
 <p> 
 <img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/survey-kit-features.png?raw=true">
 </p>
+
+
+# 🤖 : Create your Survey via JSON
+You are also able to load and create your survey via JSON. This gives you the oppertunity to dynamicly configure and deliver different surveys.
+To create your survey in JSON is almost as easy as in Dart.
+Just call ```dart Task.fromJson() ``` with your JSON-File or Response. The JSON should look like this:
+
+```json
+{
+    "id": "123",
+    "type": "navigable",
+    "rules": [
+        {
+            "type": "conditional",
+            "triggerStepIdentifier": {
+                "id": "3"
+            },
+            "values": {
+                "Yes": "2",
+                "No": "10"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "1"
+            },
+            "destinationStepIdentifier": {
+                "id": "3"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "2"
+            },
+            "destinationStepIdentifier": {
+                "id": "10"
+            }
+        }
+    ],
+    "steps": [
+        {
+            "stepIdentifier": {
+                "id": "1"
+            },
+            "type": "intro",
+            "title": "Welcome to the\nQuickBird Studios\nHealth Survey",
+            "text": "Get ready for a bunch of super random questions!",
+            "buttonText": "Let's go!"
+        },
+        {
+            "stepIdentifier": {
+                "id": "2"
+            },
+            "type": "question",
+            "title": "How old are you?",
+            "answerFormat": {
+                "type": "integer",
+                "defaultValue": 25,
+                "hint": "Please enter your age"
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "3"
+            },
+            "type": "question",
+            "title": "Medication?",
+            "text": "Are you using any medication",
+            "answerFormat": {
+                "type": "bool",
+                "positiveAnswer": "Yes",
+                "negativeAnswer": "No",
+                "result": "POSITIVE"
+            }
+        },    
+        {
+            "stepIdentifier": {
+                "id": "10"
+            },
+            "type": "completion",
+            "text": "Thanks for taking the survey, we will contact you soon!",
+            "title": "Done!",
+            "buttonText": "Submit survey"
+        }
+    ]
+}
+```
+
+
+You can find the complete example [HERE](https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/example_json.json)
   
 
 # 👤 Author

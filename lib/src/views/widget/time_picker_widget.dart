@@ -1811,11 +1811,11 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField> {
 /// selected [TimeOfDay] if the user taps the "OK" button, or null if the user
 /// taps the "CANCEL" button. The selected time is reported by calling
 /// [Navigator.pop].
-class TimePickerDialog extends StatefulWidget {
+class TimePickerWidget extends StatefulWidget {
   /// Creates a material time picker.
   ///
   /// [initialTime] must not be null.
-  const TimePickerDialog({
+  const TimePickerWidget({
     Key? key,
     required this.initialTime,
     required this.timeChanged,
@@ -1847,10 +1847,10 @@ class TimePickerDialog extends StatefulWidget {
   final String? helpText;
 
   @override
-  _TimePickerDialogState createState() => _TimePickerDialogState();
+  _TimePickerWidgetState createState() => _TimePickerWidgetState();
 }
 
-class _TimePickerDialogState extends State<TimePickerDialog> {
+class _TimePickerWidgetState extends State<TimePickerWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

@@ -1,8 +1,21 @@
-# 0.0.11
-- BUGFIX: Survey - Navigator is not popped twice on the end of a survey
-- BUGFIX: Overflowing of text on ListTile is fixed
-- BUGFIX: Added keys to different TextChoices to avoid falsely repeating answers
+# 0.0.12
+- FEATURE: Video-Step
 
+- BUGFIX: isOptional Parameter works now as expected
+- BUGFIX: DefaultSelection in SingleChoiceAnswer now works as expected
+- BUGFIX: Use of TimePicker source
+
+# 0.0.11
+
+- BREAKING: 'TextAnswerFormat' 'isValid' Function is now just a regular expression
+- BREAKING: Renamed Step 'id' to 'stepIdentifier' to make it more clearer for JSON use
+
+- FEATURE: Survey can now be created via JSON
+- FEATURE: Added documentation to the task definition
+
+- BUGFIX: Survey - Navigator is not popped twice
+- BUGFIX: Overflowing of text on ListTile
+- BUGFIX: Added keys to different TextChoice to avoid falsly reapiting answers
 
 # 0.0.10
 

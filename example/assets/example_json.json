@@ -1,0 +1,197 @@
+{
+    "id": "123",
+    "type": "navigable",
+    "rules": [
+        {
+            "type": "conditional",
+            "triggerStepIdentifier": {
+                "id": "7"
+            },
+            "values": {
+                "Yes": "2",
+                "No": "8"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "11"
+            },
+            "destinationStepIdentifier": {
+                "id": "3"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "2"
+            },
+            "destinationStepIdentifier": {
+                "id": "8"
+            }
+        }
+    ],
+    "steps": [
+        {
+            "stepIdentifier": {
+                "id": "1"
+            },
+            "type": "intro",
+            "title": "Welcome to the\nQuickBird Studios\nHealth Survey",
+            "text": "Get ready for a bunch of super random questions!",
+            "buttonText": "Let's go!"
+        },
+        {
+            "stepIdentifier": {
+                "id": "11"
+            },
+            "type": "video",
+            "url": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+            "isAutomaticFullscreen": true,
+            "isAutoPlay": true,
+            "isLooping": false,
+            "allowMuting": false,
+            "goToNextPageAfterEnd": true
+        },
+        {
+            "stepIdentifier": {
+                "id": "2"
+            },
+            "type": "question",
+            "title": "How old are you?",
+            "answerFormat": {
+                "type": "integer",
+                "defaultValue": 25,
+                "hint": "Please enter your age"
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "3"
+            },
+            "type": "question",
+            "title": "Medication?",
+            "text": "Are you using any medication",
+            "answerFormat": {
+                "type": "bool",
+                "positiveAnswer": "Yes",
+                "negativeAnswer": "No",
+                "result": "POSITIVE"
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "4"
+            },
+            "type": "question",
+            "title": "Tell us about you",
+            "text": "Tell us about yourself and why you want to improve your health.",
+            "answerFormat": {
+                "type": "text",
+                "maxLines": 5,
+                "validationRegEx": "^(?!\\s*\\$).+"
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "5"
+            },
+            "type": "question",
+            "title": "Select your body type",
+            "answerFormat": {
+                "type": "scale",
+                "step": 1,
+                "minimumValue": 1,
+                "maximumValue": 5,
+                "defaultValue": 3,
+                "minimumValueDescription": "1",
+                "maximumValueDescription": "5"
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "6"
+            },
+            "type": "question",
+            "title": "Known allergies",
+            "answerFormat": {
+                "type": "multiple",
+                "textChoices": [
+                    {
+                        "text": "Penicillin",
+                        "value": "Penicillin"
+                    },
+                    {
+                        "text": "Latex",
+                        "value": "Latex"
+                    },
+                    {
+                        "text": "Pet",
+                        "value": "Pet"
+                    },
+                    {
+                        "text": "Pollen",
+                        "value": "Pollen"
+                    }
+                ]
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "7"
+            },
+            "type": "question",
+            "title": "Done?",
+            "text": "We are done, do you mind to tell us more about yourself?",
+            "answerFormat": {
+                "type": "single",
+                "textChoices": [
+                    {
+                        "text": "Yes",
+                        "value": "Yes"
+                    },
+                    {
+                        "text": "No",
+                        "value": "No"
+                    }
+                ]
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "8"
+            },
+            "type": "question",
+            "title": "When did you wake up?",
+            "answerFormat": {
+                "type": "time",
+                "defaultValue": {
+                    "hour": 12,
+                    "minute": 0
+                }
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "9"
+            },
+            "type": "question",
+            "title": "When was your last holiday?",
+            "answerFormat": {
+                "type": "date",
+                "minDate": "2015-06-25T04:08:16Z",
+                "maxDate": "2025-06-25T04:08:16Z",
+                "defaultDate": "2021-06-25T04:08:16Z"
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "10"
+            },
+            "type": "completion",
+            "text": "Thanks for taking the survey, we will contact you soon!",
+            "title": "Done!",
+            "buttonText": "Submit survey"
+        }
+    ]
+}
