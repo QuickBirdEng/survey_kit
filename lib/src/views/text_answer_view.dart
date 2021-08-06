@@ -71,7 +71,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
-      isValid: _isValid,
+      isValid: _isValid || widget.questionStep.isOptional,
       child: Column(
         children: [
           Padding(

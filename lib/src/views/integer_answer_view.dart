@@ -64,7 +64,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
             _integerAnswerFormat.defaultValue ??
             null,
       ),
-      isValid: _isValid,
+      isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,

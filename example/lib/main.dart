@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
           child: Align(
             alignment: Alignment.center,
             child: FutureBuilder<Task>(
-              future: getJsonTask(),
+              future: getSampleTask(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData &&
@@ -119,7 +119,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Task getSampleTask() {
+  Future<Task> getSampleTask() {
     var task = NavigableTask(
       id: TaskIdentifier(),
       steps: [
@@ -134,6 +134,7 @@ class _MyAppState extends State<MyApp> {
             defaultValue: 25,
             hint: 'Please enter your age',
           ),
+          isOptional: true,
         ),
         QuestionStep(
           title: 'Medication?',
@@ -226,7 +227,7 @@ class _MyAppState extends State<MyApp> {
         },
       ),
     );
-    return task;
+    return Future.value(task);
   }
 
   Future<Task> getJsonTask() async {
