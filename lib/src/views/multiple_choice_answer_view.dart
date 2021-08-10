@@ -49,6 +49,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
             _selectedChoices.map((choices) => choices.text).join(','),
         result: _selectedChoices,
       ),
+      isValid: widget.questionStep.isOptional || _selectedChoices.isNotEmpty,
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,

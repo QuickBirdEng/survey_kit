@@ -50,6 +50,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
         valueIdentifier: _result.toString(),
         result: _result,
       ),
+      isValid: widget.questionStep.isOptional || _result != null,
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,

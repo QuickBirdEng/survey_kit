@@ -168,6 +168,7 @@ class _MyAppState extends State<MyApp> {
         QuestionStep(
           title: 'Known allergies',
           text: 'Do you have any allergies that we should be aware of?',
+          isOptional: false,
           answerFormat: MultipleChoiceAnswerFormat(
             textChoices: [
               TextChoice(text: 'Penicillin', value: 'Penicillin'),

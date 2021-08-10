@@ -55,6 +55,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
         valueIdentifier: _result?.toIso8601String() ?? 'none',
         result: _result,
       ),
+      isValid: widget.questionStep.isOptional || _result != null,
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
