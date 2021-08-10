@@ -47,6 +47,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView> {
         valueIdentifier: _selectedChoice?.text ?? '',
         result: _selectedChoice,
       ),
+      isValid: widget.questionStep.isOptional || _selectedChoice != null,
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
