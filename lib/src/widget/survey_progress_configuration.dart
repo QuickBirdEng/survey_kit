@@ -25,11 +25,16 @@ class SurveyProgressConfiguration {
   /// finishOfProgress})
   final Function(String from, String to)? label;
 
+  /// The corner radius of the progress bar - If not defines
+  /// BorderRadius.circular(14.0)
+  final BorderRadius? borderRadius;
+
   SurveyProgressConfiguration({
     this.progressbarColor = Colors.white,
     this.height = 6.0,
     this.padding = const EdgeInsets.symmetric(horizontal: 24.0),
     this.showLabel = false,
+    this.borderRadius,
     this.label,
     this.backgroundColor,
     this.valueProgressbarColor,

@@ -26,15 +26,21 @@ class SurveyProgress extends StatelessWidget {
                       state.currentStepIndex.toString(),
                       state.stepCount.toString())
                   : SizedBox.shrink(),
-              LinearProgressIndicator(
-                value: state.currentStepIndex / state.stepCount,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  progressbarConfiguration.valueProgressbarColor ??
-                      Theme.of(context).primaryColor,
+              ClipRRect(
+                borderRadius: progressbarConfiguration.borderRadius ??
+                    BorderRadius.circular(14.0),
+                child: Container(
+                  child: LinearProgressIndicator(
+                    value: state.currentStepIndex / state.stepCount,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      progressbarConfiguration.valueProgressbarColor ??
+                          Theme.of(context).primaryColor,
+                    ),
+                    backgroundColor: progressbarConfiguration.backgroundColor,
+                    color: progressbarConfiguration.progressbarColor,
+                    minHeight: progressbarConfiguration.height,
+                  ),
                 ),
-                backgroundColor: progressbarConfiguration.backgroundColor,
-                color: progressbarConfiguration.progressbarColor,
-                minHeight: progressbarConfiguration.height,
               ),
             ],
           ),
