@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 
 class SurveyProgressConfiguration {
+  /// Color of the progressbar
   final Color progressbarColor;
+
+  /// Color of the value of the progressbar
   final Color? valueProgressbarColor;
+
+  /// Color of the background of the progressbar
   final Color? backgroundColor;
+
+  /// Min height of the progressbar
   final double height;
+
+  /// Padding of the progressbar and text
   final EdgeInsets padding;
+
+  /// If a Label should be shown above the progressbar (You also need to add
+  /// the label )
   final bool showLabel;
+
+  /// Label widget which should be shown above the appbar (Also need to
+  /// activate via the 'showLabel flag {from currentProgress, to
+  /// finishOfProgress})
   final Function(String from, String to)? label;
 
   SurveyProgressConfiguration({
