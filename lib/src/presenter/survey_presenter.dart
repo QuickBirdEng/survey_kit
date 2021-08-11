@@ -45,7 +45,12 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
   SurveyState _handleInitialStep() {
     Step? step = taskNavigator.firstStep();
     if (step != null) {
-      return PresentingSurveyState(step, null);
+      return PresentingSurveyState(
+        step,
+        null,
+        currentStepIndex: currentStepIndex,
+        stepCount: countSteps,
+      );
     }
 
     //If not steps are provided we finish the survey
@@ -75,6 +80,8 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
     return PresentingSurveyState(
       nextStep,
       questionResult,
+      currentStepIndex: currentStepIndex,
+      stepCount: countSteps,
     );
   }
 
@@ -88,7 +95,12 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       QuestionResult? questionResult =
           _getResultByStepIdentifier(previousStep.stepIdentifier);
 
-      return PresentingSurveyState(previousStep, questionResult);
+      return PresentingSurveyState(
+        previousStep,
+        questionResult,
+        currentStepIndex: currentStepIndex,
+        stepCount: countSteps,
+      );
     }
 
     //If theres no previous step we can't go back further
@@ -138,5 +150,14 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
     results.add(
       questionResult,
     );
+  }
+
+  int get countSteps => taskNavigator.countSteps;
+  int get currentStepIndex {
+    final currentState = state;
+    if (currentState is PresentingSurveyState) {
+      return taskNavigator.currentStepIndex(currentState.currentStep) + 1;
+    }
+    return countSteps;
   }
 }

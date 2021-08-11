@@ -27,11 +27,14 @@ class SurveyKit extends StatefulWidget {
   /// onNextStep, onBackStep, onCloseSurvey
   final SurveyController? surveyController;
 
+  final bool showProgress;
+
   const SurveyKit({
     required this.task,
     required this.onResult,
     this.themeData,
     this.surveyController,
+    this.showProgress = true,
   });
 
   @override
@@ -66,7 +69,8 @@ class _SurveyKitState extends State<SurveyKit> {
         providers: [
           Provider<TaskNavigator>.value(value: _taskNavigator),
           Provider<SurveyController>.value(
-              value: widget.surveyController ?? SurveyController())
+              value: widget.surveyController ?? SurveyController()),
+          Provider<bool>.value(value: widget.showProgress),
         ],
         child: BlocProvider(
           create: (BuildContext context) => SurveyPresenter(

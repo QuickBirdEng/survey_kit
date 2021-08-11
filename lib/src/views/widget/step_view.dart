@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/steps/step.dart' as surveystep;
+import 'package:survey_kit/src/views/widget/survey_app_bar.dart';
 import 'package:survey_kit/survey_kit.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +12,7 @@ class StepView extends StatelessWidget {
   final Widget child;
   final QuestionResult Function() resultFunction;
   final bool canBack;
+  final bool? showProgress;
   final bool isValid;
   final SurveyController? controller;
 
@@ -20,6 +21,7 @@ class StepView extends StatelessWidget {
     required this.child,
     required this.title,
     required this.resultFunction,
+    this.showProgress,
     this.controller,
     this.isValid = true,
     this.canBack = true,
@@ -27,74 +29,15 @@ class StepView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final surveyController = controller ?? context.read<SurveyController>();
-    return PlatformScaffold(
-      material: (context, platform) => MaterialScaffoldData(
-        appBar: _androidAppBar(surveyController, context),
-        resizeToAvoidBottomInset: false,
-        body: _content(surveyController, context),
-      ),
-      cupertino: (context, platform) => CupertinoPageScaffoldData(
-        navigationBar: _iosAppBar(surveyController, context),
-        body: _content(surveyController, context),
-        resizeToAvoidBottomInset: false,
-      ),
-    );
-  }
+    final _surveyController = controller ?? context.read<SurveyController>();
+    final _showProgress = showProgress ?? context.read<bool>();
 
-  AppBar _androidAppBar(
-      SurveyController surveyController, BuildContext context) {
-    return AppBar(
-      elevation: 0.0,
-      leading: canBack
-          ? IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-              ),
-              onPressed: () {
-                surveyController.stepBack(context, resultFunction);
-              },
-            )
-          : Container(),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextButton(
-            child: Text(
-              'Cancel',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            onPressed: () =>
-                surveyController.closeSurvey(context, resultFunction),
-          ),
-        ),
-      ],
-    );
-  }
-
-  CupertinoNavigationBar _iosAppBar(
-      SurveyController surveyController, BuildContext context) {
-    return CupertinoNavigationBar(
-      leading: canBack
-          ? CupertinoNavigationBarBackButton(
-              color: Theme.of(context).primaryColor,
-              previousPageTitle: 'Back',
-              onPressed: () {
-                surveyController.stepBack(context, resultFunction);
-              },
-            )
-          : Container(),
-      trailing: GestureDetector(
-        child: Text(
-          'Cancel',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        onTap: () => surveyController.closeSurvey(context, resultFunction),
-      ),
+    return SurveyAppBar(
+      content: _content(_surveyController, context),
+      resultFunction: resultFunction,
+      controller: controller,
+      showProgress: _showProgress,
+      canBack: canBack,
     );
   }
 

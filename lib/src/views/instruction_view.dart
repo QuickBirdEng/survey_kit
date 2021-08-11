@@ -13,6 +13,7 @@ class InstructionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return StepView(
       canBack: false,
+      showProgress: false,
       step: instructionStep,
       title: Text(
         instructionStep.title,

@@ -34,6 +34,7 @@ class _MyAppState extends State<MyApp> {
                       print(result.finishReason);
                     },
                     task: task,
+                    showProgress: true,
                     themeData: Theme.of(context).copyWith(
                       colorScheme: ColorScheme.fromSwatch(
                         primarySwatch: Colors.cyan,

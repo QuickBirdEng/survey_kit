@@ -11,8 +11,15 @@ class LoadingSurveyState extends SurveyState {}
 class PresentingSurveyState extends SurveyState {
   final Step currentStep;
   final QuestionResult? result;
+  final int currentStepIndex;
+  final int stepCount;
 
-  PresentingSurveyState(this.currentStep, this.result);
+  PresentingSurveyState(
+    this.currentStep,
+    this.result, {
+    this.currentStepIndex = 0,
+    required this.stepCount,
+  });
 }
 
 class SurveyResultState extends SurveyState {
