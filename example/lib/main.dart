@@ -109,6 +109,9 @@ class _MyAppState extends State<MyApp> {
                         ),
                       ),
                     ),
+                    surveyProgressbarConfiguration: SurveyProgressConfiguration(
+                      backgroundColor: Colors.white,
+                    ),
                   );
                 }
                 return CircularProgressIndicator.adaptive();

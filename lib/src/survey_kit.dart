@@ -12,6 +12,7 @@ import 'package:survey_kit/src/result/survey/survey_result.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
+import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 class SurveyKit extends StatefulWidget {
   /// [Task] for the configuraton of the survey
@@ -27,7 +28,11 @@ class SurveyKit extends StatefulWidget {
   /// onNextStep, onBackStep, onCloseSurvey
   final SurveyController? surveyController;
 
+  /// If a progressbar should be shown in the AppBar
   final bool showProgress;
+
+  // Changes the styling of the progressbar in the appbar
+  final SurveyProgressConfiguration? surveyProgressbarConfiguration;
 
   const SurveyKit({
     required this.task,
@@ -35,6 +40,7 @@ class SurveyKit extends StatefulWidget {
     this.themeData,
     this.surveyController,
     this.showProgress = true,
+    this.surveyProgressbarConfiguration,
   });
 
   @override
@@ -71,6 +77,10 @@ class _SurveyKitState extends State<SurveyKit> {
           Provider<SurveyController>.value(
               value: widget.surveyController ?? SurveyController()),
           Provider<bool>.value(value: widget.showProgress),
+          Provider<SurveyProgressConfiguration>.value(
+            value: widget.surveyProgressbarConfiguration ??
+                SurveyProgressConfiguration(),
+          )
         ],
         child: BlocProvider(
           create: (BuildContext context) => SurveyPresenter(
