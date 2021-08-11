@@ -31,7 +31,11 @@ void main() {
           providers: [
             Provider<SurveyController>.value(
               value: SurveyController(),
-            )
+            ),
+            Provider<bool>.value(value: false),
+            Provider<SurveyProgressConfiguration>.value(
+              value: SurveyProgressConfiguration(),
+            ),
           ],
           child: _validDateAnswerView(),
         ),
@@ -52,7 +56,11 @@ void main() {
             providers: [
               Provider<SurveyController>.value(
                 value: SurveyController(),
-              )
+              ),
+              Provider<bool>.value(value: false),
+              Provider<SurveyProgressConfiguration>.value(
+                value: SurveyProgressConfiguration(),
+              ),
             ],
             child: _validDateAnswerView(),
           ),
@@ -74,7 +82,11 @@ void main() {
             providers: [
               Provider<SurveyController>.value(
                 value: SurveyController(),
-              )
+              ),
+              Provider<bool>.value(value: false),
+              Provider<SurveyProgressConfiguration>.value(
+                value: SurveyProgressConfiguration(),
+              ),
             ],
             child: DateAnswerView(
               questionStep: QuestionStep(
