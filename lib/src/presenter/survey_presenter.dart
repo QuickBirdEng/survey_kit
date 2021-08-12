@@ -48,7 +48,7 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       return PresentingSurveyState(
         step,
         null,
-        currentStepIndex: currentStepIndex,
+        currentStepIndex: currentStepIndex(step),
         stepCount: countSteps,
       );
     }
@@ -80,7 +80,7 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
     return PresentingSurveyState(
       nextStep,
       questionResult,
-      currentStepIndex: currentStepIndex,
+      currentStepIndex: currentStepIndex(nextStep),
       stepCount: countSteps,
     );
   }
@@ -98,7 +98,7 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       return PresentingSurveyState(
         previousStep,
         questionResult,
-        currentStepIndex: currentStepIndex,
+        currentStepIndex: currentStepIndex(previousStep),
         stepCount: countSteps,
       );
     }
@@ -153,10 +153,10 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
   }
 
   int get countSteps => taskNavigator.countSteps;
-  int get currentStepIndex {
+  int currentStepIndex(Step step) {
     final currentState = state;
     if (currentState is PresentingSurveyState) {
-      return taskNavigator.currentStepIndex(currentState.currentStep) + 1;
+      return taskNavigator.currentStepIndex(step);
     }
     return countSteps;
   }
