@@ -154,10 +154,6 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
 
   int get countSteps => taskNavigator.countSteps;
   int currentStepIndex(Step step) {
-    final currentState = state;
-    if (currentState is PresentingSurveyState) {
-      return taskNavigator.currentStepIndex(step);
-    }
-    return countSteps;
+    return taskNavigator.currentStepIndex(step);
   }
 }
