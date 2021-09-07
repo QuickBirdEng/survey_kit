@@ -91,7 +91,6 @@ class _SurveyKitState extends State<SurveyKit> {
             listener: (context, state) async {
               if (state is SurveyResultState) {
                 widget.onResult.call(state.result);
-                Navigator.of(context).pop();
               }
             },
             builder: (BuildContext context, SurveyState state) {
