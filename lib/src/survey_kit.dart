@@ -88,16 +88,15 @@ class _SurveyKitState extends State<SurveyKit> {
           ),
           child: BlocConsumer<SurveyPresenter, SurveyState>(
             listenWhen: (previous, current) => previous != current,
-            listener: (context, state) async {
-              if (state is SurveyResultState) {
-                widget.onResult.call(state.result);
-              }
-            },
+            listener: (context, state) async {},
             builder: (BuildContext context, SurveyState state) {
               if (state is PresentingSurveyState) {
                 return state.currentStep.createView(
                   questionResult: state.result,
                 );
+              } else if (state is SurveyResultState &&
+                  state.currentStep != null) {
+                return state.currentStep!.createView(questionResult: null);
               }
               return Center(
                 child: CircularProgressIndicator(),

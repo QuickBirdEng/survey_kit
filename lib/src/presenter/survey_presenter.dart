@@ -61,7 +61,10 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       finishReason: FinishReason.COMPLETED,
       results: [],
     );
-    return SurveyResultState(result: taskResult);
+    return SurveyResultState(
+      result: taskResult,
+      currentStep: null,
+    );
   }
 
   SurveyState _handleNextStep(
@@ -71,7 +74,7 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
         step: currentState.currentStep, questionResult: event.questionResult);
 
     if (nextStep == null) {
-      return _handleSurveyFinished();
+      return _handleSurveyFinished(currentState);
     }
 
     QuestionResult? questionResult =
@@ -127,11 +130,15 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       finishReason: FinishReason.DISCARDED,
       results: stepResults,
     );
-    return SurveyResultState(result: taskResult);
+    return SurveyResultState(
+      result: taskResult,
+      stepResult: currentState.result,
+      currentStep: currentState.currentStep,
+    );
   }
 
   //Currently we are only handling one question per step
-  SurveyState _handleSurveyFinished() {
+  SurveyState _handleSurveyFinished(PresentingSurveyState currentState) {
     List<StepResult> stepResults =
         results.map((e) => StepResult.fromQuestion(questionResult: e)).toList();
     final taskResult = SurveyResult(
@@ -141,7 +148,11 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       finishReason: FinishReason.COMPLETED,
       results: stepResults,
     );
-    return SurveyResultState(result: taskResult);
+    return SurveyResultState(
+      result: taskResult,
+      currentStep: currentState.currentStep,
+      stepResult: currentState.result,
+    );
   }
 
   void _addResult(QuestionResult questionResult) {

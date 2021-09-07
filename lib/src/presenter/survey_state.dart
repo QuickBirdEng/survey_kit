@@ -24,6 +24,12 @@ class PresentingSurveyState extends SurveyState {
 
 class SurveyResultState extends SurveyState {
   final SurveyResult result;
+  final Step? currentStep;
+  final QuestionResult? stepResult;
 
-  SurveyResultState({required this.result});
+  SurveyResultState({
+    required this.result,
+    this.stepResult,
+    required this.currentStep,
+  });
 }
