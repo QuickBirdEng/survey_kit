@@ -96,6 +96,7 @@ class _SurveyKitState extends State<SurveyKit> {
                 );
               } else if (state is SurveyResultState &&
                   state.currentStep != null) {
+                widget.onResult.call(state.result);
                 return state.currentStep!.createView(questionResult: null);
               }
               return Center(
