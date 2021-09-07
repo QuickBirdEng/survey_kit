@@ -82,5 +82,5 @@ export 'src/widget/survey_progress_configuration.dart';
 export 'src/widget/survey_progress.dart';
 export 'src/views/widget/survey_app_bar.dart';
 
-export 'src/presenter/survey_state.dart';
-export 'src/presenter/survey_event.dart';
+export 'src/steps/predefined_steps/video_step.dart';
+export 'src/views/video_step_view.dart';
