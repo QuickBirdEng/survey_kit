@@ -68,6 +68,11 @@ class _SurveyKitState extends State<SurveyKit> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Theme(
       data: widget.themeData ?? Theme.of(context),
