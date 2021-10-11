@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
@@ -12,11 +13,14 @@ import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 //TO DO: Extract gathering of the results into another class
 class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
   final TaskNavigator taskNavigator;
+  final Function(SurveyResult) onResult;
+
   Set<QuestionResult> results = {};
   late final DateTime startDate;
 
   SurveyPresenter({
     required this.taskNavigator,
+    required this.onResult,
   }) : super(LoadingSurveyState()) {
     this.startDate = DateTime.now();
     add(StartSurvey());
@@ -46,10 +50,14 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
     Step? step = taskNavigator.firstStep();
     if (step != null) {
       return PresentingSurveyState(
-        step,
-        null,
+        currentStep: step,
+        result: null,
         currentStepIndex: currentStepIndex(step),
         stepCount: countSteps,
+        appBarConfiguration: AppBarConfiguration(
+          showProgress: step.showProgress,
+          canBack: step.canGoBack,
+        ),
       );
     }
 
@@ -81,10 +89,14 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
         _getResultByStepIdentifier(nextStep.stepIdentifier);
 
     return PresentingSurveyState(
-      nextStep,
-      questionResult,
+      currentStep: nextStep,
+      result: questionResult,
       currentStepIndex: currentStepIndex(nextStep),
       stepCount: countSteps,
+      appBarConfiguration: AppBarConfiguration(
+        showProgress: nextStep.showProgress,
+        canBack: nextStep.canGoBack,
+      ),
     );
   }
 
@@ -99,9 +111,13 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
           _getResultByStepIdentifier(previousStep.stepIdentifier);
 
       return PresentingSurveyState(
-        previousStep,
-        questionResult,
+        currentStep: previousStep,
+        result: questionResult,
         currentStepIndex: currentStepIndex(previousStep),
+        appBarConfiguration: AppBarConfiguration(
+          showProgress: previousStep.showProgress,
+          canBack: previousStep.canGoBack,
+        ),
         stepCount: countSteps,
       );
     }
@@ -155,7 +171,10 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
     );
   }
 
-  void _addResult(QuestionResult questionResult) {
+  void _addResult(QuestionResult? questionResult) {
+    if (questionResult == null) {
+      return;
+    }
     results
         .removeWhere((QuestionResult result) => result.id == questionResult.id);
     results.add(

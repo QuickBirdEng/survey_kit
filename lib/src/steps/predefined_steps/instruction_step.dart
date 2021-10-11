@@ -13,15 +13,20 @@ class InstructionStep extends Step {
   final String text;
 
   InstructionStep({
+    required this.title,
+    required this.text,
     bool isOptional = false,
     String buttonText = 'Next',
     StepIdentifier? stepIdentifier,
-    required this.title,
-    required this.text,
+    bool? canGoBack,
+    bool? showProgress,
   }) : super(
-            stepIdentifier: stepIdentifier,
-            isOptional: isOptional,
-            buttonText: buttonText);
+          stepIdentifier: stepIdentifier,
+          isOptional: isOptional,
+          buttonText: buttonText,
+          canGoBack: canGoBack ?? false,
+          showProgress: showProgress ?? false,
+        );
 
   @override
   Widget createView({required QuestionResult? questionResult}) {

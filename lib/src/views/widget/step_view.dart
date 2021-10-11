@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/steps/step.dart' as surveystep;
-import 'package:survey_kit/src/views/widget/survey_app_bar.dart';
 import 'package:survey_kit/survey_kit.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +10,6 @@ class StepView extends StatelessWidget {
   final Widget title;
   final Widget child;
   final QuestionResult Function() resultFunction;
-  final bool canBack;
-  final bool? showProgress;
   final bool isValid;
   final SurveyController? controller;
 
@@ -21,24 +18,15 @@ class StepView extends StatelessWidget {
     required this.child,
     required this.title,
     required this.resultFunction,
-    this.showProgress,
     this.controller,
     this.isValid = true,
-    this.canBack = true,
   });
 
   @override
   Widget build(BuildContext context) {
     final _surveyController = controller ?? context.read<SurveyController>();
-    final _showProgress = showProgress ?? context.read<bool>();
 
-    return SurveyAppBar(
-      content: _content(_surveyController, context),
-      resultFunction: resultFunction,
-      controller: controller,
-      showProgress: _showProgress,
-      canBack: canBack,
-    );
+    return _content(_surveyController, context);
   }
 
   Widget _content(SurveyController surveyController, BuildContext context) {

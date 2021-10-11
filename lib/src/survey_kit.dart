@@ -13,6 +13,7 @@ import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 class SurveyKit extends StatefulWidget {
   /// [Task] for the configuraton of the survey
@@ -90,27 +91,61 @@ class _SurveyKitState extends State<SurveyKit> {
         child: BlocProvider(
           create: (BuildContext context) => SurveyPresenter(
             taskNavigator: _taskNavigator,
+            onResult: widget.onResult,
           ),
-          child: BlocConsumer<SurveyPresenter, SurveyState>(
-            listenWhen: (previous, current) => previous != current,
-            listener: (context, state) async {},
-            builder: (BuildContext context, SurveyState state) {
-              if (state is PresentingSurveyState) {
-                return state.currentStep.createView(
-                  questionResult: state.result,
-                );
-              } else if (state is SurveyResultState &&
-                  state.currentStep != null) {
-                widget.onResult.call(state.result);
-                return state.currentStep!.createView(questionResult: null);
-              }
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
+          child: SurveyPage(),
         ),
       ),
+    );
+  }
+}
+
+class SurveyPage extends StatelessWidget {
+  const SurveyPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<SurveyPresenter, SurveyState>(
+      listenWhen: (previous, current) => previous != current,
+      listener: (context, state) async {},
+      builder: (BuildContext context, SurveyState state) {
+        if (state is PresentingSurveyState) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: PreferredSize(
+              preferredSize: Size(
+                double.infinity,
+                70.0,
+              ),
+              child: SurveyAppBar(
+                appBarConfiguration: state.appBarConfiguration,
+              ),
+            ),
+            body: AnimatedSwitcher(
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: state.isPreviousStep
+                        ? const Offset(-1.0, 0)
+                        : const Offset(1.0, 0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+              duration: const Duration(milliseconds: 200),
+              child: state.currentStep.createView(
+                questionResult: state.result,
+              ),
+            ),
+          );
+        } else if (state is SurveyResultState && state.currentStep != null) {
+          return state.currentStep!.createView(questionResult: null);
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

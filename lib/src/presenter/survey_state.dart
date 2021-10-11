@@ -1,3 +1,4 @@
+import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/result/survey/survey_result.dart';
 import 'package:survey_kit/src/steps/step.dart';
@@ -9,16 +10,20 @@ abstract class SurveyState {
 class LoadingSurveyState extends SurveyState {}
 
 class PresentingSurveyState extends SurveyState {
+  final AppBarConfiguration appBarConfiguration;
   final Step currentStep;
   final QuestionResult? result;
   final int currentStepIndex;
   final int stepCount;
+  final bool isPreviousStep;
 
-  PresentingSurveyState(
-    this.currentStep,
-    this.result, {
-    this.currentStepIndex = 0,
+  PresentingSurveyState({
     required this.stepCount,
+    required this.appBarConfiguration,
+    required this.currentStep,
+    this.result,
+    this.currentStepIndex = 0,
+    this.isPreviousStep = false,
   });
 }
 

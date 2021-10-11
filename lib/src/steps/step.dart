@@ -12,11 +12,15 @@ abstract class Step {
   final bool isOptional;
   @JsonKey(defaultValue: 'Next')
   final String buttonText;
+  final bool canGoBack;
+  final bool showProgress;
 
   Step({
     StepIdentifier? stepIdentifier,
     this.isOptional = false,
     this.buttonText = 'Next',
+    this.canGoBack = true,
+    this.showProgress = true,
   }) : stepIdentifier = stepIdentifier ?? StepIdentifier();
 
   Widget createView({required QuestionResult? questionResult});

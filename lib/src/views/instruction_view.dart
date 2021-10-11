@@ -12,8 +12,6 @@ class InstructionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StepView(
-      canBack: false,
-      showProgress: false,
       step: instructionStep,
       title: Text(
         instructionStep.title,

@@ -13,13 +13,13 @@ class NextStep extends SurveyEvent {
 }
 
 class StepBack extends SurveyEvent {
-  final QuestionResult questionResult;
+  final QuestionResult? questionResult;
 
   StepBack(this.questionResult);
 }
 
 class CloseSurvey extends SurveyEvent {
-  final QuestionResult questionResult;
+  final QuestionResult? questionResult;
 
   CloseSurvey(this.questionResult);
 }
