@@ -125,7 +125,7 @@ class SurveyPage extends StatelessWidget {
       builder: (BuildContext context, SurveyState state) {
         if (state is PresentingSurveyState) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
             appBar: PreferredSize(
               preferredSize: Size(
                 double.infinity,
