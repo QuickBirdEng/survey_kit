@@ -99,6 +99,7 @@ class _SurveyKitState extends State<SurveyKit> {
             onResult: widget.onResult,
           ),
           child: SurveyPage(
+            onResult: widget.onResult,
             appBar: widget.appBar,
           ),
         ),
@@ -109,14 +110,18 @@ class _SurveyKitState extends State<SurveyKit> {
 
 class SurveyPage extends StatelessWidget {
   final Widget Function(AppBarConfiguration appBarConfiguration)? appBar;
-
-  const SurveyPage({this.appBar});
+  final Function(SurveyResult) onResult;
+  const SurveyPage({required this.onResult, this.appBar});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SurveyPresenter, SurveyState>(
       listenWhen: (previous, current) => previous != current,
-      listener: (context, state) async {},
+      listener: (context, state) async {
+        if (state is SurveyResultState) {
+          onResult.call(state.result);
+        }
+      },
       builder: (BuildContext context, SurveyState state) {
         if (state is PresentingSurveyState) {
           return Scaffold(
@@ -151,7 +156,9 @@ class SurveyPage extends StatelessWidget {
             ),
           );
         } else if (state is SurveyResultState && state.currentStep != null) {
-          return state.currentStep!.createView(questionResult: null);
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
         return Center(
           child: CircularProgressIndicator(),
