@@ -98,7 +98,9 @@ class _SurveyKitState extends State<SurveyKit> {
             taskNavigator: _taskNavigator,
             onResult: widget.onResult,
           ),
-          child: SurveyPage(),
+          child: SurveyPage(
+            appBar: widget.appBar,
+          ),
         ),
       ),
     );
