@@ -84,3 +84,5 @@ export 'src/views/widget/survey_app_bar.dart';
 
 export 'src/steps/predefined_steps/video_step.dart';
 export 'src/views/video_step_view.dart';
+
+export 'src/configuration/app_bar_configuration.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
 import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
@@ -29,8 +30,11 @@ class SurveyKit extends StatefulWidget {
   /// onNextStep, onBackStep, onCloseSurvey
   final SurveyController? surveyController;
 
-  /// If a progressbar should be shown in the AppBar
-  final bool showProgress;
+  /// The appbar that is shown at the top
+  final Widget Function(AppBarConfiguration appBarConfiguration)? appBar;
+
+  /// If the progressbar shoud be show in the appbar
+  final bool? showProgress;
 
   // Changes the styling of the progressbar in the appbar
   final SurveyProgressConfiguration? surveyProgressbarConfiguration;
@@ -40,7 +44,8 @@ class SurveyKit extends StatefulWidget {
     required this.onResult,
     this.themeData,
     this.surveyController,
-    this.showProgress = true,
+    this.appBar,
+    this.showProgress,
     this.surveyProgressbarConfiguration,
   });
 
@@ -82,7 +87,7 @@ class _SurveyKitState extends State<SurveyKit> {
           Provider<TaskNavigator>.value(value: _taskNavigator),
           Provider<SurveyController>.value(
               value: widget.surveyController ?? SurveyController()),
-          Provider<bool>.value(value: widget.showProgress),
+          Provider<bool>.value(value: widget.showProgress ?? true),
           Provider<SurveyProgressConfiguration>.value(
             value: widget.surveyProgressbarConfiguration ??
                 SurveyProgressConfiguration(),
@@ -101,7 +106,9 @@ class _SurveyKitState extends State<SurveyKit> {
 }
 
 class SurveyPage extends StatelessWidget {
-  const SurveyPage();
+  final Widget Function(AppBarConfiguration appBarConfiguration)? appBar;
+
+  const SurveyPage({this.appBar});
 
   @override
   Widget build(BuildContext context) {
@@ -117,9 +124,11 @@ class SurveyPage extends StatelessWidget {
                 double.infinity,
                 70.0,
               ),
-              child: SurveyAppBar(
-                appBarConfiguration: state.appBarConfiguration,
-              ),
+              child: appBar != null
+                  ? appBar!.call(state.appBarConfiguration)
+                  : SurveyAppBar(
+                      appBarConfiguration: state.appBarConfiguration,
+                    ),
             ),
             body: AnimatedSwitcher(
               transitionBuilder: (Widget child, Animation<double> animation) {
