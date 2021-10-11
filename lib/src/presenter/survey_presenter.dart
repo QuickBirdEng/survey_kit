@@ -118,6 +118,7 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
           showProgress: previousStep.showProgress,
           canBack: previousStep.canGoBack,
         ),
+        isPreviousStep: true,
         stepCount: countSteps,
       );
     }
