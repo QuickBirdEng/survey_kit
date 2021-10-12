@@ -126,17 +126,19 @@ class SurveyPage extends StatelessWidget {
         if (state is PresentingSurveyState) {
           return Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: PreferredSize(
-              preferredSize: Size(
-                double.infinity,
-                70.0,
-              ),
-              child: appBar != null
-                  ? appBar!.call(state.appBarConfiguration)
-                  : SurveyAppBar(
-                      appBarConfiguration: state.appBarConfiguration,
+            appBar: state.currentStep.showAppBar
+                ? PreferredSize(
+                    preferredSize: Size(
+                      double.infinity,
+                      70.0,
                     ),
-            ),
+                    child: appBar != null
+                        ? appBar!.call(state.appBarConfiguration)
+                        : SurveyAppBar(
+                            appBarConfiguration: state.appBarConfiguration,
+                          ),
+                  )
+                : null,
             body: AnimatedSwitcher(
               transitionBuilder: (Widget child, Animation<double> animation) {
                 return SlideTransition(

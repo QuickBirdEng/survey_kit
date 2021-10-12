@@ -35,7 +35,7 @@ class VideoStep extends Step {
     bool isOptional = false,
     String buttonText = 'Next',
     StepIdentifier? stepIdentifier,
-    bool showAppBar = true,
+    bool showAppBar = false,
   }) : super(
           isOptional: isOptional,
           buttonText: buttonText,
