@@ -35,10 +35,12 @@ class VideoStep extends Step {
     bool isOptional = false,
     String buttonText = 'Next',
     StepIdentifier? stepIdentifier,
+    bool showAppBar = true,
   }) : super(
           isOptional: isOptional,
           buttonText: buttonText,
           stepIdentifier: stepIdentifier,
+          showAppBar: showAppBar,
         );
 
   factory VideoStep.fromJson(Map<String, dynamic> json) =>

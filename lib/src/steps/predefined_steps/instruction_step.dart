@@ -20,12 +20,14 @@ class InstructionStep extends Step {
     StepIdentifier? stepIdentifier,
     bool? canGoBack,
     bool? showProgress,
+    bool showAppBar = true,
   }) : super(
           stepIdentifier: stepIdentifier,
           isOptional: isOptional,
           buttonText: buttonText,
           canGoBack: canGoBack ?? false,
           showProgress: showProgress ?? false,
+          showAppBar: showAppBar,
         );
 
   @override
