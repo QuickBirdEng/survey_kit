@@ -61,7 +61,7 @@ class NavigableTaskNavigator extends TaskNavigator {
   Step? firstStep() {
     final previousStep = peekHistory();
     return previousStep == null
-        ? task.steps.first
+        ? task.initalStep ?? task.steps.first
         : nextStep(step: previousStep, questionResult: null);
   }
 }

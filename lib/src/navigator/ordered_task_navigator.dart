@@ -22,6 +22,8 @@ class OrderedTaskNavigator extends TaskNavigator {
   @override
   Step? firstStep() {
     final previousStep = peekHistory();
-    return previousStep == null ? task.steps.first : nextInList(previousStep);
+    return previousStep == null
+        ? task.initalStep ?? task.steps.first
+        : nextInList(previousStep);
   }
 }

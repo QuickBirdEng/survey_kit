@@ -13,10 +13,12 @@ abstract class Task {
   late final TaskIdentifier id;
   @JsonKey(defaultValue: [])
   final List<Step> steps;
+  final Step? initalStep;
 
   Task({
     TaskIdentifier? id,
     this.steps = const [],
+    this.initalStep,
   }) {
     if (id == null) {
       id = TaskIdentifier();

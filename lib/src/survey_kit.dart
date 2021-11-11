@@ -39,6 +39,9 @@ class SurveyKit extends StatefulWidget {
   // Changes the styling of the progressbar in the appbar
   final SurveyProgressConfiguration? surveyProgressbarConfiguration;
 
+  //Transition
+  final Widget Function(Widget, Animation<double>)? transitionBuilder;
+
   const SurveyKit({
     required this.task,
     required this.onResult,
@@ -47,6 +50,7 @@ class SurveyKit extends StatefulWidget {
     this.appBar,
     this.showProgress,
     this.surveyProgressbarConfiguration,
+    this.transitionBuilder,
   });
 
   @override
@@ -101,6 +105,7 @@ class _SurveyKitState extends State<SurveyKit> {
           child: SurveyPage(
             onResult: widget.onResult,
             appBar: widget.appBar,
+            transitionBuilder: widget.transitionBuilder,
           ),
         ),
       ),
@@ -111,7 +116,13 @@ class _SurveyKitState extends State<SurveyKit> {
 class SurveyPage extends StatelessWidget {
   final Widget Function(AppBarConfiguration appBarConfiguration)? appBar;
   final Function(SurveyResult) onResult;
-  const SurveyPage({required this.onResult, this.appBar});
+  final Widget Function(Widget, Animation<double>)? transitionBuilder;
+
+  const SurveyPage({
+    required this.onResult,
+    this.appBar,
+    this.transitionBuilder,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -140,17 +151,18 @@ class SurveyPage extends StatelessWidget {
                   )
                 : null,
             body: AnimatedSwitcher(
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return SlideTransition(
-                  position: Tween<Offset>(
-                    begin: state.isPreviousStep
-                        ? const Offset(-1.0, 0)
-                        : const Offset(1.0, 0),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
-                );
-              },
+              transitionBuilder: transitionBuilder ??
+                  (Widget child, Animation<double> animation) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: state.isPreviousStep
+                            ? const Offset(-1.0, 0)
+                            : const Offset(1.0, 0),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
+                    );
+                  },
               duration: const Duration(milliseconds: 250),
               child: state.currentStep.createView(
                 questionResult: state.result,
