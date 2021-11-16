@@ -164,8 +164,13 @@ class SurveyPage extends StatelessWidget {
                     );
                   },
               duration: const Duration(milliseconds: 250),
-              child: state.currentStep.createView(
-                questionResult: state.result,
+              child: Container(
+                key: ValueKey<String>(
+                  state.currentStep.stepIdentifier.id,
+                ),
+                child: state.currentStep.createView(
+                  questionResult: state.result,
+                ),
               ),
             ),
           );
