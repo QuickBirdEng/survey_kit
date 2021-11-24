@@ -48,10 +48,8 @@ class _MyAppState extends State<MyApp> {
                         iconTheme: IconThemeData(
                           color: Colors.cyan,
                         ),
-                        textTheme: TextTheme(
-                          button: TextStyle(
-                            color: Colors.cyan,
-                          ),
+                        titleTextStyle: TextStyle(
+                          color: Colors.cyan,
                         ),
                       ),
                       iconTheme: const IconThemeData(
