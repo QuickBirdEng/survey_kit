@@ -41,15 +41,20 @@ class _SurveyProgressState extends State<SurveyProgress> {
                       height: progressbarConfiguration.height,
                       color: progressbarConfiguration.progressbarColor,
                     ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.linear,
-                      width: state.currentStepIndex /
-                          state.stepCount *
-                          MediaQuery.of(context).size.width,
-                      height: progressbarConfiguration.height,
-                      color: progressbarConfiguration.valueProgressbarColor ??
-                          Theme.of(context).primaryColor,
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.linear,
+                          width: (state.currentStepIndex + 1) /
+                              state.stepCount *
+                              constraints.maxWidth,
+                          height: progressbarConfiguration.height,
+                          color:
+                              progressbarConfiguration.valueProgressbarColor ??
+                                  Theme.of(context).primaryColor,
+                        );
+                      },
                     ),
                   ],
                 ),
