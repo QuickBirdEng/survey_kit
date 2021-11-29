@@ -11,6 +11,8 @@ class LoadingSurveyState extends SurveyState {}
 
 class PresentingSurveyState extends SurveyState {
   final AppBarConfiguration appBarConfiguration;
+  final List<Step> steps;
+  final Set<QuestionResult> questionResults;
   final Step currentStep;
   final QuestionResult? result;
   final int currentStepIndex;
@@ -21,6 +23,8 @@ class PresentingSurveyState extends SurveyState {
     required this.stepCount,
     required this.appBarConfiguration,
     required this.currentStep,
+    required this.steps,
+    required this.questionResults,
     this.result,
     this.currentStepIndex = 0,
     this.isPreviousStep = false,

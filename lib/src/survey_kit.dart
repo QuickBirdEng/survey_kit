@@ -15,6 +15,7 @@ import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 import 'package:survey_kit/survey_kit.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 
 class SurveyKit extends StatefulWidget {
   /// [Task] for the configuraton of the survey
@@ -39,9 +40,6 @@ class SurveyKit extends StatefulWidget {
   // Changes the styling of the progressbar in the appbar
   final SurveyProgressConfiguration? surveyProgressbarConfiguration;
 
-  //Transition
-  final Widget Function(Widget, Animation<double>)? transitionBuilder;
-
   const SurveyKit({
     required this.task,
     required this.onResult,
@@ -50,7 +48,6 @@ class SurveyKit extends StatefulWidget {
     this.appBar,
     this.showProgress,
     this.surveyProgressbarConfiguration,
-    this.transitionBuilder,
   });
 
   @override
@@ -103,9 +100,9 @@ class _SurveyKitState extends State<SurveyKit> {
             onResult: widget.onResult,
           ),
           child: SurveyPage(
+            length: widget.task.steps.length,
             onResult: widget.onResult,
             appBar: widget.appBar,
-            transitionBuilder: widget.transitionBuilder,
           ),
         ),
       ),
@@ -113,16 +110,36 @@ class _SurveyKitState extends State<SurveyKit> {
   }
 }
 
-class SurveyPage extends StatelessWidget {
+class SurveyPage extends StatefulWidget {
+  final int length;
   final Widget Function(AppBarConfiguration appBarConfiguration)? appBar;
   final Function(SurveyResult) onResult;
-  final Widget Function(Widget, Animation<double>)? transitionBuilder;
 
   const SurveyPage({
+    required this.length,
     required this.onResult,
     this.appBar,
-    this.transitionBuilder,
   });
+
+  @override
+  _SurveyPageState createState() => _SurveyPageState();
+}
+
+class _SurveyPageState extends State<SurveyPage>
+    with SingleTickerProviderStateMixin {
+  late final TabController tabController;
+
+  @override
+  void initState() {
+    tabController = TabController(length: widget.length, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +147,10 @@ class SurveyPage extends StatelessWidget {
       listenWhen: (previous, current) => previous != current,
       listener: (context, state) async {
         if (state is SurveyResultState) {
-          onResult.call(state.result);
+          widget.onResult.call(state.result);
+        }
+        if (state is PresentingSurveyState) {
+          tabController.animateTo(state.currentStepIndex);
         }
       },
       builder: (BuildContext context, SurveyState state) {
@@ -143,35 +163,30 @@ class SurveyPage extends StatelessWidget {
                       double.infinity,
                       70.0,
                     ),
-                    child: appBar != null
-                        ? appBar!.call(state.appBarConfiguration)
+                    child: widget.appBar != null
+                        ? widget.appBar!.call(state.appBarConfiguration)
                         : SurveyAppBar(
                             appBarConfiguration: state.appBarConfiguration,
                           ),
                   )
                 : null,
-            body: AnimatedSwitcher(
-              transitionBuilder: transitionBuilder ??
-                  (Widget child, Animation<double> animation) {
-                    return SlideTransition(
-                      position: Tween<Offset>(
-                        begin: state.isPreviousStep
-                            ? const Offset(-1.0, 0)
-                            : const Offset(1.0, 0),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: child,
-                    );
-                  },
-              duration: const Duration(milliseconds: 250),
-              child: Container(
-                key: ValueKey<String>(
-                  state.currentStep.stepIdentifier.id,
-                ),
-                child: state.currentStep.createView(
-                  questionResult: state.result,
-                ),
-              ),
+            body: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: tabController,
+              children: state.steps
+                  .map(
+                    (e) => Container(
+                      key: ValueKey<String>(
+                        e.stepIdentifier.id,
+                      ),
+                      child: e.createView(
+                        questionResult: state.questionResults.firstWhereOrNull(
+                          (element) => element.id == e.stepIdentifier,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           );
         } else if (state is SurveyResultState && state.currentStep != null) {

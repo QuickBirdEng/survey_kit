@@ -51,6 +51,8 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
     if (step != null) {
       return PresentingSurveyState(
         currentStep: step,
+        questionResults: results,
+        steps: taskNavigator.task.steps,
         result: null,
         currentStepIndex: currentStepIndex(step),
         stepCount: countSteps,
@@ -91,6 +93,8 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
     return PresentingSurveyState(
       currentStep: nextStep,
       result: questionResult,
+      steps: taskNavigator.task.steps,
+      questionResults: results,
       currentStepIndex: currentStepIndex(nextStep),
       stepCount: countSteps,
       appBarConfiguration: AppBarConfiguration(
@@ -113,6 +117,8 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       return PresentingSurveyState(
         currentStep: previousStep,
         result: questionResult,
+        steps: taskNavigator.task.steps,
+        questionResults: results,
         currentStepIndex: currentStepIndex(previousStep),
         appBarConfiguration: AppBarConfiguration(
           showProgress: previousStep.showProgress,
