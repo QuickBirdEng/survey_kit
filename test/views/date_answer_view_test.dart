@@ -7,7 +7,7 @@ import 'package:survey_kit/src/answer_format/date_answer_format.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/date_answer_view.dart';
-import 'package:survey_kit/survey_kit.dart';
+import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 void main() {
   DateAnswerView _validDateAnswerView() => DateAnswerView(

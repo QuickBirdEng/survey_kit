@@ -2,9 +2,11 @@ import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
+import 'package:survey_kit/src/steps/predefined_steps/completion_step.dart';
+import 'package:survey_kit/src/steps/predefined_steps/instruction_step.dart';
+import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/steps/predefined_steps/video_step.dart';
 import 'package:survey_kit/src/steps/step_not_defined_exception.dart';
-import 'package:survey_kit/survey_kit.dart';
 
 abstract class Step {
   final StepIdentifier stepIdentifier;
