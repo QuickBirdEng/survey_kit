@@ -78,9 +78,12 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView> {
                     return SelectionListTile(
                       text: tc.text,
                       onTap: () {
-                        setState(() {
+                        if (_selectedChoice == tc) {
+                          _selectedChoice = null;
+                        } else {
                           _selectedChoice = tc;
-                        });
+                        }
+                        setState(() {});
                       },
                       isSelected: _selectedChoice == tc,
                     );

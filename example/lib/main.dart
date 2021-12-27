@@ -187,6 +187,7 @@ class _MyAppState extends State<MyApp> {
         QuestionStep(
           title: 'Done?',
           text: 'We are done, do you mind to tell us more about yourself?',
+          isOptional: true,
           answerFormat: SingleChoiceAnswerFormat(
             textChoices: [
               TextChoice(text: 'Yes', value: 'Yes'),
