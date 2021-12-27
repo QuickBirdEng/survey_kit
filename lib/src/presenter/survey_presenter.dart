@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';

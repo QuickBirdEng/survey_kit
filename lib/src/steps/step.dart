@@ -13,7 +13,7 @@ abstract class Step {
   @JsonKey(defaultValue: false)
   final bool isOptional;
   @JsonKey(defaultValue: 'Next')
-  final String buttonText;
+  final String? buttonText;
   final bool canGoBack;
   final bool showProgress;
   final bool showAppBar;
