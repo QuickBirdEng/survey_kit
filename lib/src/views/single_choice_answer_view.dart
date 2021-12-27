@@ -43,7 +43,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView> {
         id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
-        valueIdentifier: _selectedChoice?.text ?? '',
+        valueIdentifier: _selectedChoice?.value ?? '',
         result: _selectedChoice,
       ),
       isValid: widget.questionStep.isOptional || _selectedChoice != null,

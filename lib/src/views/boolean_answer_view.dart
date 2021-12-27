@@ -75,18 +75,24 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView> {
               SelectionListTile(
                 text: _answerFormat.positiveAnswer,
                 onTap: () {
-                  setState(() {
+                  if (_result == BooleanResult.POSITIVE) {
+                    _result = null;
+                  } else {
                     _result = BooleanResult.POSITIVE;
-                  });
+                  }
+                  setState(() {});
                 },
                 isSelected: _result == BooleanResult.POSITIVE,
               ),
               SelectionListTile(
                 text: _answerFormat.negativeAnswer,
                 onTap: () {
-                  setState(() {
+                  if (_result == BooleanResult.NEGATIVE) {
+                    _result = null;
+                  } else {
                     _result = BooleanResult.NEGATIVE;
-                  });
+                  }
+                  setState(() {});
                 },
                 isSelected: _result == BooleanResult.NEGATIVE,
               ),

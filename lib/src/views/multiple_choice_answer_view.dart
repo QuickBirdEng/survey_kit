@@ -45,7 +45,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
         startDate: _startDateTime,
         endDate: DateTime.now(),
         valueIdentifier:
-            _selectedChoices.map((choices) => choices.text).join(','),
+            _selectedChoices.map((choices) => choices.value).join(','),
         result: _selectedChoices,
       ),
       isValid: widget.questionStep.isOptional || _selectedChoices.isNotEmpty,

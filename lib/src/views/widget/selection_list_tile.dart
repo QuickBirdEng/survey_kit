@@ -30,14 +30,14 @@ class SelectionListTile extends StatelessWidget {
             trailing: isSelected
                 ? Icon(
                     Icons.check,
-                    size: 32.0,
+                    size: 32,
                     color: isSelected
                         ? Theme.of(context).primaryColor
                         : Colors.black,
                   )
                 : Container(
-                    width: 0.0,
-                    height: 0.0,
+                    width: 32,
+                    height: 32,
                   ),
             onTap: () => onTap.call(),
           ),
