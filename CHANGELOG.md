@@ -1,3 +1,10 @@
+# 0.0.20
+- FEATURE: Progressbar
+- FEATURE: Transition between questions
+- FEATURE: Localization of text
+
+- INFO: Updated dependencies
+
 # 0.0.12
 - FEATURE: Video-Step
 

@@ -35,6 +35,10 @@ class _MyAppState extends State<MyApp> {
                     },
                     task: task,
                     showProgress: true,
+                    localizations: {
+                      'cancel': 'Cancel',
+                      'next': 'Next',
+                    },
                     themeData: Theme.of(context).copyWith(
                       colorScheme: ColorScheme.fromSwatch(
                         primarySwatch: Colors.cyan,

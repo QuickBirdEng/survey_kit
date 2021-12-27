@@ -39,6 +39,8 @@ class SurveyKit extends StatefulWidget {
   // Changes the styling of the progressbar in the appbar
   final SurveyProgressConfiguration? surveyProgressbarConfiguration;
 
+  final Map<String, String>? localizations;
+
   const SurveyKit({
     required this.task,
     required this.onResult,
@@ -47,6 +49,7 @@ class SurveyKit extends StatefulWidget {
     this.appBar,
     this.showProgress,
     this.surveyProgressbarConfiguration,
+    this.localizations,
   });
 
   @override
@@ -91,7 +94,8 @@ class _SurveyKitState extends State<SurveyKit> {
           Provider<SurveyProgressConfiguration>.value(
             value: widget.surveyProgressbarConfiguration ??
                 SurveyProgressConfiguration(),
-          )
+          ),
+          Provider<Map<String, String>?>.value(value: widget.localizations)
         ],
         child: BlocProvider(
           create: (BuildContext context) => SurveyPresenter(

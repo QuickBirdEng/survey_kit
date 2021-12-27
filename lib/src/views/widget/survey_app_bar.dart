@@ -40,7 +40,7 @@ class SurveyAppBar extends StatelessWidget {
         TextButton(
           child: appBarConfiguration.trailing ??
               Text(
-                'Cancel',
+                context.read<Map<String, String>?>()?['cancel'] ?? 'Cancel',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                 ),
