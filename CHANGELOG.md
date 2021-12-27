@@ -1,6 +1,7 @@
 # 0.0.20
 - BREAKING: Value identifier for Single-/Multiplechoice answers is now the value
 - BREAKING: You now have to close the survey yourself when finished in onResult
+- BREAKING: Remove video player step for now because of dependency issues (If you rely on it use https://github.com/quickbirdstudios/survey_kit.git)
 
 - FEATURE: Progressbar
 - FEATURE: Transition between questions

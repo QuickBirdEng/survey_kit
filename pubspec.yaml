@@ -11,9 +11,6 @@ environment:
 
 dependencies:
   bloc: ^7.1.0
-  chewie:
-    git:
-      url: https://github.com/brianegan/chewie.git
   collection: ^1.15.0
   cupertino_icons: ^1.0.2
   flutter:
