@@ -1,5 +1,6 @@
+import 'package:survey_kit/src/navigator/rules/conditional_navigation_rule.dart';
+import 'package:survey_kit/src/navigator/rules/direct_navigation_rule.dart';
 import 'package:survey_kit/src/navigator/rules/rule_not_defined_exception.dart';
-import 'package:survey_kit/survey_kit.dart';
 
 abstract class NavigationRule {
   const NavigationRule();

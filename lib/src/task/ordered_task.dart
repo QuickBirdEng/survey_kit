@@ -11,7 +11,12 @@ class OrderedTask extends Task {
   OrderedTask({
     required TaskIdentifier id,
     required List<Step> steps,
-  }) : super(id: id, steps: steps);
+    Step? initialStep,
+  }) : super(
+          id: id,
+          steps: steps,
+          initalStep: initialStep,
+        );
 
   factory OrderedTask.fromJson(Map<String, dynamic> json) => OrderedTask(
         id: TaskIdentifier.fromJson(json),

@@ -16,12 +16,15 @@ class CompletionStep extends Step {
     bool isOptional = false,
     required StepIdentifier stepIdentifier,
     String buttonText = 'End Survey',
+    bool showAppBar = true,
     required this.title,
     required this.text,
   }) : super(
-            stepIdentifier: stepIdentifier,
-            isOptional: isOptional,
-            buttonText: buttonText);
+          stepIdentifier: stepIdentifier,
+          isOptional: isOptional,
+          buttonText: buttonText,
+          showAppBar: showAppBar,
+        );
 
   @override
   Widget createView({required QuestionResult? questionResult}) {

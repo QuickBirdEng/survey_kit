@@ -1,3 +1,17 @@
+# 0.0.20
+- BREAKING: Value identifier for Single-/Multiplechoice answers is now the value
+- BREAKING: You now have to close the survey yourself when finished in onResult
+
+- FEATURE: Progressbar
+- FEATURE: Transition between questions
+- FEATURE: Localization of text
+
+- BUGFIX: isOptional Flag works now as expected
+- BUGFIX: Textinput does not spit text in half anymore
+- BUGFIX: Text in Single-/Multiplechoice answers does now break the same if selected or unselected
+
+- INFO: Updated dependencies
+
 # 0.0.12
 - FEATURE: Video-Step
 

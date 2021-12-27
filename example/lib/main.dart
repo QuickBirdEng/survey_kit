@@ -34,6 +34,11 @@ class _MyAppState extends State<MyApp> {
                       print(result.finishReason);
                     },
                     task: task,
+                    showProgress: true,
+                    localizations: {
+                      'cancel': 'Cancel',
+                      'next': 'Next',
+                    },
                     themeData: Theme.of(context).copyWith(
                       colorScheme: ColorScheme.fromSwatch(
                         primarySwatch: Colors.cyan,
@@ -47,10 +52,8 @@ class _MyAppState extends State<MyApp> {
                         iconTheme: IconThemeData(
                           color: Colors.cyan,
                         ),
-                        textTheme: TextTheme(
-                          button: TextStyle(
-                            color: Colors.cyan,
-                          ),
+                        titleTextStyle: TextStyle(
+                          color: Colors.cyan,
                         ),
                       ),
                       iconTheme: const IconThemeData(
@@ -107,6 +110,9 @@ class _MyAppState extends State<MyApp> {
                           ),
                         ),
                       ),
+                    ),
+                    surveyProgressbarConfiguration: SurveyProgressConfiguration(
+                      backgroundColor: Colors.white,
                     ),
                   );
                 }
@@ -168,6 +174,7 @@ class _MyAppState extends State<MyApp> {
         QuestionStep(
           title: 'Known allergies',
           text: 'Do you have any allergies that we should be aware of?',
+          isOptional: false,
           answerFormat: MultipleChoiceAnswerFormat(
             textChoices: [
               TextChoice(text: 'Penicillin', value: 'Penicillin'),
@@ -180,6 +187,7 @@ class _MyAppState extends State<MyApp> {
         QuestionStep(
           title: 'Done?',
           text: 'We are done, do you mind to tell us more about yourself?',
+          isOptional: true,
           answerFormat: SingleChoiceAnswerFormat(
             textChoices: [
               TextChoice(text: 'Yes', value: 'Yes'),

@@ -195,6 +195,25 @@ The `SurveyResult` contains a list of `StepResult`s and the `FinishReason`. The 
 There are already many adaptive elements for Android and IOS implemented. In the future development other parts will be adapted too.
 The styling can be adjusted by the build in Flutter theme.
 
+### Localization
+If you want to override the fixed texts or adapt them to different languages like close, next, .... You need to provide SurveyKit a Map of translations
+
+```dart
+SurveyKit(
+    localizations: {
+        'cancel': 'Cancel',
+    }
+);
+```
+Here is a complete list of keys that can be overriden:
+
+| key   |  value |
+|-------|--------|
+| cancel|        |
+| next  |        |
+|       |        |
+
+
 ### Start the survey
 All that's left is to insert the survey in the widget tree and enjoy.🎉🎊
 ```dart

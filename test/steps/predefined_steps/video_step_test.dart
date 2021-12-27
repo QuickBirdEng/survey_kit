@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 import 'package:survey_kit/src/steps/predefined_steps/video_step.dart';
-import 'package:survey_kit/survey_kit.dart';
 
 void main() {
   test('serialization of video step', () {

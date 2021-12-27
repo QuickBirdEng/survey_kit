@@ -2,21 +2,29 @@ import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
+import 'package:survey_kit/src/steps/predefined_steps/completion_step.dart';
+import 'package:survey_kit/src/steps/predefined_steps/instruction_step.dart';
+import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/steps/predefined_steps/video_step.dart';
 import 'package:survey_kit/src/steps/step_not_defined_exception.dart';
-import 'package:survey_kit/survey_kit.dart';
 
 abstract class Step {
   final StepIdentifier stepIdentifier;
   @JsonKey(defaultValue: false)
   final bool isOptional;
   @JsonKey(defaultValue: 'Next')
-  final String buttonText;
+  final String? buttonText;
+  final bool canGoBack;
+  final bool showProgress;
+  final bool showAppBar;
 
   Step({
     StepIdentifier? stepIdentifier,
     this.isOptional = false,
     this.buttonText = 'Next',
+    this.canGoBack = true,
+    this.showProgress = true,
+    this.showAppBar = true,
   }) : stepIdentifier = stepIdentifier ?? StepIdentifier();
 
   Widget createView({required QuestionResult? questionResult});
