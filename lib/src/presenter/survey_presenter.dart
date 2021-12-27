@@ -1,5 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
@@ -12,11 +13,14 @@ import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 //TO DO: Extract gathering of the results into another class
 class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
   final TaskNavigator taskNavigator;
+  final Function(SurveyResult) onResult;
+
   Set<QuestionResult> results = {};
   late final DateTime startDate;
 
   SurveyPresenter({
     required this.taskNavigator,
+    required this.onResult,
   }) : super(LoadingSurveyState()) {
     this.startDate = DateTime.now();
     add(StartSurvey());
@@ -45,7 +49,18 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
   SurveyState _handleInitialStep() {
     Step? step = taskNavigator.firstStep();
     if (step != null) {
-      return PresentingSurveyState(step, null);
+      return PresentingSurveyState(
+        currentStep: step,
+        questionResults: results,
+        steps: taskNavigator.task.steps,
+        result: null,
+        currentStepIndex: currentStepIndex(step),
+        stepCount: countSteps,
+        appBarConfiguration: AppBarConfiguration(
+          showProgress: step.showProgress,
+          canBack: step.canGoBack,
+        ),
+      );
     }
 
     //If not steps are provided we finish the survey
@@ -56,7 +71,10 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       finishReason: FinishReason.COMPLETED,
       results: [],
     );
-    return SurveyResultState(result: taskResult);
+    return SurveyResultState(
+      result: taskResult,
+      currentStep: null,
+    );
   }
 
   SurveyState _handleNextStep(
@@ -66,15 +84,23 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
         step: currentState.currentStep, questionResult: event.questionResult);
 
     if (nextStep == null) {
-      return _handleSurveyFinished();
+      return _handleSurveyFinished(currentState);
     }
 
     QuestionResult? questionResult =
         _getResultByStepIdentifier(nextStep.stepIdentifier);
 
     return PresentingSurveyState(
-      nextStep,
-      questionResult,
+      currentStep: nextStep,
+      result: questionResult,
+      steps: taskNavigator.task.steps,
+      questionResults: results,
+      currentStepIndex: currentStepIndex(nextStep),
+      stepCount: countSteps,
+      appBarConfiguration: AppBarConfiguration(
+        showProgress: nextStep.showProgress,
+        canBack: nextStep.canGoBack,
+      ),
     );
   }
 
@@ -88,7 +114,19 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       QuestionResult? questionResult =
           _getResultByStepIdentifier(previousStep.stepIdentifier);
 
-      return PresentingSurveyState(previousStep, questionResult);
+      return PresentingSurveyState(
+        currentStep: previousStep,
+        result: questionResult,
+        steps: taskNavigator.task.steps,
+        questionResults: results,
+        currentStepIndex: currentStepIndex(previousStep),
+        appBarConfiguration: AppBarConfiguration(
+          showProgress: previousStep.showProgress,
+          canBack: previousStep.canGoBack,
+        ),
+        isPreviousStep: true,
+        stepCount: countSteps,
+      );
     }
 
     //If theres no previous step we can't go back further
@@ -115,11 +153,15 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       finishReason: FinishReason.DISCARDED,
       results: stepResults,
     );
-    return SurveyResultState(result: taskResult);
+    return SurveyResultState(
+      result: taskResult,
+      stepResult: currentState.result,
+      currentStep: currentState.currentStep,
+    );
   }
 
   //Currently we are only handling one question per step
-  SurveyState _handleSurveyFinished() {
+  SurveyState _handleSurveyFinished(PresentingSurveyState currentState) {
     List<StepResult> stepResults =
         results.map((e) => StepResult.fromQuestion(questionResult: e)).toList();
     final taskResult = SurveyResult(
@@ -129,14 +171,26 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       finishReason: FinishReason.COMPLETED,
       results: stepResults,
     );
-    return SurveyResultState(result: taskResult);
+    return SurveyResultState(
+      result: taskResult,
+      currentStep: currentState.currentStep,
+      stepResult: currentState.result,
+    );
   }
 
-  void _addResult(QuestionResult questionResult) {
+  void _addResult(QuestionResult? questionResult) {
+    if (questionResult == null) {
+      return;
+    }
     results
         .removeWhere((QuestionResult result) => result.id == questionResult.id);
     results.add(
       questionResult,
     );
+  }
+
+  int get countSteps => taskNavigator.countSteps;
+  int currentStepIndex(Step step) {
+    return taskNavigator.currentStepIndex(step);
   }
 }

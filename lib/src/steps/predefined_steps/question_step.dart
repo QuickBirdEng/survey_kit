@@ -46,14 +46,17 @@ class QuestionStep extends Step {
     bool isOptional = false,
     String buttonText = 'Next',
     StepIdentifier? stepIdentifier,
+    bool showAppBar = true,
     this.title = '',
     this.text = '',
     this.content = const SizedBox.shrink(),
     required this.answerFormat,
   }) : super(
-            stepIdentifier: stepIdentifier,
-            isOptional: isOptional,
-            buttonText: buttonText);
+          stepIdentifier: stepIdentifier,
+          isOptional: isOptional,
+          buttonText: buttonText,
+          showAppBar: showAppBar,
+        );
 
   @override
   Widget createView({required QuestionResult? questionResult}) {

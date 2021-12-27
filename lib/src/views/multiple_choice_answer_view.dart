@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/text_choice.dart';
 import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
@@ -46,7 +45,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
         startDate: _startDateTime,
         endDate: DateTime.now(),
         valueIdentifier:
-            _selectedChoices.map((choices) => choices.text).join(','),
+            _selectedChoices.map((choices) => choices.value).join(','),
         result: _selectedChoices,
       ),
       isValid: widget.questionStep.isOptional || _selectedChoices.isNotEmpty,

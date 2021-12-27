@@ -37,4 +37,9 @@ abstract class TaskNavigator {
   void record(Step step) {
     history.add(step);
   }
+
+  int get countSteps => task.steps.length;
+  int currentStepIndex(Step step) {
+    return task.steps.indexOf(step);
+  }
 }

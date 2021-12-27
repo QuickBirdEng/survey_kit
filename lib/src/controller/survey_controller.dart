@@ -30,7 +30,7 @@ class SurveyController {
   /// ```
   final Function(
     BuildContext context,
-    QuestionResult Function() resultFunction,
+    QuestionResult Function()? resultFunction,
   )? onStepBack;
 
   /// Defines what should happen if the survey should be closed
@@ -44,7 +44,7 @@ class SurveyController {
   /// ```
   final Function(
     BuildContext context,
-    QuestionResult Function() resultFunction,
+    QuestionResult Function()? resultFunction,
   )? onCloseSurvey;
 
   SurveyController({
@@ -68,32 +68,32 @@ class SurveyController {
     );
   }
 
-  void stepBack(
-    BuildContext context,
-    QuestionResult Function() resultFunction,
-  ) {
+  void stepBack({
+    required BuildContext context,
+    QuestionResult Function()? resultFunction,
+  }) {
     if (onStepBack != null) {
       onStepBack!(context, resultFunction);
       return;
     }
     BlocProvider.of<SurveyPresenter>(context).add(
       StepBack(
-        resultFunction.call(),
+        resultFunction != null ? resultFunction.call() : null,
       ),
     );
   }
 
-  void closeSurvey(
-    BuildContext context,
-    QuestionResult Function() resultFunction,
-  ) {
+  void closeSurvey({
+    required BuildContext context,
+    QuestionResult Function()? resultFunction,
+  }) {
     if (onCloseSurvey != null) {
       onCloseSurvey!(context, resultFunction);
       return;
     }
     BlocProvider.of<SurveyPresenter>(context).add(
       CloseSurvey(
-        resultFunction.call(),
+        resultFunction != null ? resultFunction.call() : null,
       ),
     );
   }

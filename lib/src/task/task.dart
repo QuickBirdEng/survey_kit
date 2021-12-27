@@ -1,8 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/task/identifier/task_identifier.dart';
+import 'package:survey_kit/src/task/navigable_task.dart';
+import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task_not_defined_exception.dart';
-import 'package:survey_kit/survey_kit.dart';
 
 /// Abstract definition of survey task
 ///
@@ -13,10 +14,12 @@ abstract class Task {
   late final TaskIdentifier id;
   @JsonKey(defaultValue: [])
   final List<Step> steps;
+  final Step? initalStep;
 
   Task({
     TaskIdentifier? id,
     this.steps = const [],
+    this.initalStep,
   }) {
     if (id == null) {
       id = TaskIdentifier();

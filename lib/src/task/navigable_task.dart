@@ -15,9 +15,14 @@ class NavigableTask extends Task {
   NavigableTask({
     TaskIdentifier? id,
     List<Step> steps = const [],
+    Step? initialStep,
     Map<StepIdentifier, NavigationRule>? navigationRules,
   })  : this.navigationRules = navigationRules ?? {},
-        super(id: id, steps: steps);
+        super(
+          id: id,
+          steps: steps,
+          initalStep: initialStep,
+        );
 
   /// Adds a [NavigationRule] to the [navigationRule] Map
   /// It only adds the [NavigationRule] if none is already set for the
