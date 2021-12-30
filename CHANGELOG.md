@@ -1,3 +1,6 @@
+# 0.0.21
+- BREAKING: Adapated text styles to to TextThemes - You can find a complete list in the README.md
+
 # 0.0.20
 - BREAKING: Value identifier for Single-/Multiplechoice answers is now the value
 - BREAKING: You now have to close the survey yourself when finished in onResult

@@ -195,6 +195,13 @@ The `SurveyResult` contains a list of `StepResult`s and the `FinishReason`. The 
 There are already many adaptive elements for Android and IOS implemented. In the future development other parts will be adapted too.
 The styling can be adjusted by the build in Flutter theme.
 
+| textTheme   |  Used in                    |
+|-------------|-----------------------------|
+| headline2   | Title of question           |
+| headline5   | Text of question            |
+| bodyText2   | Text of ListTiles           |
+| subtitle1   | Textstyle used in TextFields|
+
 ### Localization
 If you want to override the fixed texts or adapt them to different languages like close, next, .... You need to provide SurveyKit a Map of translations
 
@@ -209,8 +216,8 @@ Here is a complete list of keys that can be overriden:
 
 | key   |  value |
 |-------|--------|
-| cancel|        |
-| next  |        |
+| cancel| cancel |
+| next  | next   |
 |       |        |
 
 
