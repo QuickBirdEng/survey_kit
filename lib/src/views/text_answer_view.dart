@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:survey_kit/src/answer_format/text_answer_format.dart';
 import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/result/question/text_question_result.dart';
@@ -66,7 +65,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headline2,
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
@@ -78,22 +77,17 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                 const EdgeInsets.only(bottom: 32.0, left: 14.0, right: 14.0),
             child: Text(
               widget.questionStep.text,
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
+              style: Theme.of(context).textTheme.bodyText2,
               textAlign: TextAlign.center,
             ),
           ),
           Container(
             width: MediaQuery.of(context).size.width,
             height: 50.0,
-            child: PlatformTextField(
-              material: (_, __) => MaterialTextFieldData(
-                decoration: textFieldInputDecoration(
-                  hint: _textAnswerFormat.hint,
-                ),
+            child: TextField(
+              decoration: textFieldInputDecoration(
+                hint: _textAnswerFormat.hint,
               ),
-              cupertino: (_, __) => CupertinoTextFieldData(),
               controller: _controller,
               textAlign: TextAlign.center,
               onChanged: (String text) {

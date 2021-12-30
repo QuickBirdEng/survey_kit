@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:survey_kit/src/result/step/completion_step_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/completion_step.dart';
@@ -19,19 +19,15 @@ class CompletionView extends StatelessWidget {
         _startDate,
         DateTime.now(),
       ),
-      title: Text(
-        completionStep.title,
-        style: TextStyle(
-          fontSize: 28.0,
-        ),
-      ),
+      title: Text(completionStep.title,
+          style: Theme.of(context).textTheme.headline2),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 64.0),
         child: Column(
           children: [
             Text(
               completionStep.text,
-              style: TextStyle(fontSize: 18.0),
+              style: Theme.of(context).textTheme.bodyText2,
               textAlign: TextAlign.center,
             ),
             Padding(

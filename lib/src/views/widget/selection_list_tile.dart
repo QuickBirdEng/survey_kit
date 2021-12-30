@@ -24,7 +24,7 @@ class SelectionListTile extends StatelessWidget {
               style: Theme.of(context).textTheme.headline5?.copyWith(
                     color: isSelected
                         ? Theme.of(context).primaryColor
-                        : Colors.black,
+                        : Theme.of(context).textTheme.headline5?.color,
                   ),
             ),
             trailing: isSelected

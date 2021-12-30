@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 InputDecoration textFieldInputDecoration({String hint = ''}) => InputDecoration(
       contentPadding: const EdgeInsets.only(
-        left: 8,
-        bottom: 8,
-        top: 8,
-        right: 8,
+        left: 10,
+        bottom: 10,
+        top: 10,
+        right: 10,
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(

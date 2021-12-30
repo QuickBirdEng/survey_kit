@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
@@ -59,6 +60,14 @@ class _MyAppState extends State<MyApp> {
                       iconTheme: const IconThemeData(
                         color: Colors.cyan,
                       ),
+                      textSelectionTheme: TextSelectionThemeData(
+                        cursorColor: Colors.cyan,
+                        selectionColor: Colors.cyan,
+                        selectionHandleColor: Colors.cyan,
+                      ),
+                      cupertinoOverrideTheme: CupertinoThemeData(
+                        primaryColor: Colors.cyan,
+                      ),
                       outlinedButtonTheme: OutlinedButtonThemeData(
                         style: ButtonStyle(
                           minimumSize: MaterialStateProperty.all(
@@ -108,6 +117,29 @@ class _MyAppState extends State<MyApp> {
                                   color: Colors.cyan,
                                 ),
                           ),
+                        ),
+                      ),
+                      textTheme: TextTheme(
+                        headline2: TextStyle(
+                          fontSize: 28.0,
+                          color: Colors.black,
+                        ),
+                        headline5: TextStyle(
+                          fontSize: 24.0,
+                          color: Colors.black,
+                        ),
+                        bodyText2: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                        ),
+                        subtitle1: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      inputDecorationTheme: InputDecorationTheme(
+                        labelStyle: TextStyle(
+                          color: Colors.black,
                         ),
                       ),
                     ),
