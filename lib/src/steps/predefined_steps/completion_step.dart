@@ -11,6 +11,7 @@ part 'completion_step.g.dart';
 class CompletionStep extends Step {
   final String title;
   final String text;
+  final String assetPath;
 
   CompletionStep({
     bool isOptional = false,
@@ -19,6 +20,7 @@ class CompletionStep extends Step {
     bool showAppBar = true,
     required this.title,
     required this.text,
+    this.assetPath = ""
   }) : super(
           stepIdentifier: stepIdentifier,
           isOptional: isOptional,
@@ -28,7 +30,7 @@ class CompletionStep extends Step {
 
   @override
   Widget createView({required QuestionResult? questionResult}) {
-    return CompletionView(completionStep: this);
+    return CompletionView(completionStep: this, assetPath: assetPath);
   }
 
   factory CompletionStep.fromJson(Map<String, dynamic> json) =>

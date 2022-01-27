@@ -7,8 +7,9 @@ import 'package:survey_kit/src/views/widget/step_view.dart';
 class CompletionView extends StatelessWidget {
   final CompletionStep completionStep;
   final DateTime _startDate = DateTime.now();
+  final String assetPath;
 
-  CompletionView({required this.completionStep});
+  CompletionView({required this.completionStep, this.assetPath = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,12 @@ class CompletionView extends StatelessWidget {
               child: Container(
                 width: 150.0,
                 height: 150.0,
-                child: Lottie.asset(
+                child: assetPath.isNotEmpty
+                ? Lottie.asset(
+                  assetPath,
+                  repeat: false,
+                )
+                : Lottie.asset(
                   'assets/fancy_checkmark.json',
                   package: 'survey_kit',
                   repeat: false,
