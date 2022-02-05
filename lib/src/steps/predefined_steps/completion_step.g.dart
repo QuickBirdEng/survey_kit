@@ -14,6 +14,7 @@ CompletionStep _$CompletionStepFromJson(Map<String, dynamic> json) {
     buttonText: json['buttonText'] as String? ?? 'Next',
     title: json['title'] as String,
     text: json['text'] as String,
+    assetPath: json['assetPath'] as String,
   );
 }
 
@@ -24,4 +25,5 @@ Map<String, dynamic> _$CompletionStepToJson(CompletionStep instance) =>
       'buttonText': instance.buttonText,
       'title': instance.title,
       'text': instance.text,
+      'assetPath': instance.assetPath,
     };
