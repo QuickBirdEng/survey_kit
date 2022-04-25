@@ -1,6 +1,6 @@
 name: survey_kit
 description: Create beautiful surveys with Flutter (inspired by iOS ResearchKit Surveys)
-version: 0.0.21
+version: 0.0.22
 homepage: https://quickbirdstudios.com
 repository: https://github.com/quickbirdstudios/survey_kit
 issue_tracker: https://github.com/quickbirdstudios/survey_kit/issues
