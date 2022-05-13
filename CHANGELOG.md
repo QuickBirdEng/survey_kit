@@ -1,3 +1,5 @@
+# 0.1
+- INFO: Updated dependencies
 # 0.0.21
 - BREAKING: Adapated text styles to to TextThemes - You can find a complete list in the README.md
 
