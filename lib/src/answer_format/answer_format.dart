@@ -1,6 +1,9 @@
+// Edited by Antonio Bruno, Giacomo Ignesti and Massimo Martinelli  2022
+
 import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
 import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
+import 'package:survey_kit/src/answer_format/double_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/scale_answer_format.dart';
 import 'package:survey_kit/src/answer_format/single_choice_answer_format.dart';
@@ -17,6 +20,8 @@ abstract class AnswerFormat {
         return BooleanAnswerFormat.fromJson(json);
       case 'integer':
         return IntegerAnswerFormat.fromJson(json);
+      case 'double':
+        return DoubleAnswerFormat.fromJson(json);
       case 'text':
         return TextAnswerFormat.fromJson(json);
       case 'date':
