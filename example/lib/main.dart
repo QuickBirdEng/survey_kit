@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
           child: Align(
             alignment: Alignment.center,
             child: FutureBuilder<Task>(
-              future: getSampleTask(),
+              future: getJsonTask(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData &&
@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
                   return SurveyKit(
                     onResult: (SurveyResult result) {
                       print(result.finishReason);
+                      Navigator.pushNamed(context, '/');
                     },
                     task: task,
                     showProgress: true,

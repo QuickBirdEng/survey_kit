@@ -10,5 +10,6 @@ Map<String, dynamic> _$OrderedTaskToJson(OrderedTask instance) =>
     <String, dynamic>{
       'id': instance.id,
       'steps': instance.steps,
+      'initalStep': instance.initalStep,
       'hashCode': instance.hashCode,
     };

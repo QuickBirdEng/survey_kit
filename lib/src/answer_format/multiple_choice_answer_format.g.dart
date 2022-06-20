@@ -7,17 +7,16 @@ part of 'multiple_choice_answer_format.dart';
 // **************************************************************************
 
 MultipleChoiceAnswerFormat _$MultipleChoiceAnswerFormatFromJson(
-    Map<String, dynamic> json) {
-  return MultipleChoiceAnswerFormat(
-    textChoices: (json['textChoices'] as List<dynamic>)
-        .map((e) => TextChoice.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    defaultSelection: (json['defaultSelection'] as List<dynamic>?)
-            ?.map((e) => TextChoice.fromJson(e as Map<String, dynamic>))
-            .toList() ??
-        [],
-  );
-}
+        Map<String, dynamic> json) =>
+    MultipleChoiceAnswerFormat(
+      textChoices: (json['textChoices'] as List<dynamic>)
+          .map((e) => TextChoice.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      defaultSelection: (json['defaultSelection'] as List<dynamic>?)
+              ?.map((e) => TextChoice.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
 
 Map<String, dynamic> _$MultipleChoiceAnswerFormatToJson(
         MultipleChoiceAnswerFormat instance) =>

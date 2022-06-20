@@ -6,12 +6,10 @@ part of 'text_choice.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TextChoice _$TextChoiceFromJson(Map<String, dynamic> json) {
-  return TextChoice(
-    text: json['text'] as String,
-    value: json['value'] as String,
-  );
-}
+TextChoice _$TextChoiceFromJson(Map<String, dynamic> json) => TextChoice(
+      text: json['text'] as String,
+      value: json['value'] as String,
+    );
 
 Map<String, dynamic> _$TextChoiceToJson(TextChoice instance) =>
     <String, dynamic>{

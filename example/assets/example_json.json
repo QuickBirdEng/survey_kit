@@ -20,16 +20,7 @@
             "destinationStepIdentifier": {
                 "id": "3"
             }
-        },
-        {
-            "type": "direct",
-            "triggerStepIdentifier": {
-                "id": "2"
-            },
-            "destinationStepIdentifier": {
-                "id": "8"
-            }
-        }
+        }  
     ],
     "steps": [
         {
@@ -40,18 +31,6 @@
             "title": "Welcome to the\nQuickBird Studios\nHealth Survey",
             "text": "Get ready for a bunch of super random questions!",
             "buttonText": "Let's go!"
-        },
-        {
-            "stepIdentifier": {
-                "id": "11"
-            },
-            "type": "video",
-            "url": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
-            "isAutomaticFullscreen": true,
-            "isAutoPlay": true,
-            "isLooping": false,
-            "allowMuting": false,
-            "goToNextPageAfterEnd": true
         },
         {
             "stepIdentifier": {
@@ -191,7 +170,7 @@
             "type": "completion",
             "text": "Thanks for taking the survey, we will contact you soon!",
             "title": "Done!",
-            "buttonText": "Submit survey"
+            "buttonText": "Restart"
         }
     ]
 }

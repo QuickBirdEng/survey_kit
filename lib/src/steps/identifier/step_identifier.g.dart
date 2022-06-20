@@ -6,11 +6,10 @@ part of 'step_identifier.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-StepIdentifier _$StepIdentifierFromJson(Map<String, dynamic> json) {
-  return StepIdentifier(
-    id: json['id'] as String?,
-  );
-}
+StepIdentifier _$StepIdentifierFromJson(Map<String, dynamic> json) =>
+    StepIdentifier(
+      id: json['id'] as String?,
+    );
 
 Map<String, dynamic> _$StepIdentifierToJson(StepIdentifier instance) =>
     <String, dynamic>{

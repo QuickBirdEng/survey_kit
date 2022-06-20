@@ -1,3 +1,5 @@
+# 0.1.1
+- INFO: Update dependencies (Flutter 3.0.2)
 # 0.1.0
 - INFO: Updated dependencies
 # 0.0.21

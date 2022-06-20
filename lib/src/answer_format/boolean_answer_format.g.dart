@@ -6,13 +6,13 @@ part of 'boolean_answer_format.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BooleanAnswerFormat _$BooleanAnswerFormatFromJson(Map<String, dynamic> json) {
-  return BooleanAnswerFormat(
-    positiveAnswer: json['positiveAnswer'] as String,
-    negativeAnswer: json['negativeAnswer'] as String,
-    result: _$enumDecode(_$BooleanResultEnumMap, json['result']),
-  );
-}
+BooleanAnswerFormat _$BooleanAnswerFormatFromJson(Map<String, dynamic> json) =>
+    BooleanAnswerFormat(
+      positiveAnswer: json['positiveAnswer'] as String,
+      negativeAnswer: json['negativeAnswer'] as String,
+      result: $enumDecodeNullable(_$BooleanResultEnumMap, json['result']) ??
+          BooleanResult.NONE,
+    );
 
 Map<String, dynamic> _$BooleanAnswerFormatToJson(
         BooleanAnswerFormat instance) =>
@@ -21,32 +21,6 @@ Map<String, dynamic> _$BooleanAnswerFormatToJson(
       'negativeAnswer': instance.negativeAnswer,
       'result': _$BooleanResultEnumMap[instance.result],
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
 
 const _$BooleanResultEnumMap = {
   BooleanResult.NONE: 'NONE',

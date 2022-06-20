@@ -6,12 +6,11 @@ part of 'integer_answer_format.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-IntegerAnswerFormat _$IntegerAnswerFormatFromJson(Map<String, dynamic> json) {
-  return IntegerAnswerFormat(
-    defaultValue: json['defaultValue'] as int?,
-    hint: json['hint'] as String,
-  );
-}
+IntegerAnswerFormat _$IntegerAnswerFormatFromJson(Map<String, dynamic> json) =>
+    IntegerAnswerFormat(
+      defaultValue: json['defaultValue'] as int?,
+      hint: json['hint'] as String? ?? '',
+    );
 
 Map<String, dynamic> _$IntegerAnswerFormatToJson(
         IntegerAnswerFormat instance) =>
