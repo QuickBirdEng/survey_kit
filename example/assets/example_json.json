@@ -15,12 +15,43 @@
         {
             "type": "direct",
             "triggerStepIdentifier": {
-                "id": "11"
+                "id": "1"
             },
             "destinationStepIdentifier": {
                 "id": "3"
             }
-        }  
+        },
+        {
+            "type": "conditional",
+            "triggerStepIdentifier": {
+                "id": "6"
+            },
+            "values": {
+                "Penicillin": "7",
+                "Penicillin,Latex": "7",
+                "Penicillin,Latex,Pet": "11",
+                "Penicillin,Latex,Pet,Pollen": "11",
+                "Penicillin,Pet": "11",
+                "Penicillin,Pet,Pollen": "11",
+                "Penicillin,Pollen": "7",
+                "Latex": "7",
+                "Latex,Pet": "11",
+                "Latex,Pet,Pollen": "11",
+                "Latex,Pollen": "7",
+                "Pet": "11",
+                "Pet,Pollen": "11",
+                "Pollen": "7"
+            }
+        },
+        {
+            "type": "direct",
+            "triggerStepIdentifier": {
+                "id": "11"
+            },
+            "destinationStepIdentifier": {
+                "id": "7"
+            }
+        }
     ],
     "steps": [
         {
@@ -171,6 +202,35 @@
             "text": "Thanks for taking the survey, we will contact you soon!",
             "title": "Done!",
             "buttonText": "Restart"
-        }
+        },
+        {
+            "stepIdentifier": {
+                "id": "11"
+            },
+            "type": "question",
+            "title": "Pets",
+            "text": "What type of pet(s) do you have?",
+            "answerFormat": {
+                "type": "multiple",
+                "textChoices": [
+                    {
+                        "text": "Dog",
+                        "value": "Dog"
+                    },
+                    {
+                        "text": "Cat",
+                        "value": "Cat"
+                    },
+                    {
+                        "text": "Fish",
+                        "value": "Fish"
+                    },
+                    {
+                        "text": "Small Animal",
+                        "value": "Small Animal"
+                    }
+                ]
+            }
+        },
     ]
 }
