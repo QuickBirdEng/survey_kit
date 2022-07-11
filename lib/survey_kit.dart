@@ -4,12 +4,15 @@ export 'src/survey_kit.dart';
 
 export 'src/answer_format/answer_format.dart';
 export 'src/answer_format/boolean_answer_format.dart';
+export 'src/answer_format/double_answer_format.dart';
 export 'src/answer_format/integer_answer_format.dart';
 export 'src/answer_format/multiple_choice_answer_format.dart';
+export 'src/answer_format/multiple_double_answer_format.dart';
 export 'src/answer_format/scale_answer_format.dart';
 export 'src/answer_format/single_choice_answer_format.dart';
 export 'src/answer_format/text_answer_format.dart';
 export 'src/answer_format/text_choice.dart';
+export 'src/answer_format/multi_double.dart';
 export 'src/answer_format/date_answer_format.dart';
 export 'src/answer_format/time_answer_formart.dart';
 
@@ -25,8 +28,10 @@ export 'src/presenter/survey_event.dart';
 export 'src/presenter/survey_state.dart';
 
 export 'src/result/question/boolean_question_result.dart';
+export 'src/result/question/double_question_result.dart';
 export 'src/result/question/integer_question_result.dart';
 export 'src/result/question/multiple_choice_question_result.dart';
+export 'src/result/question/multiple_double_question_result.dart';
 export 'src/result/question/scale_question_result.dart';
 export 'src/result/question/single_choice_question_result.dart';
 export 'src/result/question/text_question_result.dart';
@@ -58,6 +63,7 @@ export 'src/task/task.dart';
 
 export 'src/views/boolean_answer_view.dart';
 export 'src/views/completion_view.dart';
+export 'src/views/double_answer_view.dart';
 export 'src/views/instruction_view.dart';
 export 'src/views/integer_answer_view.dart';
 export 'src/views/multiple_choice_answer_view.dart';
