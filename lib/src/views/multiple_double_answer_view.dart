@@ -33,8 +33,8 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
     super.initState();
     _multipleDoubleAnswer =
         widget.questionStep.answerFormat as MultipleDoubleAnswerFormat;
-    _controller = _multipleDoubleAnswer.multiDouble.map((e) {
-      return TextEditingController(text: e.text);
+    _controller = _multipleDoubleAnswer.hints.map((e) {
+      return TextEditingController();
     }).toList();
 
     _controller.forEach((element) {
@@ -42,6 +42,14 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
       element.text = widget.result?.result?.toString() ?? '';
       _checkValidation(element.text);
     });
+
+    _insertedValues = List.generate(
+        _multipleDoubleAnswer.hints.length,
+        (index) => MultiDouble(
+              text: '',
+              value: 0.0,
+            ));
+
     _startDate = DateTime.now();
   }
 
@@ -67,8 +75,8 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
         id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
-        valueIdentifier: _controller.map((e) => e.value).join(''),
-        result: _insertedValues,
+        valueIdentifier: _controller.map((e) => e.text).join(', '),
+        results: _insertedValues,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -95,17 +103,25 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
                 Divider(
                   color: Colors.grey,
                 ),
-                ..._multipleDoubleAnswer.multiDouble.map((MultiDouble md) {
+                ..._multipleDoubleAnswer.hints
+                    .asMap()
+                    .entries
+                    .map((MapEntry<int, String> md) {
                   return TextField(
                     decoration: InputDecoration(
-                      labelText: md.text + ' R\$: ',
+                      labelText: md.value,
                     ),
-                    controller: _controller.firstWhere(
-                      (e) => e.text == md.text,
-                    ),
-                    // onChanged: (String value) {
-                    //   _checkValidation(value);
-                    // },
+                    controller: _controller[md.key],
+                    onChanged: (String value) {
+                      value = value.replaceAll(',', '.');
+
+                      _checkValidation(value);
+
+                      _insertedValues[md.key] = MultiDouble(
+                        text: md.value,
+                        value: double.parse(value),
+                      );
+                    },
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                   );

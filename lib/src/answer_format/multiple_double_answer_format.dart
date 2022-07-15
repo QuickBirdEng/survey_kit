@@ -6,13 +6,13 @@ part 'multiple_double_answer_format.g.dart';
 
 @JsonSerializable()
 class MultipleDoubleAnswerFormat implements AnswerFormat {
-  final List<MultiDouble> multiDouble;
+  final List<MultiDouble>? defaultValues;
   @JsonKey(defaultValue: const [])
-  final List<MultiDouble> defaultValues;
+  final List<String> hints;
 
   const MultipleDoubleAnswerFormat({
-    required this.multiDouble,
-    this.defaultValues = const [],
+    this.defaultValues,
+    required this.hints,
   }) : super();
 
   factory MultipleDoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>

@@ -8,12 +8,12 @@ class MultipleDoubleQuestionResult extends QuestionResult<List<MultiDouble>?> {
     required DateTime startDate,
     required DateTime endDate,
     required String valueIdentifier,
-    required List<MultiDouble> result,
+    required List<MultiDouble> results,
   }) : super(
           id: id,
           startDate: startDate,
           endDate: endDate,
           valueIdentifier: valueIdentifier,
-          result: result,
+          result: results,
         );
 }
