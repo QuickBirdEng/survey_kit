@@ -4,6 +4,7 @@ import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
 import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
 import 'package:survey_kit/src/answer_format/double_answer_format.dart';
+import 'package:survey_kit/src/answer_format/multiple_double_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/scale_answer_format.dart';
 import 'package:survey_kit/src/answer_format/single_choice_answer_format.dart';
@@ -30,6 +31,8 @@ abstract class AnswerFormat {
         return SingleChoiceAnswerFormat.fromJson(json);
       case 'multiple':
         return MultipleChoiceAnswerFormat.fromJson(json);
+      case 'multiple_double':
+        return MultipleDoubleAnswerFormat.fromJson(json);
       case 'scale':
         return ScaleAnswerFormat.fromJson(json);
       case 'time':
