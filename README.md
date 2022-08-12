@@ -63,7 +63,7 @@ To use this plugin, add flutter_surveykit as a dependency in your pubspec.yaml f
 `pubspec.yaml`
 ```yaml
 dependencies:
-  surveykit: ^0.1
+  survey_kit: ^0.1.1
 ```
 
 ## 2. Install it
