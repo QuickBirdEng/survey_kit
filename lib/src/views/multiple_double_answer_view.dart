@@ -76,7 +76,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.map((e) => e.text).join(', '),
-        results: _insertedValues,
+        result: _insertedValues,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
