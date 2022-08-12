@@ -13,4 +13,7 @@ class InstructionStepResult extends QuestionResult {
           valueIdentifier: 'instruction',
           result: null,
         );
+
+  @override
+  List<Object?> get props => [id, startDate, endDate, valueIdentifier];
 }

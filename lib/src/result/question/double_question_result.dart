@@ -15,4 +15,7 @@ class DoubleQuestionResult extends QuestionResult<double?> {
           valueIdentifier: valueIdentifier,
           result: result,
         );
+
+  @override
+  List<Object?> get props => [id, startDate, endDate, valueIdentifier, result];
 }

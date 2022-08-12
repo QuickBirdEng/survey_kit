@@ -13,4 +13,7 @@ class CompletionStepResult extends QuestionResult {
           valueIdentifier: 'completion',
           result: null,
         );
+
+  @override
+  List<Object?> get props => [id, startDate, endDate, valueIdentifier];
 }

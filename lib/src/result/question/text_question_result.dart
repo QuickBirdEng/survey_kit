@@ -15,4 +15,7 @@ class TextQuestionResult extends QuestionResult<String?> {
           valueIdentifier: valueIdentifier,
           result: result,
         );
+
+  @override
+  List<Object?> get props => [id, startDate, endDate, valueIdentifier, result];
 }

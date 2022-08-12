@@ -15,4 +15,7 @@ class DateQuestionResult extends QuestionResult<DateTime?> {
           valueIdentifier: valueIdentifier,
           result: result,
         );
+
+  @override
+  List<Object?> get props => [id, startDate, endDate, valueIdentifier, result];
 }

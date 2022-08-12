@@ -16,4 +16,7 @@ class MultipleDoubleQuestionResult extends QuestionResult<List<MultiDouble>?> {
           valueIdentifier: valueIdentifier,
           result: results,
         );
+
+  @override
+  List<Object?> get props => [id, startDate, endDate, valueIdentifier, result];
 }

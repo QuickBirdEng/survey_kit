@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:survey_kit/src/steps/identifier/identifier.dart';
 
-abstract class Result {
+abstract class Result extends Equatable {
   final Identifier? id;
   final DateTime startDate;
   final DateTime endDate;

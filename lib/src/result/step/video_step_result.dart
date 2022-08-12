@@ -14,6 +14,9 @@ class VideoStepResult extends QuestionResult<VideoResult> {
           valueIdentifier: id.id,
           result: videoResult,
         );
+
+  @override
+  List<Object?> get props => [id, startDate, endDate, valueIdentifier];
 }
 
 class VideoResult {

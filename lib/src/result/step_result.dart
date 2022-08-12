@@ -20,4 +20,7 @@ class StepResult extends Result {
       results: [questionResult],
     );
   }
+
+  @override
+  List<Object?> get props => [id, startDate, endDate];
 }

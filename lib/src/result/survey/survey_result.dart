@@ -13,6 +13,9 @@ class SurveyResult extends Result {
     required this.finishReason,
     required this.results,
   }) : super(id: id, startDate: startDate, endDate: endDate);
+
+  @override
+  List<Object?> get props => [id, startDate, endDate, finishReason];
 }
 
 enum FinishReason { SAVED, DISCARDED, COMPLETED, FAILED }
