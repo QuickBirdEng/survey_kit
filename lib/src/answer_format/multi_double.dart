@@ -13,9 +13,9 @@ class MultiDouble {
   }) : super();
 
   factory MultiDouble.fromJson(Map<String, dynamic> json) =>
-      _$DoubleChoiceFromJson(json);
-  Map<String, dynamic> toJson() => _$DoubleChoiceToJson(this);
+      _$MultiDoubleFromJson(json);
+  Map<String, dynamic> toJson() => _$MultiDoubleToJson(this);
 
   bool operator ==(o) => o is MultiDouble && text == o.text && value == o.value;
-  int get hasCode => text.hashCode ^ value.hashCode;
+  int get hashCode => text.hashCode ^ value.hashCode;
 }

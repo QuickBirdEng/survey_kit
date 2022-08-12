@@ -16,6 +16,6 @@ class MultipleDoubleAnswerFormat implements AnswerFormat {
   }) : super();
 
   factory MultipleDoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>
-      _$DoubleAnswerFormatFromJson(json);
-  Map<String, dynamic> toJson() => _$DoubleAnswerFormatToJson(this);
+      _$MultipleDoubleAnswerFormatFromJson(json);
+  Map<String, dynamic> toJson() => _$MultipleDoubleAnswerFormatToJson(this);
 }
