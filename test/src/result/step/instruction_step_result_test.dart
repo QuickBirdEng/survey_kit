@@ -2,9 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  final tResult = InstructionStep(
-    text: 'example 1 text here',
-    title: 'example 1 title here'
+  final tResult = InstructionStepResult(
+    Identifier(id: 'example1'),
+    DateTime(2022, 8, 12, 16, 4),
+    DateTime(2022, 8, 12, 16, 14),
   );
 
   group('serialisation', () {
@@ -12,7 +13,7 @@ void main() {
       'should work with valid example',
           () async {
         final encodedResult = tResult.toJson();
-        final decodedResult = InstructionStep.fromJson(encodedResult);
+        final decodedResult = InstructionStepResult.fromJson(encodedResult);
         expect(tResult, decodedResult);
       },
     );

@@ -24,11 +24,10 @@ class StepResult extends Result {
   @_Converter()
   final List<QuestionResult> results;
 
-  StepResult(
-      {required Identifier? id,
-      required DateTime startDate,
-      required DateTime endDate,
-      required this.results})
+  StepResult({required Identifier? id,
+    required DateTime startDate,
+    required DateTime endDate,
+    required this.results})
       : super(id: id, startDate: startDate, endDate: endDate);
 
   factory StepResult.fromQuestion({required QuestionResult questionResult}) {
@@ -119,33 +118,42 @@ class _Converter implements JsonConverter<List<QuestionResult>, Object> {
 
   @override
   List<QuestionResult> fromJson(Object json) {
-    return (json as List<dynamic>).map((element) {
+    final List<QuestionResult> results = [];
+    for (var element in json as List<dynamic>) {
       final qData = element as Map<String, dynamic>;
       final qType = qData['type'] as String;
 
       if (qType == (BooleanQuestionResult).toString()) {
-        return BooleanQuestionResult.fromJson(qData);
+        results.add(BooleanQuestionResult.fromJson(qData));
       } else if (qType == (DateQuestionResult).toString()) {
-        return DateQuestionResult.fromJson(qData);
+        results.add(DateQuestionResult.fromJson(qData));
       } else if (qType == (DoubleQuestionResult).toString()) {
-        return DoubleQuestionResult.fromJson(qData);
+        results.add(DoubleQuestionResult.fromJson(qData));
       } else if (qType == (IntegerQuestionResult).toString()) {
-        return IntegerQuestionResult.fromJson(qData);
+        results.add(IntegerQuestionResult.fromJson(qData));
       } else if (qType == (MultipleChoiceQuestionResult).toString()) {
-        return MultipleChoiceQuestionResult.fromJson(qData);
+        results.add(MultipleChoiceQuestionResult.fromJson(qData));
       } else if (qType == (MultipleDoubleQuestionResult).toString()) {
-        return MultipleDoubleQuestionResult.fromJson(qData);
+        results.add(MultipleDoubleQuestionResult.fromJson(qData));
       } else if (qType == (ScaleQuestionResult).toString()) {
-        return ScaleQuestionResult.fromJson(qData);
+        results.add(ScaleQuestionResult.fromJson(qData));
       } else if (qType == (SingleChoiceQuestionResult).toString()) {
-        return SingleChoiceQuestionResult.fromJson(qData);
+        results.add(SingleChoiceQuestionResult.fromJson(qData));
       } else if (qType == (TextQuestionResult).toString()) {
-        return TextQuestionResult.fromJson(qData);
+        results.add(TextQuestionResult.fromJson(qData));
       } else if (qType == (TimeQuestionResult).toString()) {
-        return TimeQuestionResult.fromJson(qData);
+        results.add(TimeQuestionResult.fromJson(qData));
+      } else if (qType == (InstructionStepResult).toString()) {
+        results.add(InstructionStepResult.fromJson(qData));
+      } else if (qType == (CompletionStepResult).toString()) {
+        results.add(CompletionStepResult.fromJson(qData));
+      } else if (qType == (VideoStepResult).toString()) {
+        results.add(VideoStepResult.fromJson(qData));
       } else {
         throw ('Unhandled Question Result Type');
       }
-    }).toList() as List<QuestionResult>;
+    }
+
+    return results;
   }
 }
