@@ -23,7 +23,7 @@ InstructionStep _$InstructionStepFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$InstructionStepToJson(InstructionStep instance) =>
     <String, dynamic>{
-      'stepIdentifier': instance.stepIdentifier,
+      'stepIdentifier': instance.stepIdentifier.toJson(),
       'isOptional': instance.isOptional,
       'buttonText': instance.buttonText,
       'canGoBack': instance.canGoBack,
