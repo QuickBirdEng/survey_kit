@@ -190,6 +190,19 @@ The `SurveyResult` contains a list of `StepResult`s and the `FinishReason`. The 
     },
 )
 ```
+### Export the results to JSON
+After obtaining the `SurveyResult` object in the callback described above, you can use its `toJson()` method to either print the results in a json format, or to pass that json (Map) object on, and for example store it (in your DB, SharedPreferences, as a separate file etc.)
+```dart
+ SurveyKit(
+    onResult: (SurveyResult result) {
+      final jsonResult = result.toJson();
+      // print the json-formatted results
+      debugPrint(jsonEncode(jsonResult));
+      // or store them
+      yourDbHandler.store(jsonResult);
+    },
+)
+```
 
 ### Style
 There are already many adaptive elements for Android and IOS implemented. In the future development other parts will be adapted too.

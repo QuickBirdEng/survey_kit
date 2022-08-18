@@ -6,12 +6,12 @@ part of 'multi_double.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MultiDouble _$DoubleChoiceFromJson(Map<String, dynamic> json) => MultiDouble(
+MultiDouble _$MultiDoubleFromJson(Map<String, dynamic> json) => MultiDouble(
       text: json['text'] as String,
-      value: json['value'] as double,
+      value: (json['value'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$DoubleChoiceToJson(MultiDouble instance) =>
+Map<String, dynamic> _$MultiDoubleToJson(MultiDouble instance) =>
     <String, dynamic>{
       'text': instance.text,
       'value': instance.value,
