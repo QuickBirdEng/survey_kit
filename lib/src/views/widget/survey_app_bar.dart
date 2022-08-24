@@ -23,10 +23,7 @@ class SurveyAppBar extends StatelessWidget {
     return AppBar(
       leading: _canGoBack
           ? appBarConfiguration.leading ??
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                ),
+              BackButton(
                 onPressed: () {
                   surveyController.stepBack(
                     context: context,
