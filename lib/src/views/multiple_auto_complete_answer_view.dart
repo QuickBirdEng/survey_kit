@@ -73,6 +73,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                 _AutoComplete(
                   suggestions: _multipleChoiceAnswer.suggestions,
                   onSelected: onChoiceSelected,
+                  selectedChoices: _selectedChoices,
                 ),
                 SizedBox(
                   height: 32,
@@ -172,11 +173,12 @@ class _AutoComplete extends StatelessWidget {
     Key? key,
     required this.suggestions,
     required this.onSelected,
+    required this.selectedChoices,
   }) : super(key: key);
 
   final List<TextChoice> suggestions;
-
   final void Function(TextChoice) onSelected;
+  final List<TextChoice> selectedChoices;
 
   @override
   Widget build(BuildContext context) {
@@ -187,15 +189,25 @@ class _AutoComplete extends StatelessWidget {
         controller: textEditingController,
         focusNode: focusNode,
         decoration: InputDecoration(
-          labelText: 'Search',
-          hintText: 'Type here to search.',
-        ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 32),
+            labelText: 'Search',
+            hintText: 'Type here to search',
+            suffixIcon: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                textEditingController.clear();
+              },
+            )),
         onSubmitted: (v) {
           onFieldSubmitted();
         },
       ),
-      optionsViewBuilder: (context, onSelected, options) =>
-          _OptionsViewBuilder(options: options, onSelected: onSelected),
+      optionsViewBuilder: (context, onSelected, options) => _OptionsViewBuilder(
+        options: options,
+        onSelected: onSelected,
+        selectedChoices: selectedChoices,
+      ),
       displayStringForOption: (tc) => tc.text,
       optionsBuilder: (textEditingValue) {
         if (textEditingValue.text == '') {
@@ -216,13 +228,15 @@ class _OptionsViewBuilder extends StatelessWidget {
     Key? key,
     required this.options,
     required this.onSelected,
+    required this.selectedChoices,
   }) : super(key: key);
 
   final Iterable<TextChoice> options;
   final void Function(TextChoice) onSelected;
+  final List<TextChoice> selectedChoices;
   @override
   Widget build(BuildContext context) => Align(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.topLeft,
         child: Material(
           elevation: 4.0,
           textStyle: Theme.of(context).textTheme.bodyText1,
@@ -250,7 +264,14 @@ class _OptionsViewBuilder extends StatelessWidget {
                     return Container(
                       color: highlight ? Theme.of(context).focusColor : null,
                       padding: const EdgeInsets.all(16.0),
-                      child: Text(option.text),
+                      margin: EdgeInsets.only(right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(option.text),
+                          if (selectedChoices.contains(option)) Icon(Icons.done)
+                        ],
+                      ),
                     );
                   }),
                 );
