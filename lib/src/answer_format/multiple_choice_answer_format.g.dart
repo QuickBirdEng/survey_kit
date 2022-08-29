@@ -16,6 +16,7 @@ MultipleChoiceAnswerFormat _$MultipleChoiceAnswerFormatFromJson(
               ?.map((e) => TextChoice.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      otherField: json['otherField'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$MultipleChoiceAnswerFormatToJson(
@@ -23,4 +24,5 @@ Map<String, dynamic> _$MultipleChoiceAnswerFormatToJson(
     <String, dynamic>{
       'textChoices': instance.textChoices,
       'defaultSelection': instance.defaultSelection,
+      'otherField': instance.otherField,
     };

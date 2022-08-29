@@ -6,6 +6,7 @@ import 'package:survey_kit/src/answer_format/date_answer_format.dart';
 import 'package:survey_kit/src/answer_format/double_answer_format.dart';
 import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
+import 'package:survey_kit/src/answer_format/multiple_choice_auto_complete_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_double_answer_format.dart';
 import 'package:survey_kit/src/answer_format/scale_answer_format.dart';
 import 'package:survey_kit/src/answer_format/single_choice_answer_format.dart';
@@ -26,6 +27,7 @@ import 'package:survey_kit/src/views/boolean_answer_view.dart';
 import 'package:survey_kit/src/views/date_answer_view.dart';
 import 'package:survey_kit/src/views/integer_answer_view.dart';
 import 'package:survey_kit/src/views/double_answer_view.dart';
+import 'package:survey_kit/src/views/multiple_auto_complete_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_choice_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_double_answer_view.dart';
 import 'package:survey_kit/src/views/scale_answer_view.dart';
@@ -128,6 +130,12 @@ class QuestionStep extends Step {
           key: key,
           questionStep: this,
           result: questionResult as MultipleDoubleQuestionResult?,
+        );
+      case MultipleChoiceAutoCompleteAnswerFormat:
+        return MultipleChoiceAutoCompleteAnswerView(
+          key: key,
+          questionStep: this,
+          result: questionResult as MultipleChoiceQuestionResult?,
         );
       default:
         throw AnswerFormatNotDefinedException();

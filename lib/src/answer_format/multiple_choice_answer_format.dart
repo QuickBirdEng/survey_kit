@@ -9,10 +9,13 @@ class MultipleChoiceAnswerFormat implements AnswerFormat {
   final List<TextChoice> textChoices;
   @JsonKey(defaultValue: const [])
   final List<TextChoice> defaultSelection;
+  @JsonKey(defaultValue: false)
+  final bool otherField;
 
   const MultipleChoiceAnswerFormat({
     required this.textChoices,
     this.defaultSelection = const [],
+    this.otherField = false,
   }) : super();
 
   factory MultipleChoiceAnswerFormat.fromJson(Map<String, dynamic> json) =>

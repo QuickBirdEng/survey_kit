@@ -22,7 +22,8 @@ class MultipleChoiceQuestionResult extends QuestionResult<List<TextChoice>?> {
           result: result,
         );
 
-  factory MultipleChoiceQuestionResult.fromJson(Map<String, dynamic> json) => _$MultipleChoiceQuestionResultFromJson(json);
+  factory MultipleChoiceQuestionResult.fromJson(Map<String, dynamic> json) =>
+      _$MultipleChoiceQuestionResultFromJson(json);
 
   Map<String, dynamic> toJson() => _$MultipleChoiceQuestionResultToJson(this);
 

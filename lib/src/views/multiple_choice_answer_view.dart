@@ -5,6 +5,7 @@ import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
 import 'package:survey_kit/src/result/question/multiple_choice_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:collection/collection.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
@@ -92,6 +93,52 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
                       ),
                     )
                     .toList(),
+                if (_multipleChoiceAnswer.otherField) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                    child: ListTile(
+                      title: TextField(
+                        onChanged: (v) {
+                          int? currentIndex;
+                          final otherTextChoice = _selectedChoices
+                              .firstWhereIndexedOrNull((index, element) {
+                            final isOtherField = element.text == 'Other';
+
+                            if (isOtherField) {
+                              currentIndex = index;
+                            }
+
+                            return isOtherField;
+                          });
+
+                          setState(() {
+                            if (v.isEmpty && otherTextChoice != null) {
+                              _selectedChoices.remove(otherTextChoice);
+                            } else if (v.isNotEmpty) {
+                              final updatedTextChoice =
+                                  TextChoice(text: 'Other', value: v);
+                              if (otherTextChoice == null) {
+                                _selectedChoices.add(updatedTextChoice);
+                              } else if (currentIndex != null) {
+                                _selectedChoices[currentIndex!] =
+                                    updatedTextChoice;
+                              }
+                            }
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Other',
+                          labelStyle: Theme.of(context).textTheme.headline5,
+                          hintText: 'Write other information here',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                  ),
+                ],
               ],
             ),
           ],
