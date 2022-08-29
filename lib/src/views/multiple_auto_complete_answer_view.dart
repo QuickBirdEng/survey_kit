@@ -35,7 +35,6 @@ class _MultipleChoiceAutoCompleteAnswerViewState
     _startDateTime = DateTime.now();
   }
 
-  // TODO refactor the widgets and organize, DRY also
   @override
   Widget build(BuildContext context) {
     return StepView(
