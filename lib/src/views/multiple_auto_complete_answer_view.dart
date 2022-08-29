@@ -70,82 +70,9 @@ class _MultipleChoiceAutoCompleteAnswerViewState
             ),
             Column(
               children: [
-                Autocomplete<TextChoice>(
-                  fieldViewBuilder: (context, textEditingController, focusNode,
-                          onFieldSubmitted) =>
-                      TextField(
-                    controller: textEditingController,
-                    focusNode: focusNode,
-                    decoration:
-                        InputDecoration(labelText: 'Search more medicines...'),
-                    onSubmitted: (v) {
-                      onFieldSubmitted();
-                    },
-                  ),
-                  optionsViewBuilder: (context, onSelected, options) => Align(
-                    alignment: Alignment.topLeft,
-                    child: Material(
-                      elevation: 4.0,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 200),
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          itemCount: options.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final option = options.elementAt(index);
-                            return InkWell(
-                              onTap: () {
-                                onSelected(option);
-                              },
-                              child: Builder(builder: (BuildContext context) {
-                                final bool highlight =
-                                    AutocompleteHighlightedOption.of(context) ==
-                                        index;
-                                if (highlight) {
-                                  SchedulerBinding.instance
-                                      .addPostFrameCallback(
-                                          (Duration timeStamp) {
-                                    Scrollable.ensureVisible(context,
-                                        alignment: 0.5);
-                                  });
-                                }
-                                return Container(
-                                  color: highlight
-                                      ? Theme.of(context).focusColor
-                                      : null,
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Text(option.text),
-                                );
-                              }),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  displayStringForOption: (tc) => tc.text,
-                  optionsBuilder: (textEditingValue) {
-                    if (textEditingValue.text == '') {
-                      return const Iterable<TextChoice>.empty();
-                    }
-
-                    return _multipleChoiceAnswer.suggestions.where((element) =>
-                        element.text
-                            .toLowerCase()
-                            .contains(textEditingValue.text.toLowerCase()));
-                  },
-                  onSelected: (tc) {
-                    setState(
-                      () {
-                        if (_selectedChoices.contains(tc)) {
-                          _selectedChoices.remove(tc);
-                        } else {
-                          _selectedChoices = [..._selectedChoices, tc];
-                        }
-                      },
-                    );
-                  },
+                _AutoComplete(
+                  suggestions: _multipleChoiceAnswer.suggestions,
+                  onSelected: onChoiceSelected,
                 ),
                 SizedBox(
                   height: 32,
@@ -157,17 +84,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                     .map(
                       (TextChoice tc) => SelectionListTile(
                         text: tc.text,
-                        onTap: () {
-                          setState(
-                            () {
-                              if (_selectedChoices.contains(tc)) {
-                                _selectedChoices.remove(tc);
-                              } else {
-                                _selectedChoices = [..._selectedChoices, tc];
-                              }
-                            },
-                          );
-                        },
+                        onTap: () => onChoiceSelected(tc),
                         isSelected: _selectedChoices.contains(tc),
                       ),
                     )
@@ -178,17 +95,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                     .map(
                       (TextChoice tc) => SelectionListTile(
                         text: tc.text,
-                        onTap: () {
-                          setState(
-                            () {
-                              if (_selectedChoices.contains(tc)) {
-                                _selectedChoices.remove(tc);
-                              } else {
-                                _selectedChoices = [..._selectedChoices, tc];
-                              }
-                            },
-                          );
-                        },
+                        onTap: () => onChoiceSelected(tc),
                         isSelected: _selectedChoices.contains(tc),
                       ),
                     )
@@ -230,6 +137,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                           labelText: 'Other',
                           labelStyle: Theme.of(context).textTheme.headline5,
                           hintText: 'Write other information here',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                         ),
                       ),
                     ),
@@ -245,4 +153,110 @@ class _MultipleChoiceAutoCompleteAnswerViewState
       ),
     );
   }
+
+  void onChoiceSelected(TextChoice tc) {
+    setState(
+      () {
+        if (_selectedChoices.contains(tc)) {
+          _selectedChoices.remove(tc);
+        } else {
+          _selectedChoices = [..._selectedChoices, tc];
+        }
+      },
+    );
+  }
+}
+
+class _AutoComplete extends StatelessWidget {
+  const _AutoComplete({
+    Key? key,
+    required this.suggestions,
+    required this.onSelected,
+  }) : super(key: key);
+
+  final List<TextChoice> suggestions;
+
+  final void Function(TextChoice) onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Autocomplete<TextChoice>(
+      fieldViewBuilder:
+          (context, textEditingController, focusNode, onFieldSubmitted) =>
+              TextField(
+        controller: textEditingController,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Type here to search.',
+        ),
+        onSubmitted: (v) {
+          onFieldSubmitted();
+        },
+      ),
+      optionsViewBuilder: (context, onSelected, options) =>
+          _OptionsViewBuilder(options: options, onSelected: onSelected),
+      displayStringForOption: (tc) => tc.text,
+      optionsBuilder: (textEditingValue) {
+        if (textEditingValue.text == '') {
+          return const Iterable<TextChoice>.empty();
+        }
+
+        return suggestions.where((element) => element.text
+            .toLowerCase()
+            .contains(textEditingValue.text.toLowerCase()));
+      },
+      onSelected: onSelected,
+    );
+  }
+}
+
+class _OptionsViewBuilder extends StatelessWidget {
+  const _OptionsViewBuilder({
+    Key? key,
+    required this.options,
+    required this.onSelected,
+  }) : super(key: key);
+
+  final Iterable<TextChoice> options;
+  final void Function(TextChoice) onSelected;
+  @override
+  Widget build(BuildContext context) => Align(
+        alignment: Alignment.topCenter,
+        child: Material(
+          elevation: 4.0,
+          textStyle: Theme.of(context).textTheme.bodyText1,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 200),
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              itemCount: options.length,
+              itemBuilder: (BuildContext context, int index) {
+                final option = options.elementAt(index);
+                return InkWell(
+                  onTap: () {
+                    onSelected(option);
+                  },
+                  child: Builder(builder: (BuildContext context) {
+                    final bool highlight =
+                        AutocompleteHighlightedOption.of(context) == index;
+                    if (highlight) {
+                      SchedulerBinding.instance
+                          .addPostFrameCallback((Duration timeStamp) {
+                        Scrollable.ensureVisible(context, alignment: 0.5);
+                      });
+                    }
+                    return Container(
+                      color: highlight ? Theme.of(context).focusColor : null,
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(option.text),
+                    );
+                  }),
+                );
+              },
+            ),
+          ),
+        ),
+      );
 }
