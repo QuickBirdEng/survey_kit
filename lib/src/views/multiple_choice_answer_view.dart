@@ -130,6 +130,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
                           labelText: 'Other',
                           labelStyle: Theme.of(context).textTheme.headline5,
                           hintText: 'Write other information here',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                         ),
                       ),
                     ),
