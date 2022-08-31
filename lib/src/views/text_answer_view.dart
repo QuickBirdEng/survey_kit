@@ -30,8 +30,9 @@ class _TextAnswerViewState extends State<TextAnswerView> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _controller.text = widget.result?.result ?? '';
     _textAnswerFormat = widget.questionStep.answerFormat as TextAnswerFormat;
+    _controller.text =
+        widget.result?.result ?? _textAnswerFormat.defaultValue ?? '';
     _checkValidation(_controller.text);
     _startDate = DateTime.now();
   }
