@@ -31,7 +31,6 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
     super.initState();
     _agreementAnswerFormat =
         widget.questionStep.answerFormat as AgreementAnswerFormat;
-    print(widget.result?.result);
     _result = widget.result?.result ??
         _agreementAnswerFormat.defaultValue ??
         BooleanResult.NEGATIVE;
@@ -90,25 +89,33 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Radio(
+                    Radio<BooleanResult>(
                         groupValue: _result,
                         value: BooleanResult.POSITIVE,
                         onChanged: (v) {
                           setState(() {
-                            _result = BooleanResult.POSITIVE;
+                            _result = v;
                           });
                         }),
                     SizedBox(
                       width: 16,
                     ),
                     Expanded(
-                        child: MarkdownBody(
-                      styleSheet: markDownStyleSheet.copyWith(
-                        p: theme.textTheme.caption,
+                        child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _result = BooleanResult.POSITIVE;
+                        });
+                      },
+                      child: MarkdownBody(
+                        styleSheet: markDownStyleSheet.copyWith(
+                          p: theme.textTheme.caption,
+                        ),
+                        data:
+                            _agreementAnswerFormat.markdownAgreementText ?? '',
+                        onTapLink: (text, href, title) =>
+                            href != null ? launchUrl(Uri.parse(href)) : null,
                       ),
-                      data: _agreementAnswerFormat.markdownAgreementText ?? '',
-                      onTapLink: (text, href, title) =>
-                          href != null ? launchUrl(Uri.parse(href)) : null,
                     )),
                   ],
                 )
