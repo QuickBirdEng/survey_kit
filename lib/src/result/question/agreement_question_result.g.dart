@@ -6,9 +6,9 @@ part of 'agreement_question_result.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SingleCheckboxQuestionResult _$SingleCheckboxQuestionResultFromJson(
+AgreementQuestionResult _$AgreementQuestionResultFromJson(
         Map<String, dynamic> json) =>
-    SingleCheckboxQuestionResult(
+    AgreementQuestionResult(
       id: Identifier.fromJson(json['id'] as Map<String, dynamic>),
       startDate: DateTime.parse(json['startDate'] as String),
       endDate: DateTime.parse(json['endDate'] as String),
@@ -16,8 +16,8 @@ SingleCheckboxQuestionResult _$SingleCheckboxQuestionResultFromJson(
       result: $enumDecodeNullable(_$BooleanResultEnumMap, json['result']),
     );
 
-Map<String, dynamic> _$SingleCheckboxQuestionResultToJson(
-        SingleCheckboxQuestionResult instance) =>
+Map<String, dynamic> _$AgreementQuestionResultToJson(
+        AgreementQuestionResult instance) =>
     <String, dynamic>{
       'id': instance.id?.toJson(),
       'startDate': instance.startDate.toIso8601String(),

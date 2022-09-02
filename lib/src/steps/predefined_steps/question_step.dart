@@ -140,11 +140,11 @@ class QuestionStep extends Step {
           questionStep: this,
           result: questionResult as MultipleChoiceQuestionResult?,
         );
-      case SingleCheckboxAnswerFormat:
-        return SingleCheckboxAnswerView(
+      case AgreementAnswerFormat:
+        return AgreementAnswerView(
           key: key,
           questionStep: this,
-          result: questionResult as SingleCheckboxQuestionResult?,
+          result: questionResult as AgreementQuestionResult?,
         );
       default:
         throw AnswerFormatNotDefinedException();

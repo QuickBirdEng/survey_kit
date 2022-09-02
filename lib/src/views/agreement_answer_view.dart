@@ -7,34 +7,33 @@ import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SingleCheckboxAnswerView extends StatefulWidget {
+class AgreementAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
-  final SingleCheckboxQuestionResult? result;
+  final AgreementQuestionResult? result;
 
-  const SingleCheckboxAnswerView({
+  const AgreementAnswerView({
     Key? key,
     required this.questionStep,
     required this.result,
   }) : super(key: key);
 
   @override
-  _SingleCheckboxAnswerViewState createState() =>
-      _SingleCheckboxAnswerViewState();
+  _AgreementAnswerViewState createState() => _AgreementAnswerViewState();
 }
 
-class _SingleCheckboxAnswerViewState extends State<SingleCheckboxAnswerView> {
+class _AgreementAnswerViewState extends State<AgreementAnswerView> {
   late final DateTime _startDate;
-  late final SingleCheckboxAnswerFormat _singleCheckboxAnswerFormat;
+  late final AgreementAnswerFormat _agreementAnswerFormat;
   BooleanResult? _result;
 
   @override
   void initState() {
     super.initState();
-    _singleCheckboxAnswerFormat =
-        widget.questionStep.answerFormat as SingleCheckboxAnswerFormat;
+    _agreementAnswerFormat =
+        widget.questionStep.answerFormat as AgreementAnswerFormat;
     print(widget.result?.result);
     _result = widget.result?.result ??
-        _singleCheckboxAnswerFormat.defaultValue ??
+        _agreementAnswerFormat.defaultValue ??
         BooleanResult.NEGATIVE;
     _startDate = DateTime.now();
   }
@@ -46,7 +45,7 @@ class _SingleCheckboxAnswerViewState extends State<SingleCheckboxAnswerView> {
 
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => SingleCheckboxQuestionResult(
+      resultFunction: () => AgreementQuestionResult(
         id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
@@ -76,11 +75,11 @@ class _SingleCheckboxAnswerViewState extends State<SingleCheckboxAnswerView> {
             ),
             Column(
               children: [
-                if (_singleCheckboxAnswerFormat.markdownDescription != null)
+                if (_agreementAnswerFormat.markdownDescription != null)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 32.0),
                     child: MarkdownBody(
-                      data: _singleCheckboxAnswerFormat.markdownDescription!,
+                      data: _agreementAnswerFormat.markdownDescription!,
                       styleSheet: markDownStyleSheet.copyWith(
                         textAlign: WrapAlignment.center,
                       ),
@@ -107,8 +106,7 @@ class _SingleCheckboxAnswerViewState extends State<SingleCheckboxAnswerView> {
                       styleSheet: markDownStyleSheet.copyWith(
                         p: theme.textTheme.caption,
                       ),
-                      data: _singleCheckboxAnswerFormat.markdownAgreementText ??
-                          '',
+                      data: _agreementAnswerFormat.markdownAgreementText ?? '',
                       onTapLink: (text, href, title) =>
                           href != null ? launchUrl(Uri.parse(href)) : null,
                     )),

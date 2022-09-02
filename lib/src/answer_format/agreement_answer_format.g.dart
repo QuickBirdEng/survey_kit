@@ -6,9 +6,9 @@ part of 'agreement_answer_format.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SingleCheckboxAnswerFormat _$SingleCheckboxAnswerFormatFromJson(
+AgreementAnswerFormat _$AgreementAnswerFormatFromJson(
         Map<String, dynamic> json) =>
-    SingleCheckboxAnswerFormat(
+    AgreementAnswerFormat(
       result: $enumDecodeNullable(_$BooleanResultEnumMap, json['result']) ??
           BooleanResult.NEGATIVE,
       defaultValue:
@@ -17,8 +17,8 @@ SingleCheckboxAnswerFormat _$SingleCheckboxAnswerFormatFromJson(
       markdownAgreementText: json['markdownAgreementText'] as String?,
     );
 
-Map<String, dynamic> _$SingleCheckboxAnswerFormatToJson(
-        SingleCheckboxAnswerFormat instance) =>
+Map<String, dynamic> _$AgreementAnswerFormatToJson(
+        AgreementAnswerFormat instance) =>
     <String, dynamic>{
       'result': _$BooleanResultEnumMap[instance.result],
       'defaultValue': _$BooleanResultEnumMap[instance.defaultValue],

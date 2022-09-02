@@ -5,20 +5,20 @@ import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 part 'agreement_answer_format.g.dart';
 
 @JsonSerializable()
-class SingleCheckboxAnswerFormat implements AnswerFormat {
+class AgreementAnswerFormat implements AnswerFormat {
   final BooleanResult result;
   final BooleanResult? defaultValue;
   final String? markdownDescription;
   final String? markdownAgreementText;
 
-  const SingleCheckboxAnswerFormat({
+  const AgreementAnswerFormat({
     this.result = BooleanResult.NEGATIVE,
     this.defaultValue,
     this.markdownDescription,
     this.markdownAgreementText,
   }) : super();
 
-  factory SingleCheckboxAnswerFormat.fromJson(Map<String, dynamic> json) =>
-      _$SingleCheckboxAnswerFormatFromJson(json);
-  Map<String, dynamic> toJson() => _$SingleCheckboxAnswerFormatToJson(this);
+  factory AgreementAnswerFormat.fromJson(Map<String, dynamic> json) =>
+      _$AgreementAnswerFormatFromJson(json);
+  Map<String, dynamic> toJson() => _$AgreementAnswerFormatToJson(this);
 }

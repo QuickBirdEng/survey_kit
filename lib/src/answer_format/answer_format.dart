@@ -42,7 +42,7 @@ abstract class AnswerFormat {
       case 'time':
         return TimeAnswerFormat.fromJson(json);
       case 'agreement':
-        return SingleCheckboxAnswerFormat.fromJson(json);
+        return AgreementAnswerFormat.fromJson(json);
       default:
         throw AnswerFormatNotDefinedException();
     }

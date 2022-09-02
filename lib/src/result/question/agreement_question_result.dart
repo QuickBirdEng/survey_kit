@@ -7,8 +7,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'agreement_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class SingleCheckboxQuestionResult extends QuestionResult<BooleanResult?> {
-  SingleCheckboxQuestionResult({
+class AgreementQuestionResult extends QuestionResult<BooleanResult?> {
+  AgreementQuestionResult({
     required Identifier id,
     required DateTime startDate,
     required DateTime endDate,
@@ -22,10 +22,10 @@ class SingleCheckboxQuestionResult extends QuestionResult<BooleanResult?> {
           result: result,
         );
 
-  factory SingleCheckboxQuestionResult.fromJson(Map<String, dynamic> json) =>
-      _$SingleCheckboxQuestionResultFromJson(json);
+  factory AgreementQuestionResult.fromJson(Map<String, dynamic> json) =>
+      _$AgreementQuestionResultFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SingleCheckboxQuestionResultToJson(this);
+  Map<String, dynamic> toJson() => _$AgreementQuestionResultToJson(this);
 
   @override
   List<Object?> get props => [id, startDate, endDate, valueIdentifier, result];
