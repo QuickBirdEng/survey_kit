@@ -273,9 +273,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<Task> getJsonTask() async {
-    final taskJson = await rootBundle.loadString('assets/example_json.json');
-    final taskMap = json.decode(taskJson);
+    try {
+      final taskJson = await rootBundle.loadString('assets/example_json.json');
+      final taskMap = json.decode(taskJson);
 
-    return Task.fromJson(taskMap);
+      return Task.fromJson(taskMap);
+    } catch (e) {
+      throw e;
+    }
   }
 }

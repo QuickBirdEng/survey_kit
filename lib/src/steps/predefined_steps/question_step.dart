@@ -9,6 +9,7 @@ import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart'
 import 'package:survey_kit/src/answer_format/multiple_choice_auto_complete_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_double_answer_format.dart';
 import 'package:survey_kit/src/answer_format/scale_answer_format.dart';
+import 'package:survey_kit/src/answer_format/agreement_answer_format.dart';
 import 'package:survey_kit/src/answer_format/single_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/text_answer_format.dart';
 import 'package:survey_kit/src/answer_format/time_answer_formart.dart';
@@ -19,6 +20,7 @@ import 'package:survey_kit/src/result/question/integer_question_result.dart';
 import 'package:survey_kit/src/result/question/multiple_choice_question_result.dart';
 import 'package:survey_kit/src/result/question/multiple_double_question_result.dart';
 import 'package:survey_kit/src/result/question/scale_question_result.dart';
+import 'package:survey_kit/src/result/question/agreement_question_result.dart';
 import 'package:survey_kit/src/result/question/single_choice_question_result.dart';
 import 'package:survey_kit/src/result/question/text_question_result.dart';
 import 'package:survey_kit/src/result/question/time_question_result.dart';
@@ -31,6 +33,7 @@ import 'package:survey_kit/src/views/multiple_auto_complete_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_choice_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_double_answer_view.dart';
 import 'package:survey_kit/src/views/scale_answer_view.dart';
+import 'package:survey_kit/src/views/agreement_answer_view.dart';
 import 'package:survey_kit/src/views/single_choice_answer_view.dart';
 import 'package:survey_kit/src/views/text_answer_view.dart';
 import 'package:survey_kit/src/result/question_result.dart';
@@ -136,6 +139,12 @@ class QuestionStep extends Step {
           key: key,
           questionStep: this,
           result: questionResult as MultipleChoiceQuestionResult?,
+        );
+      case SingleCheckboxAnswerFormat:
+        return SingleCheckboxAnswerView(
+          key: key,
+          questionStep: this,
+          result: questionResult as SingleCheckboxQuestionResult?,
         );
       default:
         throw AnswerFormatNotDefinedException();

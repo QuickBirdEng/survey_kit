@@ -63,6 +63,20 @@
         },
         {
             "stepIdentifier": {
+                "id": "11112"
+            },
+            "type": "question",
+            "title": "Before we begin",
+            "text": "In order to provide our services, this app will collect and use your sensitive health data based on your consent.",
+            "answerFormat": {
+                "type": "agreement",
+                "defaultValue": "NEGATIVE",
+                "markdownDescription": "Please read our [Privacy Notice](https://www.healthylongevity.cafe/privacy) carefully to ensure that you understand it fully.",
+                "markdownAgreementText": "By clicking this option you consent to the collection and processing of your personal data according to our [Privacy Notice](https://www.healthylongevity.cafe/privacy)"
+            }
+        },
+        {
+            "stepIdentifier": {
                 "id": "2"
             },
             "type": "question",

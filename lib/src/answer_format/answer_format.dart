@@ -8,6 +8,7 @@ import 'package:survey_kit/src/answer_format/multiple_choice_auto_complete_answe
 import 'package:survey_kit/src/answer_format/multiple_double_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/scale_answer_format.dart';
+import 'package:survey_kit/src/answer_format/agreement_answer_format.dart';
 import 'package:survey_kit/src/answer_format/single_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/text_answer_format.dart';
 import 'package:survey_kit/src/answer_format/time_answer_formart.dart';
@@ -40,6 +41,8 @@ abstract class AnswerFormat {
         return ScaleAnswerFormat.fromJson(json);
       case 'time':
         return TimeAnswerFormat.fromJson(json);
+      case 'agreement':
+        return SingleCheckboxAnswerFormat.fromJson(json);
       default:
         throw AnswerFormatNotDefinedException();
     }
