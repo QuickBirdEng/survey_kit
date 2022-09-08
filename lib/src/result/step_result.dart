@@ -24,10 +24,11 @@ class StepResult extends Result {
   @_Converter()
   final List<QuestionResult> results;
 
-  StepResult({required Identifier? id,
-    required DateTime startDate,
-    required DateTime endDate,
-    required this.results})
+  StepResult(
+      {required Identifier? id,
+      required DateTime startDate,
+      required DateTime endDate,
+      required this.results})
       : super(id: id, startDate: startDate, endDate: endDate);
 
   factory StepResult.fromQuestion({required QuestionResult questionResult}) {
@@ -79,6 +80,10 @@ class _Converter implements JsonConverter<List<QuestionResult>, Object> {
       } else if (qr is MultipleDoubleQuestionResult) {
         final qrJson = qr.toJson();
         qrJson['type'] = (MultipleDoubleQuestionResult).toString();
+        allQuestionResultsEncoded.add(qrJson);
+      } else if (qr is MultipleChoiceQuestionResult) {
+        final qrJson = qr.toJson();
+        qrJson['type'] = (MultipleChoiceQuestionResult).toString();
         allQuestionResultsEncoded.add(qrJson);
       } else if (qr is ScaleQuestionResult) {
         final qrJson = qr.toJson();
