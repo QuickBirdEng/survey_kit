@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'file_answer_format.dart';
+part of 'image_answer_format.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-FileAnswerFormat _$FileAnswerFormatFromJson(Map<String, dynamic> json) =>
-    FileAnswerFormat(
+ImageAnswerFormat _$ImageAnswerFormatFromJson(Map<String, dynamic> json) =>
+    ImageAnswerFormat(
       defaultValue: json['defaulValue'] as String?,
       hint: json['hint'] as String? ?? '',
     );
 
-Map<String, dynamic> _$FileAnswerFormatToJson(FileAnswerFormat instance) =>
+Map<String, dynamic> _$ImageAnswerFormatToJson(ImageAnswerFormat instance) =>
     <String, dynamic>{
       'defaultValue': instance.defaultValue,
       'hint': instance.hint,

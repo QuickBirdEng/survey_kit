@@ -162,18 +162,18 @@ class _MyAppState extends State<MyApp> {
     var task = NavigableTask(
       id: TaskIdentifier(),
       steps: [
-        InstructionStep(
-          title: 'Welcome to the\nQuickBird Studios\nHealth Survey',
-          text: 'Get ready for a bunch of super random questions!',
-          buttonText: 'Let\'s go!',
-        ),
         QuestionStep(
           title: 'Upload a file',
-          answerFormat: FileAnswerFormat(
+          answerFormat: ImageAnswerFormat(
             defaultValue: '',
             hint: 'file',
           ),
           isOptional: true,
+        ),
+        InstructionStep(
+          title: 'Welcome to the\nQuickBird Studios\nHealth Survey',
+          text: 'Get ready for a bunch of super random questions!',
+          buttonText: 'Let\'s go!',
         ),
         CompletionStep(
           stepIdentifier: StepIdentifier(id: '321'),

@@ -3,7 +3,7 @@
 import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
 import 'package:survey_kit/src/answer_format/double_answer_format.dart';
-import 'package:survey_kit/src/answer_format/file_answer_format.dart';
+import 'package:survey_kit/src/answer_format/image_answer_format.dart';
 import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_double_answer_format.dart';
@@ -39,7 +39,7 @@ abstract class AnswerFormat {
       case 'time':
         return TimeAnswerFormat.fromJson(json);
       case 'file':
-        return FileAnswerFormat.fromJson(json);
+        return ImageAnswerFormat.fromJson(json);
       default:
         throw AnswerFormatNotDefinedException();
     }

@@ -4,7 +4,7 @@ import 'package:survey_kit/src/answer_format/answer_format.dart';
 import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
 import 'package:survey_kit/src/answer_format/double_answer_format.dart';
-import 'package:survey_kit/src/answer_format/file_answer_format.dart';
+import 'package:survey_kit/src/answer_format/image_answer_format.dart';
 import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_double_answer_format.dart';
@@ -15,7 +15,7 @@ import 'package:survey_kit/src/answer_format/time_answer_formart.dart';
 import 'package:survey_kit/src/result/question/boolean_question_result.dart';
 import 'package:survey_kit/src/result/question/date_question_result.dart';
 import 'package:survey_kit/src/result/question/double_question_result.dart';
-import 'package:survey_kit/src/result/question/file_question_result.dart';
+import 'package:survey_kit/src/result/question/image_question_result.dart';
 import 'package:survey_kit/src/result/question/integer_question_result.dart';
 import 'package:survey_kit/src/result/question/multiple_choice_question_result.dart';
 import 'package:survey_kit/src/result/question/multiple_double_question_result.dart';
@@ -30,7 +30,7 @@ import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/views/boolean_answer_view.dart';
 import 'package:survey_kit/src/views/date_answer_view.dart';
 import 'package:survey_kit/src/views/double_answer_view.dart';
-import 'package:survey_kit/src/views/file_answer_view.dart';
+import 'package:survey_kit/src/views/image_answer_view.dart';
 import 'package:survey_kit/src/views/integer_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_choice_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_double_answer_view.dart';
@@ -132,11 +132,11 @@ class QuestionStep extends Step {
           questionStep: this,
           result: questionResult as MultipleDoubleQuestionResult?,
         );
-      case FileAnswerFormat:
-        return FileAnswerView(
+      case ImageAnswerFormat:
+        return ImageAnswerView(
           key: key,
           questionStep: this,
-          result: questionResult as FileQuestionResult?,
+          result: questionResult as ImageQuestionResult?,
         );
       default:
         throw AnswerFormatNotDefinedException();
