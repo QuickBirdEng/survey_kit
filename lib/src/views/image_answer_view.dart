@@ -1,9 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:survey_kit/src/answer_format/image_answer_format.dart';
 import 'package:survey_kit/src/result/question/image_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
-import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class ImageAnswerView extends StatefulWidget {
@@ -22,8 +23,8 @@ class ImageAnswerView extends StatefulWidget {
 
 class _ImageAnswerViewState extends State<ImageAnswerView> {
   late final ImageAnswerFormat _imageAnswerFormat;
-  late final TextEditingController _controller;
   late final DateTime _startDate;
+  late final Uint8List pickedFile;
 
   bool _isValid = false;
 
@@ -31,23 +32,12 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   void initState() {
     super.initState();
     _imageAnswerFormat = widget.questionStep.answerFormat as ImageAnswerFormat;
-
-    _controller = TextEditingController();
-    _controller.text = widget.result?.result?.toString() ?? '';
-
     _startDate = DateTime.now();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
-  }
-
-  void _checkValidation(String text) {
-    setState(() {
-      _isValid = text.isNotEmpty;
-    });
   }
 
   @override
@@ -58,8 +48,8 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
         id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
-        valueIdentifier: _controller.text,
-        result: _controller.text,
+        valueIdentifier: pickedFile.toString(),
+        result: pickedFile.toString(),
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -75,23 +65,13 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              TextField(
-                decoration: textFieldInputDecoration(
-                  hint: _imageAnswerFormat.hint,
-                ),
-                controller: _controller,
-                onChanged: (String value) {
-                  _checkValidation(value);
-                },
-                textAlign: TextAlign.center,
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32.0,
                   vertical: 8.0,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ElevatedButton(
@@ -139,19 +119,27 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
     );
   }
 
-  _openCamera() async {
+  Future<void> _openCamera() async {
     var picture = await ImagePicker.platform.pickImage(
       source: ImageSource.camera,
     );
 
-    return picture;
+    Navigator.pop(context);
+
+    picture?.readAsBytes().then((value) {
+      pickedFile = value;
+    });
   }
 
-  _openGallery() async {
+  Future<void> _openGallery() async {
     var picture = await ImagePicker.platform.pickImage(
       source: ImageSource.gallery,
     );
 
-    return picture;
+    Navigator.pop(context);
+
+    picture?.readAsBytes().then((value) {
+      pickedFile = value;
+    });
   }
 }
