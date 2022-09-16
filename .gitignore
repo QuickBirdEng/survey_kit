@@ -1,4 +1,5 @@
 # Miscellaneous
+.gitignore
 *.class
 *.log
 *.pyc
@@ -8,6 +9,7 @@
 .buildlog/
 .history
 .svn/
+.fvm/
 
 # IntelliJ related
 *.iml

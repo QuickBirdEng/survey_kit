@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:survey_kit/src/answer_format/image_answer_format.dart';
@@ -24,9 +22,9 @@ class ImageAnswerView extends StatefulWidget {
 class _ImageAnswerViewState extends State<ImageAnswerView> {
   late final ImageAnswerFormat _imageAnswerFormat;
   late final DateTime _startDate;
-  late final Uint8List pickedFile;
 
   bool _isValid = false;
+  String filePath = '';
 
   @override
   void initState() {
@@ -48,8 +46,8 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
         id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
-        valueIdentifier: pickedFile.toString(),
-        result: pickedFile.toString(),
+        valueIdentifier: filePath,
+        result: filePath,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -70,16 +68,30 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                   horizontal: 32.0,
                   vertical: 8.0,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ElevatedButton(
                       onPressed: () {
                         _optionsDialogBox();
                       },
-                      child: Text('Image'),
+                      child: Text('Image :'),
                     ),
+                    filePath.isNotEmpty
+                        ? Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                filePath
+                                    .split('/')[filePath.split('/').length - 1],
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
                   ],
                 ),
               ),
@@ -127,7 +139,9 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
     Navigator.pop(context);
 
     picture?.readAsBytes().then((value) {
-      pickedFile = value;
+      setState(() {
+        filePath = picture.path;
+      });
     });
   }
 
@@ -139,7 +153,9 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
     Navigator.pop(context);
 
     picture?.readAsBytes().then((value) {
-      pickedFile = value;
+      setState(() {
+        filePath = picture.path;
+      });
     });
   }
 }
