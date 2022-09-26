@@ -6,11 +6,11 @@ part 'image_answer_format.g.dart';
 @JsonSerializable()
 class ImageAnswerFormat implements AnswerFormat {
   final String? defaultValue;
-  final String hint;
+  final String buttonText;
 
   const ImageAnswerFormat({
     this.defaultValue,
-    this.hint = '',
+    this.buttonText = 'Image: ',
   }) : super();
 
   factory ImageAnswerFormat.fromJson(Map<String, dynamic> json) =>

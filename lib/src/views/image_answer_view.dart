@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:survey_kit/src/answer_format/image_answer_format.dart';
 import 'package:survey_kit/src/result/question/image_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
@@ -19,6 +20,7 @@ class ImageAnswerView extends StatefulWidget {
 }
 
 class _ImageAnswerViewState extends State<ImageAnswerView> {
+  late final ImageAnswerFormat _imageAnswerFormat;
   late final DateTime _startDate;
 
   bool _isValid = false;
@@ -27,6 +29,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   @override
   void initState() {
     super.initState();
+    _imageAnswerFormat = widget.questionStep.answerFormat as ImageAnswerFormat;
     _startDate = DateTime.now();
   }
 
@@ -73,7 +76,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                       onPressed: () {
                         _optionsDialogBox();
                       },
-                      child: Text('Image :'),
+                      child: Text(_imageAnswerFormat.buttonText),
                     ),
                     filePath.isNotEmpty
                         ? Flexible(
