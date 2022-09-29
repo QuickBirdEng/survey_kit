@@ -6,11 +6,12 @@ repository: https://github.com/quickbirdstudios/survey_kit
 issue_tracker: https://github.com/quickbirdstudios/survey_kit/issues
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: ">=2.17.0 <3.0.0"
   flutter: ">=1.20.0"
 
 dependencies:
   bloc: ^8.0.3
+  camera: ^0.10.0+1
   collection: ^1.15.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
@@ -19,6 +20,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_platform_widgets: ^2.0.0
   go_router: ^4.0.0
+  image_picker: ^0.8.5+3
   intl: ^0.17.0
   json_annotation: ^4.0.1
   lottie: ^1.0.1
@@ -37,7 +39,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # To add assets to your plugin package, add an assets section, like this:
   assets:
     - assets/fancy_checkmark.json
