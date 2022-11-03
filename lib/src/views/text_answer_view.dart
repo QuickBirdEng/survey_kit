@@ -75,8 +75,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
       child: Column(
         children: [
           Padding(
-            padding:
-                const EdgeInsets.only(bottom: 32.0, left: 14.0, right: 14.0),
+            padding: const EdgeInsets.only(bottom: 32.0, left: 14.0, right: 14.0),
             child: Text(
               widget.questionStep.text,
               style: Theme.of(context).textTheme.bodyText2,
@@ -87,6 +86,8 @@ class _TextAnswerViewState extends State<TextAnswerView> {
             width: MediaQuery.of(context).size.width,
             height: 50.0,
             child: TextField(
+              textInputAction: TextInputAction.next,
+              autofocus: true,
               decoration: textFieldInputDecoration(
                 hint: _textAnswerFormat.hint,
               ),

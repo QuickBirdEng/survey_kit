@@ -29,8 +29,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
   @override
   void initState() {
     super.initState();
-    _integerAnswerFormat =
-        widget.questionStep.answerFormat as IntegerAnswerFormat;
+    _integerAnswerFormat = widget.questionStep.answerFormat as IntegerAnswerFormat;
     _controller = TextEditingController();
     _controller.text = widget.result?.result?.toString() ?? '';
     _checkValidation(_controller.text);
@@ -58,9 +57,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: int.tryParse(_controller.text) ??
-            _integerAnswerFormat.defaultValue ??
-            null,
+        result: int.tryParse(_controller.text) ?? _integerAnswerFormat.defaultValue ?? null,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -75,6 +72,8 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: TextField(
+            textInputAction: TextInputAction.next,
+            autofocus: true,
             decoration: textFieldInputDecoration(
               hint: _integerAnswerFormat.hint,
             ),

@@ -91,6 +91,7 @@ class QuestionStep extends Step {
           result: questionResult as TextQuestionResult?,
         );
       case SingleChoiceAnswerFormat:
+        FocusManager.instance.primaryFocus?.unfocus();
         return SingleChoiceAnswerView(
           key: key,
           questionStep: this,
@@ -143,7 +144,6 @@ class QuestionStep extends Step {
     }
   }
 
-  factory QuestionStep.fromJson(Map<String, dynamic> json) =>
-      _$QuestionStepFromJson(json);
+  factory QuestionStep.fromJson(Map<String, dynamic> json) => _$QuestionStepFromJson(json);
   Map<String, dynamic> toJson() => _$QuestionStepToJson(this);
 }

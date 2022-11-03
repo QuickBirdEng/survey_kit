@@ -29,8 +29,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
   @override
   void initState() {
     super.initState();
-    _doubleAnswerFormat =
-        widget.questionStep.answerFormat as DoubleAnswerFormat;
+    _doubleAnswerFormat = widget.questionStep.answerFormat as DoubleAnswerFormat;
     _controller = TextEditingController();
     _controller.text = widget.result?.result?.toString() ?? '';
     _checkValidation(_controller.text);
@@ -58,9 +57,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: double.tryParse(_controller.text) ??
-            _doubleAnswerFormat.defaultValue ??
-            null,
+        result: double.tryParse(_controller.text) ?? _doubleAnswerFormat.defaultValue ?? null,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -75,6 +72,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: TextField(
+            autofocus: true,
             decoration: textFieldInputDecoration(
               hint: _doubleAnswerFormat.hint,
             ),
