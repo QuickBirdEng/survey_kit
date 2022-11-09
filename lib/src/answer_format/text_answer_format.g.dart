@@ -10,8 +10,8 @@ TextAnswerFormat _$TextAnswerFormatFromJson(Map<String, dynamic> json) =>
     TextAnswerFormat(
       maxLines: json['maxLines'] as int?,
       hint: json['hint'] as String? ?? '',
-      validationRegEx: json['validationRegEx'] as String?,
       defaultValue: json['defaultValue'] as String?,
+      validationRegEx: json['validationRegEx'] as String? ?? r'^(?!s*$).+',
     );
 
 Map<String, dynamic> _$TextAnswerFormatToJson(TextAnswerFormat instance) =>
