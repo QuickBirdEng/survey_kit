@@ -2,10 +2,11 @@
 
 import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 import 'package:survey_kit/src/answer_format/date_answer_format.dart';
-import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
 import 'package:survey_kit/src/answer_format/double_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_auto_complete_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_double_answer_format.dart';
+import 'package:survey_kit/src/answer_format/image_answer_format.dart';
+import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/scale_answer_format.dart';
 import 'package:survey_kit/src/answer_format/single_choice_answer_format.dart';
@@ -40,6 +41,8 @@ abstract class AnswerFormat {
         return ScaleAnswerFormat.fromJson(json);
       case 'time':
         return TimeAnswerFormat.fromJson(json);
+      case 'file':
+        return ImageAnswerFormat.fromJson(json);
       default:
         throw AnswerFormatNotDefinedException();
     }

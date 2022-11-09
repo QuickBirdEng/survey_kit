@@ -42,6 +42,8 @@ class _TextAnswerViewState extends State<TextAnswerView> {
       if (_textAnswerFormat.validationRegEx != null) {
         RegExp regExp = new RegExp(_textAnswerFormat.validationRegEx!);
         _isValid = regExp.hasMatch(text);
+      } else {
+        _isValid = true;
       }
     });
   }
