@@ -16,8 +16,7 @@ class MultipleDoubleAnswerView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MultipleDoubleAnswerView> createState() =>
-      _MultipleDoubleAnswerViewState();
+  State<MultipleDoubleAnswerView> createState() => _MultipleDoubleAnswerViewState();
 }
 
 class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
@@ -31,8 +30,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
   @override
   void initState() {
     super.initState();
-    _multipleDoubleAnswer =
-        widget.questionStep.answerFormat as MultipleDoubleAnswerFormat;
+    _multipleDoubleAnswer = widget.questionStep.answerFormat as MultipleDoubleAnswerFormat;
     _controller = _multipleDoubleAnswer.hints.map((e) {
       return TextEditingController();
     }).toList();
@@ -103,11 +101,10 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
                 Divider(
                   color: Colors.grey,
                 ),
-                ..._multipleDoubleAnswer.hints
-                    .asMap()
-                    .entries
-                    .map((MapEntry<int, String> md) {
+                ..._multipleDoubleAnswer.hints.asMap().entries.map((MapEntry<int, String> md) {
                   return TextField(
+                    textInputAction: TextInputAction.next,
+                    autofocus: true,
                     decoration: InputDecoration(
                       labelText: md.value,
                     ),
