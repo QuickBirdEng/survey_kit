@@ -25,7 +25,7 @@ class InstructionView extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
-        child: Text(
+        child: instructionStep.textWidget ?? Text(
           instructionStep.text,
           style: Theme.of(context).textTheme.bodyText2,
           textAlign: TextAlign.center,

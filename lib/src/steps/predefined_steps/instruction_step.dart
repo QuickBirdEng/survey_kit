@@ -11,10 +11,12 @@ part 'instruction_step.g.dart';
 class InstructionStep extends Step {
   final String title;
   final String text;
+  final Widget? textWidget;
 
   InstructionStep({
     required this.title,
     required this.text,
+    this.textWidget,
     bool isOptional = false,
     String buttonText = 'Next',
     StepIdentifier? stepIdentifier,
@@ -37,14 +39,9 @@ class InstructionStep extends Step {
     );
   }
 
-  factory InstructionStep.fromJson(Map<String, dynamic> json) =>
-      _$InstructionStepFromJson(json);
+  factory InstructionStep.fromJson(Map<String, dynamic> json) => _$InstructionStepFromJson(json);
   Map<String, dynamic> toJson() => _$InstructionStepToJson(this);
 
-  bool operator ==(o) =>
-      super == (o) &&
-      o is InstructionStep &&
-      o.title == title &&
-      o.text == text;
+  bool operator ==(o) => super == (o) && o is InstructionStep && o.title == title && o.text == text;
   int get hashCode => super.hashCode ^ title.hashCode ^ text.hashCode;
 }
