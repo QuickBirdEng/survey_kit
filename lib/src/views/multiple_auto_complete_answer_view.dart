@@ -35,7 +35,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
     _startDateTime = DateTime.now();
   }
 
-  // TODO refactor the widgets and organize, DRY also
+  // TODO(marvin): refactor the widgets and organize, DRY also
   @override
   Widget build(BuildContext context) {
     return StepView(
@@ -91,8 +91,10 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                     )
                     .toList(),
                 ..._selectedChoices
-                    .where((element) =>
-                        !_multipleChoiceAnswer.textChoices.contains(element),)
+                    .where(
+                      (element) =>
+                          !_multipleChoiceAnswer.textChoices.contains(element),
+                    )
                     .map(
                       (TextChoice tc) => SelectionListTile(
                         text: tc.text,
@@ -189,16 +191,17 @@ class _AutoComplete extends StatelessWidget {
         controller: textEditingController,
         focusNode: focusNode,
         decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 32),
-            labelText: 'Search',
-            hintText: 'Type here to search',
-            suffixIcon: IconButton(
-              padding: EdgeInsets.zero,
-              icon: const Icon(Icons.clear),
-              onPressed: () {
-                textEditingController.clear();
-              },
-            ),),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 32),
+          labelText: 'Search',
+          hintText: 'Type here to search',
+          suffixIcon: IconButton(
+            padding: EdgeInsets.zero,
+            icon: const Icon(Icons.clear),
+            onPressed: () {
+              textEditingController.clear();
+            },
+          ),
+        ),
         onSubmitted: (v) {
           onFieldSubmitted();
         },
@@ -214,9 +217,11 @@ class _AutoComplete extends StatelessWidget {
           return const Iterable<TextChoice>.empty();
         }
 
-        return suggestions.where((element) => element.text
-            .toLowerCase()
-            .contains(textEditingValue.text.toLowerCase()),);
+        return suggestions.where(
+          (element) => element.text
+              .toLowerCase()
+              .contains(textEditingValue.text.toLowerCase()),
+        );
       },
       onSelected: onSelected,
     );
@@ -252,28 +257,31 @@ class _OptionsViewBuilder extends StatelessWidget {
                   onTap: () {
                     onSelected(option);
                   },
-                  child: Builder(builder: (BuildContext context) {
-                    final highlight =
-                        AutocompleteHighlightedOption.of(context) == index;
-                    if (highlight) {
-                      SchedulerBinding.instance
-                          .addPostFrameCallback((Duration timeStamp) {
-                        Scrollable.ensureVisible(context, alignment: 0.5);
-                      });
-                    }
-                    return Container(
-                      color: highlight ? Theme.of(context).focusColor : null,
-                      padding: const EdgeInsets.all(16.0),
-                      margin: const EdgeInsets.only(right: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(option.text),
-                          if (selectedChoices.contains(option)) const Icon(Icons.done)
-                        ],
-                      ),
-                    );
-                  },),
+                  child: Builder(
+                    builder: (BuildContext context) {
+                      final highlight =
+                          AutocompleteHighlightedOption.of(context) == index;
+                      if (highlight) {
+                        SchedulerBinding.instance
+                            .addPostFrameCallback((Duration timeStamp) {
+                          Scrollable.ensureVisible(context, alignment: 0.5);
+                        });
+                      }
+                      return Container(
+                        color: highlight ? Theme.of(context).focusColor : null,
+                        padding: const EdgeInsets.all(16.0),
+                        margin: const EdgeInsets.only(right: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(option.text),
+                            if (selectedChoices.contains(option))
+                              const Icon(Icons.done)
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
             ),
