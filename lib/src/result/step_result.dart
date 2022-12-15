@@ -23,12 +23,12 @@ class StepResult extends Result {
   @_Converter()
   final List<QuestionResult> results;
 
-  const StepResult(
-      {required Identifier? id,
-      required DateTime startDate,
-      required DateTime endDate,
-      required this.results,})
-      : super(id: id, startDate: startDate, endDate: endDate);
+  const StepResult({
+    required Identifier? id,
+    required DateTime startDate,
+    required DateTime endDate,
+    required this.results,
+  }) : super(id: id, startDate: startDate, endDate: endDate);
 
   factory StepResult.fromQuestion({required QuestionResult questionResult}) {
     return StepResult(
@@ -113,7 +113,7 @@ class _Converter implements JsonConverter<List<QuestionResult>, Object> {
         qrJson['type'] = (VideoStepResult).toString();
         allQuestionResultsEncoded.add(qrJson);
       } else {
-        throw 'Unhandled Question Result Type';
+        throw Exception('Unhandled Question Result Type');
       }
     }
 
@@ -154,7 +154,7 @@ class _Converter implements JsonConverter<List<QuestionResult>, Object> {
       } else if (qType == (VideoStepResult).toString()) {
         results.add(VideoStepResult.fromJson(qData));
       } else {
-        throw 'Unhandled Question Result Type';
+        throw Exception('Unhandled Question Result Type');
       }
     }
 

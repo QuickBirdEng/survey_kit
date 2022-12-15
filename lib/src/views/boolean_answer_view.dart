@@ -40,9 +40,9 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView> {
         id: widget.questionStep.stepIdentifier,
         startDate: _startDate,
         endDate: DateTime.now(),
-        valueIdentifier: _result == BooleanResult.POSITIVE
+        valueIdentifier: _result == BooleanResult.positive
             ? _answerFormat.positiveAnswer
-            : _result == BooleanResult.NEGATIVE
+            : _result == BooleanResult.negative
                 ? _answerFormat.negativeAnswer
                 : '',
         result: _result,
@@ -73,26 +73,26 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView> {
               SelectionListTile(
                 text: _answerFormat.positiveAnswer,
                 onTap: () {
-                  if (_result == BooleanResult.POSITIVE) {
+                  if (_result == BooleanResult.positive) {
                     _result = null;
                   } else {
-                    _result = BooleanResult.POSITIVE;
+                    _result = BooleanResult.positive;
                   }
                   setState(() {});
                 },
-                isSelected: _result == BooleanResult.POSITIVE,
+                isSelected: _result == BooleanResult.positive,
               ),
               SelectionListTile(
                 text: _answerFormat.negativeAnswer,
                 onTap: () {
-                  if (_result == BooleanResult.NEGATIVE) {
+                  if (_result == BooleanResult.negative) {
                     _result = null;
                   } else {
-                    _result = BooleanResult.NEGATIVE;
+                    _result = BooleanResult.negative;
                   }
                   setState(() {});
                 },
-                isSelected: _result == BooleanResult.NEGATIVE,
+                isSelected: _result == BooleanResult.negative,
               ),
             ],
           ),

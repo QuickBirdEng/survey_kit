@@ -7,6 +7,7 @@ import 'package:survey_kit/src/steps/predefined_steps/instruction_step.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/steps/step_not_defined_exception.dart';
 
+@immutable
 abstract class Step {
   final StepIdentifier stepIdentifier;
   @JsonKey(defaultValue: false)

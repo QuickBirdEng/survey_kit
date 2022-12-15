@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/task/identifier/task_identifier.dart';
@@ -10,6 +11,7 @@ import 'package:survey_kit/src/task/task_not_defined_exception.dart';
 /// If you want to create a custom task:
 ///  * Inherit from Task
 ///  * If you want to use JSON override [fromJson] and add your type
+@immutable
 abstract class Task {
   late final TaskIdentifier id;
   @JsonKey(defaultValue: <Step>[])
@@ -25,6 +27,7 @@ abstract class Task {
       id = TaskIdentifier();
       return;
     }
+    // ignore: prefer_initializing_formals
     this.id = id;
   }
 

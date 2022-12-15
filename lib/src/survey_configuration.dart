@@ -28,7 +28,7 @@ class SurveyConfiguration extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(SurveyConfiguration old) =>
-      surveyProgressConfiguration != old.surveyProgressConfiguration &&
-      showProgress != old.showProgress;
+  bool updateShouldNotify(SurveyConfiguration oldWidget) =>
+      surveyProgressConfiguration != oldWidget.surveyProgressConfiguration &&
+      showProgress != oldWidget.showProgress;
 }

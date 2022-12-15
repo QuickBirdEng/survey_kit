@@ -45,7 +45,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
 
     _insertedValues = List.generate(
       _multipleDoubleAnswer.hints.length,
-      (index) => MultiDouble(
+      (index) => const MultiDouble(
         text: '',
         value: 0.0,
       ),

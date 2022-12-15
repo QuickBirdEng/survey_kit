@@ -8,6 +8,7 @@ import 'package:survey_kit/src/views/completion_view.dart';
 part 'completion_step.g.dart';
 
 @JsonSerializable()
+@immutable
 class CompletionStep extends Step {
   final String title;
   final String text;
@@ -39,8 +40,11 @@ class CompletionStep extends Step {
   Map<String, dynamic> toJson() => _$CompletionStepToJson(this);
 
   @override
-  bool operator ==(Object o) =>
-      super == o && o is CompletionStep && o.title == title && o.text == text;
+  bool operator ==(Object other) =>
+      super == other &&
+      other is CompletionStep &&
+      other.title == title &&
+      other.text == text;
   @override
   int get hashCode => super.hashCode ^ title.hashCode ^ text.hashCode;
 }

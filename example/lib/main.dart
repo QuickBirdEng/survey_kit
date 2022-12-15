@@ -184,7 +184,7 @@ class _MyAppState extends State<MyApp> {
           answerFormat: const BooleanAnswerFormat(
             positiveAnswer: 'Yes',
             negativeAnswer: 'No',
-            result: BooleanResult.POSITIVE,
+            result: BooleanResult.positive,
           ),
         ),
         QuestionStep(

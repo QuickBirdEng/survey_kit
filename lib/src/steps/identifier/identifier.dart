@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'identifier.g.dart';
 
 @JsonSerializable()
+@immutable
 class Identifier {
   final String id;
 
@@ -14,7 +16,7 @@ class Identifier {
   Map<String, dynamic> toJson() => _$IdentifierToJson(this);
 
   @override
-  bool operator ==(Object o) => o is Identifier && o.id == id;
+  bool operator ==(Object other) => other is Identifier && other.id == id;
   @override
   int get hashCode => id.hashCode;
 }

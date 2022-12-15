@@ -12,7 +12,7 @@ void main() {
     }
     ''';
     final Task orderedTask =
-        OrderedTask(id: TaskIdentifier(id: '123'), steps: []);
+        OrderedTask(id: TaskIdentifier(id: '123'), steps: const []);
 
     final orderedJsonTask =
         OrderedTask.fromJson(json.decode(jsonStr) as Map<String, dynamic>);

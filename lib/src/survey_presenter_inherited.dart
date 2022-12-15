@@ -12,6 +12,7 @@ import 'package:survey_kit/src/result/survey/survey_result.dart';
 import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 import 'package:survey_kit/src/steps/step.dart';
 
+// ignore: must_be_immutable
 class SurveyPresenterInherited extends InheritedWidget {
   SurveyPresenterInherited({
     super.key,
@@ -20,7 +21,6 @@ class SurveyPresenterInherited extends InheritedWidget {
     required super.child,
   })  : _state = LoadingSurveyState(),
         startDate = DateTime.now() {
-    //TODO: Do somewhere else
     onEvent(StartSurvey());
   }
 
@@ -93,7 +93,7 @@ class SurveyPresenterInherited extends InheritedWidget {
       id: taskNavigator.task.id,
       startDate: startDate,
       endDate: DateTime.now(),
-      finishReason: FinishReason.COMPLETED,
+      finishReason: FinishReason.completed,
       results: const [],
     );
     return SurveyResultState(
@@ -181,7 +181,7 @@ class SurveyPresenterInherited extends InheritedWidget {
       id: taskNavigator.task.id,
       startDate: startDate,
       endDate: DateTime.now(),
-      finishReason: FinishReason.DISCARDED,
+      finishReason: FinishReason.discarded,
       results: stepResults,
     );
     return SurveyResultState(
@@ -199,7 +199,7 @@ class SurveyPresenterInherited extends InheritedWidget {
       id: taskNavigator.task.id,
       startDate: startDate,
       endDate: DateTime.now(),
-      finishReason: FinishReason.COMPLETED,
+      finishReason: FinishReason.completed,
       results: stepResults,
     );
     return SurveyResultState(
@@ -214,10 +214,10 @@ class SurveyPresenterInherited extends InheritedWidget {
       return;
     }
     results
-        .removeWhere((QuestionResult result) => result.id == questionResult.id);
-    results.add(
-      questionResult,
-    );
+      ..removeWhere((QuestionResult result) => result.id == questionResult.id)
+      ..add(
+        questionResult,
+      );
   }
 
   int get countSteps => taskNavigator.countSteps;

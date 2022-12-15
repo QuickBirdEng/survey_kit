@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/result/survey/survey_result.dart';
 import 'package:survey_kit/src/steps/step.dart';
 
+@immutable
 abstract class SurveyState {
   const SurveyState();
 }
@@ -19,7 +21,7 @@ class PresentingSurveyState extends SurveyState {
   final int stepCount;
   final bool isPreviousStep;
 
-  PresentingSurveyState({
+  const PresentingSurveyState({
     required this.stepCount,
     required this.appBarConfiguration,
     required this.currentStep,
@@ -58,7 +60,7 @@ class SurveyResultState extends SurveyState {
   final Step? currentStep;
   final QuestionResult? stepResult;
 
-  SurveyResultState({
+  const SurveyResultState({
     required this.result,
     this.stepResult,
     required this.currentStep,

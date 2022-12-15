@@ -7,7 +7,7 @@ void main() {
     startDate: DateTime(2022, 8, 12, 16, 4),
     endDate: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'multiDouble1',
-    result: [
+    result: const [
       MultiDouble(text: 'doubleVal1', value: 123.45),
       MultiDouble(text: 'doubleVal2', value: 234.56),
     ],

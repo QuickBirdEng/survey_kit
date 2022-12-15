@@ -7,7 +7,7 @@ void main() {
     startDate: DateTime(2022, 8, 12, 16, 4),
     endDate: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'bool1',
-    result: BooleanResult.NEGATIVE,
+    result: BooleanResult.negative,
   );
 
   group('serialisation', () {

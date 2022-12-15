@@ -5,7 +5,6 @@ import 'package:survey_kit/src/task/identifier/task_identifier.dart';
 import 'package:survey_kit/src/task/task.dart';
 
 /// Definition of task which can handle routing between [Tasks]
-///
 /// The [navigationRules] defines on which Step [StepIdentifier] which next Step
 /// is called. The logic which [Step] is called is defined in the
 /// [NavigationRule]
@@ -48,9 +47,10 @@ class NavigableTask extends Task {
       for (final rule in rules) {
         navigationRules.putIfAbsent(
           StepIdentifier.fromJson(
-            rule['triggerStepIdentifier'] as Map<String, dynamic>,
+            (rule as Map<String, dynamic>)['triggerStepIdentifier']
+                as Map<String, dynamic>,
           ),
-          () => NavigationRule.fromJson(rule as Map<String, dynamic>),
+          () => NavigationRule.fromJson(rule),
         );
       }
     }

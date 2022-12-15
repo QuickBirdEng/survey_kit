@@ -13,7 +13,7 @@ class StepIdentifier extends Identifier {
   Map<String, dynamic> toJson() => _$StepIdentifierToJson(this);
 
   @override
-  bool operator ==(Object o) => o is StepIdentifier && id == o.id;
+  bool operator ==(Object other) => other is StepIdentifier && id == other.id;
   @override
   int get hashCode => id.hashCode;
 }

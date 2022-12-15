@@ -3,9 +3,8 @@ import 'package:survey_kit/src/steps/predefined_steps/cms_step.dart';
 
 class CMSStepView extends StatelessWidget {
   final CMSStep cmsStep;
-  final _startDate = DateTime.now();
 
-  CMSStepView({
+  const CMSStepView({
     super.key,
     required this.cmsStep,
   });

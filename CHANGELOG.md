@@ -1,3 +1,6 @@
+# 0.2.0
+- BREAKING: BooleanResult is now lowercase
+- BREAKING: FinishReason is now lowercase
 # 0.1.1
 - INFO: Update dependencies (Flutter 3.0.2)
 # 0.1.0

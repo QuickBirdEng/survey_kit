@@ -25,23 +25,22 @@ void main() {
     ''';
     final navigableTask = NavigableTask(
       id: TaskIdentifier(id: '123'),
-      steps: [],
-    );
-    navigableTask.addNavigationRule(
-      forTriggerStepIdentifier: StepIdentifier(id: '123'),
-      navigationRule: ConditionalNavigationRule(
-        resultToStepIdentifierMapper: (input) {
-          switch (input) {
-            case 'Yes':
-              return StepIdentifier(id: '321');
-            case 'No':
-              return StepIdentifier(id: '456');
-            default:
-              return null;
-          }
-        },
-      ),
-    );
+      steps: const [],
+    )..addNavigationRule(
+        forTriggerStepIdentifier: StepIdentifier(id: '123'),
+        navigationRule: ConditionalNavigationRule(
+          resultToStepIdentifierMapper: (input) {
+            switch (input) {
+              case 'Yes':
+                return StepIdentifier(id: '321');
+              case 'No':
+                return StepIdentifier(id: '456');
+              default:
+                return null;
+            }
+          },
+        ),
+      );
 
     final navigableJsonTask =
         NavigableTask.fromJson(json.decode(jsonStr) as Map<String, dynamic>);

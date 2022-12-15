@@ -8,6 +8,7 @@ import 'package:survey_kit/src/views/instruction_view.dart';
 part 'instruction_step.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+@immutable
 class InstructionStep extends Step {
   final String title;
   final String text;
@@ -43,11 +44,11 @@ class InstructionStep extends Step {
   Map<String, dynamic> toJson() => _$InstructionStepToJson(this);
 
   @override
-  bool operator ==(Object o) =>
-      super == o &&
-      o is InstructionStep &&
-      o.title == title &&
-      o.text == text;
+  bool operator ==(Object other) =>
+      super == other &&
+      other is InstructionStep &&
+      other.title == title &&
+      other.text == text;
   @override
   int get hashCode => super.hashCode ^ title.hashCode ^ text.hashCode;
 }

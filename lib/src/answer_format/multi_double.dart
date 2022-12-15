@@ -1,13 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'multi_double.g.dart';
 
 @JsonSerializable()
+@immutable
 class MultiDouble {
   final String text;
   final double value;
 
-  MultiDouble({
+  const MultiDouble({
     required this.text,
     required this.value,
   }) : super();

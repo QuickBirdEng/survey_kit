@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'text_choice.g.dart';
 
 @JsonSerializable()
+@immutable
 class TextChoice {
   final String text;
   final String value;
@@ -17,7 +19,8 @@ class TextChoice {
   Map<String, dynamic> toJson() => _$TextChoiceToJson(this);
 
   @override
-  bool operator ==(Object o) => o is TextChoice && text == o.text && value == o.value;
+  bool operator ==(Object other) =>
+      other is TextChoice && text == other.text && value == other.value;
   @override
   int get hashCode => text.hashCode ^ value.hashCode;
 }
