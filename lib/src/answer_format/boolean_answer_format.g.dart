@@ -11,7 +11,7 @@ BooleanAnswerFormat _$BooleanAnswerFormatFromJson(Map<String, dynamic> json) =>
       positiveAnswer: json['positiveAnswer'] as String,
       negativeAnswer: json['negativeAnswer'] as String,
       result: $enumDecodeNullable(_$BooleanResultEnumMap, json['result']) ??
-          BooleanResult.NONE,
+          BooleanResult.none,
     );
 
 Map<String, dynamic> _$BooleanAnswerFormatToJson(
@@ -23,7 +23,7 @@ Map<String, dynamic> _$BooleanAnswerFormatToJson(
     };
 
 const _$BooleanResultEnumMap = {
-  BooleanResult.NONE: 'NONE',
-  BooleanResult.POSITIVE: 'POSITIVE',
-  BooleanResult.NEGATIVE: 'NEGATIVE',
+  BooleanResult.none: 'none',
+  BooleanResult.positive: 'positive',
+  BooleanResult.negative: 'negative',
 };

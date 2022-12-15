@@ -15,7 +15,7 @@ CompletionStep _$CompletionStepFromJson(Map<String, dynamic> json) =>
       showAppBar: json['showAppBar'] as bool? ?? true,
       title: json['title'] as String,
       text: json['text'] as String,
-      assetPath: json['assetPath'] as String? ?? "",
+      assetPath: json['assetPath'] as String? ?? '',
     );
 
 Map<String, dynamic> _$CompletionStepToJson(CompletionStep instance) =>
