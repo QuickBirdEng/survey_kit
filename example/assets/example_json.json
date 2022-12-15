@@ -84,7 +84,7 @@
                 "type": "bool",
                 "positiveAnswer": "Yes",
                 "negativeAnswer": "No",
-                "result": "POSITIVE"
+                "result": "positive"
             }
         },
         {
