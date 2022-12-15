@@ -12,7 +12,7 @@ import 'package:survey_kit/src/task/task_not_defined_exception.dart';
 ///  * If you want to use JSON override [fromJson] and add your type
 abstract class Task {
   late final TaskIdentifier id;
-  @JsonKey(defaultValue: [])
+  @JsonKey(defaultValue: <Step>[])
   final List<Step> steps;
   final Step? initalStep;
 
@@ -32,17 +32,19 @@ abstract class Task {
   /// either 'ordered' - [OrderedTask] or 'navigable' - [NavigableTask].
   /// If not it will throw a [TaskNotDefinedException].
   factory Task.fromJson(Map<String, dynamic> json) {
-    final type = json['type'];
+    final type = json['type'] as String;
     if (type == 'ordered') {
       return OrderedTask.fromJson(json);
     } else if (type == 'navigable') {
       return NavigableTask.fromJson(json);
     }
-    throw TaskNotDefinedException();
+    throw const TaskNotDefinedException();
   }
 
   Map<String, dynamic> toJson();
 
-  bool operator ==(o) => o is Task && o.id == id;
+  @override
+  bool operator ==(Object other) => other is Task && other.id == id;
+  @override
   int get hashCode => id.hashCode ^ steps.hashCode;
 }

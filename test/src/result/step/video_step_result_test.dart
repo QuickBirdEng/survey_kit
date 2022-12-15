@@ -9,7 +9,7 @@ void main() {
     endDate: DateTime(2022, 8, 12, 16, 14),
     result: VideoResult(
       stayedInVideo: DateTime(2022, 8, 12, 16, 12, 30),
-      leftVideoAt: Duration(minutes: 1, seconds: 13, milliseconds: 123),
+      leftVideoAt: const Duration(minutes: 1, seconds: 13, milliseconds: 123),
     ),
   );
 

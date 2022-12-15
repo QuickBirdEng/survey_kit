@@ -1,8 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/result/result.dart';
 import 'package:survey_kit/src/result/step_result.dart';
 import 'package:survey_kit/src/steps/identifier/identifier.dart';
-
-import 'package:json_annotation/json_annotation.dart';
 
 part 'survey_result.g.dart';
 
@@ -11,7 +10,7 @@ class SurveyResult extends Result {
   final FinishReason finishReason;
   final List<StepResult> results;
 
-  SurveyResult({
+  const SurveyResult({
     required Identifier? id,
     required DateTime startDate,
     required DateTime endDate,

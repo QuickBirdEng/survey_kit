@@ -1,6 +1,6 @@
+import 'package:survey_kit/src/answer_format/text_choice.dart';
 import 'package:survey_kit/src/navigator/rules/conditional_navigation_rule.dart';
 import 'package:survey_kit/src/navigator/rules/direct_navigation_rule.dart';
-import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/steps/step.dart';
@@ -14,19 +14,23 @@ class NavigableTaskNavigator extends TaskNavigator {
   Step? nextStep({required Step step, QuestionResult? questionResult}) {
     record(step);
     final navigableTask = task as NavigableTask;
-    NavigationRule? rule =
-        navigableTask.getRuleByStepIdentifier(step.stepIdentifier);
+    final rule = navigableTask.getRuleByStepIdentifier(step.stepIdentifier);
     if (rule == null) {
       return nextInList(step);
     }
     switch (rule.runtimeType) {
       case DirectNavigationRule:
-        return task.steps.firstWhere((element) =>
-            element.stepIdentifier ==
-            (rule as DirectNavigationRule).destinationStepIdentifier);
+        return task.steps.firstWhere(
+          (element) =>
+              element.stepIdentifier ==
+              (rule as DirectNavigationRule).destinationStepIdentifier,
+        );
       case ConditionalNavigationRule:
         return evaluateNextStep(
-            step, rule as ConditionalNavigationRule, questionResult);
+          step,
+          rule as ConditionalNavigationRule,
+          questionResult,
+        );
     }
     return nextInList(step);
   }
@@ -39,12 +43,15 @@ class NavigableTaskNavigator extends TaskNavigator {
     return history.removeLast();
   }
 
-  Step? evaluateNextStep(Step? step, ConditionalNavigationRule rule,
-      QuestionResult? questionResult) {
+  Step? evaluateNextStep(
+    Step? step,
+    ConditionalNavigationRule rule,
+    QuestionResult? questionResult,
+  ) {
     if (questionResult == null) {
       return nextInList(step);
     }
-    final result = questionResult.result;
+    final result = questionResult.result as List<TextChoice>?;
     if (result == null) {
       return nextInList(step);
     }

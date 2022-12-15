@@ -42,7 +42,7 @@ class SelectionListTile extends StatelessWidget {
             onTap: () => onTap.call(),
           ),
         ),
-        Divider(
+        const Divider(
           color: Colors.grey,
         ),
       ],

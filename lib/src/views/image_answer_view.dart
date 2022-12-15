@@ -23,7 +23,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   late final ImageAnswerFormat _imageAnswerFormat;
   late final DateTime _startDate;
 
-  bool _isValid = false;
+  final bool _isValid = false;
   String filePath = '';
 
   @override
@@ -73,25 +73,21 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () {
-                        _optionsDialogBox();
-                      },
+                      onPressed: _optionsDialogBox,
                       child: Text(_imageAnswerFormat.buttonText),
                     ),
-                    filePath.isNotEmpty
-                        ? Flexible(
+                    if (filePath.isNotEmpty) Flexible(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 filePath
                                     .split('/')[filePath.split('/').length - 1],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                 ),
                               ),
                             ),
-                          )
-                        : SizedBox(),
+                          ) else const SizedBox(),
                   ],
                 ),
               ),
@@ -111,17 +107,13 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
             child: ListBody(
               children: <Widget>[
                 GestureDetector(
-                  child: Text('Take a picture'),
-                  onTap: () {
-                    _openCamera();
-                  },
+                  onTap: _openCamera,
+                  child: const Text('Take a picture'),
                 ),
-                Padding(padding: EdgeInsets.all(8.0)),
+                const Padding(padding: EdgeInsets.all(8.0)),
                 GestureDetector(
-                  child: Text('Select from Gallery'),
-                  onTap: () {
-                    _openGallery();
-                  },
+                  onTap: _openGallery,
+                  child: const Text('Select from Gallery'),
                 ),
               ],
             ),
@@ -132,13 +124,13 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   }
 
   Future<void> _openCamera() async {
-    var picture = await ImagePicker().pickImage(
+    final picture = await ImagePicker().pickImage(
       source: ImageSource.camera,
     );
 
     Navigator.pop(context);
 
-    picture?.readAsBytes().then((value) {
+    await picture?.readAsBytes().then((value) {
       setState(() {
         filePath = picture.path;
       });
@@ -146,13 +138,13 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   }
 
   Future<void> _openGallery() async {
-    var picture = await ImagePicker().pickImage(
+    final picture = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
 
     Navigator.pop(context);
 
-    picture?.readAsBytes().then((value) {
+    await picture?.readAsBytes().then((value) {
       setState(() {
         filePath = picture.path;
       });

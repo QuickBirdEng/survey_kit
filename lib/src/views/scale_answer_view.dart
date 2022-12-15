@@ -61,7 +61,7 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(14.0),
+            padding: const EdgeInsets.all(14.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,13 +82,13 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
                         children: [
                           Text(
                             _scaleAnswerFormat.minimumValueDescription,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                             ),
                           ),
                           Text(
                             _scaleAnswerFormat.maximumValueDescription,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                             ),
                           ),

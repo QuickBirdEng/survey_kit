@@ -99,7 +99,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
                 bottom: 8.0,
                 child: Text(
                   _dateFormat.format(_result!),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 28.0,
                     color: Colors.white,
                   ),
@@ -114,14 +114,14 @@ class _DateAnswerViewState extends State<DateAnswerView> {
           child: CalendarDatePicker(
             firstDate: _dateAnswerFormat.minDate ?? DateTime.utc(1900),
             lastDate: _dateAnswerFormat.maxDate?.add(
-                  Duration(hours: 1),
+                  const Duration(hours: 1),
                 ) ??
                 DateTime.now().add(
-                  Duration(hours: 1),
+                  const Duration(hours: 1),
                 ),
             initialDate: _result ?? DateTime.now(),
             currentDate: _result,
-            onDateChanged: (DateTime value) => _handleDateChanged(value),
+            onDateChanged: _handleDateChanged,
           ),
         ),
       ],
@@ -137,10 +137,10 @@ class _DateAnswerViewState extends State<DateAnswerView> {
         minimumDate: _dateAnswerFormat.minDate,
         //We have to add an hour to to met the assert maxDate > initDate
         maximumDate: _dateAnswerFormat.maxDate?.add(
-              Duration(hours: 1),
+              const Duration(hours: 1),
             ) ??
             DateTime.now().add(
-              Duration(hours: 1),
+              const Duration(hours: 1),
             ),
         initialDateTime: _dateAnswerFormat.defaultDate,
         onDateTimeChanged: (DateTime value) {

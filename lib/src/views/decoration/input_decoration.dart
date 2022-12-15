@@ -8,17 +8,13 @@ InputDecoration textFieldInputDecoration({String hint = ''}) => InputDecoration(
         right: 10,
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.zero,
-        ),
+        borderRadius: BorderRadius.zero,
         borderSide: BorderSide(
           color: Colors.black.withOpacity(0.2),
         ),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.zero,
-        ),
+        borderRadius: BorderRadius.zero,
         borderSide: BorderSide(
           color: Colors.black.withOpacity(0.2),
         ),

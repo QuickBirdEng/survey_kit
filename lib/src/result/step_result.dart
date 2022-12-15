@@ -1,3 +1,4 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/result/question/boolean_question_result.dart';
 import 'package:survey_kit/src/result/question/date_question_result.dart';
 import 'package:survey_kit/src/result/question/double_question_result.dart';
@@ -8,14 +9,12 @@ import 'package:survey_kit/src/result/question/scale_question_result.dart';
 import 'package:survey_kit/src/result/question/single_choice_question_result.dart';
 import 'package:survey_kit/src/result/question/text_question_result.dart';
 import 'package:survey_kit/src/result/question/time_question_result.dart';
+import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/result/result.dart';
 import 'package:survey_kit/src/result/step/completion_step_result.dart';
 import 'package:survey_kit/src/result/step/instruction_step_result.dart';
 import 'package:survey_kit/src/result/step/video_step_result.dart';
 import 'package:survey_kit/src/steps/identifier/identifier.dart';
-import 'package:survey_kit/src/result/question_result.dart';
-
-import 'package:json_annotation/json_annotation.dart';
 
 part 'step_result.g.dart';
 
@@ -24,11 +23,11 @@ class StepResult extends Result {
   @_Converter()
   final List<QuestionResult> results;
 
-  StepResult(
+  const StepResult(
       {required Identifier? id,
       required DateTime startDate,
       required DateTime endDate,
-      required this.results})
+      required this.results,})
       : super(id: id, startDate: startDate, endDate: endDate);
 
   factory StepResult.fromQuestion({required QuestionResult questionResult}) {
@@ -54,9 +53,9 @@ class _Converter implements JsonConverter<List<QuestionResult>, Object> {
 
   @override
   Object toJson(List<QuestionResult> questionResults) {
-    List<Map<String, dynamic>> allQuestionResultsEncoded = [];
+    final allQuestionResultsEncoded = <Map<String, dynamic>>[];
 
-    for (QuestionResult qr in questionResults) {
+    for (final qr in questionResults) {
       if (qr is BooleanQuestionResult) {
         final qrJson = qr.toJson();
         qrJson['type'] = (BooleanQuestionResult).toString();
@@ -114,7 +113,7 @@ class _Converter implements JsonConverter<List<QuestionResult>, Object> {
         qrJson['type'] = (VideoStepResult).toString();
         allQuestionResultsEncoded.add(qrJson);
       } else {
-        throw ('Unhandled Question Result Type');
+        throw 'Unhandled Question Result Type';
       }
     }
 
@@ -123,8 +122,8 @@ class _Converter implements JsonConverter<List<QuestionResult>, Object> {
 
   @override
   List<QuestionResult> fromJson(Object json) {
-    final List<QuestionResult> results = [];
-    for (var element in json as List<dynamic>) {
+    final results = <QuestionResult>[];
+    for (final element in json as List<dynamic>) {
       final qData = element as Map<String, dynamic>;
       final qType = qData['type'] as String;
 
@@ -155,7 +154,7 @@ class _Converter implements JsonConverter<List<QuestionResult>, Object> {
       } else if (qType == (VideoStepResult).toString()) {
         results.add(VideoStepResult.fromJson(qData));
       } else {
-        throw ('Unhandled Question Result Type');
+        throw 'Unhandled Question Result Type';
       }
     }
 

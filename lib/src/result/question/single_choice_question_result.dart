@@ -1,14 +1,13 @@
-import 'package:survey_kit/src/answer_format/text_choice.dart';
-import 'package:survey_kit/src/steps/identifier/identifier.dart';
-import 'package:survey_kit/src/result/question_result.dart';
-
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/answer_format/text_choice.dart';
+import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/identifier/identifier.dart';
 
 part 'single_choice_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class SingleChoiceQuestionResult extends QuestionResult<TextChoice?> {
-  SingleChoiceQuestionResult({
+  const SingleChoiceQuestionResult({
     required Identifier id,
     required DateTime startDate,
     required DateTime endDate,

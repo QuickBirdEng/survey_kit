@@ -17,6 +17,7 @@ class BooleanAnswerFormat implements AnswerFormat {
 
   factory BooleanAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$BooleanAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$BooleanAnswerFormatToJson(this);
 }
 

@@ -9,7 +9,11 @@ class CompletionView extends StatelessWidget {
   final DateTime _startDate = DateTime.now();
   final String assetPath;
 
-  CompletionView({required this.completionStep, this.assetPath = ""});
+  CompletionView({
+    super.key,
+    required this.completionStep,
+    this.assetPath = '',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +24,10 @@ class CompletionView extends StatelessWidget {
         _startDate,
         DateTime.now(),
       ),
-      title: Text(completionStep.title,
-          style: Theme.of(context).textTheme.headline2),
+      title: Text(
+        completionStep.title,
+        style: Theme.of(context).textTheme.headline2,
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 64.0),
         child: Column(
@@ -37,15 +43,15 @@ class CompletionView extends StatelessWidget {
                 width: 150.0,
                 height: 150.0,
                 child: assetPath.isNotEmpty
-                ? Lottie.asset(
-                  assetPath,
-                  repeat: false,
-                )
-                : Lottie.asset(
-                  'assets/fancy_checkmark.json',
-                  package: 'survey_kit',
-                  repeat: false,
-                ),
+                    ? Lottie.asset(
+                        assetPath,
+                        repeat: false,
+                      )
+                    : Lottie.asset(
+                        'assets/fancy_checkmark.json',
+                        package: 'survey_kit',
+                        repeat: false,
+                      ),
               ),
             )
           ],

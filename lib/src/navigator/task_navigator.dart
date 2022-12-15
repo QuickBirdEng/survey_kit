@@ -16,7 +16,7 @@ abstract class TaskNavigator {
 
   Step? nextInList(Step? step) {
     final currentIndex = task.steps.indexWhere(
-        (element) => element.stepIdentifier == step?.stepIdentifier);
+        (element) => element.stepIdentifier == step?.stepIdentifier,);
     return (currentIndex + 1 > task.steps.length - 1)
         ? null
         : task.steps[currentIndex + 1];

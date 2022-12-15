@@ -7,7 +7,7 @@ void main() {
     startDate: DateTime(2022, 8, 12, 16, 4),
     endDate: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'singleChoiceValue1',
-    result: TextChoice(text: 'choice1', value: 'option2'),
+    result: const TextChoice(text: 'choice1', value: 'option2'),
   );
 
   group('serialisation', () {

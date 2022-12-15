@@ -8,7 +8,7 @@ void main() {
     startDate: DateTime(2022, 8, 12, 16, 4),
     endDate: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'timeInput1',
-    result: TimeOfDay(hour: 14, minute: 59),
+    result: const TimeOfDay(hour: 14, minute: 59),
   );
 
   group('serialisation', () {

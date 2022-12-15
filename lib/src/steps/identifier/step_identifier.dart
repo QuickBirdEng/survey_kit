@@ -9,8 +9,11 @@ class StepIdentifier extends Identifier {
 
   factory StepIdentifier.fromJson(Map<String, dynamic> json) =>
       _$StepIdentifierFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$StepIdentifierToJson(this);
 
-  bool operator ==(o) => o is StepIdentifier && id == o.id;
+  @override
+  bool operator ==(Object o) => o is StepIdentifier && id == o.id;
+  @override
   int get hashCode => id.hashCode;
 }

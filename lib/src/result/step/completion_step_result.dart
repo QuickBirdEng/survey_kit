@@ -1,13 +1,12 @@
-import 'package:survey_kit/src/steps/identifier/identifier.dart';
-import 'package:survey_kit/src/result/question_result.dart';
-
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/identifier/identifier.dart';
 
 part 'completion_step_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class CompletionStepResult extends QuestionResult {
-  CompletionStepResult(
+class CompletionStepResult extends QuestionResult<void> {
+  const CompletionStepResult(
     Identifier id,
     DateTime startDate,
     DateTime endDate,

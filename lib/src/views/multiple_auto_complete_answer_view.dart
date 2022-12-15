@@ -75,10 +75,10 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                   onSelected: onChoiceSelected,
                   selectedChoices: _selectedChoices,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 32,
                 ),
-                Divider(
+                const Divider(
                   color: Colors.grey,
                 ),
                 ..._multipleChoiceAnswer.textChoices
@@ -92,7 +92,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                     .toList(),
                 ..._selectedChoices
                     .where((element) =>
-                        !_multipleChoiceAnswer.textChoices.contains(element))
+                        !_multipleChoiceAnswer.textChoices.contains(element),)
                     .map(
                       (TextChoice tc) => SelectionListTile(
                         text: tc.text,
@@ -143,7 +143,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                       ),
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.grey,
                   ),
                 ],
@@ -189,16 +189,16 @@ class _AutoComplete extends StatelessWidget {
         controller: textEditingController,
         focusNode: focusNode,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 32),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 32),
             labelText: 'Search',
             hintText: 'Type here to search',
             suffixIcon: IconButton(
               padding: EdgeInsets.zero,
-              icon: Icon(Icons.clear),
+              icon: const Icon(Icons.clear),
               onPressed: () {
                 textEditingController.clear();
               },
-            )),
+            ),),
         onSubmitted: (v) {
           onFieldSubmitted();
         },
@@ -216,7 +216,7 @@ class _AutoComplete extends StatelessWidget {
 
         return suggestions.where((element) => element.text
             .toLowerCase()
-            .contains(textEditingValue.text.toLowerCase()));
+            .contains(textEditingValue.text.toLowerCase()),);
       },
       onSelected: onSelected,
     );
@@ -241,7 +241,7 @@ class _OptionsViewBuilder extends StatelessWidget {
           elevation: 4.0,
           textStyle: Theme.of(context).textTheme.bodyText1,
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 200),
+            constraints: const BoxConstraints(maxHeight: 200),
             child: ListView.builder(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
@@ -253,7 +253,7 @@ class _OptionsViewBuilder extends StatelessWidget {
                     onSelected(option);
                   },
                   child: Builder(builder: (BuildContext context) {
-                    final bool highlight =
+                    final highlight =
                         AutocompleteHighlightedOption.of(context) == index;
                     if (highlight) {
                       SchedulerBinding.instance
@@ -264,16 +264,16 @@ class _OptionsViewBuilder extends StatelessWidget {
                     return Container(
                       color: highlight ? Theme.of(context).focusColor : null,
                       padding: const EdgeInsets.all(16.0),
-                      margin: EdgeInsets.only(right: 16),
+                      margin: const EdgeInsets.only(right: 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(option.text),
-                          if (selectedChoices.contains(option)) Icon(Icons.done)
+                          if (selectedChoices.contains(option)) const Icon(Icons.done)
                         ],
                       ),
                     );
-                  }),
+                  },),
                 );
               },
             ),

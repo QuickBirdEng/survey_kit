@@ -10,5 +10,6 @@ class TaskIdentifier extends Identifier {
 
   factory TaskIdentifier.fromJson(Map<String, dynamic> json) =>
       _$TaskIdentifierFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$TaskIdentifierToJson(this);
 }

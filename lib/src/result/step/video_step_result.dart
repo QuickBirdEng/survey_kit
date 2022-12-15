@@ -1,7 +1,6 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/steps/identifier/identifier.dart';
-
-import 'package:json_annotation/json_annotation.dart';
 
 part 'video_step_result.g.dart';
 
@@ -33,14 +32,14 @@ class VideoResult {
   final Duration leftVideoAt;
   final DateTime stayedInVideo;
 
-  factory VideoResult.fromJson(Map<String, dynamic> json) =>
-      _$VideoResultFromJson(json);
-
-  Map<String, dynamic> toJson() => _$VideoResultToJson(this);
-
 
   const VideoResult({
     required this.leftVideoAt,
     required this.stayedInVideo,
   });
+
+  factory VideoResult.fromJson(Map<String, dynamic> json) =>
+      _$VideoResultFromJson(json);
+
+  Map<String, dynamic> toJson() => _$VideoResultToJson(this);
 }

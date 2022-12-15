@@ -29,6 +29,28 @@ class PresentingSurveyState extends SurveyState {
     this.currentStepIndex = 0,
     this.isPreviousStep = false,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      other is PresentingSurveyState &&
+      other.stepCount == stepCount &&
+      other.appBarConfiguration == appBarConfiguration &&
+      other.currentStep == currentStep &&
+      other.steps == steps &&
+      other.questionResults == questionResults &&
+      other.result == result &&
+      other.currentStepIndex == currentStepIndex &&
+      other.isPreviousStep == isPreviousStep;
+  @override
+  int get hashCode =>
+      stepCount.hashCode ^
+      appBarConfiguration.hashCode ^
+      currentStep.hashCode ^
+      steps.hashCode ^
+      questionResults.hashCode ^
+      result.hashCode ^
+      currentStepIndex.hashCode ^
+      isPreviousStep.hashCode;
 }
 
 class SurveyResultState extends SurveyState {

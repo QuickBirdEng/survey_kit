@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:survey_kit/src/steps/identifier/identifier.dart';
-import 'package:survey_kit/src/result/question_result.dart';
-
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/identifier/identifier.dart';
 
 part 'time_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 @TimeOfDayConverter()
 class TimeQuestionResult extends QuestionResult<TimeOfDay?> {
-  TimeQuestionResult({
+  const TimeQuestionResult({
     required Identifier id,
     required DateTime startDate,
     required DateTime endDate,
@@ -71,13 +70,14 @@ class TimeOfDayConverter extends JsonConverter<TimeOfDay?, String?> {
     }
 
     String _addLeadingZeroIfNeeded(int value) {
-      if (value < 10)
+      if (value < 10) {
         return '0$value';
+      }
       return value.toString();
     }
 
-    final String hourLabel = _addLeadingZeroIfNeeded(object.hour);
-    final String minuteLabel = _addLeadingZeroIfNeeded(object.minute);
+    final hourLabel = _addLeadingZeroIfNeeded(object.hour);
+    final minuteLabel = _addLeadingZeroIfNeeded(object.minute);
 
     return '$hourLabel:$minuteLabel';
   }

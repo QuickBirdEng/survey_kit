@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
-import 'package:survey_kit/src/presenter/survey_presenter.dart';
 import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/survey_presenter_inherited.dart';
 
 class SurveyController {
   /// Defines what should happen if the next step is called
@@ -61,7 +60,7 @@ class SurveyController {
       onNextStep!(context, resultFunction);
       return;
     }
-    BlocProvider.of<SurveyPresenter>(context).add(
+    SurveyPresenterInherited.of(context).onEvent(
       NextStep(
         resultFunction.call(),
       ),
@@ -76,9 +75,9 @@ class SurveyController {
       onStepBack!(context, resultFunction);
       return;
     }
-    BlocProvider.of<SurveyPresenter>(context).add(
+    SurveyPresenterInherited.of(context).onEvent(
       StepBack(
-        resultFunction != null ? resultFunction.call() : null,
+        resultFunction?.call(),
       ),
     );
   }
@@ -91,9 +90,9 @@ class SurveyController {
       onCloseSurvey!(context, resultFunction);
       return;
     }
-    BlocProvider.of<SurveyPresenter>(context).add(
+    SurveyPresenterInherited.of(context).onEvent(
       CloseSurvey(
-        resultFunction != null ? resultFunction.call() : null,
+        resultFunction?.call(),
       ),
     );
   }

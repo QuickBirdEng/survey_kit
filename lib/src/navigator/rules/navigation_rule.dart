@@ -6,13 +6,13 @@ abstract class NavigationRule {
   const NavigationRule();
 
   factory NavigationRule.fromJson(Map<String, dynamic> json) {
-    final type = json['type'];
+    final type = json['type'] as String;
     if (type == 'conditional') {
       return ConditionalNavigationRule.fromJson(json);
     } else if (type == 'direct') {
       return DirectNavigationRule.fromJson(json);
     }
-    throw RuleNotDefinedException();
+    throw const RuleNotDefinedException();
   }
   Map<String, dynamic> toJson();
 }

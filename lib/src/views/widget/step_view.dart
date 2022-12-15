@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/steps/step.dart' as surveystep;
-import 'package:provider/provider.dart';
+import 'package:survey_kit/src/survey_configuration.dart';
 
 class StepView extends StatelessWidget {
   final surveystep.Step step;
@@ -13,6 +14,7 @@ class StepView extends StatelessWidget {
   final SurveyController? controller;
 
   const StepView({
+    super.key,
     required this.step,
     required this.child,
     required this.title,
@@ -23,7 +25,8 @@ class StepView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _surveyController = controller ?? context.read<SurveyController>();
+    final _surveyController =
+        controller ?? SurveyConfiguration.of(context).surveyController;
 
     return _content(_surveyController, context);
   }

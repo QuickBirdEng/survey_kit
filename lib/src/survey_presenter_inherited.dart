@@ -1,5 +1,7 @@
-import 'package:collection/collection.dart' show IterableExtension;
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:async';
+
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
@@ -7,57 +9,70 @@ import 'package:survey_kit/src/presenter/survey_state.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/result/step_result.dart';
 import 'package:survey_kit/src/result/survey/survey_result.dart';
-import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
+import 'package:survey_kit/src/steps/step.dart';
 
-//TO DO: Extract gathering of the results into another class
-class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
+class SurveyPresenterInherited extends InheritedWidget {
+  SurveyPresenterInherited({
+    super.key,
+    required this.taskNavigator,
+    required this.onResult,
+    required super.child,
+  })  : _state = LoadingSurveyState(),
+        startDate = DateTime.now() {
+    //TODO: Do somewhere else
+    onEvent(StartSurvey());
+  }
+
   final TaskNavigator taskNavigator;
   final Function(SurveyResult) onResult;
+
+  late SurveyState _state;
+  SurveyState get state => _state;
+  void updateState(SurveyState newState) {
+    _state = newState;
+    surveyStateStream.add(_state);
+  }
+
+  late StreamController<SurveyState> surveyStateStream =
+      StreamController<SurveyState>();
+
+  static SurveyPresenterInherited of(BuildContext context) {
+    final result =
+        context.dependOnInheritedWidgetOfExactType<SurveyPresenterInherited>();
+    assert(result != null, 'No SurveyPresenterInherited found in context');
+    return result!;
+  }
+
+  @override
+  bool updateShouldNotify(SurveyPresenterInherited oldWidget) =>
+      taskNavigator != oldWidget.taskNavigator ||
+      onResult != oldWidget.onResult ||
+      _state != oldWidget._state;
 
   Set<QuestionResult> results = {};
   late final DateTime startDate;
 
-  SurveyPresenter({
-    required this.taskNavigator,
-    required this.onResult,
-  }) : super(LoadingSurveyState()) {
-
-    on<StartSurvey>((event, emit){
-      emit(
-        _handleInitialStep()
-      );
-    });
-
-    on<NextStep>((event, emit){
-      if (state is PresentingSurveyState){
-        emit(_handleNextStep(event, state as PresentingSurveyState));
+  void onEvent(SurveyEvent event) {
+    if (event is StartSurvey) {
+      updateState(_handleInitialStep());
+    } else if (event is NextStep) {
+      if (state is PresentingSurveyState) {
+        updateState(_handleNextStep(event, state as PresentingSurveyState));
       }
-    });
-
-    on<StepBack>((event, emit){
-      if (state is PresentingSurveyState){
-        emit(
-          _handleStepBack(event, state as PresentingSurveyState)
-        );
+    } else if (event is StepBack) {
+      if (state is PresentingSurveyState) {
+        updateState(_handleStepBack(event, state as PresentingSurveyState));
       }
-    });
-
-    on<CloseSurvey>((event, emit){
-      if (state is PresentingSurveyState){
-        emit(
-          _handleClose(event, state as PresentingSurveyState)
-        );
+    } else if (event is CloseSurvey) {
+      if (state is PresentingSurveyState) {
+        updateState(_handleClose(event, state as PresentingSurveyState));
       }
-    });
-
-    this.startDate = DateTime.now();
-    add(StartSurvey());
+    }
   }
 
-
   SurveyState _handleInitialStep() {
-    Step? step = taskNavigator.firstStep();
+    final step = taskNavigator.firstStep();
     if (step != null) {
       return PresentingSurveyState(
         currentStep: step,
@@ -79,7 +94,7 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
       startDate: startDate,
       endDate: DateTime.now(),
       finishReason: FinishReason.COMPLETED,
-      results: [],
+      results: const [],
     );
     return SurveyResultState(
       result: taskResult,
@@ -88,17 +103,20 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
   }
 
   SurveyState _handleNextStep(
-      NextStep event, PresentingSurveyState currentState) {
+    NextStep event,
+    PresentingSurveyState currentState,
+  ) {
     _addResult(event.questionResult);
-    final Step? nextStep = taskNavigator.nextStep(
-        step: currentState.currentStep, questionResult: event.questionResult);
+    final nextStep = taskNavigator.nextStep(
+      step: currentState.currentStep,
+      questionResult: event.questionResult,
+    );
 
     if (nextStep == null) {
       return _handleSurveyFinished(currentState);
     }
 
-    QuestionResult? questionResult =
-        _getResultByStepIdentifier(nextStep.stepIdentifier);
+    final questionResult = _getResultByStepIdentifier(nextStep.stepIdentifier);
 
     return PresentingSurveyState(
       currentStep: nextStep,
@@ -115,13 +133,14 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
   }
 
   SurveyState _handleStepBack(
-      StepBack event, PresentingSurveyState currentState) {
+    StepBack event,
+    PresentingSurveyState currentState,
+  ) {
     _addResult(event.questionResult);
-    final Step? previousStep =
-        taskNavigator.previousInList(currentState.currentStep);
+    final previousStep = taskNavigator.previousInList(currentState.currentStep);
 
     if (previousStep != null) {
-      QuestionResult? questionResult =
+      final questionResult =
           _getResultByStepIdentifier(previousStep.stepIdentifier);
 
       return PresentingSurveyState(
@@ -150,10 +169,12 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
   }
 
   SurveyState _handleClose(
-      CloseSurvey event, PresentingSurveyState currentState) {
+    CloseSurvey event,
+    PresentingSurveyState currentState,
+  ) {
     _addResult(event.questionResult);
 
-    List<StepResult> stepResults =
+    final stepResults =
         results.map((e) => StepResult.fromQuestion(questionResult: e)).toList();
 
     final taskResult = SurveyResult(
@@ -172,7 +193,7 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
 
   //Currently we are only handling one question per step
   SurveyState _handleSurveyFinished(PresentingSurveyState currentState) {
-    List<StepResult> stepResults =
+    final stepResults =
         results.map((e) => StepResult.fromQuestion(questionResult: e)).toList();
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,

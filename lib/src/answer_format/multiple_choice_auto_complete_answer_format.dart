@@ -7,9 +7,9 @@ part 'multiple_choice_auto_complete_answer_format.g.dart';
 @JsonSerializable()
 class MultipleChoiceAutoCompleteAnswerFormat implements AnswerFormat {
   final List<TextChoice> textChoices;
-  @JsonKey(defaultValue: const [])
+  @JsonKey(defaultValue: <TextChoice>[])
   final List<TextChoice> defaultSelection;
-  @JsonKey(defaultValue: const [])
+  @JsonKey(defaultValue: <TextChoice>[])
   final List<TextChoice> suggestions;
   @JsonKey(defaultValue: false)
   final bool otherField;
@@ -22,8 +22,10 @@ class MultipleChoiceAutoCompleteAnswerFormat implements AnswerFormat {
   }) : super();
 
   factory MultipleChoiceAutoCompleteAnswerFormat.fromJson(
-          Map<String, dynamic> json) =>
+    Map<String, dynamic> json,
+  ) =>
       _$MultipleChoiceAutoCompleteAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() =>
       _$MultipleChoiceAutoCompleteAnswerFormatToJson(this);
 }

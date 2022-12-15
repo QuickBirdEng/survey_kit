@@ -23,7 +23,7 @@ class SurveyProgressConfiguration {
   /// Label widget which should be shown above the appbar (Also need to
   /// activate via the 'showLabel flag {from currentProgress, to
   /// finishOfProgress})
-  final Function(String from, String to)? label;
+  final Widget Function(String from, String to)? label;
 
   /// The corner radius of the progress bar - If not defines
   /// BorderRadius.circular(14.0)

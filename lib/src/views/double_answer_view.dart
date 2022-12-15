@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/double_answer_format.dart';
-import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/result/question/double_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class DoubleAnswerView extends StatefulWidget {
@@ -57,7 +57,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: double.tryParse(_controller.text) ?? _doubleAnswerFormat.defaultValue ?? null,
+        result: double.tryParse(_controller.text) ?? _doubleAnswerFormat.defaultValue,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -77,9 +77,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
               hint: _doubleAnswerFormat.hint,
             ),
             controller: _controller,
-            onChanged: (String value) {
-              _checkValidation(value);
-            },
+            onChanged: _checkValidation,
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
           ),

@@ -16,7 +16,8 @@ class MultipleDoubleAnswerView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MultipleDoubleAnswerView> createState() => _MultipleDoubleAnswerViewState();
+  State<MultipleDoubleAnswerView> createState() =>
+      _MultipleDoubleAnswerViewState();
 }
 
 class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
@@ -30,32 +31,34 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
   @override
   void initState() {
     super.initState();
-    _multipleDoubleAnswer = widget.questionStep.answerFormat as MultipleDoubleAnswerFormat;
+    _multipleDoubleAnswer =
+        widget.questionStep.answerFormat as MultipleDoubleAnswerFormat;
     _controller = _multipleDoubleAnswer.hints.map((e) {
       return TextEditingController();
     }).toList();
 
-    _controller.forEach((element) {
-      element = TextEditingController();
-      element.text = widget.result?.result?.toString() ?? '';
+    for (var element in _controller) {
+      element = TextEditingController()
+        ..text = widget.result?.result?.toString() ?? '';
       _checkValidation(element.text);
-    });
+    }
 
     _insertedValues = List.generate(
-        _multipleDoubleAnswer.hints.length,
-        (index) => MultiDouble(
-              text: '',
-              value: 0.0,
-            ));
+      _multipleDoubleAnswer.hints.length,
+      (index) => MultiDouble(
+        text: '',
+        value: 0.0,
+      ),
+    );
 
     _startDate = DateTime.now();
   }
 
   @override
   void dispose() {
-    _controller.forEach((element) {
+    for (final element in _controller) {
       element.dispose();
-    });
+    }
     super.dispose();
   }
 
@@ -98,10 +101,13 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
             ),
             Column(
               children: [
-                Divider(
+                const Divider(
                   color: Colors.grey,
                 ),
-                ..._multipleDoubleAnswer.hints.asMap().entries.map((MapEntry<int, String> md) {
+                ..._multipleDoubleAnswer.hints
+                    .asMap()
+                    .entries
+                    .map((MapEntry<int, String> md) {
                   return TextField(
                     textInputAction: TextInputAction.next,
                     autofocus: true,

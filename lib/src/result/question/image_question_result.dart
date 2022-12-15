@@ -1,10 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/steps/identifier/identifier.dart';
 
 part 'image_question_result.g.dart';
 
+@JsonSerializable()
 class ImageQuestionResult extends QuestionResult<String?> {
-  ImageQuestionResult({
+  const ImageQuestionResult({
     required Identifier id,
     required DateTime startDate,
     required DateTime endDate,

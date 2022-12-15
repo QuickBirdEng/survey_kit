@@ -5,7 +5,7 @@ import 'package:survey_kit/survey_kit.dart';
 
 void main() {
   test('ordered task created by json is the same as created via code', () {
-    final jsonStr = '''
+    const jsonStr = '''
     {
       "id": "123",
       "type": "ordered"
@@ -14,7 +14,8 @@ void main() {
     final Task orderedTask =
         OrderedTask(id: TaskIdentifier(id: '123'), steps: []);
 
-    final orderedJsonTask = OrderedTask.fromJson(json.decode(jsonStr));
+    final orderedJsonTask =
+        OrderedTask.fromJson(json.decode(jsonStr) as Map<String, dynamic>);
 
     expect(orderedTask, orderedJsonTask);
   });

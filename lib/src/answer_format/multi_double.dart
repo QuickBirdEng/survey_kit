@@ -16,6 +16,9 @@ class MultiDouble {
       _$MultiDoubleFromJson(json);
   Map<String, dynamic> toJson() => _$MultiDoubleToJson(this);
 
-  bool operator ==(o) => o is MultiDouble && text == o.text && value == o.value;
+  @override
+  bool operator ==(Object other) =>
+      other is MultiDouble && text == other.text && value == other.value;
+  @override
   int get hashCode => text.hashCode ^ value.hashCode;
 }

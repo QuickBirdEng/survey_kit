@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
-import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/result/question/integer_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class IntegerAnswerView extends StatefulWidget {
@@ -57,7 +57,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: int.tryParse(_controller.text) ?? _integerAnswerFormat.defaultValue ?? null,
+        result: int.tryParse(_controller.text) ?? _integerAnswerFormat.defaultValue,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -78,9 +78,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
               hint: _integerAnswerFormat.hint,
             ),
             controller: _controller,
-            onChanged: (String value) {
-              _checkValidation(value);
-            },
+            onChanged: _checkValidation,
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
           ),

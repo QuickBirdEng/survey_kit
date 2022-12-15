@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  final List<QuestionResult> tQuestionResults = ([
+  final tQuestionResults = <QuestionResult>[
     InstructionStepResult(
       Identifier(id: 'example1_intro'),
       DateTime(2022, 8, 12, 16, 4),
@@ -20,7 +20,7 @@ void main() {
       DateTime(2022, 8, 12, 16, 10),
       DateTime(2022, 8, 12, 16, 14),
     ),
-  ]);
+  ];
   final tSurveyResult = SurveyResult(
     id: Identifier(id: 'example1'),
     startDate: DateTime(2022, 8, 12, 16, 4),

@@ -31,9 +31,9 @@ import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/views/boolean_answer_view.dart';
 import 'package:survey_kit/src/views/date_answer_view.dart';
 import 'package:survey_kit/src/views/double_answer_view.dart';
-import 'package:survey_kit/src/views/multiple_auto_complete_answer_view.dart';
 import 'package:survey_kit/src/views/image_answer_view.dart';
 import 'package:survey_kit/src/views/integer_answer_view.dart';
+import 'package:survey_kit/src/views/multiple_auto_complete_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_choice_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_double_answer_view.dart';
 import 'package:survey_kit/src/views/scale_answer_view.dart';
@@ -71,7 +71,7 @@ class QuestionStep extends Step {
 
   @override
   Widget createView({required QuestionResult? questionResult}) {
-    final key = ObjectKey(this.stepIdentifier.id);
+    final key = ObjectKey(stepIdentifier.id);
 
     switch (answerFormat.runtimeType) {
       case IntegerAnswerFormat:
@@ -148,10 +148,11 @@ class QuestionStep extends Step {
           result: questionResult as ImageQuestionResult?,
         );
       default:
-        throw AnswerFormatNotDefinedException();
+        throw const AnswerFormatNotDefinedException();
     }
   }
 
   factory QuestionStep.fromJson(Map<String, dynamic> json) => _$QuestionStepFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$QuestionStepToJson(this);
 }

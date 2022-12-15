@@ -1,13 +1,12 @@
-import 'package:survey_kit/src/steps/identifier/identifier.dart';
-import 'package:survey_kit/src/result/question_result.dart';
-
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/identifier/identifier.dart';
 
 part 'text_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class TextQuestionResult extends QuestionResult<String?> {
-  TextQuestionResult({
+  const TextQuestionResult({
     required Identifier id,
     required DateTime startDate,
     required DateTime endDate,

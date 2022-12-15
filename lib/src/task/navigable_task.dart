@@ -1,8 +1,8 @@
 import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
-import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
-import 'package:survey_kit/src/task/task.dart';
+import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/task/identifier/task_identifier.dart';
+import 'package:survey_kit/src/task/task.dart';
 
 /// Definition of task which can handle routing between [Tasks]
 ///
@@ -17,7 +17,7 @@ class NavigableTask extends Task {
     List<Step> steps = const [],
     Step? initialStep,
     Map<StepIdentifier, NavigationRule>? navigationRules,
-  })  : this.navigationRules = navigationRules ?? {},
+  })  : navigationRules = navigationRules ?? {},
         super(
           id: id,
           steps: steps,
@@ -27,9 +27,10 @@ class NavigableTask extends Task {
   /// Adds a [NavigationRule] to the [navigationRule] Map
   /// It only adds the [NavigationRule] if none is already set for the
   /// [StepIdentifier]
-  void addNavigationRule(
-      {required StepIdentifier forTriggerStepIdentifier,
-      required NavigationRule navigationRule}) {
+  void addNavigationRule({
+    required StepIdentifier forTriggerStepIdentifier,
+    required NavigationRule navigationRule,
+  }) {
     navigationRules.putIfAbsent(forTriggerStepIdentifier, () => navigationRule);
   }
 
@@ -40,29 +41,35 @@ class NavigableTask extends Task {
   }
 
   factory NavigableTask.fromJson(Map<String, dynamic> json) {
-    final Map<StepIdentifier, NavigationRule> navigationRules = {};
+    final navigationRules = <StepIdentifier, NavigationRule>{};
 
     if (json['rules'] != null) {
       final rules = json['rules'] as List;
-      rules.forEach((rule) {
+      for (final rule in rules) {
         navigationRules.putIfAbsent(
-            StepIdentifier.fromJson(rule['triggerStepIdentifier']),
-            () => NavigationRule.fromJson(rule as Map<String, dynamic>));
-      });
+          StepIdentifier.fromJson(
+            rule['triggerStepIdentifier'] as Map<String, dynamic>,
+          ),
+          () => NavigationRule.fromJson(rule as Map<String, dynamic>),
+        );
+      }
     }
 
     return NavigableTask(
       id: TaskIdentifier.fromJson(json),
       steps: json['steps'] != null
           ? (json['steps'] as List)
-              .map((step) => Step.fromJson(step as Map<String, dynamic>))
+              .map(
+                (dynamic step) => Step.fromJson(step as Map<String, dynamic>),
+              )
               .toList()
           : [],
       navigationRules: navigationRules,
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  @override
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id.toJson(),
         'steps': steps.map((step) => step.toJson()).toList(),
         'navigationRules': navigationRules,

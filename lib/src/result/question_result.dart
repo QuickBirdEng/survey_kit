@@ -4,7 +4,7 @@ import 'package:survey_kit/src/steps/identifier/identifier.dart';
 abstract class QuestionResult<T> extends Result {
   final T? result;
   final String? valueIdentifier;
-  QuestionResult({
+  const QuestionResult({
     required Identifier? id,
     required DateTime startDate,
     required DateTime endDate,

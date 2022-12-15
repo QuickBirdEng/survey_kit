@@ -29,7 +29,7 @@ abstract class Step {
   Widget createView({required QuestionResult? questionResult});
 
   factory Step.fromJson(Map<String, dynamic> json) {
-    final type = json['type'];
+    final type = json['type'] as String;
     if (type == 'intro') {
       return InstructionStep.fromJson(json);
     } else if (type == 'question') {
@@ -37,16 +37,18 @@ abstract class Step {
     } else if (type == 'completion') {
       return CompletionStep.fromJson(json);
     }
-    throw StepNotDefinedException();
+    throw const StepNotDefinedException();
   }
 
   Map<String, dynamic> toJson();
 
-  bool operator ==(o) =>
-      o is Step &&
-      o.stepIdentifier == stepIdentifier &&
-      o.isOptional == isOptional &&
-      o.buttonText == buttonText;
+  @override
+  bool operator ==(Object other) =>
+      other is Step &&
+      other.stepIdentifier == stepIdentifier &&
+      other.isOptional == isOptional &&
+      other.buttonText == buttonText;
+  @override
   int get hashCode =>
       stepIdentifier.hashCode ^ isOptional.hashCode ^ buttonText.hashCode;
 }

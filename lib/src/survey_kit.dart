@@ -1,15 +1,14 @@
-import 'package:collection/collection.dart' show IterableExtension;
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
 import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
-import 'package:survey_kit/src/presenter/survey_presenter.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
 import 'package:survey_kit/src/result/survey/survey_result.dart';
+import 'package:survey_kit/src/survey_configuration.dart';
+import 'package:survey_kit/src/survey_presenter_inherited.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
@@ -42,6 +41,7 @@ class SurveyKit extends StatefulWidget {
   final Map<String, String>? localizations;
 
   const SurveyKit({
+    super.key,
     required this.task,
     required this.onResult,
     this.themeData,
@@ -83,25 +83,18 @@ class _SurveyKitState extends State<SurveyKit> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: widget.themeData ?? Theme.of(context),
-      child: MultiProvider(
-        providers: [
-          Provider<TaskNavigator>.value(value: _taskNavigator),
-          Provider<SurveyController>.value(
-              value: widget.surveyController ?? SurveyController()),
-          Provider<bool>.value(value: widget.showProgress ?? true),
-          Provider<SurveyProgressConfiguration>.value(
-            value: widget.surveyProgressbarConfiguration ??
-                SurveyProgressConfiguration(),
-          ),
-          Provider<Map<String, String>?>.value(value: widget.localizations)
-        ],
-        child: BlocProvider(
-          create: (BuildContext context) => SurveyPresenter(
-            taskNavigator: _taskNavigator,
-            onResult: widget.onResult,
-          ),
+    return SurveyConfiguration(
+      showProgress: widget.showProgress ?? true,
+      surveyProgressConfiguration: widget.surveyProgressbarConfiguration ??
+          SurveyProgressConfiguration(),
+      taskNavigator: _taskNavigator,
+      surveyController: widget.surveyController ?? SurveyController(),
+      localizations: widget.localizations,
+      child: Theme(
+        data: widget.themeData ?? Theme.of(context),
+        child: SurveyPresenterInherited(
+          taskNavigator: _taskNavigator,
+          onResult: widget.onResult,
           child: SurveyPage(
             length: widget.task.steps.length,
             onResult: widget.onResult,
@@ -119,6 +112,7 @@ class SurveyPage extends StatefulWidget {
   final Function(SurveyResult) onResult;
 
   const SurveyPage({
+    super.key,
     required this.length,
     required this.onResult,
     this.appBar,
@@ -146,23 +140,24 @@ class _SurveyPageState extends State<SurveyPage>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SurveyPresenter, SurveyState>(
-      listenWhen: (previous, current) => previous != current,
-      listener: (context, state) async {
+    return StreamBuilder(
+      stream: SurveyPresenterInherited.of(context).surveyStateStream.stream,
+      builder: (_, __) {
+        final state = SurveyPresenterInherited.of(context).state;
+
         if (state is SurveyResultState) {
           widget.onResult.call(state.result);
         }
         if (state is PresentingSurveyState) {
           tabController.animateTo(state.currentStepIndex);
         }
-      },
-      builder: (BuildContext context, SurveyState state) {
+
         if (state is PresentingSurveyState) {
           return Scaffold(
             backgroundColor: Colors.transparent,
             appBar: state.currentStep.showAppBar
                 ? PreferredSize(
-                    preferredSize: Size(
+                    preferredSize: const Size(
                       double.infinity,
                       70.0,
                     ),
@@ -174,7 +169,7 @@ class _SurveyPageState extends State<SurveyPage>
                   )
                 : null,
             body: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: state.steps
                   .map(
@@ -191,11 +186,11 @@ class _SurveyPageState extends State<SurveyPage>
             ),
           );
         } else if (state is SurveyResultState && state.currentStep != null) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       },

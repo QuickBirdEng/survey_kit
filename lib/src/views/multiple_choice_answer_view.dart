@@ -1,11 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/text_choice.dart';
-import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
 import 'package:survey_kit/src/result/question/multiple_choice_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
-import 'package:collection/collection.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
@@ -61,6 +61,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Column(
           children: [
+            widget.questionStep.content,
             Padding(
               padding: const EdgeInsets.only(bottom: 32.0),
               child: Text(
@@ -71,7 +72,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
             ),
             Column(
               children: [
-                Divider(
+                const Divider(
                   color: Colors.grey,
                 ),
                 ..._multipleChoiceAnswer.textChoices
@@ -135,7 +136,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
                       ),
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.grey,
                   ),
                 ],

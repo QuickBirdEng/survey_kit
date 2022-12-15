@@ -7,7 +7,7 @@ void main() {
     startDate: DateTime(2022, 8, 12, 16, 4),
     endDate: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'multiChoice1',
-    result: [
+    result: const [
       TextChoice(text: 'doubleVal1', value: '123.45'),
       TextChoice(text: 'doubleVal2', value: '234.56'),
     ],

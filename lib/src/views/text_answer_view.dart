@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/text_answer_format.dart';
-import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/result/question/text_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class TextAnswerView extends StatefulWidget {
@@ -39,7 +39,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
   void _checkValidation(String text) {
     setState(() {
       if (_textAnswerFormat.validationRegEx != null) {
-        RegExp regExp = new RegExp(_textAnswerFormat.validationRegEx!);
+        final regExp = RegExp(_textAnswerFormat.validationRegEx!);
         _isValid = regExp.hasMatch(text);
       } else {
         _isValid = true;
@@ -93,9 +93,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
               ),
               controller: _controller,
               textAlign: TextAlign.center,
-              onChanged: (String text) {
-                _checkValidation(text);
-              },
+              onChanged: _checkValidation,
             ),
           ),
         ],

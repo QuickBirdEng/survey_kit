@@ -5,7 +5,7 @@ import 'package:survey_kit/survey_kit.dart';
 
 void main() {
   test('navigable task created by json is the same as created via code', () {
-    final jsonStr = '''
+    const jsonStr = '''
     {
       "id": "123",
       "type": "navigable",
@@ -23,7 +23,7 @@ void main() {
         ]
     }
     ''';
-    final NavigableTask navigableTask = NavigableTask(
+    final navigableTask = NavigableTask(
       id: TaskIdentifier(id: '123'),
       steps: [],
     );
@@ -32,9 +32,9 @@ void main() {
       navigationRule: ConditionalNavigationRule(
         resultToStepIdentifierMapper: (input) {
           switch (input) {
-            case "Yes":
+            case 'Yes':
               return StepIdentifier(id: '321');
-            case "No":
+            case 'No':
               return StepIdentifier(id: '456');
             default:
               return null;
@@ -43,7 +43,8 @@ void main() {
       ),
     );
 
-    final navigableJsonTask = NavigableTask.fromJson(json.decode(jsonStr));
+    final navigableJsonTask =
+        NavigableTask.fromJson(json.decode(jsonStr) as Map<String, dynamic>);
 
     expect(navigableJsonTask, navigableTask);
   });

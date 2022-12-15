@@ -16,5 +16,6 @@ class ImageAnswerFormat implements AnswerFormat {
   factory ImageAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$ImageAnswerFormatFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$ImageAnswerFormatToJson(this);
 }

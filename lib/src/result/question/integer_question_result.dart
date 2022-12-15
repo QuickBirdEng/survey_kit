@@ -1,13 +1,12 @@
-import 'package:survey_kit/src/steps/identifier/identifier.dart';
-import 'package:survey_kit/src/result/question_result.dart';
-
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/steps/identifier/identifier.dart';
 
 part 'integer_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class IntegerQuestionResult extends QuestionResult<int?> {
-  IntegerQuestionResult({
+  const IntegerQuestionResult({
     required Identifier id,
     required DateTime startDate,
     required DateTime endDate,

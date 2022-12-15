@@ -12,7 +12,7 @@ class ConditionalNavigationRule implements NavigationRule {
       resultToStepIdentifierMapper: (input) {
         for (final MapEntry entry in inputValues.entries) {
           if (entry.key == input) {
-            return StepIdentifier(id: entry.value);
+            return StepIdentifier(id: entry.value as String);
           }
         }
         return null;
@@ -20,5 +20,8 @@ class ConditionalNavigationRule implements NavigationRule {
     );
   }
 
-  Map<String, dynamic> toJson() => {'values': {}};
+  @override
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'values': <String, dynamic>{},
+      };
 }
