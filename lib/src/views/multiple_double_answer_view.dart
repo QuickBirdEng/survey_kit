@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:survey_kit/src/answer_format/multi_double.dart';
-import 'package:survey_kit/src/answer_format/multiple_double_answer_format.dart';
-import 'package:survey_kit/src/result/question/multiple_double_question_result.dart';
-import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
-import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/src/_new/model/answer/multi_double.dart';
+import 'package:survey_kit/src/_new/model/answer/multiple_double_answer_format.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/_new/view/content/content_widget.dart';
+import 'package:survey_kit/src/_new/view/step_view.dart';
 
 class MultipleDoubleAnswerView extends StatefulWidget {
-  final QuestionStep questionStep;
-  final MultipleDoubleQuestionResult? result;
+  final Step questionStep;
+  final StepResult? result;
 
   const MultipleDoubleAnswerView({
     Key? key,
@@ -32,7 +33,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
   void initState() {
     super.initState();
     _multipleDoubleAnswer =
-        widget.questionStep.answerFormat as MultipleDoubleAnswerFormat;
+        widget.questionStep.answer as MultipleDoubleAnswerFormat;
     _controller = _multipleDoubleAnswer.hints.map((e) {
       return TextEditingController();
     }).toList();
@@ -72,31 +73,22 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => MultipleDoubleQuestionResult(
-        id: widget.questionStep.stepIdentifier,
-        startDate: _startDate,
-        endDate: DateTime.now(),
+      resultFunction: () => StepResult<List<MultiDouble>>(
+        id: widget.questionStep.id,
+        startTime: _startDate,
+        endTime: DateTime.now(),
         valueIdentifier: _controller.map((e) => e.text).join(', '),
         result: _insertedValues,
       ),
-      isValid: _isValid || widget.questionStep.isOptional,
-      title: widget.questionStep.title.isNotEmpty
-          ? Text(
-              widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
-              textAlign: TextAlign.center,
-            )
-          : widget.questionStep.content,
+      isValid: _isValid || !widget.questionStep.isMandatory,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 32.0),
-              child: Text(
-                widget.questionStep.text,
-                style: Theme.of(context).textTheme.bodyText2,
-                textAlign: TextAlign.center,
+              child: ContentWidget(
+                content: widget.questionStep.content,
               ),
             ),
             Column(

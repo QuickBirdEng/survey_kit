@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:survey_kit/src/answer_format/text_answer_format.dart';
-import 'package:survey_kit/src/result/question/text_question_result.dart';
-import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
-import 'package:survey_kit/src/views/decoration/input_decoration.dart';
-import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/src/_new/model/answer/text_answer_format.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/_new/view/content/content_widget.dart';
+import 'package:survey_kit/src/_new/view/decoration/input_decoration.dart';
+import 'package:survey_kit/src/_new/view/step_view.dart';
 
 class TextAnswerView extends StatefulWidget {
-  final QuestionStep questionStep;
-  final TextQuestionResult? result;
+  final Step questionStep;
+  final StepResult? result;
 
   const TextAnswerView({
     Key? key,
@@ -30,8 +31,8 @@ class _TextAnswerViewState extends State<TextAnswerView> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _controller.text = widget.result?.result ?? '';
-    _textAnswerFormat = widget.questionStep.answerFormat as TextAnswerFormat;
+    _controller.text = widget.result?.result as String? ?? '';
+    _textAnswerFormat = widget.questionStep.answer as TextAnswerFormat;
     _checkValidation(_controller.text);
     _startDate = DateTime.now();
   }
@@ -57,29 +58,21 @@ class _TextAnswerViewState extends State<TextAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => TextQuestionResult(
-        id: widget.questionStep.stepIdentifier,
-        startDate: _startDate,
-        endDate: DateTime.now(),
+      resultFunction: () => StepResult<String>(
+        id: widget.questionStep.id,
+        startTime: _startDate,
+        endTime: DateTime.now(),
         valueIdentifier: _controller.text,
         result: _controller.text,
       ),
-      title: widget.questionStep.title.isNotEmpty
-          ? Text(
-              widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
-              textAlign: TextAlign.center,
-            )
-          : widget.questionStep.content,
-      isValid: _isValid || widget.questionStep.isOptional,
+      isValid: _isValid || !widget.questionStep.isMandatory,
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 32.0, left: 14.0, right: 14.0),
-            child: Text(
-              widget.questionStep.text,
-              style: Theme.of(context).textTheme.bodyText2,
-              textAlign: TextAlign.center,
+            padding:
+                const EdgeInsets.only(bottom: 32.0, left: 14.0, right: 14.0),
+            child: ContentWidget(
+              content: widget.questionStep.content,
             ),
           ),
           Container(

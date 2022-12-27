@@ -238,7 +238,7 @@ class _TimePickerHeader extends StatelessWidget {
             helpText ??
                 MaterialLocalizations.of(context).timePickerDialHelpText,
             style: TimePickerTheme.of(context).helpTextStyle ??
-                themeData.textTheme.overline,
+                themeData.textTheme.labelSmall,
           ),
           controls,
         ],
@@ -278,7 +278,7 @@ class _HourMinuteControl extends StatelessWidget {
               : themeData.colorScheme.onSurface.withOpacity(0.12);
         });
     final style =
-        timePickerTheme.hourMinuteTextStyle ?? themeData.textTheme.headline2!;
+        timePickerTheme.hourMinuteTextStyle ?? themeData.textTheme.displayMedium!;
     final shape = timePickerTheme.hourMinuteShape ?? _kDefaultShape;
 
     final states = isSelected
@@ -406,7 +406,7 @@ class _StringFragment extends StatelessWidget {
     final theme = Theme.of(context);
     final timePickerTheme = TimePickerTheme.of(context);
     final hourMinuteStyle =
-        timePickerTheme.hourMinuteTextStyle ?? theme.textTheme.headline2!;
+        timePickerTheme.hourMinuteTextStyle ?? theme.textTheme.displayMedium!;
     final textColor =
         timePickerTheme.hourMinuteTextColor ?? theme.colorScheme.onSurface;
 
@@ -574,7 +574,7 @@ class _DayPeriodControl extends StatelessWidget {
         ? <MaterialState>{MaterialState.selected}
         : <MaterialState>{};
     final textStyle = timePickerTheme.dayPeriodTextStyle ??
-        Theme.of(context).textTheme.subtitle1!;
+        Theme.of(context).textTheme.titleMedium!;
     final amStyle = textStyle.copyWith(
       color: MaterialStateProperty.resolveAs(textColor, amStates),
     );
@@ -1228,7 +1228,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
     String label,
     VoidCallback onTap,
   ) {
-    final style = textTheme.bodyText1!.copyWith(color: color);
+    final style = textTheme.bodyLarge!.copyWith(color: color);
     final double labelScaleFactor =
         math.min(MediaQuery.of(context).textScaleFactor, 2.0);
     return _TappableLabel(
@@ -1512,7 +1512,7 @@ class _TimePickerInputState extends State<_TimePickerInput> {
     final use24HourDials = hourFormat(of: timeOfDayFormat) != HourFormat.h;
     final theme = Theme.of(context);
     final hourMinuteStyle = TimePickerTheme.of(context).hourMinuteTextStyle ??
-        theme.textTheme.headline2!;
+        theme.textTheme.displayMedium!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
@@ -1523,7 +1523,7 @@ class _TimePickerInputState extends State<_TimePickerInput> {
             widget.helpText ??
                 MaterialLocalizations.of(context).timePickerInputHelpText,
             style: TimePickerTheme.of(context).helpTextStyle ??
-                theme.textTheme.overline,
+                theme.textTheme.labelSmall,
           ),
           const SizedBox(height: 16.0),
           Row(
@@ -1564,7 +1564,7 @@ class _TimePickerInputState extends State<_TimePickerInput> {
                               child: Text(
                                 MaterialLocalizations.of(context)
                                     .timePickerHourLabel,
-                                style: theme.textTheme.caption,
+                                style: theme.textTheme.bodySmall,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -1595,7 +1595,7 @@ class _TimePickerInputState extends State<_TimePickerInput> {
                               child: Text(
                                 MaterialLocalizations.of(context)
                                     .timePickerMinuteLabel,
-                                style: theme.textTheme.caption,
+                                style: theme.textTheme.bodySmall,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -1621,7 +1621,7 @@ class _TimePickerInputState extends State<_TimePickerInput> {
           if (hourHasError || minuteHasError)
             Text(
               MaterialLocalizations.of(context).invalidTimeLabel,
-              style: theme.textTheme.bodyText2!
+              style: theme.textTheme.bodyMedium!
                   .copyWith(color: theme.colorScheme.error),
             )
           else

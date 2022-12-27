@@ -1,4 +1,4 @@
-import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
 
 abstract class SurveyEvent {
   const SurveyEvent();
@@ -7,19 +7,19 @@ abstract class SurveyEvent {
 class StartSurvey extends SurveyEvent {}
 
 class NextStep extends SurveyEvent {
-  final QuestionResult questionResult;
+  final StepResult questionResult;
 
   NextStep(this.questionResult);
 }
 
 class StepBack extends SurveyEvent {
-  final QuestionResult? questionResult;
+  final StepResult? questionResult;
 
   StepBack(this.questionResult);
 }
 
 class CloseSurvey extends SurveyEvent {
-  final QuestionResult? questionResult;
+  final StepResult? questionResult;
 
   CloseSurvey(this.questionResult);
 }

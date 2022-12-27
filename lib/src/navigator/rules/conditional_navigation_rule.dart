@@ -1,8 +1,7 @@
 import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
-import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 
 class ConditionalNavigationRule implements NavigationRule {
-  final StepIdentifier? Function(String?) resultToStepIdentifierMapper;
+  final String? Function(String?) resultToStepIdentifierMapper;
 
   ConditionalNavigationRule({required this.resultToStepIdentifierMapper});
 
@@ -12,7 +11,7 @@ class ConditionalNavigationRule implements NavigationRule {
       resultToStepIdentifierMapper: (input) {
         for (final MapEntry entry in inputValues.entries) {
           if (entry.key == input) {
-            return StepIdentifier(id: entry.value as String);
+            return entry.value as String;
           }
         }
         return null;

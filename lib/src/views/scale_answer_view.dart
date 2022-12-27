@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:survey_kit/src/answer_format/scale_answer_format.dart';
-import 'package:survey_kit/src/result/question/scale_question_result.dart';
-import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
-import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/src/_new/model/answer/scale_answer_format.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/_new/view/content/content_widget.dart';
+import 'package:survey_kit/src/_new/view/step_view.dart';
 
 class ScaleAnswerView extends StatefulWidget {
-  final QuestionStep questionStep;
-  final ScaleQuestionResult? result;
+  final Step questionStep;
+  final StepResult? result;
 
   const ScaleAnswerView({
     Key? key,
@@ -26,8 +27,9 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
   @override
   void initState() {
     super.initState();
-    _scaleAnswerFormat = widget.questionStep.answerFormat as ScaleAnswerFormat;
-    _sliderValue = widget.result?.result ?? _scaleAnswerFormat.defaultValue;
+    _scaleAnswerFormat = widget.questionStep.answer as ScaleAnswerFormat;
+    _sliderValue =
+        widget.result?.result as double? ?? _scaleAnswerFormat.defaultValue;
     _startDate = DateTime.now();
   }
 
@@ -35,29 +37,20 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => ScaleQuestionResult(
-        id: widget.questionStep.stepIdentifier,
-        startDate: _startDate,
-        endDate: DateTime.now(),
+      resultFunction: () => StepResult<double>(
+        id: widget.questionStep.id,
+        startTime: _startDate,
+        endTime: DateTime.now(),
         valueIdentifier: _sliderValue.toString(),
         result: _sliderValue,
       ),
-      title: widget.questionStep.title.isNotEmpty
-          ? Text(
-              widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
-              textAlign: TextAlign.center,
-            )
-          : widget.questionStep.content,
       child: Column(
         children: [
           Padding(
             padding:
                 const EdgeInsets.only(bottom: 32.0, left: 14.0, right: 14.0),
-            child: Text(
-              widget.questionStep.text,
-              style: Theme.of(context).textTheme.bodyText2,
-              textAlign: TextAlign.center,
+            child: ContentWidget(
+              content: widget.questionStep.content,
             ),
           ),
           Padding(
@@ -70,7 +63,7 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
                   padding: const EdgeInsets.all(14.0),
                   child: Text(
                     _sliderValue.toInt().toString(),
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
                 Column(

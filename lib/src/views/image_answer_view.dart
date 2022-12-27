@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Step;
 import 'package:image_picker/image_picker.dart';
-import 'package:survey_kit/src/answer_format/image_answer_format.dart';
-import 'package:survey_kit/src/result/question/image_question_result.dart';
-import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
-import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:survey_kit/src/_new/model/answer/image_answer_format.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/_new/view/content/content_widget.dart';
+import 'package:survey_kit/src/_new/view/step_view.dart';
 
 class ImageAnswerView extends StatefulWidget {
-  final QuestionStep questionStep;
-  final ImageQuestionResult? result;
+  final Step questionStep;
+  final StepResult? result;
 
   const ImageAnswerView({
     Key? key,
@@ -29,7 +30,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   @override
   void initState() {
     super.initState();
-    _imageAnswerFormat = widget.questionStep.answerFormat as ImageAnswerFormat;
+    _imageAnswerFormat = widget.questionStep.answer as ImageAnswerFormat;
     _startDate = DateTime.now();
   }
 
@@ -42,27 +43,23 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => ImageQuestionResult(
-        id: widget.questionStep.stepIdentifier,
-        startDate: _startDate,
-        endDate: DateTime.now(),
+      resultFunction: () => StepResult<String>(
+        id: widget.questionStep.id,
+        startTime: _startDate,
+        endTime: DateTime.now(),
         valueIdentifier: filePath,
         result: filePath,
       ),
-      isValid: _isValid || widget.questionStep.isOptional,
-      title: widget.questionStep.title.isNotEmpty
-          ? Text(
-              widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
-              textAlign: TextAlign.center,
-            )
-          : widget.questionStep.content,
+      isValid: _isValid || !widget.questionStep.isMandatory,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32.0),
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
+              ContentWidget(
+                content: widget.questionStep.content,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32.0,
@@ -76,18 +73,20 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                       onPressed: _optionsDialogBox,
                       child: Text(_imageAnswerFormat.buttonText),
                     ),
-                    if (filePath.isNotEmpty) Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                filePath
-                                    .split('/')[filePath.split('/').length - 1],
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
+                    if (filePath.isNotEmpty)
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            filePath.split('/')[filePath.split('/').length - 1],
+                            style: const TextStyle(
+                              fontSize: 12,
                             ),
-                          ) else const SizedBox(),
+                          ),
+                        ),
+                      )
+                    else
+                      const SizedBox(),
                   ],
                 ),
               ),

@@ -7,23 +7,21 @@ part of 'survey_result.dart';
 // **************************************************************************
 
 SurveyResult _$SurveyResultFromJson(Map<String, dynamic> json) => SurveyResult(
-      id: json['id'] == null
-          ? null
-          : Identifier.fromJson(json['id'] as Map<String, dynamic>),
-      startDate: DateTime.parse(json['startDate'] as String),
-      endDate: DateTime.parse(json['endDate'] as String),
+      id: json['id'] as String,
+      startTime: DateTime.parse(json['startTime'] as String),
+      endTime: DateTime.parse(json['endTime'] as String),
       finishReason: $enumDecode(_$FinishReasonEnumMap, json['finishReason']),
       results: (json['results'] as List<dynamic>)
-          .map((e) => StepResult.fromJson(e as Map<String, dynamic>))
+          .map((e) => StepResult<dynamic>.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$SurveyResultToJson(SurveyResult instance) =>
     <String, dynamic>{
-      'id': instance.id?.toJson(),
-      'startDate': instance.startDate.toIso8601String(),
-      'endDate': instance.endDate.toIso8601String(),
-      'finishReason': _$FinishReasonEnumMap[instance.finishReason],
+      'id': instance.id,
+      'startTime': instance.startTime.toIso8601String(),
+      'endTime': instance.endTime.toIso8601String(),
+      'finishReason': _$FinishReasonEnumMap[instance.finishReason]!,
       'results': instance.results.map((e) => e.toJson()).toList(),
     };
 

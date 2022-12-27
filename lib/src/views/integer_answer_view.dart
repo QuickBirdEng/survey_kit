@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
-import 'package:survey_kit/src/result/question/integer_question_result.dart';
-import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
-import 'package:survey_kit/src/views/decoration/input_decoration.dart';
-import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/src/_new/model/answer/integer_answer_format.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/_new/view/decoration/input_decoration.dart';
+import 'package:survey_kit/src/_new/view/step_view.dart';
 
 class IntegerAnswerView extends StatefulWidget {
-  final QuestionStep questionStep;
-  final IntegerQuestionResult? result;
+  final Step questionStep;
+  final StepResult? result;
 
   const IntegerAnswerView({
     Key? key,
@@ -29,7 +29,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
   @override
   void initState() {
     super.initState();
-    _integerAnswerFormat = widget.questionStep.answerFormat as IntegerAnswerFormat;
+    _integerAnswerFormat = widget.questionStep.answer as IntegerAnswerFormat;
     _controller = TextEditingController();
     _controller.text = widget.result?.result?.toString() ?? '';
     _checkValidation(_controller.text);
@@ -52,21 +52,15 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => IntegerQuestionResult(
-        id: widget.questionStep.stepIdentifier,
-        startDate: _startDate,
-        endDate: DateTime.now(),
+      resultFunction: () => StepResult<int>(
+        id: widget.questionStep.id,
+        startTime: _startDate,
+        endTime: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: int.tryParse(_controller.text) ?? _integerAnswerFormat.defaultValue,
+        result:
+            int.tryParse(_controller.text) ?? _integerAnswerFormat.defaultValue,
       ),
-      isValid: _isValid || widget.questionStep.isOptional,
-      title: widget.questionStep.title.isNotEmpty
-          ? Text(
-              widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
-              textAlign: TextAlign.center,
-            )
-          : widget.questionStep.content,
+      isValid: _isValid || !widget.questionStep.isMandatory,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32.0),
         child: Container(

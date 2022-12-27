@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
-import 'package:survey_kit/src/result/question_result.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
 import 'package:survey_kit/src/result/survey/survey_result.dart';
-import 'package:survey_kit/src/steps/step.dart';
 
 @immutable
 abstract class SurveyState {
@@ -12,18 +11,16 @@ abstract class SurveyState {
 class LoadingSurveyState extends SurveyState {}
 
 class PresentingSurveyState extends SurveyState {
-  final AppBarConfiguration appBarConfiguration;
   final List<Step> steps;
-  final Set<QuestionResult> questionResults;
+  final Set<StepResult> questionResults;
   final Step currentStep;
-  final QuestionResult? result;
+  final StepResult? result;
   final int currentStepIndex;
   final int stepCount;
   final bool isPreviousStep;
 
   const PresentingSurveyState({
     required this.stepCount,
-    required this.appBarConfiguration,
     required this.currentStep,
     required this.steps,
     required this.questionResults,
@@ -36,7 +33,6 @@ class PresentingSurveyState extends SurveyState {
   bool operator ==(Object other) =>
       other is PresentingSurveyState &&
       other.stepCount == stepCount &&
-      other.appBarConfiguration == appBarConfiguration &&
       other.currentStep == currentStep &&
       other.steps == steps &&
       other.questionResults == questionResults &&
@@ -46,7 +42,6 @@ class PresentingSurveyState extends SurveyState {
   @override
   int get hashCode =>
       stepCount.hashCode ^
-      appBarConfiguration.hashCode ^
       currentStep.hashCode ^
       steps.hashCode ^
       questionResults.hashCode ^
@@ -58,7 +53,7 @@ class PresentingSurveyState extends SurveyState {
 class SurveyResultState extends SurveyState {
   final SurveyResult result;
   final Step? currentStep;
-  final QuestionResult? stepResult;
+  final StepResult? stepResult;
 
   const SurveyResultState({
     required this.result,

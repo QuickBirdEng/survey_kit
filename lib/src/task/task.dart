@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/steps/step.dart';
-import 'package:survey_kit/src/task/identifier/task_identifier.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task_not_defined_exception.dart';
+import 'package:uuid/uuid.dart';
 
 /// Abstract definition of survey task
 ///
@@ -13,18 +13,18 @@ import 'package:survey_kit/src/task/task_not_defined_exception.dart';
 ///  * If you want to use JSON override [fromJson] and add your type
 @immutable
 abstract class Task {
-  late final TaskIdentifier id;
+  late final String id;
   @JsonKey(defaultValue: <Step>[])
   final List<Step> steps;
   final Step? initalStep;
 
   Task({
-    TaskIdentifier? id,
+    String? id,
     this.steps = const [],
     this.initalStep,
   }) {
     if (id == null) {
-      id = TaskIdentifier();
+      id = const Uuid().v4();
       return;
     }
     // ignore: prefer_initializing_formals

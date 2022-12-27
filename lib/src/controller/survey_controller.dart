@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
-import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/survey_presenter_inherited.dart';
 
 class SurveyController {
@@ -15,7 +15,7 @@ class SurveyController {
   /// ```
   final Function(
     BuildContext context,
-    QuestionResult Function() resultFunction,
+    StepResult Function() resultFunction,
   )? onNextStep;
 
   /// Defines what should happen if the previous step is called
@@ -29,7 +29,7 @@ class SurveyController {
   /// ```
   final Function(
     BuildContext context,
-    QuestionResult Function()? resultFunction,
+    StepResult Function()? resultFunction,
   )? onStepBack;
 
   /// Defines what should happen if the survey should be closed
@@ -43,7 +43,7 @@ class SurveyController {
   /// ```
   final Function(
     BuildContext context,
-    QuestionResult Function()? resultFunction,
+    StepResult Function()? resultFunction,
   )? onCloseSurvey;
 
   SurveyController({
@@ -54,7 +54,7 @@ class SurveyController {
 
   void nextStep(
     BuildContext context,
-    QuestionResult Function() resultFunction,
+    StepResult Function() resultFunction,
   ) {
     if (onNextStep != null) {
       onNextStep!(context, resultFunction);
@@ -69,7 +69,7 @@ class SurveyController {
 
   void stepBack({
     required BuildContext context,
-    QuestionResult Function()? resultFunction,
+    StepResult Function()? resultFunction,
   }) {
     if (onStepBack != null) {
       onStepBack!(context, resultFunction);
@@ -84,7 +84,7 @@ class SurveyController {
 
   void closeSurvey({
     required BuildContext context,
-    QuestionResult Function()? resultFunction,
+    StepResult Function()? resultFunction,
   }) {
     if (onCloseSurvey != null) {
       onCloseSurvey!(context, resultFunction);

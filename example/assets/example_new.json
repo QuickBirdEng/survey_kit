@@ -1,0 +1,154 @@
+{
+    "text": "Module group1",
+    "description": "Description module group",
+    "image_url": "https://imageurl.com",
+    "locking_configuration": {},
+    "modules": [
+        {
+            "id": "1",
+            "type": "survey",
+            "title": "Title Module 1",
+            "description": "Description module 1",
+            "image_url": "Image Url",
+            "navigation_rules": [
+                {
+                    "step_id": "1",
+                    "next_step_id": "3",
+                    "condition": {
+                        "value": "United States"
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "id": "1",
+                    "isMandatory": true,
+                    "content": [
+                        {
+                            "id": "content_1",
+                            "type": "markdown",
+                            "text": "This is a markdown text"
+                        },
+                        {
+                            "id": "content_2",
+                            "type": "video",
+                            "url": "https://www.youtube.com/"
+                        },
+                        {
+                            "id": "content_3",
+                            "type": "audio",
+                            "url": "https://www.youtube.com/"
+                        },
+                        {
+                            "id": "content_4",
+                            "type": "image",
+                            "url": "https://www.quickbird.com/"
+                        },
+                        {
+                            "id": "content_5",
+                            "type": "text",
+                            "text": "Text 123",
+                            "fontSize": 14
+                        }
+                    ],
+                    "answer" : {
+                        "type": "multi",
+                        "options": [
+                            {
+                                "id": "1",
+                                "value": "United States"
+                            },
+                            {
+                                "id": "2",
+                                "value": "Canada"
+                            },
+                            {
+                                "id": "3",
+                                "value": "Germany"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "2",
+                    "type": "text",
+                    "isMandatory": true,
+                    "answer" : {
+                        "type": "single",
+                        "options": [
+                            {
+                                "id": "1",
+                                "value": "United States"
+                            },
+                            {
+                                "id": "2",
+                                "value": "Canada"
+                            },
+                            {
+                                "id": "3",
+                                "value": "Germany"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "2",
+                    "type": "text",
+                    "isMandatory": true,
+                    "answer" : {
+                        "type": "single",
+                        "options": [
+                            {
+                                "id": "1",
+                                "value": "United States"
+                            },
+                            {
+                                "id": "2",
+                                "value": "Canada"
+                            },
+                            {
+                                "id": "3",
+                                "value": "Germany"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }, 
+        {
+            "id": "2",
+            "type": "glossary",
+            "title": "Title mdule 2",
+            "description": "Description module 2",
+            "image_url": "https://www.google.com",
+            "content": [
+                {
+                    "id": "content_1",
+                    "type": "markdown",
+                    "text": "This is a markdown text"
+                },
+                {
+                    "id": "content_2",
+                    "type": "video",
+                    "url": "https://www.youtube.com/"
+                },
+                {
+                    "id": "content_3",
+                    "type": "audio",
+                    "url": "https://www.youtube.com/"
+                },
+                {
+                    "id": "content_4",
+                    "type": "image",
+                    "url": "https://www.quickbird.com/"
+                },
+                {
+                    "id": "content_5",
+                    "type": "text",
+                    "text": "Text 123",
+                    "fontSize": 14
+                }
+            ]
+        }        
+    ]
+}

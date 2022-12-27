@@ -9,8 +9,7 @@ part of 'direct_navigation_rule.dart';
 DirectNavigationRule _$DirectNavigationRuleFromJson(
         Map<String, dynamic> json) =>
     DirectNavigationRule(
-      StepIdentifier.fromJson(
-          json['destinationStepIdentifier'] as Map<String, dynamic>),
+      json['destinationStepIdentifier'] as String,
     );
 
 Map<String, dynamic> _$DirectNavigationRuleToJson(

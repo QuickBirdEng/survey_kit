@@ -2,15 +2,12 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
-import 'package:survey_kit/src/result/question_result.dart';
-import 'package:survey_kit/src/result/step_result.dart';
 import 'package:survey_kit/src/result/survey/survey_result.dart';
-import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
-import 'package:survey_kit/src/steps/step.dart';
 
 // ignore: must_be_immutable
 class SurveyPresenterInherited extends InheritedWidget {
@@ -50,7 +47,7 @@ class SurveyPresenterInherited extends InheritedWidget {
       onResult != oldWidget.onResult ||
       _state != oldWidget._state;
 
-  Set<QuestionResult> results = {};
+  Set<StepResult> results = {};
   late final DateTime startDate;
 
   void onEvent(SurveyEvent event) {
@@ -81,18 +78,14 @@ class SurveyPresenterInherited extends InheritedWidget {
         result: null,
         currentStepIndex: currentStepIndex(step),
         stepCount: countSteps,
-        appBarConfiguration: AppBarConfiguration(
-          showProgress: step.showProgress,
-          canBack: step.canGoBack,
-        ),
       );
     }
 
     //If not steps are provided we finish the survey
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
-      startDate: startDate,
-      endDate: DateTime.now(),
+      startTime: startDate,
+      endTime: DateTime.now(),
       finishReason: FinishReason.completed,
       results: const [],
     );
@@ -116,7 +109,7 @@ class SurveyPresenterInherited extends InheritedWidget {
       return _handleSurveyFinished(currentState);
     }
 
-    final questionResult = _getResultByStepIdentifier(nextStep.stepIdentifier);
+    final questionResult = _getResultByStepIdentifier(nextStep.id);
 
     return PresentingSurveyState(
       currentStep: nextStep,
@@ -125,10 +118,6 @@ class SurveyPresenterInherited extends InheritedWidget {
       questionResults: results,
       currentStepIndex: currentStepIndex(nextStep),
       stepCount: countSteps,
-      appBarConfiguration: AppBarConfiguration(
-        showProgress: nextStep.showProgress,
-        canBack: nextStep.canGoBack,
-      ),
     );
   }
 
@@ -140,8 +129,7 @@ class SurveyPresenterInherited extends InheritedWidget {
     final previousStep = taskNavigator.previousInList(currentState.currentStep);
 
     if (previousStep != null) {
-      final questionResult =
-          _getResultByStepIdentifier(previousStep.stepIdentifier);
+      final questionResult = _getResultByStepIdentifier(previousStep.id);
 
       return PresentingSurveyState(
         currentStep: previousStep,
@@ -149,10 +137,6 @@ class SurveyPresenterInherited extends InheritedWidget {
         steps: taskNavigator.task.steps,
         questionResults: results,
         currentStepIndex: currentStepIndex(previousStep),
-        appBarConfiguration: AppBarConfiguration(
-          showProgress: previousStep.showProgress,
-          canBack: previousStep.canGoBack,
-        ),
         isPreviousStep: true,
         stepCount: countSteps,
       );
@@ -162,7 +146,7 @@ class SurveyPresenterInherited extends InheritedWidget {
     return state;
   }
 
-  QuestionResult? _getResultByStepIdentifier(StepIdentifier? identifier) {
+  StepResult? _getResultByStepIdentifier(String? identifier) {
     return results.firstWhereOrNull(
       (element) => element.id == identifier,
     );
@@ -174,13 +158,14 @@ class SurveyPresenterInherited extends InheritedWidget {
   ) {
     _addResult(event.questionResult);
 
-    final stepResults =
-        results.map((e) => StepResult.fromQuestion(questionResult: e)).toList();
+    final stepResults = results
+        .map((e) => StepResult<dynamic>.fromQuestion(questionResult: e))
+        .toList();
 
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
-      startDate: startDate,
-      endDate: DateTime.now(),
+      startTime: startDate,
+      endTime: DateTime.now(),
       finishReason: FinishReason.discarded,
       results: stepResults,
     );
@@ -193,12 +178,13 @@ class SurveyPresenterInherited extends InheritedWidget {
 
   //Currently we are only handling one question per step
   SurveyState _handleSurveyFinished(PresentingSurveyState currentState) {
-    final stepResults =
-        results.map((e) => StepResult.fromQuestion(questionResult: e)).toList();
+    final stepResults = results
+        .map((e) => StepResult<dynamic>.fromQuestion(questionResult: e))
+        .toList();
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
-      startDate: startDate,
-      endDate: DateTime.now(),
+      startTime: startDate,
+      endTime: DateTime.now(),
       finishReason: FinishReason.completed,
       results: stepResults,
     );
@@ -209,12 +195,12 @@ class SurveyPresenterInherited extends InheritedWidget {
     );
   }
 
-  void _addResult(QuestionResult? questionResult) {
+  void _addResult(StepResult? questionResult) {
     if (questionResult == null) {
       return;
     }
     results
-      ..removeWhere((QuestionResult result) => result.id == questionResult.id)
+      ..removeWhere((StepResult result) => result.id == questionResult.id)
       ..add(
         questionResult,
       );

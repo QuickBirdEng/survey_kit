@@ -1,9 +1,9 @@
-import 'package:survey_kit/src/answer_format/text_choice.dart';
+import 'package:survey_kit/src/_new/model/answer/option.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
 import 'package:survey_kit/src/navigator/rules/conditional_navigation_rule.dart';
 import 'package:survey_kit/src/navigator/rules/direct_navigation_rule.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
-import 'package:survey_kit/src/result/question_result.dart';
-import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/task.dart';
 
@@ -11,10 +11,10 @@ class NavigableTaskNavigator extends TaskNavigator {
   NavigableTaskNavigator(Task task) : super(task);
 
   @override
-  Step? nextStep({required Step step, QuestionResult? questionResult}) {
+  Step? nextStep({required Step step, StepResult? questionResult}) {
     record(step);
     final navigableTask = task as NavigableTask;
-    final rule = navigableTask.getRuleByStepIdentifier(step.stepIdentifier);
+    final rule = navigableTask.getRuleByStepIdentifier(step.id);
     if (rule == null) {
       return nextInList(step);
     }
@@ -22,7 +22,7 @@ class NavigableTaskNavigator extends TaskNavigator {
       case DirectNavigationRule:
         return task.steps.firstWhere(
           (element) =>
-              element.stepIdentifier ==
+              element.id ==
               (rule as DirectNavigationRule).destinationStepIdentifier,
         );
       case ConditionalNavigationRule:
@@ -46,12 +46,12 @@ class NavigableTaskNavigator extends TaskNavigator {
   Step? evaluateNextStep(
     Step? step,
     ConditionalNavigationRule rule,
-    QuestionResult? questionResult,
+    StepResult? questionResult,
   ) {
     if (questionResult == null) {
       return nextInList(step);
     }
-    final result = questionResult.result as List<TextChoice>?;
+    final result = questionResult.result as List<Option>?;
     if (result == null) {
       return nextInList(step);
     }
@@ -60,8 +60,7 @@ class NavigableTaskNavigator extends TaskNavigator {
     if (nextStepIdentifier == null) {
       return nextInList(step);
     }
-    return task.steps
-        .firstWhere((element) => element.stepIdentifier == nextStepIdentifier);
+    return task.steps.firstWhere((element) => element.id == nextStepIdentifier);
   }
 
   @override

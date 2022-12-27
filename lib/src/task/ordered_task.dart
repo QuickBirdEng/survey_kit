@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/steps/step.dart';
-import 'package:survey_kit/src/task/identifier/task_identifier.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
 import 'package:survey_kit/src/task/task.dart';
 
 part 'ordered_task.g.dart';
@@ -9,7 +8,7 @@ part 'ordered_task.g.dart';
 @JsonSerializable(createFactory: false)
 class OrderedTask extends Task {
   OrderedTask({
-    required TaskIdentifier id,
+    required String id,
     required List<Step> steps,
     Step? initialStep,
   }) : super(
@@ -19,7 +18,7 @@ class OrderedTask extends Task {
         );
 
   factory OrderedTask.fromJson(Map<String, dynamic> json) => OrderedTask(
-        id: TaskIdentifier.fromJson(json),
+        id: json['id'] as String,
         steps: json['steps'] != null
             ? (json['steps'] as List<Map<String, dynamic>>)
                 .map(Step.fromJson)

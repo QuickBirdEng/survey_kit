@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:survey_kit/src/result/question_result.dart';
-import 'package:survey_kit/src/steps/step.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
 import 'package:survey_kit/src/task/task.dart';
 
 abstract class TaskNavigator {
@@ -11,12 +11,13 @@ abstract class TaskNavigator {
   TaskNavigator(this.task);
 
   Step? firstStep();
-  Step? nextStep({required Step step, QuestionResult? questionResult});
+  Step? nextStep({required Step step, StepResult? questionResult});
   Step? previousInList(Step step);
 
   Step? nextInList(Step? step) {
     final currentIndex = task.steps.indexWhere(
-        (element) => element.stepIdentifier == step?.stepIdentifier,);
+      (element) => element.id == step?.id,
+    );
     return (currentIndex + 1 > task.steps.length - 1)
         ? null
         : task.steps[currentIndex + 1];

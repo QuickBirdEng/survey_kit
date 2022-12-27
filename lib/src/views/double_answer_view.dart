@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:survey_kit/src/answer_format/double_answer_format.dart';
-import 'package:survey_kit/src/result/question/double_question_result.dart';
-import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
-import 'package:survey_kit/src/views/decoration/input_decoration.dart';
-import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/src/_new/model/answer/double_answer_format.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/_new/view/decoration/input_decoration.dart';
+import 'package:survey_kit/src/_new/view/step_view.dart';
 
 class DoubleAnswerView extends StatefulWidget {
-  final QuestionStep questionStep;
-  final DoubleQuestionResult? result;
+  final Step questionStep;
+  final StepResult? result;
 
   const DoubleAnswerView({
     Key? key,
@@ -29,7 +29,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
   @override
   void initState() {
     super.initState();
-    _doubleAnswerFormat = widget.questionStep.answerFormat as DoubleAnswerFormat;
+    _doubleAnswerFormat = widget.questionStep.answer as DoubleAnswerFormat;
     _controller = TextEditingController();
     _controller.text = widget.result?.result?.toString() ?? '';
     _checkValidation(_controller.text);
@@ -52,21 +52,15 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => DoubleQuestionResult(
-        id: widget.questionStep.stepIdentifier,
-        startDate: _startDate,
-        endDate: DateTime.now(),
+      resultFunction: () => StepResult<double>(
+        id: widget.questionStep.id,
+        startTime: _startDate,
+        endTime: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: double.tryParse(_controller.text) ?? _doubleAnswerFormat.defaultValue,
+        result: double.tryParse(_controller.text) ??
+            _doubleAnswerFormat.defaultValue,
       ),
-      isValid: _isValid || widget.questionStep.isOptional,
-      title: widget.questionStep.title.isNotEmpty
-          ? Text(
-              widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
-              textAlign: TextAlign.center,
-            )
-          : widget.questionStep.content,
+      isValid: _isValid || !widget.questionStep.isMandatory,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32.0),
         child: Container(

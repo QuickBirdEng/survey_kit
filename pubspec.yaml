@@ -14,12 +14,10 @@ dependencies:
   camera: ^0.10.0+1
   collection: ^1.15.0
   cupertino_icons: ^1.0.2
-  equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_markdown: ^0.6.13
-  flutter_platform_widgets: ^2.0.0
   image_picker: ^0.8.5+3
   intl: ^0.17.0
   json_annotation: ^4.0.1

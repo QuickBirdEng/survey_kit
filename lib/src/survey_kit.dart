@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:survey_kit/src/_new/view/answer_view.dart';
 import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
@@ -155,31 +156,29 @@ class _SurveyPageState extends State<SurveyPage>
         if (state is PresentingSurveyState) {
           return Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: state.currentStep.showAppBar
-                ? PreferredSize(
-                    preferredSize: const Size(
-                      double.infinity,
-                      70.0,
-                    ),
-                    child: widget.appBar != null
-                        ? widget.appBar!.call(state.appBarConfiguration)
-                        : SurveyAppBar(
-                            appBarConfiguration: state.appBarConfiguration,
-                          ),
-                  )
-                : null,
+            appBar: const PreferredSize(
+              preferredSize: Size(
+                double.infinity,
+                70.0,
+              ),
+              child: SurveyAppBar(),
+            ),
             body: TabBarView(
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: state.steps
                   .map(
                     (e) => _SurveyView(
-                      id: e.stepIdentifier.id,
-                      createView: () => e.createView(
-                        questionResult: state.questionResults.firstWhereOrNull(
-                          (element) => element.id == e.stepIdentifier,
-                        ),
-                      ),
+                      id: e.id,
+                      createView: () {
+                        return AnswerView(
+                          answer: e.answer!,
+                          step: e,
+                          stepResult: state.questionResults.firstWhereOrNull(
+                            (element) => element.id == e.id,
+                          ),
+                        );
+                      },
                     ),
                   )
                   .toList(),

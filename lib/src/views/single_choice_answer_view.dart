@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:survey_kit/src/answer_format/single_choice_answer_format.dart';
-import 'package:survey_kit/src/answer_format/text_choice.dart';
-import 'package:survey_kit/src/result/question/single_choice_question_result.dart';
-import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
-import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
-import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/src/_new/model/answer/option.dart';
+import 'package:survey_kit/src/_new/model/answer/single_select_answer.dart';
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/_new/view/content/content_widget.dart';
+import 'package:survey_kit/src/_new/view/selection_list_tile.dart';
+import 'package:survey_kit/src/_new/view/step_view.dart';
 
 class SingleChoiceAnswerView extends StatefulWidget {
-  final QuestionStep questionStep;
-  final SingleChoiceQuestionResult? result;
+  final Step questionStep;
+  final StepResult? result;
 
   const SingleChoiceAnswerView({
     Key? key,
@@ -22,16 +23,16 @@ class SingleChoiceAnswerView extends StatefulWidget {
 
 class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView> {
   late final DateTime _startDate;
-  late final SingleChoiceAnswerFormat _singleChoiceAnswerFormat;
-  TextChoice? _selectedChoice;
+  late final SingleSelectAnswer _singleChoiceAnswerFormat;
+  Option? _selectedChoice;
 
   @override
   void initState() {
     super.initState();
     _singleChoiceAnswerFormat =
-        widget.questionStep.answerFormat as SingleChoiceAnswerFormat;
-    _selectedChoice =
-        widget.result?.result ?? _singleChoiceAnswerFormat.defaultSelection;
+        widget.questionStep.answer as SingleSelectAnswer;
+    _selectedChoice = widget.result?.result as Option? ??
+        _singleChoiceAnswerFormat.defaultSelection;
     _startDate = DateTime.now();
   }
 
@@ -39,31 +40,22 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView> {
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => SingleChoiceQuestionResult(
-        id: widget.questionStep.stepIdentifier,
-        startDate: _startDate,
-        endDate: DateTime.now(),
+      resultFunction: () => StepResult<Option>(
+        id: widget.questionStep.id,
+        startTime: _startDate,
+        endTime: DateTime.now(),
         valueIdentifier: _selectedChoice?.value ?? '',
         result: _selectedChoice,
       ),
-      isValid: widget.questionStep.isOptional || _selectedChoice != null,
-      title: widget.questionStep.title.isNotEmpty
-          ? Text(
-              widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
-              textAlign: TextAlign.center,
-            )
-          : widget.questionStep.content,
+      isValid: !widget.questionStep.isMandatory || _selectedChoice != null,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 32.0),
-              child: Text(
-                widget.questionStep.text,
-                style: Theme.of(context).textTheme.bodyText2,
-                textAlign: TextAlign.center,
+              child: ContentWidget(
+                content: widget.questionStep.content,
               ),
             ),
             Column(
@@ -71,10 +63,10 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView> {
                 const Divider(
                   color: Colors.grey,
                 ),
-                ..._singleChoiceAnswerFormat.textChoices.map(
-                  (TextChoice tc) {
+                ..._singleChoiceAnswerFormat.options.map(
+                  (Option tc) {
                     return SelectionListTile(
-                      text: tc.text,
+                      text: tc.value,
                       onTap: () {
                         if (_selectedChoice == tc) {
                           _selectedChoice = null;

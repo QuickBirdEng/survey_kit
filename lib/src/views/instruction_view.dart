@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:survey_kit/src/result/step/instruction_step_result.dart';
-import 'package:survey_kit/src/steps/predefined_steps/instruction_step.dart';
-import 'package:survey_kit/src/views/widget/step_view.dart';
+import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/_new/view/content/content_widget.dart';
+import 'package:survey_kit/src/_new/view/step_view.dart';
 
 class InstructionView extends StatelessWidget {
-  final InstructionStep instructionStep;
+  final Step instructionStep;
   final DateTime _startDate = DateTime.now();
 
   InstructionView({
@@ -16,22 +17,16 @@ class InstructionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return StepView(
       step: instructionStep,
-      title: Text(
-        instructionStep.title,
-        style: Theme.of(context).textTheme.headline2,
-        textAlign: TextAlign.center,
-      ),
-      resultFunction: () => InstructionStepResult(
-        instructionStep.stepIdentifier,
-        _startDate,
-        DateTime.now(),
+      resultFunction: () => StepResult<void>(
+        id: instructionStep.id,
+        startTime: _startDate,
+        endTime: DateTime.now(),
+        result: null,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
-        child: Text(
-          instructionStep.text,
-          style: Theme.of(context).textTheme.bodyText2,
-          textAlign: TextAlign.center,
+        child: ContentWidget(
+          content: instructionStep.content,
         ),
       ),
     );
