@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/_new/model/answer/integer_answer_format.dart';
 import 'package:survey_kit/src/_new/model/result/step_result.dart';
 import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/_new/view/content/content_widget.dart';
 import 'package:survey_kit/src/_new/view/decoration/input_decoration.dart';
 import 'package:survey_kit/src/_new/view/step_view.dart';
 
@@ -65,16 +66,23 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
         padding: const EdgeInsets.symmetric(vertical: 32.0),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          child: TextField(
-            textInputAction: TextInputAction.next,
-            autofocus: true,
-            decoration: textFieldInputDecoration(
-              hint: _integerAnswerFormat.hint,
-            ),
-            controller: _controller,
-            onChanged: _checkValidation,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
+          child: Column(
+            children: [
+              ContentWidget(
+                content: widget.questionStep.content,
+              ),
+              TextField(
+                textInputAction: TextInputAction.next,
+                autofocus: true,
+                decoration: textFieldInputDecoration(
+                  hint: _integerAnswerFormat.hint,
+                ),
+                controller: _controller,
+                onChanged: _checkValidation,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ),

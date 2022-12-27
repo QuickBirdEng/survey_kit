@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
           child: Align(
             alignment: Alignment.center,
             child: FutureBuilder<Task>(
-              future: getJsonTask(),
+              future: newSampleTask(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData &&
@@ -178,6 +178,21 @@ class _MyAppState extends State<MyApp> {
                   'https://admin.mamly.de:1337/uploads/was_ist_coaching_c85aa48fc0.m4v',
             ),
           ],
+          answer: IntegerAnswerFormat(),
+        ),
+        Step(
+          id: '1',
+          title: 'First Step',
+          content: [
+            TextContent(id: '1', text: 'Text'),
+            MarkdownContent(id: '1', text: 'Text'),
+            VideoContent(
+              id: '1',
+              url:
+                  'https://admin.mamly.de:1337/uploads/was_ist_coaching_c85aa48fc0.m4v',
+            ),
+          ],
+          answer: IntegerAnswerFormat(),
         ),
       ],
     );

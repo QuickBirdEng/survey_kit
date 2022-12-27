@@ -1,11 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:survey_kit/src/_new/model/answer/multi_double.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  final tResult = MultipleDoubleQuestionResult(
-    id: Identifier(id: 'example1'),
-    startDate: DateTime(2022, 8, 12, 16, 4),
-    endDate: DateTime(2022, 8, 12, 16, 14),
+  final tResult = StepResult(
+    id: 'example1',
+    startTime: DateTime(2022, 8, 12, 16, 4),
+    endTime: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'multiDouble1',
     result: const [
       MultiDouble(text: 'doubleVal1', value: 123.45),
@@ -19,7 +20,7 @@ void main() {
       () async {
         final encodedResult = tResult.toJson();
         final decodedResult =
-            MultipleDoubleQuestionResult.fromJson(encodedResult);
+            StepResult<List<MultiDouble>>.fromJson(encodedResult);
         expect(tResult, decodedResult);
       },
     );

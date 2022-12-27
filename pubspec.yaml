@@ -19,9 +19,9 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_markdown: ^0.6.13
   image_picker: ^0.8.5+3
-  intl: ^0.17.0
+  intl: ^0.18.0
   json_annotation: ^4.0.1
-  lottie: ^1.0.1
+  lottie: ^2.1.0
   uuid: ^3.0.4
   video_player: ^2.1.6
 

@@ -1,37 +1,40 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:survey_kit/src/_new/model/answer/boolean_answer_format.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  final tQuestionResults = <QuestionResult>[
-    InstructionStepResult(
-      Identifier(id: 'example1_intro'),
-      DateTime(2022, 8, 12, 16, 4),
-      DateTime(2022, 8, 12, 16, 5),
+  final tQuestionResults = <StepResult>[
+    StepResult<void>(
+      id: 'example1_intro',
+      startTime: DateTime(2022, 8, 12, 16, 4),
+      endTime: DateTime(2022, 8, 12, 16, 5),
+      result: null,
     ),
-    BooleanQuestionResult(
-      id: Identifier(id: 'example1_boolean'),
-      startDate: DateTime(2022, 8, 12, 16, 5),
-      endDate: DateTime(2022, 8, 12, 16, 10),
+    StepResult<BooleanResult>(
+      id: 'example1_boolean',
+      startTime: DateTime(2022, 8, 12, 16, 5),
+      endTime: DateTime(2022, 8, 12, 16, 10),
       valueIdentifier: 'bool1',
       result: BooleanResult.negative,
     ),
-    CompletionStepResult(
-      Identifier(id: 'example1_completion'),
-      DateTime(2022, 8, 12, 16, 10),
-      DateTime(2022, 8, 12, 16, 14),
+    StepResult<void>(
+      id: 'example1_intro',
+      startTime: DateTime(2022, 8, 12, 16, 4),
+      endTime: DateTime(2022, 8, 12, 16, 5),
+      result: null,
     ),
   ];
   final tSurveyResult = SurveyResult(
-    id: Identifier(id: 'example1'),
-    startDate: DateTime(2022, 8, 12, 16, 4),
-    endDate: DateTime(2022, 8, 12, 16, 14),
+    id: 'example1',
+    startTime: DateTime(2022, 8, 12, 16, 4),
+    endTime: DateTime(2022, 8, 12, 16, 14),
     finishReason: FinishReason.completed,
     results: [
-      StepResult(
-        id: Identifier(id: 'example1_stepResult'),
-        startDate: DateTime(2022, 8, 12, 16, 5),
-        endDate: DateTime(2022, 8, 12, 16, 10),
-        results: tQuestionResults,
+      StepResult<dynamic>(
+        id: 'example1_stepResult',
+        startTime: DateTime(2022, 8, 12, 16, 5),
+        endTime: DateTime(2022, 8, 12, 16, 10),
+        result: tQuestionResults,
       ),
     ],
   );

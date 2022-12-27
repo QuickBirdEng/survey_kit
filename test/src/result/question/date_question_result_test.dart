@@ -2,10 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  final tResult = DateQuestionResult(
-    id: Identifier(id: 'example1'),
-    startDate: DateTime(2022, 8, 12, 16, 4),
-    endDate: DateTime(2022, 8, 12, 16, 14),
+  final tResult = StepResult(
+    id: 'example1',
+    startTime: DateTime(2022, 8, 12, 16, 4),
+    endTime: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'date1',
     result: DateTime.now(),
   );
@@ -13,9 +13,9 @@ void main() {
   group('serialisation', () {
     test(
       'should work with valid example',
-          () async {
+      () async {
         final encodedResult = tResult.toJson();
-        final decodedResult = DateQuestionResult.fromJson(encodedResult);
+        final decodedResult = StepResult<DateTime>.fromJson(encodedResult);
         expect(tResult, decodedResult);
       },
     );

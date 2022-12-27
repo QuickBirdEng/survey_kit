@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:provider/provider.dart';
-import 'package:survey_kit/src/_new/model/result/step_result.dart';
-import 'package:survey_kit/src/_new/model/step.dart';
 import 'package:survey_kit/src/survey_configuration.dart';
 import 'package:survey_kit/survey_kit.dart';
 

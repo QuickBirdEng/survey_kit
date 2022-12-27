@@ -1,6 +1,7 @@
 library survery_kit;
 
 export 'src/_new/model/answer/answer.dart';
+export 'src/_new/model/answer/integer_answer_format.dart';
 export 'src/_new/model/content/audio_content.dart';
 export 'src/_new/model/content/content.dart';
 export 'src/_new/model/content/markdown_content.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:survey_kit/src/_new/model/content/markdown_content.dart';
 import 'package:survey_kit/src/widget/survey_kit_markdown.dart';
 

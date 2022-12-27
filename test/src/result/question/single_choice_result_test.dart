@@ -1,13 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:survey_kit/src/_new/model/answer/option.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  final tResult = SingleChoiceQuestionResult(
-    id: Identifier(id: 'example1'),
-    startDate: DateTime(2022, 8, 12, 16, 4),
-    endDate: DateTime(2022, 8, 12, 16, 14),
+  final tResult = StepResult(
+    id: 'example1',
+    startTime: DateTime(2022, 8, 12, 16, 4),
+    endTime: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'singleChoiceValue1',
-    result: const TextChoice(text: 'choice1', value: 'option2'),
+    result: const Option(id: 'choice1', value: 'option2'),
   );
 
   group('serialisation', () {
@@ -15,7 +16,7 @@ void main() {
       'should work with valid example',
       () async {
         final encodedResult = tResult.toJson();
-        final decodedResult = SingleChoiceQuestionResult.fromJson(encodedResult);
+        final decodedResult = StepResult<Option>.fromJson(encodedResult);
         expect(tResult, decodedResult);
       },
     );

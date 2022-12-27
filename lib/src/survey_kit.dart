@@ -172,7 +172,7 @@ class _SurveyPageState extends State<SurveyPage>
                       id: e.id,
                       createView: () {
                         return AnswerView(
-                          answer: e.answer!,
+                          answer: e.answer,
                           step: e,
                           stepResult: state.questionResults.firstWhereOrNull(
                             (element) => element.id == e.id,

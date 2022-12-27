@@ -7,7 +7,7 @@ class Option {
   final String id;
   final String value;
 
-  Option({
+  const Option({
     required this.id,
     required this.value,
   });

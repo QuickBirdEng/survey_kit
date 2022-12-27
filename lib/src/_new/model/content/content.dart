@@ -5,7 +5,7 @@ import 'package:survey_kit/src/_new/model/content/text_content.dart';
 import 'package:survey_kit/src/_new/model/content/video_content.dart';
 
 @JsonSerializable()
-abstract class Content {
+class Content {
   final String id;
 
   const Content({required this.id});
