@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/result/survey_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
-import 'package:survey_kit/src/result/survey/survey_result.dart';
 
 // ignore: must_be_immutable
 class SurveyPresenterInherited extends InheritedWidget {
@@ -209,5 +209,9 @@ class SurveyPresenterInherited extends InheritedWidget {
   int get countSteps => taskNavigator.countSteps;
   int currentStepIndex(Step step) {
     return taskNavigator.currentStepIndex(step);
+  }
+
+  StepResult? getStepResultById(String id) {
+    return results.firstWhereOrNull((element) => element.id == id);
   }
 }

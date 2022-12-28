@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'time_answer_formart.dart';
+part of 'time_answer_format.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

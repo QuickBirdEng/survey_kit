@@ -13,7 +13,7 @@ class DateAnswerView extends StatefulWidget {
   final Step questionStep;
 
   /// [DateQuestionResult] which boxes the result
-  final StepResult<DateTime?> result;
+  final StepResult<DateTime?>? result;
 
   const DateAnswerView({
     Key? key,
@@ -35,7 +35,7 @@ class _DateAnswerViewState extends State<DateAnswerView>
   void initState() {
     super.initState();
     _dateAnswerFormat = widget.questionStep.answer as DateAnswerFormat?;
-    _result = widget.result.result ??
+    _result = widget.result?.result ??
         _dateAnswerFormat?.defaultDate ??
         DateTime.now();
   }

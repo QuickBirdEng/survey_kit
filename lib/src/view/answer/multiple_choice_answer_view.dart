@@ -5,8 +5,8 @@ import 'package:survey_kit/src/model/answer/option.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
+import 'package:survey_kit/src/view/answer/selection_list_tile.dart';
 import 'package:survey_kit/src/view/content/content_widget.dart';
-import 'package:survey_kit/src/view/selection_list_tile.dart';
 import 'package:survey_kit/src/view/step_view.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
@@ -32,7 +32,11 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
   @override
   void initState() {
     super.initState();
-    _multipleChoiceAnswer = widget.questionStep as MultiSelectAnswer;
+    final answer = widget.questionStep.answer;
+    if (answer == null) {
+      throw Exception('MultiSelectAnswer is null');
+    }
+    _multipleChoiceAnswer = answer as MultiSelectAnswer;
     _selectedChoices = (widget.result?.result ??
             _multipleChoiceAnswer.defaultSelection) as List<Option>? ??
         [];

@@ -1,18 +1,17 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
+import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/model/result/survey_result.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
 import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
-import 'package:survey_kit/src/result/survey/survey_result.dart';
-import 'package:survey_kit/src/survey_configuration.dart';
 import 'package:survey_kit/src/survey_presenter_inherited.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
-import 'package:survey_kit/src/view/answer_view.dart';
+import 'package:survey_kit/src/view/answer/answer_view.dart';
 import 'package:survey_kit/src/widget/survey_app_bar.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
@@ -31,7 +30,6 @@ class SurveyKit extends StatefulWidget {
   final SurveyController? surveyController;
 
   /// The appbar that is shown at the top
-  final Widget Function(AppBarConfiguration appBarConfiguration)? appBar;
 
   /// If the progressbar shoud be show in the appbar
   final bool? showProgress;
@@ -47,7 +45,6 @@ class SurveyKit extends StatefulWidget {
     required this.onResult,
     this.themeData,
     this.surveyController,
-    this.appBar,
     this.showProgress,
     this.surveyProgressbarConfiguration,
     this.localizations,
@@ -99,7 +96,6 @@ class _SurveyKitState extends State<SurveyKit> {
           child: SurveyPage(
             length: widget.task.steps.length,
             onResult: widget.onResult,
-            appBar: widget.appBar,
           ),
         ),
       ),
@@ -109,14 +105,12 @@ class _SurveyKitState extends State<SurveyKit> {
 
 class SurveyPage extends StatefulWidget {
   final int length;
-  final Widget Function(AppBarConfiguration appBarConfiguration)? appBar;
   final Function(SurveyResult) onResult;
 
   const SurveyPage({
     super.key,
     required this.length,
     required this.onResult,
-    this.appBar,
   });
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:survey_kit/src/survey_configuration.dart';
+import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/src/survey_presenter_inherited.dart';
 import 'package:survey_kit/survey_kit.dart';
 

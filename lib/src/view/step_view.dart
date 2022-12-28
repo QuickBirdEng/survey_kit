@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:provider/provider.dart';
-import 'package:survey_kit/src/survey_configuration.dart';
+import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class StepView extends StatefulWidget {
@@ -35,9 +35,10 @@ class _StepViewState extends State<StepView> {
   }
 
   Widget _content(SurveyController surveyController, BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.background,
-      child: Center(
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 600),
+        color: Theme.of(context).colorScheme.background,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -9,6 +9,9 @@
   - FEATURE(Optional): List of Modules that contain Surveys
   - FEATURE(Optional): Glossary
 - FEATURE: MeasureDateStateMixin to measure when the user entered and left a step
+- FEATURE: PreviousStepResultMixin: If one of your steps depends on a Previous step just implement this mixin 
+and you can access the previous result
+- 
 - BREAKING: BooleanResult is now lowercase
 - BREAKING: FinishReason is now lowercase
 - BREAKING: Id's are now simple Strings

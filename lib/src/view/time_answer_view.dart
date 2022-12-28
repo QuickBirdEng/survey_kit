@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/model/answer/time_answer_formart.dart';
+import 'package:survey_kit/src/model/answer/time_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
@@ -29,7 +29,11 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
   @override
   void initState() {
     super.initState();
-    _timeAnswerFormat = widget.questionStep.answer as TimeAnswerFormat;
+    final answer = widget.questionStep.answer;
+    if (answer == null) {
+      throw Exception('TimeAnswerFormat is null');
+    }
+    _timeAnswerFormat = answer as TimeAnswerFormat;
     _result = widget.result?.result as TimeOfDay? ??
         _timeAnswerFormat.defaultValue ??
         TimeOfDay.fromDateTime(

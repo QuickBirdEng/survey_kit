@@ -1,3 +1,4 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -14,7 +15,8 @@ class SurveyKitVideoPlayer extends StatefulWidget {
 }
 
 class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
-  late VideoPlayerController _controller;
+  late final VideoPlayerController _controller;
+  late final ChewieController _chewieController;
 
   @override
   void initState() {
@@ -22,43 +24,33 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
     _controller = VideoPlayerController.network(
       widget.videoUrl,
     )..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        _chewieController = ChewieController(
+          videoPlayerController: _controller,
+          autoPlay: true,
+          looping: true,
+        );
         setState(() {});
       });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      child: Scaffold(
-        body: Center(
-          child: _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : Container(),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              _controller.value.isPlaying
-                  ? _controller.pause()
-                  : _controller.play();
-            });
-          },
-          child: Icon(
-            _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-          ),
-        ),
-      ),
-    );
+    return _controller.value.isInitialized
+        ? AspectRatio(
+            aspectRatio: _chewieController.aspectRatio ?? 16 / 9,
+            child: Chewie(
+              controller: _chewieController,
+            ),
+          )
+        : const SizedBox.shrink();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    _controller.pause().then((value) {
+      _chewieController.dispose();
+      _controller.dispose();
+    });
   }
 }

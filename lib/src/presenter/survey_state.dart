@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/result/survey_result.dart';
 import 'package:survey_kit/src/model/step.dart';
-import 'package:survey_kit/src/result/survey/survey_result.dart';
 
 @immutable
 abstract class SurveyState {

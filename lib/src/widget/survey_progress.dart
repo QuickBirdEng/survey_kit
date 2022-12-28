@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
-import 'package:survey_kit/src/survey_configuration.dart';
 import 'package:survey_kit/src/survey_presenter_inherited.dart';
 
 class SurveyProgress extends StatefulWidget {

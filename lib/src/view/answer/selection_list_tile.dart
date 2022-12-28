@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SelectionListTile extends StatelessWidget {
   final String text;
-  final Function onTap;
+  final Function() onTap;
   final bool isSelected;
 
   const SelectionListTile({
@@ -39,7 +39,7 @@ class SelectionListTile extends StatelessWidget {
                     width: 32,
                     height: 32,
                   ),
-            onTap: () => onTap,
+            onTap: onTap,
           ),
         ),
         const Divider(

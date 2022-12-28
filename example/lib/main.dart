@@ -164,14 +164,14 @@ class _MyAppState extends State<MyApp> {
 
   Future<Task> newSampleTask() {
     final task = NavigableTask(
-      id: 't',
+      id: 'task',
       steps: const [
         Step(
-          id: '2',
+          id: '1',
           content: [
             TextContent(
               id: '1',
-              text: 'Welcome to the\nQuickBird Studios\nHealth Survey',
+              text: 'Welcome to the\nQuickBird\nHealth Survey',
               fontSize: 22,
             ),
             TextContent(
@@ -182,34 +182,63 @@ class _MyAppState extends State<MyApp> {
           title: 'Title',
         ),
         Step(
-          id: '1',
+          id: '2',
           title: 'First Step',
           content: [
-            TextContent(id: '1', text: 'Text'),
-            MarkdownContent(id: '1', text: 'Text'),
+            TextContent(
+              id: '1',
+              text: 'Introduction to SurveyKit',
+              fontSize: 24,
+            ),
+            MarkdownContent(
+              id: '1',
+              text: '''
+Content types which are supported by survey_kit
+
+* Audio
+* Video
+* Markdown
+* Text
+''',
+            ),
             VideoContent(
               id: '1',
               url:
-                  'https://admin.mamly.de:1337/uploads/was_ist_coaching_c85aa48fc0.m4v',
+                  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             ),
           ],
-          answer: IntegerAnswerFormat(),
+          answer: IntegerAnswerFormat(
+            hint: 'Count of content types',
+          ),
         ),
         Step(
           id: '3',
           title: 'Second Step',
           content: [
-            TextContent(id: '1', text: 'Text'),
-            MarkdownContent(id: '1', text: 'Text'),
-            VideoContent(
+            TextContent(id: '1', text: 'This is a sample for the Audioplayer'),
+            MarkdownContent(
+              id: '2',
+              text: '''
+Supported formats
+
+* .mp3
+* .wav
+* .ogg
+* .aac
+''',
+            ),
+            AudioContent(
               id: '1',
-              url:
-                  'https://admin.mamly.de:1337/uploads/was_ist_coaching_c85aa48fc0.m4v',
+              url: 'https://www2.cs.uic.edu/~i101/SoundFiles/CantinaBand3.wav',
             ),
           ],
-          answer: IntegerAnswerFormat(
-            defaultValue: 25,
-            hint: 'Please enter your age',
+          answer: MultiSelectAnswer(
+            options: [
+              Option(id: '1', value: 'Penicillin'),
+              Option(id: '2', value: 'Amoxicillin'),
+              Option(id: '3', value: 'Clavulanic acid'),
+              Option(id: '4', value: 'Azithromycin'),
+            ],
           ),
         ),
       ],
