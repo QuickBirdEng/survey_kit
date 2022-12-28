@@ -167,6 +167,21 @@ class _MyAppState extends State<MyApp> {
       id: 't',
       steps: const [
         Step(
+          id: '',
+          content: [
+            TextContent(
+              id: '1',
+              text: 'Welcome to the\nQuickBird Studios\nHealth Survey',
+              fontSize: 22,
+            ),
+            TextContent(
+              id: '2',
+              text: 'Get ready for a bunch of super random questions!',
+            )
+          ],
+          title: 'Title',
+        ),
+        Step(
           id: '1',
           title: 'First Step',
           content: [

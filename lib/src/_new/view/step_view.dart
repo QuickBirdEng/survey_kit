@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:survey_kit/src/survey_configuration.dart';
 import 'package:survey_kit/survey_kit.dart';
 
-class StepView extends StatelessWidget {
+class StepView extends StatefulWidget {
   final Step step;
   final Widget child;
-  final StepResult Function() resultFunction;
+  final StepResult Function()? resultFunction;
   final bool isValid;
   final SurveyController? controller;
 
@@ -14,15 +14,22 @@ class StepView extends StatelessWidget {
     super.key,
     required this.step,
     required this.child,
-    required this.resultFunction,
+    this.resultFunction,
     this.controller,
     this.isValid = true,
   });
 
   @override
+  State<StepView> createState() => _StepViewState();
+}
+
+class _StepViewState extends State<StepView> {
+  final startTime = DateTime.now();
+
+  @override
   Widget build(BuildContext context) {
     final _surveyController =
-        controller ?? SurveyConfiguration.of(context).surveyController;
+        widget.controller ?? SurveyConfiguration.of(context).surveyController;
 
     return _content(_surveyController, context);
   }
@@ -36,12 +43,23 @@ class StepView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              child,
+              widget.child,
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 32.0),
                 child: OutlinedButton(
-                  onPressed: isValid || !step.isMandatory
-                      ? () => surveyController.nextStep(context, resultFunction)
+                  onPressed: widget.isValid || !widget.step.isMandatory
+                      ? () => surveyController.nextStep(
+                            context,
+                            widget.resultFunction ??
+                                () {
+                                  return StepResult<void>(
+                                    id: widget.step.id,
+                                    result: null,
+                                    endTime: DateTime.now(),
+                                    startTime: startTime,
+                                  );
+                                },
+                          )
                       : null,
                   child: Text(
                     context
@@ -49,7 +67,7 @@ class StepView extends StatelessWidget {
                             ?.toUpperCase() ??
                         'Next',
                     style: TextStyle(
-                      color: isValid
+                      color: widget.isValid
                           ? Theme.of(context).primaryColor
                           : Colors.grey,
                     ),
