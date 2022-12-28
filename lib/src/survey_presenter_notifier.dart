@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/_new/model/result/step_result.dart';
-import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
@@ -14,7 +14,7 @@ class SurveyPresenterInherited extends ChangeNotifier {
   SurveyPresenterInherited({
     required this.taskNavigator,
     required this.onResult,
-  })  : _state = LoadingSurveyState(),
+  })  : state = LoadingSurveyState(),
         startDate = DateTime.now() {
     onEvent(StartSurvey());
   }
@@ -22,11 +22,7 @@ class SurveyPresenterInherited extends ChangeNotifier {
   final TaskNavigator taskNavigator;
   final Function(SurveyResult) onResult;
 
-  late SurveyState _state;
-  SurveyState get state => _state;
-  void updateState(SurveyState newState) {
-    _state = newState;
-  }
+  late SurveyState state;
 
   late StreamController<SurveyState> surveyStateStream =
       StreamController<SurveyState>();
@@ -36,18 +32,18 @@ class SurveyPresenterInherited extends ChangeNotifier {
 
   void onEvent(SurveyEvent event) {
     if (event is StartSurvey) {
-      updateState(_handleInitialStep());
+      state = _handleInitialStep();
     } else if (event is NextStep) {
       if (state is PresentingSurveyState) {
-        updateState(_handleNextStep(event, state as PresentingSurveyState));
+        state = _handleNextStep(event, state as PresentingSurveyState);
       }
     } else if (event is StepBack) {
       if (state is PresentingSurveyState) {
-        updateState(_handleStepBack(event, state as PresentingSurveyState));
+        state = _handleStepBack(event, state as PresentingSurveyState);
       }
     } else if (event is CloseSurvey) {
       if (state is PresentingSurveyState) {
-        updateState(_handleClose(event, state as PresentingSurveyState));
+        state = _handleClose(event, state as PresentingSurveyState);
       }
     }
     notifyListeners();

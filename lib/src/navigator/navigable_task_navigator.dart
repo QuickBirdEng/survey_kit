@@ -1,6 +1,6 @@
-import 'package:survey_kit/src/_new/model/answer/option.dart';
-import 'package:survey_kit/src/_new/model/result/step_result.dart';
-import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/model/answer/option.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/rules/conditional_navigation_rule.dart';
 import 'package:survey_kit/src/navigator/rules/direct_navigation_rule.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';

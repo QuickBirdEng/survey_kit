@@ -1,4 +1,4 @@
-import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
 import 'package:survey_kit/src/task/task.dart';
 

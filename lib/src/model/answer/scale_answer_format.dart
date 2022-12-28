@@ -1,0 +1,29 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/model/answer/answer.dart';
+
+part 'scale_answer_format.g.dart';
+
+@JsonSerializable()
+class ScaleAnswerFormat implements Answer {
+  static const String type = 'scale';
+
+  final double maximumValue;
+  final double minimumValue;
+  final double defaultValue;
+  final double step;
+  final String maximumValueDescription;
+  final String minimumValueDescription;
+
+  const ScaleAnswerFormat({
+    required this.maximumValue,
+    required this.minimumValue,
+    required this.defaultValue,
+    required this.step,
+    this.maximumValueDescription = '',
+    this.minimumValueDescription = '',
+  }) : super();
+
+  factory ScaleAnswerFormat.fromJson(Map<String, dynamic> json) =>
+      _$ScaleAnswerFormatFromJson(json);
+  Map<String, dynamic> toJson() => _$ScaleAnswerFormatToJson(this);
+}

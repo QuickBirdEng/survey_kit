@@ -167,7 +167,7 @@ class _MyAppState extends State<MyApp> {
       id: 't',
       steps: const [
         Step(
-          id: '',
+          id: '2',
           content: [
             TextContent(
               id: '1',
@@ -196,8 +196,8 @@ class _MyAppState extends State<MyApp> {
           answer: IntegerAnswerFormat(),
         ),
         Step(
-          id: '1',
-          title: 'First Step',
+          id: '3',
+          title: 'Second Step',
           content: [
             TextContent(id: '1', text: 'Text'),
             MarkdownContent(id: '1', text: 'Text'),
@@ -207,7 +207,10 @@ class _MyAppState extends State<MyApp> {
                   'https://admin.mamly.de:1337/uploads/was_ist_coaching_c85aa48fc0.m4v',
             ),
           ],
-          answer: IntegerAnswerFormat(),
+          answer: IntegerAnswerFormat(
+            defaultValue: 25,
+            hint: 'Please enter your age',
+          ),
         ),
       ],
     );

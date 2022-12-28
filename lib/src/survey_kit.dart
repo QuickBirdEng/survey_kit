@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:survey_kit/src/_new/view/answer_view.dart';
 import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
@@ -13,7 +12,8 @@ import 'package:survey_kit/src/survey_presenter_inherited.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
-import 'package:survey_kit/src/views/widget/survey_app_bar.dart';
+import 'package:survey_kit/src/view/answer_view.dart';
+import 'package:survey_kit/src/widget/survey_app_bar.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 class SurveyKit extends StatefulWidget {
@@ -147,7 +147,11 @@ class _SurveyPageState extends State<SurveyPage>
         final state = SurveyPresenterInherited.of(context).state;
 
         if (state is SurveyResultState) {
-          widget.onResult.call(state.result);
+          Future<dynamic>.microtask(
+            () => widget.onResult.call(state.result),
+          );
+
+          return const SizedBox.shrink();
         }
         if (state is PresentingSurveyState) {
           tabController.animateTo(state.currentStepIndex);

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/_new/model/step.dart';
+import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/task/task.dart';
 
 part 'ordered_task.g.dart';

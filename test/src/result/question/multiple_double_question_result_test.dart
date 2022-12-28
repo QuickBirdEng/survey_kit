@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:survey_kit/src/_new/model/answer/multi_double.dart';
+import 'package:survey_kit/src/model/answer/multi_double.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {

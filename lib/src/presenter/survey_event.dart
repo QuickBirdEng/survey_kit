@@ -1,4 +1,4 @@
-import 'package:survey_kit/src/_new/model/result/step_result.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
 
 abstract class SurveyEvent {
   const SurveyEvent();

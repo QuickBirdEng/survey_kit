@@ -1,6 +1,23 @@
 # 0.2.0
+- BREAKING: We we completly reworked how survey_kit works:
+  - FEATURE: survey_kit is now mor dynamic and every content can be used before the question
+    - VideoContent
+    - AudioContent
+    - MarkdownContent
+    - TextContent
+  - FEATURE(Optional): List of Surveys
+  - FEATURE(Optional): List of Modules that contain Surveys
+  - FEATURE(Optional): Glossary
+- FEATURE: MeasureDateStateMixin to measure when the user entered and left a step
 - BREAKING: BooleanResult is now lowercase
 - BREAKING: FinishReason is now lowercase
+- BREAKING: Id's are now simple Strings
+
+HOW TO MIGRATE:
+- JSON
+- Code-Definition
+
+
 # 0.1.1
 - INFO: Update dependencies (Flutter 3.0.2)
 # 0.1.0
