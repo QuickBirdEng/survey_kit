@@ -36,9 +36,10 @@ class _StepViewState extends State<StepView> {
 
   Widget _content(SurveyController surveyController, BuildContext context) {
     return Center(
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 600),
-        color: Theme.of(context).colorScheme.background,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+        ),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

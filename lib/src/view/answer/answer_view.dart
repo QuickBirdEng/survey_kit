@@ -1,14 +1,4 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/model/answer/boolean_answer_format.dart';
-import 'package:survey_kit/src/model/answer/date_answer_format.dart';
-import 'package:survey_kit/src/model/answer/double_answer_format.dart';
-import 'package:survey_kit/src/model/answer/image_answer_format.dart';
-import 'package:survey_kit/src/model/answer/multi_select_answer.dart';
-import 'package:survey_kit/src/model/answer/multiple_choice_auto_complete_answer_format.dart';
-import 'package:survey_kit/src/model/answer/option.dart';
-import 'package:survey_kit/src/model/answer/scale_answer_format.dart';
-import 'package:survey_kit/src/model/answer/single_select_answer.dart';
-import 'package:survey_kit/src/model/answer/text_answer_format.dart';
 import 'package:survey_kit/src/view/answer/boolean_answer_view.dart';
 import 'package:survey_kit/src/view/answer/multiple_choice_auto_complete_answer_view.dart';
 import 'package:survey_kit/src/view/content/content_widget.dart';

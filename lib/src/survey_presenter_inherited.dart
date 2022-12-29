@@ -32,7 +32,7 @@ class SurveyPresenterInherited extends InheritedWidget {
   }
 
   late StreamController<SurveyState> surveyStateStream =
-      StreamController<SurveyState>();
+      StreamController<SurveyState>.broadcast();
 
   static SurveyPresenterInherited of(BuildContext context) {
     final result =

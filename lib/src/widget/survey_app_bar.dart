@@ -12,23 +12,33 @@ class SurveyAppBar extends StatelessWidget {
   });
 
   @override
-  AppBar build(BuildContext context) {
+  Widget build(BuildContext context) {
     final surveyController =
         controller ?? SurveyConfiguration.of(context).surveyController;
-    final surveyState = SurveyPresenterInherited.of(context).state;
-    final isFirstStep =
-        surveyState is PresentingSurveyState && surveyState.isFirstStep;
+    final surveyPresenter = SurveyPresenterInherited.of(context);
+
     return AppBar(
       elevation: 0,
-      leading: isFirstStep
-          ? null
-          : BackButton(
-              onPressed: () {
-                surveyController.stepBack(
-                  context: context,
+      leading: StreamBuilder<SurveyState>(
+        stream: surveyPresenter.surveyStateStream.stream,
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return const SizedBox.shrink();
+          }
+
+          final state = snapshot.data!;
+
+          return (state as PresentingSurveyState).isFirstStep
+              ? const SizedBox.shrink()
+              : BackButton(
+                  onPressed: () {
+                    surveyController.stepBack(
+                      context: context,
+                    );
+                  },
                 );
-              },
-            ),
+        },
+      ),
       title: const SurveyProgress(),
       actions: [
         TextButton(
