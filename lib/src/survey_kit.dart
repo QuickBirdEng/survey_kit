@@ -182,10 +182,6 @@ class _SurveyPageState extends State<SurveyPage>
                   .toList(),
             ),
           );
-        } else if (state is SurveyResultState && state.currentStep != null) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
         }
         return const Center(
           child: CircularProgressIndicator(),

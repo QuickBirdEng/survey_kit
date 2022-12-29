@@ -215,7 +215,11 @@ Content types which are supported by survey_kit
           id: '3',
           title: 'Second Step',
           content: [
-            TextContent(id: '1', text: 'This is a sample for the Audioplayer'),
+            TextContent(
+              id: '1',
+              text: 'This is a sample for the Audioplayer',
+              fontSize: 22,
+            ),
             MarkdownContent(
               id: '2',
               text: '''
@@ -240,6 +244,25 @@ Supported formats
               Option(id: '4', value: 'Azithromycin'),
             ],
           ),
+        ),
+        Step(
+          id: '123',
+          title: 'Last Step',
+          content: [
+            TextContent(
+              id: '1',
+              text: 'Done!',
+              fontSize: 22,
+            ),
+            TextContent(
+              id: '2',
+              text: 'Thanks for taking the survey, we will contact you soon!',
+            ),
+            LottieContent(
+              id: '1',
+              asset: 'assets/fancy_checkmark.json',
+            ),
+          ],
         ),
       ],
     );

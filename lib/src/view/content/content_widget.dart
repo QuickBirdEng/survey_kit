@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/model/content/audio_content.dart';
-import 'package:survey_kit/src/model/content/content.dart';
-import 'package:survey_kit/src/model/content/markdown_content.dart';
-import 'package:survey_kit/src/model/content/text_content.dart';
-import 'package:survey_kit/src/model/content/video_content.dart';
 import 'package:survey_kit/src/util/extension.dart';
 import 'package:survey_kit/src/view/content/audio_widget.dart';
+import 'package:survey_kit/src/view/content/lottie_widget.dart';
 import 'package:survey_kit/src/view/content/markdown_widget.dart';
 import 'package:survey_kit/src/view/content/text_widget.dart';
 import 'package:survey_kit/src/view/content/video_widget.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 class ContentWidget extends StatefulWidget {
   const ContentWidget({
@@ -36,6 +33,8 @@ class _ContentWidgetState extends State<ContentWidget> {
               return MarkdownWidget(markdownContent: e);
             } else if (e is TextContent) {
               return TextWidget(textContent: e);
+            } else if (e is LottieContent) {
+              return LottieWidget(lottieContent: e);
             }
             throw Exception('Content type not supported: ${e.runtimeType}');
           })
