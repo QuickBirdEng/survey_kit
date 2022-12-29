@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:survey_kit/src/model/answer/option.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {

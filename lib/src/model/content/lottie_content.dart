@@ -9,9 +9,9 @@ class LottieContent extends Content {
   final bool repeat;
 
   const LottieContent({
-    required super.id,
     required this.asset,
     this.repeat = false,
+    super.id,
   });
 
   factory LottieContent.fromJson(Map<String, dynamic> json) =>

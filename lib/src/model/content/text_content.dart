@@ -11,10 +11,10 @@ class TextContent extends Content {
   final TextAlign textAlign;
 
   const TextContent({
-    required super.id,
     required this.text,
     this.fontSize = 16,
     this.textAlign = TextAlign.center,
+    super.id,
   });
 
   factory TextContent.fromJson(Map<String, dynamic> json) =>

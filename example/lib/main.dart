@@ -39,7 +39,6 @@ class _MyAppState extends State<MyApp> {
                       Navigator.pushNamed(context, '/');
                     },
                     task: task,
-                    showProgress: true,
                     localizations: const {
                       'cancel': 'Cancel',
                       'next': 'Next',
@@ -165,17 +164,15 @@ class _MyAppState extends State<MyApp> {
   Future<Task> newSampleTask() {
     final task = NavigableTask(
       id: 'task',
-      steps: const [
+      steps: [
         Step(
           id: '1',
-          content: [
+          content: const [
             TextContent(
-              id: '1',
               text: 'Welcome to the\nQuickBird\nHealth Survey',
               fontSize: 22,
             ),
             TextContent(
-              id: '2',
               text: 'Get ready for a bunch of super random questions!',
             )
           ],
@@ -184,14 +181,12 @@ class _MyAppState extends State<MyApp> {
         Step(
           id: '2',
           title: 'First Step',
-          content: [
+          content: const [
             TextContent(
-              id: '1',
               text: 'Introduction to SurveyKit',
               fontSize: 24,
             ),
             MarkdownContent(
-              id: '1',
               text: '''
 Content types which are supported by survey_kit
 
@@ -202,26 +197,23 @@ Content types which are supported by survey_kit
 ''',
             ),
             VideoContent(
-              id: '1',
               url:
                   'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             ),
           ],
-          answer: IntegerAnswerFormat(
+          answer: const IntegerAnswerFormat(
             hint: 'Count of content types',
           ),
         ),
         Step(
           id: '3',
           title: 'Second Step',
-          content: [
+          content: const [
             TextContent(
-              id: '1',
               text: 'This is a sample for the Audioplayer',
               fontSize: 22,
             ),
             MarkdownContent(
-              id: '2',
               text: '''
 Supported formats
 
@@ -232,11 +224,10 @@ Supported formats
 ''',
             ),
             AudioContent(
-              id: '1',
               url: 'https://www2.cs.uic.edu/~i101/SoundFiles/CantinaBand3.wav',
             ),
           ],
-          answer: MultiSelectAnswer(
+          answer: const MultiSelectAnswer(
             options: [
               Option(id: '1', value: 'Penicillin'),
               Option(id: '2', value: 'Amoxicillin'),
@@ -248,18 +239,15 @@ Supported formats
         Step(
           id: '123',
           title: 'Last Step',
-          content: [
+          content: const [
             TextContent(
-              id: '1',
               text: 'Done!',
               fontSize: 22,
             ),
             TextContent(
-              id: '2',
               text: 'Thanks for taking the survey, we will contact you soon!',
             ),
             LottieContent(
-              id: '1',
               asset: 'assets/fancy_checkmark.json',
             ),
           ],

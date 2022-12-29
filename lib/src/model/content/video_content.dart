@@ -8,8 +8,8 @@ class VideoContent extends Content {
   final String url;
 
   const VideoContent({
-    required super.id,
     required this.url,
+    super.id,
   });
 
   factory VideoContent.fromJson(Map<String, dynamic> json) =>

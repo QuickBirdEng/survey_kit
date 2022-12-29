@@ -8,8 +8,8 @@ class AudioContent extends Content {
   final String url;
 
   const AudioContent({
-    required super.id,
     required this.url,
+    super.id,
   });
 
   factory AudioContent.fromJson(Map<String, dynamic> json) =>

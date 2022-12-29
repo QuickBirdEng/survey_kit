@@ -7,9 +7,9 @@ import 'package:survey_kit/src/model/content/video_content.dart';
 
 @JsonSerializable()
 class Content {
-  final String id;
+  final String? id;
 
-  const Content({required this.id});
+  const Content({this.id});
 
   factory Content.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String?;

@@ -184,7 +184,7 @@ class _SurveyPageState extends State<SurveyPage>
           );
         }
         return const Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator.adaptive(),
         );
       },
     );

@@ -2,21 +2,22 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/answer/answer.dart';
 import 'package:survey_kit/src/model/content/content.dart';
 import 'package:survey_kit/src/model/module.dart';
+import 'package:uuid/uuid.dart';
 
 @JsonSerializable()
 class Step extends Module {
   final bool isMandatory;
   final Answer? answer;
 
-  const Step({
-    required super.id,
+  Step({
+    String? id,
     required super.title,
     required super.content,
     super.description,
     super.imageUrl,
     this.isMandatory = true,
     this.answer,
-  });
+  }) : super(id: id ?? const Uuid().v4());
 
   factory Step.fromJson(Map<String, dynamic> json) => Step(
         id: json['id'] as String,

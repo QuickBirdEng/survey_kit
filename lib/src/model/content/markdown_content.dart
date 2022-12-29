@@ -8,8 +8,8 @@ class MarkdownContent extends Content {
   final String text;
 
   const MarkdownContent({
-    required super.id,
     required this.text,
+    super.id,
   });
 
   factory MarkdownContent.fromJson(Map<String, dynamic> json) =>

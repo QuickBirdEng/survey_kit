@@ -1,6 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class SurveyKitVideoPlayer extends StatefulWidget {
   const SurveyKitVideoPlayer({
@@ -38,8 +39,16 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
     return _controller.value.isInitialized
         ? AspectRatio(
             aspectRatio: _chewieController.aspectRatio ?? 16 / 9,
-            child: Chewie(
-              controller: _chewieController,
+            child: VisibilityDetector(
+              key: Key(widget.videoUrl),
+              onVisibilityChanged: (info) {
+                if (info.visibleFraction == 0) {
+                  _controller.pause();
+                }
+              },
+              child: Chewie(
+                controller: _chewieController,
+              ),
             ),
           )
         : const SizedBox.shrink();

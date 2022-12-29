@@ -38,7 +38,9 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer> {
               player: player,
             );
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
           }
         },
       ),
@@ -95,8 +97,6 @@ class _PlayerWidgetState extends State<_PlayerWidget>
 
   @override
   void setState(VoidCallback fn) {
-    // Subscriptions only can be closed asynchronously,
-    // therefore events can occur after widget has been disposed.
     if (mounted) {
       super.setState(fn);
     }
