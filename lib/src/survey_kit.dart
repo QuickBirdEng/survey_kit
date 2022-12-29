@@ -157,7 +157,7 @@ class _SurveyPageState extends State<SurveyPage>
             appBar: const PreferredSize(
               preferredSize: Size(
                 double.infinity,
-                70.0,
+                40,
               ),
               child: SurveyAppBar(),
             ),
