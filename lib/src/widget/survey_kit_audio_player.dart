@@ -33,15 +33,10 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer> {
       child: FutureBuilder<void>(
         future: audioReady,
         builder: (_, snapshot) {
-          if (ConnectionState.done == snapshot.connectionState) {
-            return _PlayerWidget(
-              player: player,
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          }
+          return _PlayerWidget(
+            player: player,
+            isLoading: ConnectionState.done != snapshot.connectionState,
+          );
         },
       ),
     );
@@ -50,9 +45,11 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer> {
 
 class _PlayerWidget extends StatefulWidget {
   final AudioPlayer player;
+  final bool isLoading;
 
   const _PlayerWidget({
     required this.player,
+    required this.isLoading,
   });
 
   @override
@@ -121,7 +118,11 @@ class _PlayerWidgetState extends State<_PlayerWidget>
           children: [
             IconButton(
               key: const Key('play_button'),
-              onPressed: _isPlaying ? _pause : _play,
+              onPressed: widget.isLoading
+                  ? null
+                  : _isPlaying
+                      ? _pause
+                      : _play,
               iconSize: 32,
               icon: AnimatedIcon(
                 icon: AnimatedIcons.play_pause,
@@ -129,16 +130,21 @@ class _PlayerWidgetState extends State<_PlayerWidget>
                 size: 32,
                 semanticLabel: 'Play/Pause',
               ),
-              color: Colors.cyan,
+              color: widget.isLoading
+                  ? Colors.grey
+                  : Theme.of(context).primaryColor,
             ),
-            Text(
-              _position != null
-                  ? '$_positionText / $_durationText'
-                  : _duration != null
-                      ? _durationText
-                      : '',
-              style: const TextStyle(fontSize: 16.0),
-            ),
+            if (widget.isLoading)
+              const CircularProgressIndicator.adaptive()
+            else
+              Text(
+                _position != null
+                    ? '$_positionText / $_durationText'
+                    : _duration != null
+                        ? _durationText
+                        : '',
+                style: const TextStyle(fontSize: 16.0),
+              ),
           ],
         ),
         const SizedBox(width: 14),
@@ -151,6 +157,12 @@ class _PlayerWidgetState extends State<_PlayerWidget>
             final position = v * duration.inMilliseconds;
             player.seek(Duration(milliseconds: position.round()));
           },
+          thumbColor: widget.isLoading
+              ? Colors.grey
+              : Theme.of(context).sliderTheme.thumbColor,
+          inactiveColor: widget.isLoading
+              ? Colors.grey
+              : Theme.of(context).sliderTheme.activeTrackColor,
           value: (_position != null &&
                   _duration != null &&
                   _position!.inMilliseconds > 0 &&

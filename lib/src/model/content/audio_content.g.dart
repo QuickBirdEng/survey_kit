@@ -7,8 +7,8 @@ part of 'audio_content.dart';
 // **************************************************************************
 
 AudioContent _$AudioContentFromJson(Map<String, dynamic> json) => AudioContent(
-      id: json['id'] as String,
       url: json['url'] as String,
+      id: json['id'] as String?,
     );
 
 Map<String, dynamic> _$AudioContentToJson(AudioContent instance) =>

@@ -7,8 +7,8 @@ part of 'video_content.dart';
 // **************************************************************************
 
 VideoContent _$VideoContentFromJson(Map<String, dynamic> json) => VideoContent(
-      id: json['id'] as String,
       url: json['url'] as String,
+      id: json['id'] as String?,
     );
 
 Map<String, dynamic> _$VideoContentToJson(VideoContent instance) =>

@@ -14,7 +14,6 @@ class LottieWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Lottie.asset(
       lottieContent.asset,
-      package: 'survey_kit',
       repeat: lottieContent.repeat,
     );
   }

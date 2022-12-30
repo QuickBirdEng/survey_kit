@@ -19,9 +19,6 @@ class SurveyKit extends StatefulWidget {
   /// [Task] for the configuraton of the survey
   final Task task;
 
-  /// [ThemeData] to override the Theme of the subtree
-  final ThemeData? themeData;
-
   /// Function which is called after the results are collected
   final Function(SurveyResult) onResult;
 
@@ -30,9 +27,6 @@ class SurveyKit extends StatefulWidget {
   final SurveyController? surveyController;
 
   /// The appbar that is shown at the top
-
-  /// If the progressbar shoud be show in the appbar
-  final bool? showProgress;
 
   // Changes the styling of the progressbar in the appbar
   final SurveyProgressConfiguration? surveyProgressbarConfiguration;
@@ -43,9 +37,7 @@ class SurveyKit extends StatefulWidget {
     super.key,
     required this.task,
     required this.onResult,
-    this.themeData,
     this.surveyController,
-    this.showProgress,
     this.surveyProgressbarConfiguration,
     this.localizations,
   });
@@ -82,21 +74,18 @@ class _SurveyKitState extends State<SurveyKit> {
   @override
   Widget build(BuildContext context) {
     return SurveyConfiguration(
-      showProgress: widget.showProgress ?? true,
       surveyProgressConfiguration: widget.surveyProgressbarConfiguration ??
           SurveyProgressConfiguration(),
       taskNavigator: _taskNavigator,
       surveyController: widget.surveyController ?? SurveyController(),
       localizations: widget.localizations,
-      child: Theme(
-        data: widget.themeData ?? Theme.of(context),
-        child: SurveyPresenterInherited(
-          taskNavigator: _taskNavigator,
+      padding: const EdgeInsets.all(14),
+      child: SurveyPresenterInherited(
+        taskNavigator: _taskNavigator,
+        onResult: widget.onResult,
+        child: SurveyPage(
+          length: widget.task.steps.length,
           onResult: widget.onResult,
-          child: SurveyPage(
-            length: widget.task.steps.length,
-            onResult: widget.onResult,
-          ),
         ),
       ),
     );

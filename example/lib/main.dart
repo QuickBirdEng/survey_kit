@@ -21,6 +21,104 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: Theme.of(context).copyWith(
+        primaryColor: Colors.cyan,
+        appBarTheme: const AppBarTheme(
+          color: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.cyan,
+          ),
+          titleTextStyle: TextStyle(
+            color: Colors.cyan,
+          ),
+        ),
+        iconTheme: const IconThemeData(
+          color: Colors.cyan,
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.cyan,
+          selectionColor: Colors.cyan,
+          selectionHandleColor: Colors.cyan,
+        ),
+        cupertinoOverrideTheme: const CupertinoThemeData(
+          primaryColor: Colors.cyan,
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(
+              const Size(150.0, 60.0),
+            ),
+            side: MaterialStateProperty.resolveWith(
+              (Set<MaterialState> state) {
+                if (state.contains(MaterialState.disabled)) {
+                  return const BorderSide(
+                    color: Colors.grey,
+                  );
+                }
+                return const BorderSide(
+                  color: Colors.cyan,
+                );
+              },
+            ),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            textStyle: MaterialStateProperty.resolveWith(
+              (Set<MaterialState> state) {
+                if (state.contains(MaterialState.disabled)) {
+                  return Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: Colors.grey,
+                      );
+                }
+                return Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Colors.cyan,
+                    );
+              },
+            ),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            textStyle: MaterialStateProperty.all(
+              Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Colors.cyan,
+                  ),
+            ),
+          ),
+        ),
+        textTheme: const TextTheme(
+          displayMedium: TextStyle(
+            fontSize: 28.0,
+            color: Colors.black,
+          ),
+          headlineSmall: TextStyle(
+            fontSize: 24.0,
+            color: Colors.black,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 18.0,
+            color: Colors.black,
+          ),
+          titleMedium: TextStyle(
+            fontSize: 18.0,
+            color: Colors.black,
+          ),
+        ),
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.cyan,
+        )
+            .copyWith(
+              onPrimary: Colors.white,
+            )
+            .copyWith(background: Colors.white),
+      ),
       home: Scaffold(
         body: Container(
           color: Colors.white,
@@ -43,110 +141,6 @@ class _MyAppState extends State<MyApp> {
                       'cancel': 'Cancel',
                       'next': 'Next',
                     },
-                    themeData: Theme.of(context).copyWith(
-                      primaryColor: Colors.cyan,
-                      appBarTheme: const AppBarTheme(
-                        color: Colors.white,
-                        iconTheme: IconThemeData(
-                          color: Colors.cyan,
-                        ),
-                        titleTextStyle: TextStyle(
-                          color: Colors.cyan,
-                        ),
-                      ),
-                      iconTheme: const IconThemeData(
-                        color: Colors.cyan,
-                      ),
-                      textSelectionTheme: const TextSelectionThemeData(
-                        cursorColor: Colors.cyan,
-                        selectionColor: Colors.cyan,
-                        selectionHandleColor: Colors.cyan,
-                      ),
-                      cupertinoOverrideTheme: const CupertinoThemeData(
-                        primaryColor: Colors.cyan,
-                      ),
-                      outlinedButtonTheme: OutlinedButtonThemeData(
-                        style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(
-                            const Size(150.0, 60.0),
-                          ),
-                          side: MaterialStateProperty.resolveWith(
-                            (Set<MaterialState> state) {
-                              if (state.contains(MaterialState.disabled)) {
-                                return const BorderSide(
-                                  color: Colors.grey,
-                                );
-                              }
-                              return const BorderSide(
-                                color: Colors.cyan,
-                              );
-                            },
-                          ),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          textStyle: MaterialStateProperty.resolveWith(
-                            (Set<MaterialState> state) {
-                              if (state.contains(MaterialState.disabled)) {
-                                return Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(
-                                      color: Colors.grey,
-                                    );
-                              }
-                              return Theme.of(context)
-                                  .textTheme
-                                  .labelLarge
-                                  ?.copyWith(
-                                    color: Colors.cyan,
-                                  );
-                            },
-                          ),
-                        ),
-                      ),
-                      textButtonTheme: TextButtonThemeData(
-                        style: ButtonStyle(
-                          textStyle: MaterialStateProperty.all(
-                            Theme.of(context).textTheme.labelLarge?.copyWith(
-                                  color: Colors.cyan,
-                                ),
-                          ),
-                        ),
-                      ),
-                      textTheme: const TextTheme(
-                        displayMedium: TextStyle(
-                          fontSize: 28.0,
-                          color: Colors.black,
-                        ),
-                        headlineSmall: TextStyle(
-                          fontSize: 24.0,
-                          color: Colors.black,
-                        ),
-                        bodyMedium: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.black,
-                        ),
-                        titleMedium: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.black,
-                        ),
-                      ),
-                      inputDecorationTheme: const InputDecorationTheme(
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      colorScheme: ColorScheme.fromSwatch(
-                        primarySwatch: Colors.cyan,
-                      )
-                          .copyWith(
-                            onPrimary: Colors.white,
-                          )
-                          .copyWith(background: Colors.white),
-                    ),
                     surveyProgressbarConfiguration: SurveyProgressConfiguration(
                       backgroundColor: Colors.white,
                     ),
@@ -186,23 +180,18 @@ class _MyAppState extends State<MyApp> {
               text: 'Introduction to SurveyKit',
               fontSize: 24,
             ),
-            MarkdownContent(
-              text: '''
-Content types which are supported by survey_kit
-
-* Audio
-* Video
-* Markdown
-* Text
-''',
-            ),
             VideoContent(
               url:
                   'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             ),
+            TextContent(
+              text: 'Did you like the video? ',
+              fontSize: 20,
+            ),
           ],
-          answer: const IntegerAnswerFormat(
-            hint: 'Count of content types',
+          answer: const BooleanAnswerFormat(
+            positiveAnswer: 'Yes',
+            negativeAnswer: 'No',
           ),
         ),
         Step(
@@ -215,7 +204,7 @@ Content types which are supported by survey_kit
             ),
             MarkdownContent(
               text: '''
-Supported formats
+Supported audio formats
 
 * .mp3
 * .wav
@@ -227,18 +216,70 @@ Supported formats
               url: 'https://www2.cs.uic.edu/~i101/SoundFiles/CantinaBand3.wav',
             ),
           ],
+        ),
+        Step(
+          content: const [
+            TextContent(
+              text: 'How old are you?',
+              fontSize: 18,
+            ),
+          ],
+          answer: const IntegerAnswerFormat(
+            hint: 'Age',
+          ),
+        ),
+        Step(
+          content: const [
+            TextContent(
+              text: 'Select your body type',
+              fontSize: 18,
+            ),
+          ],
+          answer: const ScaleAnswerFormat(
+            maximumValue: 5,
+            minimumValue: 1,
+            defaultValue: 3,
+            step: 1,
+          ),
+        ),
+        Step(
+          content: const [
+            TextContent(
+              text: 'Known allergies',
+              fontSize: 22,
+            ),
+            TextContent(
+              text: 'Do you have allergies that we need to be aware of?',
+              fontSize: 18,
+            ),
+          ],
           answer: const MultiSelectAnswer(
             options: [
               Option(id: '1', value: 'Penicillin'),
-              Option(id: '2', value: 'Amoxicillin'),
-              Option(id: '3', value: 'Clavulanic acid'),
-              Option(id: '4', value: 'Azithromycin'),
+              Option(id: '2', value: 'Latex'),
+              Option(id: '3', value: 'Pet'),
+              Option(id: '4', value: 'Pollen'),
             ],
           ),
         ),
         Step(
-          id: '123',
-          title: 'Last Step',
+          id: '12',
+          content: const [
+            TextContent(
+              text: 'Done?',
+              fontSize: 22,
+            ),
+            TextContent(
+              text: 'We are done, do you mind to tell us more about yourself?',
+              fontSize: 18,
+            ),
+          ],
+          answer: const BooleanAnswerFormat(
+            positiveAnswer: 'Yes',
+            negativeAnswer: 'No',
+          ),
+        ),
+        Step(
           content: const [
             TextContent(
               text: 'Done!',

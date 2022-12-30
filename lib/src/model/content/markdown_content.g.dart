@@ -8,8 +8,8 @@ part of 'markdown_content.dart';
 
 MarkdownContent _$MarkdownContentFromJson(Map<String, dynamic> json) =>
     MarkdownContent(
-      id: json['id'] as String,
       text: json['text'] as String,
+      id: json['id'] as String?,
     );
 
 Map<String, dynamic> _$MarkdownContentToJson(MarkdownContent instance) =>

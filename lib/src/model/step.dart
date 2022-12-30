@@ -11,8 +11,8 @@ class Step extends Module {
 
   Step({
     String? id,
-    required super.title,
     required super.content,
+    super.title = '',
     super.description,
     super.imageUrl,
     this.isMandatory = true,

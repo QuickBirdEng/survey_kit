@@ -42,7 +42,7 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
             child: VisibilityDetector(
               key: Key(widget.videoUrl),
               onVisibilityChanged: (info) {
-                if (info.visibleFraction == 0) {
+                if (info.visibleFraction == 0 && mounted) {
                   _controller.pause();
                 }
               },
@@ -51,7 +51,12 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
               ),
             ),
           )
-        : const SizedBox.shrink();
+        : Container(
+            height: 200,
+            child: const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          );
   }
 
   @override

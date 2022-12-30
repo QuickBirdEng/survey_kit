@@ -4,6 +4,7 @@ import 'package:survey_kit/src/model/result/video_result.dart';
 
 part 'step_result.g.dart';
 
+@immutable
 @JsonSerializable()
 class StepResult<T> {
   final String id;
@@ -32,6 +33,19 @@ class StepResult<T> {
       endTime: questionResult.endTime,
       result: [questionResult] as T?,
     );
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ startTime.hashCode ^ endTime.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is StepResult &&
+            runtimeType == other.runtimeType &&
+            id == other.id &&
+            startTime == other.startTime &&
+            endTime == other.endTime;
   }
 }
 

@@ -41,6 +41,7 @@ class _StepViewState extends State<StepView> {
           color: Theme.of(context).colorScheme.background,
         ),
         child: SingleChildScrollView(
+          padding: SurveyConfiguration.of(context).padding,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
