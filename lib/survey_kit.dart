@@ -22,6 +22,8 @@ export 'src/model/content/lottie_content.dart';
 export 'src/model/content/markdown_content.dart';
 export 'src/model/content/text_content.dart';
 export 'src/model/content/video_content.dart';
+export 'src/model/predifined/completion_step.dart';
+export 'src/model/predifined/instruction_step.dart';
 //Results
 export 'src/model/result/step_result.dart';
 export 'src/model/result/survey_result.dart';

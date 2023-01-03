@@ -159,18 +159,9 @@ class _MyAppState extends State<MyApp> {
     final task = NavigableTask(
       id: 'task',
       steps: [
-        Step(
-          id: '1',
-          content: const [
-            TextContent(
-              text: 'Welcome to the\nQuickBird\nHealth Survey',
-              fontSize: 22,
-            ),
-            TextContent(
-              text: 'Get ready for a bunch of super random questions!',
-            )
-          ],
-          title: 'Title',
+        InstructionStep(
+          title: 'Welcome to the\nQuickBird\nHealth Survey',
+          text: 'Get ready for a bunch of super random questions!',
         ),
         Step(
           id: '2',
@@ -295,20 +286,9 @@ Supported audio formats
             hint: 'Feedback',
           ),
         ),
-        Step(
-          id: 'end_id',
-          content: const [
-            TextContent(
-              text: 'Done!',
-              fontSize: 22,
-            ),
-            TextContent(
-              text: 'Thanks for taking the survey, we will contact you soon!',
-            ),
-            LottieContent(
-              asset: 'assets/fancy_checkmark.json',
-            ),
-          ],
+        CompletionStep(
+          title: 'Done!',
+          text: 'Thanks for taking the survey, we will contact you soon!',
         ),
       ],
     );
