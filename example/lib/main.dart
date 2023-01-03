@@ -253,7 +253,7 @@ Supported audio formats
               fontSize: 18,
             ),
           ],
-          answer: const MultiSelectAnswer(
+          answer: const MultipleChoiceAnswerFormat(
             options: [
               Option(id: '1', value: 'Penicillin'),
               Option(id: '2', value: 'Latex'),
@@ -280,6 +280,23 @@ Supported audio formats
           ),
         ),
         Step(
+          id: '13',
+          content: const [
+            TextContent(
+              text: 'Feedback',
+              fontSize: 22,
+            ),
+            TextContent(
+              text: 'What did you like about the survey?',
+              fontSize: 18,
+            ),
+          ],
+          answer: const TextAnswerFormat(
+            hint: 'Feedback',
+          ),
+        ),
+        Step(
+          id: 'end_id',
           content: const [
             TextContent(
               text: 'Done!',
@@ -294,6 +311,22 @@ Supported audio formats
           ],
         ),
       ],
+    );
+
+    task.addNavigationRule(
+      forTriggerStepIdentifier: '12',
+      navigationRule: ConditionalNavigationRule(
+        resultToStepIdentifierMapper: (input) {
+          switch (input) {
+            case 'Yes':
+              return '13';
+            case 'No':
+              return task.steps.last.id;
+            default:
+              return null;
+          }
+        },
+      ),
     );
 
     return Future.value(task);

@@ -28,15 +28,15 @@ class DateAnswerView extends StatefulWidget {
 class _DateAnswerViewState extends State<DateAnswerView>
     with MeasureDateStateMixin {
   final DateFormat _dateFormat = DateFormat('E, MMM d');
-  late DateAnswerFormat? _dateAnswerFormat;
+  late DateAnswerFormat _dateAnswerFormat;
   DateTime? _result;
 
   @override
   void initState() {
     super.initState();
-    _dateAnswerFormat = widget.questionStep.answer as DateAnswerFormat?;
+    _dateAnswerFormat = widget.questionStep.answer! as DateAnswerFormat;
     _result = widget.result?.result ??
-        _dateAnswerFormat?.defaultDate ??
+        _dateAnswerFormat.defaultDate ??
         DateTime.now();
   }
 
@@ -101,8 +101,8 @@ class _DateAnswerViewState extends State<DateAnswerView>
           width: double.infinity,
           height: 300.0,
           child: CalendarDatePicker(
-            firstDate: _dateAnswerFormat?.minDate ?? DateTime.utc(1900),
-            lastDate: _dateAnswerFormat?.maxDate?.add(
+            firstDate: _dateAnswerFormat.minDate ?? DateTime.utc(1900),
+            lastDate: _dateAnswerFormat.maxDate?.add(
                   const Duration(hours: 1),
                 ) ??
                 DateTime.now().add(
@@ -123,15 +123,15 @@ class _DateAnswerViewState extends State<DateAnswerView>
       height: 400.0,
       child: CupertinoDatePicker(
         mode: CupertinoDatePickerMode.date,
-        minimumDate: _dateAnswerFormat?.minDate,
+        minimumDate: _dateAnswerFormat.minDate,
         //We have to add an hour to to met the assert maxDate > initDate
-        maximumDate: _dateAnswerFormat?.maxDate?.add(
+        maximumDate: _dateAnswerFormat.maxDate?.add(
               const Duration(hours: 1),
             ) ??
             DateTime.now().add(
               const Duration(hours: 1),
             ),
-        initialDateTime: _dateAnswerFormat?.defaultDate,
+        initialDateTime: _dateAnswerFormat.defaultDate,
         onDateTimeChanged: (DateTime value) {
           setState(() {
             _result = value;

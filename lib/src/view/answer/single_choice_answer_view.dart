@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/model/answer/option.dart';
-import 'package:survey_kit/src/model/answer/single_select_answer.dart';
+import 'package:survey_kit/src/model/answer/single_choice_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
@@ -24,7 +24,7 @@ class SingleChoiceAnswerView extends StatefulWidget {
 
 class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
     with MeasureDateStateMixin {
-  late final SingleSelectAnswer _singleChoiceAnswerFormat;
+  late final SingleChoiceAnswerFormat _singleChoiceAnswerFormat;
   Option? _selectedChoice;
 
   @override
@@ -34,7 +34,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
     if (answer == null) {
       throw Exception('SingleSelectAnswer is null');
     }
-    _singleChoiceAnswerFormat = answer as SingleSelectAnswer;
+    _singleChoiceAnswerFormat = answer as SingleChoiceAnswerFormat;
     _selectedChoice = widget.result?.result as Option? ??
         _singleChoiceAnswerFormat.defaultSelection;
   }

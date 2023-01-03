@@ -12,7 +12,7 @@ class AnswerView extends StatelessWidget {
     required this.step,
     required this.stepResult,
   });
-  final Answer? answer;
+  final AnswerFormat? answer;
 
   final Step step;
   final StepResult? stepResult;
@@ -33,7 +33,7 @@ class AnswerView extends StatelessWidget {
 
   Widget _buildAnswerView() {
     switch (answer.runtimeType) {
-      case MultiSelectAnswer:
+      case MultipleChoiceAnswerFormat:
         return MultipleChoiceAnswerView(
           questionStep: step,
           result: stepResult as StepResult<List<Option>>?,
@@ -71,9 +71,9 @@ class AnswerView extends StatelessWidget {
       case ScaleAnswerFormat:
         return ScaleAnswerView(
           questionStep: step,
-          result: stepResult as StepResult<int>?,
+          result: stepResult as StepResult<double>?,
         );
-      case SingleSelectAnswer:
+      case SingleChoiceAnswerFormat:
         return SingleChoiceAnswerView(
           questionStep: step,
           result: stepResult as StepResult<Option>?,

@@ -1,18 +1,18 @@
 library survery_kit;
 
 export 'src/controller/survey_controller.dart';
-export 'src/model/answer/answer.dart';
+export 'src/model/answer/answer_format.dart';
 export 'src/model/answer/boolean_answer_format.dart';
 export 'src/model/answer/date_answer_format.dart';
 export 'src/model/answer/double_answer_format.dart';
 export 'src/model/answer/image_answer_format.dart';
 export 'src/model/answer/integer_answer_format.dart';
-export 'src/model/answer/multi_select_answer.dart';
+export 'src/model/answer/multiple_choice_answer_format.dart';
 export 'src/model/answer/multiple_choice_auto_complete_answer_format.dart';
 export 'src/model/answer/multiple_double_answer_format.dart';
 export 'src/model/answer/option.dart';
 export 'src/model/answer/scale_answer_format.dart';
-export 'src/model/answer/single_select_answer.dart';
+export 'src/model/answer/single_choice_answer_format.dart';
 export 'src/model/answer/text_answer_format.dart';
 export 'src/model/answer/time_answer_format.dart';
 //Content

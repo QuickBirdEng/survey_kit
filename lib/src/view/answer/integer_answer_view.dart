@@ -49,7 +49,11 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView>
 
   void _checkValidation(String text) {
     setState(() {
-      _isValid = text.isNotEmpty && int.tryParse(text) != null;
+      final value = int.tryParse(text);
+      _isValid = text.isNotEmpty &&
+          value != null &&
+          value >= _integerAnswerFormat.min &&
+          value <= _integerAnswerFormat.max;
     });
   }
 

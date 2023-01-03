@@ -42,7 +42,7 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => StepResult<dynamic>(
+      resultFunction: () => StepResult<BooleanResult>(
         id: widget.questionStep.id,
         startTime: startDate,
         endTime: DateTime.now(),

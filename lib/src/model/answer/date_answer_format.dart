@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/model/answer/answer.dart';
+import 'package:survey_kit/src/model/answer/answer_format.dart';
 
 part 'date_answer_format.g.dart';
 
 @JsonSerializable()
-class DateAnswerFormat implements Answer {
+class DateAnswerFormat implements AnswerFormat {
   static const String type = 'date';
 
   /// Default date which will be preselected on datepicker opening

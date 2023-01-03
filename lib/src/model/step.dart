@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/model/answer/answer.dart';
+import 'package:survey_kit/src/model/answer/answer_format.dart';
 import 'package:survey_kit/src/model/content/content.dart';
 import 'package:survey_kit/src/model/module.dart';
 import 'package:uuid/uuid.dart';
@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 @JsonSerializable()
 class Step extends Module {
   final bool isMandatory;
-  final Answer? answer;
+  final AnswerFormat? answer;
 
   Step({
     String? id,
@@ -28,9 +28,11 @@ class Step extends Module {
         description: json['description'] as String?,
         imageUrl: json['imageUrl'] as String?,
         isMandatory: json['isMandatory'] as bool? ?? true,
-        answer: json['answer'] == null
+        answer: json['answerFormat'] == null
             ? null
-            : Answer.fromJson(json['answer'] as Map<String, dynamic>),
+            : AnswerFormat.fromJson(
+                json['answerFormat'] as Map<String, dynamic>,
+              ),
       );
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,

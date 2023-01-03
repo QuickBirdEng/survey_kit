@@ -1,4 +1,3 @@
-import 'package:survey_kit/src/model/answer/option.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/rules/conditional_navigation_rule.dart';
@@ -51,7 +50,7 @@ class NavigableTaskNavigator extends TaskNavigator {
     if (questionResult == null) {
       return nextInList(step);
     }
-    final result = questionResult.result as List<Option>?;
+    final dynamic result = questionResult.result as dynamic;
     if (result == null) {
       return nextInList(step);
     }

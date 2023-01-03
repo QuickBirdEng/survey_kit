@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'multi_select_answer.dart';
+part of 'single_choice_answer_format.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MultiSelectAnswer _$MultiSelectAnswerFromJson(Map<String, dynamic> json) =>
-    MultiSelectAnswer(
+SingleChoiceAnswerFormat _$SingleChoiceAnswerFormatFromJson(
+        Map<String, dynamic> json) =>
+    SingleChoiceAnswerFormat(
       options: (json['options'] as List<dynamic>)
           .map((e) => Option.fromJson(e as Map<String, dynamic>))
           .toList(),
-      otherField: json['otherField'] as bool? ?? false,
       defaultSelection: json['defaultSelection'] == null
           ? null
           : Option.fromJson(json['defaultSelection'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$MultiSelectAnswerToJson(MultiSelectAnswer instance) =>
+Map<String, dynamic> _$SingleChoiceAnswerFormatToJson(
+        SingleChoiceAnswerFormat instance) =>
     <String, dynamic>{
       'options': instance.options,
       'defaultSelection': instance.defaultSelection,
-      'otherField': instance.otherField,
     };

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/model/answer/multi_select_answer.dart';
+import 'package:survey_kit/src/model/answer/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/model/answer/option.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
@@ -25,7 +25,7 @@ class MultipleChoiceAnswerView extends StatefulWidget {
 
 class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
     with MeasureDateStateMixin {
-  late final MultiSelectAnswer _multipleChoiceAnswer;
+  late final MultipleChoiceAnswerFormat _multipleChoiceAnswer;
 
   List<Option> _selectedChoices = [];
 
@@ -36,7 +36,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
     if (answer == null) {
       throw Exception('MultiSelectAnswer is null');
     }
-    _multipleChoiceAnswer = answer as MultiSelectAnswer;
+    _multipleChoiceAnswer = answer as MultipleChoiceAnswerFormat;
     _selectedChoices = (widget.result?.result ??
             _multipleChoiceAnswer.defaultSelection) as List<Option>? ??
         [];
