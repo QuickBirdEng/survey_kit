@@ -8,11 +8,11 @@ part 'single_choice_answer_format.g.dart';
 class SingleChoiceAnswerFormat implements AnswerFormat {
   static const String type = 'single';
 
-  final List<TextChoice> options;
+  final List<TextChoice> textChoices;
   final TextChoice? defaultSelection;
 
   const SingleChoiceAnswerFormat({
-    required this.options,
+    required this.textChoices,
     this.defaultSelection,
   });
 

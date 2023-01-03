@@ -65,7 +65,8 @@ class _StepViewState extends State<StepView> {
                           )
                       : null,
                   child: Text(
-                    context
+                    widget.step.buttonText ??
+                        context
                             .read<Map<String, String>?>()?['next']
                             ?.toUpperCase() ??
                         'Next',

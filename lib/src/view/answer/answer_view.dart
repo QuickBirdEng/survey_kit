@@ -83,6 +83,11 @@ class AnswerView extends StatelessWidget {
           questionStep: step,
           result: stepResult as StepResult<String>?,
         );
+      case TimeAnswerFormat:
+        return TimeAnswerView(
+          questionStep: step,
+          result: stepResult as StepResult<TimeOfDay>?,
+        );
       default:
         throw Exception('Answer type not supported: ${answer.runtimeType}');
     }

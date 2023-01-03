@@ -4,12 +4,15 @@ import 'package:survey_kit/survey_kit.dart';
 @Deprecated('Create Step from Step.dart')
 // ignore: non_constant_identifier_names
 Step QuestionStep({
+  String? id,
   required String title,
-  required String text,
+  String text = '',
   required AnswerFormat answerFormat,
   bool isOptional = true,
+  String? buttonText,
 }) =>
     Step(
+      id: id,
       content: [
         TextContent(
           text: title,
@@ -21,4 +24,5 @@ Step QuestionStep({
       ],
       answerFormat: answerFormat,
       isMandatory: !isOptional,
+      buttonText: buttonText,
     );

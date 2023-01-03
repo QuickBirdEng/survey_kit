@@ -5,10 +5,13 @@ import 'package:survey_kit/src/model/step.dart';
 @Deprecated('Create Step from Step.dart')
 // ignore: non_constant_identifier_names
 Step InstructionStep({
+  String? id,
   required String title,
   required String text,
+  String? buttonText,
 }) =>
     Step(
+      id: id,
       content: [
         TextContent(
           text: title,
@@ -18,4 +21,5 @@ Step InstructionStep({
           text: text,
         ),
       ],
+      buttonText: buttonText,
     );

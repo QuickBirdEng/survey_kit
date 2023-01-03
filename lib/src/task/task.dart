@@ -22,14 +22,7 @@ abstract class Task {
     String? id,
     this.steps = const [],
     this.initalStep,
-  }) {
-    if (id == null) {
-      id = const Uuid().v4();
-      return;
-    }
-    // ignore: prefer_initializing_formals
-    this.id = id;
-  }
+  }) : id = id ?? const Uuid().v4();
 
   /// Creates a task from a Map. The task needs to have a type definition of
   /// either 'ordered' - [OrderedTask] or 'navigable' - [NavigableTask].

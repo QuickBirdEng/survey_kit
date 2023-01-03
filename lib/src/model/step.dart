@@ -8,6 +8,7 @@ import 'package:uuid/uuid.dart';
 class Step extends Module {
   final bool isMandatory;
   final AnswerFormat? answerFormat;
+  final String? buttonText;
 
   Step({
     String? id,
@@ -17,6 +18,7 @@ class Step extends Module {
     super.imageUrl,
     this.isMandatory = true,
     this.answerFormat,
+    this.buttonText,
   }) : super(id: id ?? const Uuid().v4());
 
   factory Step.fromJson(Map<String, dynamic> json) => Step(
@@ -33,6 +35,7 @@ class Step extends Module {
             : AnswerFormat.fromJson(
                 json['answerFormat'] as Map<String, dynamic>,
               ),
+        buttonText: json['buttonText'] as String?,
       );
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
@@ -42,5 +45,6 @@ class Step extends Module {
         'imageUrl': imageUrl,
         'isMandatory': isMandatory,
         'answer': answerFormat,
+        'buttonText': buttonText,
       };
 }
