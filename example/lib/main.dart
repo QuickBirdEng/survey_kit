@@ -159,6 +159,8 @@ class _MyAppState extends State<MyApp> {
     final task = NavigableTask(
       id: 'task',
       steps: [
+        // Migrate and just use Step
+        // ignore: deprecated_member_use
         InstructionStep(
           title: 'Welcome to the\nQuickBird\nHealth Survey',
           text: 'Get ready for a bunch of super random questions!',
@@ -270,22 +272,18 @@ Supported audio formats
             negativeAnswer: 'No',
           ),
         ),
-        Step(
-          id: '13',
-          content: const [
-            TextContent(
-              text: 'Feedback',
-              fontSize: 22,
-            ),
-            TextContent(
-              text: 'What did you like about the survey?',
-              fontSize: 18,
-            ),
-          ],
+        // Migrate and just use Step
+        // ignore: deprecated_member_use
+        QuestionStep(
+          title: 'Feedback',
+          text: 'What did you like about the survey?',
           answerFormat: const TextAnswerFormat(
             hint: 'Feedback',
           ),
+          isOptional: true,
         ),
+        // Migrate and just use Step
+        // ignore: deprecated_member_use
         CompletionStep(
           title: 'Done!',
           text: 'Thanks for taking the survey, we will contact you soon!',

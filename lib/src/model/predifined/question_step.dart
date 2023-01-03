@@ -1,12 +1,13 @@
-import 'package:survey_kit/src/model/content/text_content.dart';
-import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/survey_kit.dart';
 
-/// It is uppercase to support previous implementions of the InstructionStep
+/// It is uppercase to support previous implementions of the QuestionStep
 @Deprecated('Create Step from Step.dart')
 // ignore: non_constant_identifier_names
-Step InstructionStep({
+Step QuestionStep({
   required String title,
   required String text,
+  required AnswerFormat answerFormat,
+  bool isOptional = true,
 }) =>
     Step(
       content: [
@@ -18,4 +19,6 @@ Step InstructionStep({
           text: text,
         ),
       ],
+      answerFormat: answerFormat,
+      isMandatory: !isOptional,
     );
