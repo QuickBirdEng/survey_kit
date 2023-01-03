@@ -29,7 +29,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
   @override
   void initState() {
     super.initState();
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('TimeAnswerFormat is null');
     }

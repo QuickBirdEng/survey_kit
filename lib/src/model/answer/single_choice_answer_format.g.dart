@@ -10,11 +10,12 @@ SingleChoiceAnswerFormat _$SingleChoiceAnswerFormatFromJson(
         Map<String, dynamic> json) =>
     SingleChoiceAnswerFormat(
       options: (json['options'] as List<dynamic>)
-          .map((e) => Option.fromJson(e as Map<String, dynamic>))
+          .map((e) => TextChoice.fromJson(e as Map<String, dynamic>))
           .toList(),
       defaultSelection: json['defaultSelection'] == null
           ? null
-          : Option.fromJson(json['defaultSelection'] as Map<String, dynamic>),
+          : TextChoice.fromJson(
+              json['defaultSelection'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SingleChoiceAnswerFormatToJson(

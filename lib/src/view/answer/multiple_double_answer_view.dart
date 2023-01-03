@@ -33,7 +33,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView>
   @override
   void initState() {
     super.initState();
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('MultipleDoubleAnswerFormat is null');
     }

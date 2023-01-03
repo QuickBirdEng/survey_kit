@@ -28,7 +28,7 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
   @override
   void initState() {
     super.initState();
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('ScaleAnswerFormat is null');
     }

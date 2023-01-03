@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/answer/answer_format.dart';
-import 'package:survey_kit/src/model/answer/option.dart';
+import 'package:survey_kit/src/model/answer/text_choice.dart';
 
 part 'multiple_choice_answer_format.g.dart';
 
@@ -8,13 +8,13 @@ part 'multiple_choice_answer_format.g.dart';
 class MultipleChoiceAnswerFormat implements AnswerFormat {
   static const String type = 'multi';
 
-  final List<Option> options;
-  final Option? defaultSelection;
+  final List<TextChoice> textChoices;
+  final TextChoice? defaultSelection;
   @JsonKey(defaultValue: false)
   final bool otherField;
 
   const MultipleChoiceAnswerFormat({
-    required this.options,
+    required this.textChoices,
     this.otherField = false,
     this.defaultSelection,
   });

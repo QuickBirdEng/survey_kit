@@ -33,7 +33,7 @@ class _TextAnswerViewState extends State<TextAnswerView>
     super.initState();
     _controller = TextEditingController();
     _controller.text = widget.result?.result as String? ?? '';
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('TextAnswerFormat is null');
     }

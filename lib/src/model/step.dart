@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 @JsonSerializable()
 class Step extends Module {
   final bool isMandatory;
-  final AnswerFormat? answer;
+  final AnswerFormat? answerFormat;
 
   Step({
     String? id,
@@ -16,7 +16,7 @@ class Step extends Module {
     super.description,
     super.imageUrl,
     this.isMandatory = true,
-    this.answer,
+    this.answerFormat,
   }) : super(id: id ?? const Uuid().v4());
 
   factory Step.fromJson(Map<String, dynamic> json) => Step(
@@ -28,7 +28,7 @@ class Step extends Module {
         description: json['description'] as String?,
         imageUrl: json['imageUrl'] as String?,
         isMandatory: json['isMandatory'] as bool? ?? true,
-        answer: json['answerFormat'] == null
+        answerFormat: json['answerFormat'] == null
             ? null
             : AnswerFormat.fromJson(
                 json['answerFormat'] as Map<String, dynamic>,
@@ -41,6 +41,6 @@ class Step extends Module {
         'description': description,
         'imageUrl': imageUrl,
         'isMandatory': isMandatory,
-        'answer': answer,
+        'answer': answerFormat,
       };
 }

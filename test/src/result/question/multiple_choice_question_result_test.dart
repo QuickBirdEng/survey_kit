@@ -7,9 +7,9 @@ void main() {
     startTime: DateTime(2022, 8, 12, 16, 4),
     endTime: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'multiChoice1',
-    result: const [
-      Option(id: 'doubleVal1', value: '123.45'),
-      Option(id: 'doubleVal2', value: '234.56'),
+    result: [
+      TextChoice(id: 'doubleVal1', value: '123.45', text: '123.45'),
+      TextChoice(id: 'doubleVal2', value: '234.56', text: '234.56'),
     ],
   );
 
@@ -18,7 +18,8 @@ void main() {
       'should work with valid example',
       () async {
         final encodedResult = tResult.toJson();
-        final decodedResult = StepResult<List<Option>>.fromJson(encodedResult);
+        final decodedResult =
+            StepResult<List<TextChoice>>.fromJson(encodedResult);
         expect(tResult, decodedResult);
       },
     );

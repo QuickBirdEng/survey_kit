@@ -31,7 +31,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView>
   @override
   void initState() {
     super.initState();
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('ImageAnswerFormat is null');
     }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/model/answer/option.dart';
 import 'package:survey_kit/src/model/answer/single_choice_answer_format.dart';
+import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
@@ -25,17 +25,17 @@ class SingleChoiceAnswerView extends StatefulWidget {
 class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
     with MeasureDateStateMixin {
   late final SingleChoiceAnswerFormat _singleChoiceAnswerFormat;
-  Option? _selectedChoice;
+  TextChoice? _selectedChoice;
 
   @override
   void initState() {
     super.initState();
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('SingleSelectAnswer is null');
     }
     _singleChoiceAnswerFormat = answer as SingleChoiceAnswerFormat;
-    _selectedChoice = widget.result?.result as Option? ??
+    _selectedChoice = widget.result?.result as TextChoice? ??
         _singleChoiceAnswerFormat.defaultSelection;
   }
 
@@ -43,7 +43,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => StepResult<Option>(
+      resultFunction: () => StepResult<TextChoice>(
         id: widget.questionStep.id,
         startTime: startDate,
         endTime: DateTime.now(),
@@ -67,7 +67,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
                   color: Colors.grey,
                 ),
                 ..._singleChoiceAnswerFormat.options.map(
-                  (Option tc) {
+                  (TextChoice tc) {
                     return SelectionListTile(
                       text: tc.value,
                       onTap: () {

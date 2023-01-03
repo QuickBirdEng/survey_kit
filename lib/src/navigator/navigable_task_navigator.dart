@@ -50,7 +50,7 @@ class NavigableTaskNavigator extends TaskNavigator {
     if (questionResult == null) {
       return nextInList(step);
     }
-    final dynamic result = questionResult.result as dynamic;
+    final dynamic result = questionResult.result;
     if (result == null) {
       return nextInList(step);
     }

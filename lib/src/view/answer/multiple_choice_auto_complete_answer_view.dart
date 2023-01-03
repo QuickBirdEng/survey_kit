@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:flutter/scheduler.dart';
 import 'package:survey_kit/src/model/answer/multiple_choice_auto_complete_answer_format.dart';
-import 'package:survey_kit/src/model/answer/option.dart';
+import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
@@ -29,17 +29,17 @@ class _MultipleChoiceAutoCompleteAnswerViewState
     with MeasureDateStateMixin {
   late final MultipleChoiceAutoCompleteAnswerFormat _multipleChoiceAnswer;
 
-  List<Option> _selectedChoices = [];
+  List<TextChoice> _selectedChoices = [];
 
   @override
   void initState() {
     super.initState();
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('MultipleChoiceAutoCompleteAnswerFormat is null');
     }
     _multipleChoiceAnswer = answer as MultipleChoiceAutoCompleteAnswerFormat;
-    _selectedChoices = widget.result?.result as List<Option>? ??
+    _selectedChoices = widget.result?.result as List<TextChoice>? ??
         _multipleChoiceAnswer.defaultSelection;
   }
 
@@ -48,7 +48,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => StepResult<List<Option>>(
+      resultFunction: () => StepResult<List<TextChoice>>(
         id: widget.questionStep.id,
         startTime: startDate,
         endTime: DateTime.now(),
@@ -82,7 +82,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                 ),
                 ..._multipleChoiceAnswer.textChoices
                     .map(
-                      (Option tc) => SelectionListTile(
+                      (TextChoice tc) => SelectionListTile(
                         text: tc.value,
                         onTap: () => onChoiceSelected(tc),
                         isSelected: _selectedChoices.contains(tc),
@@ -95,7 +95,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                           !_multipleChoiceAnswer.textChoices.contains(element),
                     )
                     .map(
-                      (Option tc) => SelectionListTile(
+                      (TextChoice tc) => SelectionListTile(
                         text: tc.value,
                         onTap: () => onChoiceSelected(tc),
                         isSelected: _selectedChoices.contains(tc),
@@ -125,7 +125,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                               _selectedChoices.remove(otherTextChoice);
                             } else if (v.isNotEmpty) {
                               final updatedTextChoice =
-                                  Option(id: 'Other', value: v);
+                                  TextChoice(id: 'Other', value: v, text: v);
                               if (otherTextChoice == null) {
                                 _selectedChoices.add(updatedTextChoice);
                               } else if (currentIndex != null) {
@@ -156,7 +156,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
     );
   }
 
-  void onChoiceSelected(Option tc) {
+  void onChoiceSelected(TextChoice tc) {
     setState(
       () {
         if (_selectedChoices.contains(tc)) {
@@ -177,13 +177,13 @@ class _AutoComplete extends StatelessWidget {
     required this.selectedChoices,
   }) : super(key: key);
 
-  final List<Option> suggestions;
-  final void Function(Option) onSelected;
-  final List<Option> selectedChoices;
+  final List<TextChoice> suggestions;
+  final void Function(TextChoice) onSelected;
+  final List<TextChoice> selectedChoices;
 
   @override
   Widget build(BuildContext context) {
-    return Autocomplete<Option>(
+    return Autocomplete<TextChoice>(
       fieldViewBuilder:
           (context, textEditingController, focusNode, onFieldSubmitted) =>
               TextField(
@@ -213,7 +213,7 @@ class _AutoComplete extends StatelessWidget {
       displayStringForOption: (tc) => tc.value,
       optionsBuilder: (textEditingValue) {
         if (textEditingValue.text == '') {
-          return const Iterable<Option>.empty();
+          return const Iterable<TextChoice>.empty();
         }
 
         return suggestions.where(
@@ -235,9 +235,9 @@ class _OptionsViewBuilder extends StatelessWidget {
     required this.selectedChoices,
   }) : super(key: key);
 
-  final Iterable<Option> options;
-  final void Function(Option) onSelected;
-  final List<Option> selectedChoices;
+  final Iterable<TextChoice> options;
+  final void Function(TextChoice) onSelected;
+  final List<TextChoice> selectedChoices;
   @override
   Widget build(BuildContext context) => Align(
         alignment: Alignment.topLeft,

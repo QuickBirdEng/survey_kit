@@ -34,7 +34,7 @@ class _DateAnswerViewState extends State<DateAnswerView>
   @override
   void initState() {
     super.initState();
-    _dateAnswerFormat = widget.questionStep.answer! as DateAnswerFormat;
+    _dateAnswerFormat = widget.questionStep.answerFormat! as DateAnswerFormat;
     _result = widget.result?.result ??
         _dateAnswerFormat.defaultDate ??
         DateTime.now();

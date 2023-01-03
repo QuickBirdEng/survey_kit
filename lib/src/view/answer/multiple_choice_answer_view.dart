@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/model/answer/multiple_choice_answer_format.dart';
-import 'package:survey_kit/src/model/answer/option.dart';
+import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
@@ -11,7 +11,7 @@ import 'package:survey_kit/src/view/step_view.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
   final Step questionStep;
-  final StepResult<List<Option>>? result;
+  final StepResult<List<TextChoice>>? result;
 
   const MultipleChoiceAnswerView({
     Key? key,
@@ -27,18 +27,18 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
     with MeasureDateStateMixin {
   late final MultipleChoiceAnswerFormat _multipleChoiceAnswer;
 
-  List<Option> _selectedChoices = [];
+  List<TextChoice> _selectedChoices = [];
 
   @override
   void initState() {
     super.initState();
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('MultiSelectAnswer is null');
     }
     _multipleChoiceAnswer = answer as MultipleChoiceAnswerFormat;
     _selectedChoices = (widget.result?.result ??
-            _multipleChoiceAnswer.defaultSelection) as List<Option>? ??
+            _multipleChoiceAnswer.defaultSelection) as List<TextChoice>? ??
         [];
   }
 
@@ -46,7 +46,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => StepResult<List<Option>>(
+      resultFunction: () => StepResult<List<TextChoice>>(
         id: widget.questionStep.id,
         startTime: startDate,
         endTime: DateTime.now(),
@@ -67,9 +67,9 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                 const Divider(
                   color: Colors.grey,
                 ),
-                ..._multipleChoiceAnswer.options
+                ..._multipleChoiceAnswer.textChoices
                     .map(
-                      (Option tc) => SelectionListTile(
+                      (TextChoice tc) => SelectionListTile(
                         text: tc.value,
                         onTap: () {
                           setState(
@@ -109,7 +109,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                               _selectedChoices.remove(otherTextChoice);
                             } else if (v.isNotEmpty) {
                               final updatedTextChoice =
-                                  Option(id: 'Other', value: v);
+                                  TextChoice(id: 'Other', value: v, text: v);
                               if (otherTextChoice == null) {
                                 _selectedChoices.add(updatedTextChoice);
                               } else if (currentIndex != null) {

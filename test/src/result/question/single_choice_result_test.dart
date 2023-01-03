@@ -7,7 +7,7 @@ void main() {
     startTime: DateTime(2022, 8, 12, 16, 4),
     endTime: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'singleChoiceValue1',
-    result: const Option(id: 'choice1', value: 'option2'),
+    result: TextChoice(id: 'choice1', value: 'option2', text: 'option2'),
   );
 
   group('serialisation', () {
@@ -15,7 +15,7 @@ void main() {
       'should work with valid example',
       () async {
         final encodedResult = tResult.toJson();
-        final decodedResult = StepResult<Option>.fromJson(encodedResult);
+        final decodedResult = StepResult<TextChoice>.fromJson(encodedResult);
         expect(tResult, decodedResult);
       },
     );

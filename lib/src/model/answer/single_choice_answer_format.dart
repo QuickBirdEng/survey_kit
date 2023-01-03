@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/answer/answer_format.dart';
-import 'package:survey_kit/src/model/answer/option.dart';
+import 'package:survey_kit/src/model/answer/text_choice.dart';
 
 part 'single_choice_answer_format.g.dart';
 
@@ -8,8 +8,8 @@ part 'single_choice_answer_format.g.dart';
 class SingleChoiceAnswerFormat implements AnswerFormat {
   static const String type = 'single';
 
-  final List<Option> options;
-  final Option? defaultSelection;
+  final List<TextChoice> options;
+  final TextChoice? defaultSelection;
 
   const SingleChoiceAnswerFormat({
     required this.options,

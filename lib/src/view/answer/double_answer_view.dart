@@ -30,7 +30,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView>
   @override
   void initState() {
     super.initState();
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('DoubleAnswerFormat is null');
     }

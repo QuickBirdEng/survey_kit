@@ -11,14 +11,14 @@ MultipleChoiceAutoCompleteAnswerFormat
             Map<String, dynamic> json) =>
         MultipleChoiceAutoCompleteAnswerFormat(
           textChoices: (json['textChoices'] as List<dynamic>)
-              .map((e) => Option.fromJson(e as Map<String, dynamic>))
+              .map((e) => TextChoice.fromJson(e as Map<String, dynamic>))
               .toList(),
           defaultSelection: (json['defaultSelection'] as List<dynamic>?)
-                  ?.map((e) => Option.fromJson(e as Map<String, dynamic>))
+                  ?.map((e) => TextChoice.fromJson(e as Map<String, dynamic>))
                   .toList() ??
               [],
           suggestions: (json['suggestions'] as List<dynamic>?)
-                  ?.map((e) => Option.fromJson(e as Map<String, dynamic>))
+                  ?.map((e) => TextChoice.fromJson(e as Map<String, dynamic>))
                   .toList() ??
               [],
           otherField: json['otherField'] as bool? ?? false,

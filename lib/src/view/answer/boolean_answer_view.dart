@@ -29,7 +29,7 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
   @override
   void initState() {
     super.initState();
-    final answer = widget.questionStep.answer;
+    final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('BooleanAnswerFormat is null');
     }

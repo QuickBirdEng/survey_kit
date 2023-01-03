@@ -189,7 +189,7 @@ class _MyAppState extends State<MyApp> {
               fontSize: 20,
             ),
           ],
-          answer: const BooleanAnswerFormat(
+          answerFormat: const BooleanAnswerFormat(
             positiveAnswer: 'Yes',
             negativeAnswer: 'No',
           ),
@@ -224,7 +224,7 @@ Supported audio formats
               fontSize: 18,
             ),
           ],
-          answer: const IntegerAnswerFormat(
+          answerFormat: const IntegerAnswerFormat(
             hint: 'Age',
           ),
         ),
@@ -235,7 +235,7 @@ Supported audio formats
               fontSize: 18,
             ),
           ],
-          answer: const ScaleAnswerFormat(
+          answerFormat: const ScaleAnswerFormat(
             maximumValue: 5,
             minimumValue: 1,
             defaultValue: 3,
@@ -253,12 +253,12 @@ Supported audio formats
               fontSize: 18,
             ),
           ],
-          answer: const MultipleChoiceAnswerFormat(
-            options: [
-              Option(id: '1', value: 'Penicillin'),
-              Option(id: '2', value: 'Latex'),
-              Option(id: '3', value: 'Pet'),
-              Option(id: '4', value: 'Pollen'),
+          answerFormat: MultipleChoiceAnswerFormat(
+            textChoices: [
+              TextChoice(id: '1', value: 'Penicillin', text: 'Penicillin'),
+              TextChoice(id: '2', value: 'Latex', text: 'Latex'),
+              TextChoice(id: '3', value: 'Pet', text: 'Pet'),
+              TextChoice(id: '4', value: 'Pollen', text: 'Pollen'),
             ],
           ),
         ),
@@ -274,7 +274,7 @@ Supported audio formats
               fontSize: 18,
             ),
           ],
-          answer: const BooleanAnswerFormat(
+          answerFormat: const BooleanAnswerFormat(
             positiveAnswer: 'Yes',
             negativeAnswer: 'No',
           ),
@@ -291,7 +291,7 @@ Supported audio formats
               fontSize: 18,
             ),
           ],
-          answer: const TextAnswerFormat(
+          answerFormat: const TextAnswerFormat(
             hint: 'Feedback',
           ),
         ),

@@ -36,7 +36,7 @@ class AnswerView extends StatelessWidget {
       case MultipleChoiceAnswerFormat:
         return MultipleChoiceAnswerView(
           questionStep: step,
-          result: stepResult as StepResult<List<Option>>?,
+          result: stepResult as StepResult<List<TextChoice>>?,
         );
       case IntegerAnswerFormat:
         return IntegerAnswerView(
@@ -66,7 +66,7 @@ class AnswerView extends StatelessWidget {
       case MultipleChoiceAutoCompleteAnswerFormat:
         return MultipleChoiceAutoCompleteAnswerView(
           questionStep: step,
-          result: stepResult as StepResult<List<Option>>?,
+          result: stepResult as StepResult<List<TextChoice>>?,
         );
       case ScaleAnswerFormat:
         return ScaleAnswerView(
@@ -76,7 +76,7 @@ class AnswerView extends StatelessWidget {
       case SingleChoiceAnswerFormat:
         return SingleChoiceAnswerView(
           questionStep: step,
-          result: stepResult as StepResult<Option>?,
+          result: stepResult,
         );
       case TextAnswerFormat:
         return TextAnswerView(
