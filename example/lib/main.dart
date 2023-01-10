@@ -157,9 +157,8 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future<Task> newSampleTask() {
+  Future<Task> getSampleTask() {
     final task = NavigableTask(
-      id: 'task',
       steps: [
         // Migrate and just use Step
         InstructionStep(
@@ -167,7 +166,6 @@ class _MyAppState extends State<MyApp> {
           text: 'Get ready for a bunch of super random questions!',
         ),
         Step(
-          id: '2',
           content: const [
             TextContent(
               text: 'Introduction to SurveyKit',
@@ -188,7 +186,6 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         Step(
-          id: '3',
           content: const [
             TextContent(
               text: 'This is a sample for the Audioplayer',
@@ -271,6 +268,45 @@ Supported audio formats
             negativeAnswer: 'No',
           ),
         ),
+
+        QuestionStep(
+          id: '13',
+          title: 'Medication?',
+          text: 'Are you using any medication',
+          answerFormat: const BooleanAnswerFormat(
+            positiveAnswer: 'Yes',
+            negativeAnswer: 'No',
+            result: BooleanResult.positive,
+          ),
+        ),
+        Step(
+          content: const [
+            TextContent(
+              text: 'Listen carefully!',
+              fontSize: 28,
+            ),
+            AudioContent(
+              url: 'https://www2.cs.uic.edu/~i101/SoundFiles/CantinaBand3.wav',
+            ),
+          ],
+        ),
+        QuestionStep(
+          title: 'When did you wake up?',
+          answerFormat: const TimeAnswerFormat(
+            defaultValue: TimeOfDay(
+              hour: 12,
+              minute: 0,
+            ),
+          ),
+        ),
+        QuestionStep(
+          title: 'When was your last holiday?',
+          answerFormat: DateAnswerFormat(
+            minDate: DateTime.utc(1970),
+            defaultDate: DateTime.now(),
+            maxDate: DateTime.now(),
+          ),
+        ),
         // Migrate and just use Step
         QuestionStep(
           title: 'Feedback',
@@ -304,119 +340,6 @@ Supported audio formats
       ),
     );
 
-    return Future.value(task);
-  }
-
-  Future<Task> getSampleTask() {
-    final task = NavigableTask(
-      steps: [
-        InstructionStep(
-          title: 'Welcome to the\nQuickBird Studios\nHealth Survey',
-          text: 'Get ready for a bunch of super random questions!',
-          buttonText: "Let's go!",
-        ),
-        QuestionStep(
-          title: 'How old are you?',
-          answerFormat: const IntegerAnswerFormat(
-            defaultValue: 25,
-            hint: 'Please enter your age',
-          ),
-          isOptional: true,
-        ),
-        QuestionStep(
-          title: 'Medication?',
-          text: 'Are you using any medication',
-          answerFormat: const BooleanAnswerFormat(
-            positiveAnswer: 'Yes',
-            negativeAnswer: 'No',
-            result: BooleanResult.positive,
-          ),
-        ),
-        QuestionStep(
-          title: 'Tell us about you',
-          text:
-              'Tell us about yourself and why you want to improve your health.',
-          answerFormat: const TextAnswerFormat(
-            maxLines: 5,
-            validationRegEx: r'^(?!s*$).+',
-          ),
-        ),
-        QuestionStep(
-          title: 'Select your body type',
-          answerFormat: const ScaleAnswerFormat(
-            step: 1,
-            minimumValue: 1,
-            maximumValue: 5,
-            defaultValue: 3,
-            minimumValueDescription: '1',
-            maximumValueDescription: '5',
-          ),
-        ),
-        QuestionStep(
-          title: 'Known allergies',
-          text: 'Do you have any allergies that we should be aware of?',
-          isOptional: false,
-          answerFormat: MultipleChoiceAnswerFormat(
-            textChoices: [
-              TextChoice(text: 'Penicillin', value: 'Penicillin'),
-              TextChoice(text: 'Latex', value: 'Latex'),
-              TextChoice(text: 'Pet', value: 'Pet'),
-              TextChoice(text: 'Pollen', value: 'Pollen'),
-            ],
-          ),
-        ),
-        QuestionStep(
-          title: 'Done?',
-          text: 'We are done, do you mind to tell us more about yourself?',
-          isOptional: true,
-          answerFormat: SingleChoiceAnswerFormat(
-            textChoices: [
-              TextChoice(text: 'Yes', value: 'Yes'),
-              TextChoice(text: 'No', value: 'No'),
-            ],
-            defaultSelection: TextChoice(text: 'No', value: 'No'),
-          ),
-        ),
-        QuestionStep(
-          title: 'When did you wake up?',
-          answerFormat: const TimeAnswerFormat(
-            defaultValue: TimeOfDay(
-              hour: 12,
-              minute: 0,
-            ),
-          ),
-        ),
-        QuestionStep(
-          title: 'When was your last holiday?',
-          answerFormat: DateAnswerFormat(
-            minDate: DateTime.utc(1970),
-            defaultDate: DateTime.now(),
-            maxDate: DateTime.now(),
-          ),
-        ),
-        CompletionStep(
-          id: '321',
-          text: 'Thanks for taking the survey, we will contact you soon!',
-          title: 'Done!',
-          buttonText: 'Submit survey',
-        ),
-      ],
-    );
-    task.addNavigationRule(
-      forTriggerStepIdentifier: task.steps[6].id,
-      navigationRule: ConditionalNavigationRule(
-        resultToStepIdentifierMapper: (input) {
-          switch (input) {
-            case 'Yes':
-              return task.steps[0].id;
-            case 'No':
-              return task.steps[7].id;
-            default:
-              return null;
-          }
-        },
-      ),
-    );
     return Future.value(task);
   }
 
