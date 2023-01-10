@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/util/extension.dart';
-import 'package:survey_kit/src/view/content/audio_widget.dart';
-import 'package:survey_kit/src/view/content/lottie_widget.dart';
-import 'package:survey_kit/src/view/content/markdown_widget.dart';
-import 'package:survey_kit/src/view/content/text_widget.dart';
-import 'package:survey_kit/src/view/content/video_widget.dart';
+import 'package:survey_kit/src/view/widget/content/audio_widget.dart';
+import 'package:survey_kit/src/view/widget/content/lottie_widget.dart';
+import 'package:survey_kit/src/view/widget/content/markdown_widget.dart';
+import 'package:survey_kit/src/view/widget/content/text_widget.dart';
+import 'package:survey_kit/src/view/widget/content/video_widget.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class ContentWidget extends StatefulWidget {

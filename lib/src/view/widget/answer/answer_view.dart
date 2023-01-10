@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/view/answer/boolean_answer_view.dart';
-import 'package:survey_kit/src/view/answer/multiple_choice_auto_complete_answer_view.dart';
-import 'package:survey_kit/src/view/content/content_widget.dart';
+import 'package:survey_kit/src/model/result/time_result.dart';
 import 'package:survey_kit/src/view/step_view.dart';
+import 'package:survey_kit/src/view/widget/answer/boolean_answer_view.dart';
+import 'package:survey_kit/src/view/widget/answer/multiple_choice_auto_complete_answer_view.dart';
+import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class AnswerView extends StatelessWidget {
@@ -86,7 +87,7 @@ class AnswerView extends StatelessWidget {
       case TimeAnswerFormat:
         return TimeAnswerView(
           questionStep: step,
-          result: stepResult as StepResult<TimeOfDay>?,
+          result: stepResult as StepResult<TimeResult>?,
         );
       default:
         throw Exception('Answer type not supported: ${answer.runtimeType}');

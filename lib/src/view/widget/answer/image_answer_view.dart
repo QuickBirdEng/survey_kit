@@ -4,8 +4,8 @@ import 'package:survey_kit/src/model/answer/image_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/content/content_widget.dart';
 import 'package:survey_kit/src/view/step_view.dart';
+import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 
 class ImageAnswerView extends StatefulWidget {
   final Step questionStep;

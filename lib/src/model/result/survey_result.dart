@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 
 part 'survey_result.g.dart';
 
+@immutable
 @JsonSerializable(explicitToJson: true)
 class SurveyResult {
   final String id;
@@ -23,6 +25,25 @@ class SurveyResult {
       _$SurveyResultFromJson(json);
 
   Map<String, dynamic> toJson() => _$SurveyResultToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SurveyResult &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          startTime == other.startTime &&
+          endTime == other.endTime &&
+          finishReason == other.finishReason &&
+          results == other.results;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      startTime.hashCode ^
+      endTime.hashCode ^
+      finishReason.hashCode ^
+      results.hashCode;
 }
 
 enum FinishReason { saved, discarded, completed, failed }

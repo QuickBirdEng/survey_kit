@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:survey_kit/src/model/result/time_result.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
@@ -16,7 +17,7 @@ void main() {
       'should work with valid example',
       () async {
         final encodedResult = tResult.toJson();
-        final decodedResult = StepResult<TimeOfDay>.fromJson(encodedResult);
+        final decodedResult = StepResult<TimeResult>.fromJson(encodedResult);
         expect(tResult, decodedResult);
       },
     );

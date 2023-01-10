@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'video_result.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable()
 class VideoResult {
   final Duration leftVideoAt;
   final DateTime stayedInVideo;

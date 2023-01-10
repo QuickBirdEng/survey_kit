@@ -6,12 +6,12 @@ import 'package:survey_kit/src/model/result/survey_result.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
 import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
+import 'package:survey_kit/src/presenter/survey_presenter_inherited.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
-import 'package:survey_kit/src/survey_presenter_inherited.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
-import 'package:survey_kit/src/view/answer/answer_view.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_view.dart';
 import 'package:survey_kit/src/widget/survey_app_bar.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 

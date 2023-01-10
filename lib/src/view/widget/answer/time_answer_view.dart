@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/model/answer/time_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/result/time_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/content/content_widget.dart';
 import 'package:survey_kit/src/view/step_view.dart';
+import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 
 class TimeAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -24,7 +25,7 @@ class TimeAnswerView extends StatefulWidget {
 class _TimeAnswerViewState extends State<TimeAnswerView>
     with MeasureDateStateMixin {
   late TimeAnswerFormat _timeAnswerFormat;
-  late TimeOfDay? _result;
+  late TimeResult? _result;
 
   @override
   void initState() {
@@ -34,18 +35,25 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
       throw Exception('TimeAnswerFormat is null');
     }
     _timeAnswerFormat = answer as TimeAnswerFormat;
-    _result = widget.result?.result as TimeOfDay? ??
-        _timeAnswerFormat.defaultValue ??
-        TimeOfDay.fromDateTime(
-          DateTime.now(),
-        );
+
+    _result = widget.result?.result != null
+        ? widget.result?.result as TimeResult
+        : _timeAnswerFormat.defaultValue != null
+            ? TimeResult(
+                timeOfDay: _timeAnswerFormat.defaultValue!,
+              )
+            : TimeResult(
+                timeOfDay: TimeOfDay.fromDateTime(
+                  DateTime.now(),
+                ),
+              );
   }
 
   @override
   Widget build(BuildContext context) {
     return StepView(
       step: widget.questionStep,
-      resultFunction: () => StepResult<TimeOfDay>(
+      resultFunction: () => StepResult<TimeResult>(
         id: widget.questionStep.id,
         startTime: startDate,
         endTime: DateTime.now(),
@@ -76,7 +84,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
         mode: CupertinoDatePickerMode.time,
         onDateTimeChanged: (DateTime newTime) {
           setState(() {
-            _result = TimeOfDay.fromDateTime(newTime);
+            _result = TimeResult(timeOfDay: TimeOfDay.fromDateTime(newTime));
           });
         },
       ),

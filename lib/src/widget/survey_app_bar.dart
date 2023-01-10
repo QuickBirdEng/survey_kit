@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/configuration/survey_configuration.dart';
-import 'package:survey_kit/src/survey_presenter_inherited.dart';
+import 'package:survey_kit/src/presenter/survey_presenter_inherited.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class SurveyAppBar extends StatelessWidget {
@@ -15,12 +15,33 @@ class SurveyAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final surveyController =
         controller ?? SurveyConfiguration.of(context).surveyController;
-    final surveyPresenter = SurveyPresenterInherited.of(context);
+    final surveyStream =
+        SurveyPresenterInherited.of(context).surveyStateStream.stream;
+
+    final cancelButton = TextButton(
+      child: Text(
+        SurveyConfiguration.of(context).localizations?['cancel'] ?? 'Cancel',
+        style: TextStyle(
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+      onPressed: () => surveyController.closeSurvey(
+        context: context,
+      ),
+    );
+
+    final backButton = BackButton(
+      onPressed: () {
+        surveyController.stepBack(
+          context: context,
+        );
+      },
+    );
 
     return AppBar(
       elevation: 0,
       leading: StreamBuilder<SurveyState>(
-        stream: surveyPresenter.surveyStateStream.stream,
+        stream: surveyStream,
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return const SizedBox.shrink();
@@ -30,29 +51,12 @@ class SurveyAppBar extends StatelessWidget {
 
           return (state as PresentingSurveyState).isFirstStep
               ? const SizedBox.shrink()
-              : BackButton(
-                  onPressed: () {
-                    surveyController.stepBack(
-                      context: context,
-                    );
-                  },
-                );
+              : backButton;
         },
       ),
       title: const SurveyProgress(),
       actions: [
-        TextButton(
-          child: Text(
-            SurveyConfiguration.of(context).localizations?['cancel'] ??
-                'Cancel',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          onPressed: () => surveyController.closeSurvey(
-            context: context,
-          ),
-        ),
+        cancelButton,
       ],
     );
   }

@@ -168,7 +168,6 @@ class _MyAppState extends State<MyApp> {
         ),
         Step(
           id: '2',
-          title: 'First Step',
           content: const [
             TextContent(
               text: 'Introduction to SurveyKit',
@@ -190,7 +189,6 @@ class _MyAppState extends State<MyApp> {
         ),
         Step(
           id: '3',
-          title: 'Second Step',
           content: const [
             TextContent(
               text: 'This is a sample for the Audioplayer',

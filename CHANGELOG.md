@@ -1,23 +1,19 @@
 # 0.2.0
-- BREAKING: We we completly reworked how survey_kit works:
-  - FEATURE: survey_kit is now mor dynamic and every content can be used before the question
+- INFO: We we completly reworked how survey_kit works
+- 
+- BREAKING: Enum BooleanResult is now lowercase
+- BREAKING: Enum FinishReason is now lowercase
+- BREAKING: Id's are now simple Strings
+- BREAKING: TextChoice is not const anymore
+- FEATURE: survey_kit is now more dynamic and every content can be used before the question
     - VideoContent
     - AudioContent
     - MarkdownContent
     - TextContent
-  - FEATURE(Optional): List of Surveys
-  - FEATURE(Optional): List of Modules that contain Surveys
-  - FEATURE(Optional): Glossary
-step just implement this mixin 
-and you can access the previous result
-- 
-- BREAKING: BooleanResult is now lowercase
-- BREAKING: FinishReason is now lowercase
-- BREAKING: Id's are now simple Strings
-- BREAKING: TextChoice is not const anymore
-
+    - LottieContent
 - FEATURE: MeasureDateStateMixin to measure when the user entered and left a step
-- FEATURE: PreviousStepResultMixin: If one of your steps depends on a Previous 
+- FEATURE: PreviousStepResultMixin: If one of your steps depends on a previous step just implement this mixin and you can access the previous result
+- CHORE: Updated dependecies
 
 HOW TO MIGRATE:
 - JSON
