@@ -38,45 +38,48 @@ class _StepViewState extends State<StepView> {
         ),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            return SingleChildScrollView(
-              padding: SurveyConfiguration.of(context).padding,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  widget.child,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 32.0),
-                    child: OutlinedButton(
-                      onPressed: widget.isValid || !widget.step.isMandatory
-                          ? () => _surveyController.nextStep(
-                                context,
-                                widget.resultFunction ??
-                                    () {
-                                      return StepResult<void>(
-                                        id: widget.step.id,
-                                        result: null,
-                                        endTime: DateTime.now(),
-                                        startTime: startTime,
-                                      );
-                                    },
-                              )
-                          : null,
-                      child: Text(
-                        widget.step.buttonText ??
-                            context
-                                .read<Map<String, String>?>()?['next']
-                                ?.toUpperCase() ??
-                            'Next',
-                        style: TextStyle(
-                          color: widget.isValid
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey,
+            return Container(
+              constraints: const BoxConstraints(maxWidth: 600),
+              child: SingleChildScrollView(
+                padding: SurveyConfiguration.of(context).padding,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    widget.child,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32.0),
+                      child: OutlinedButton(
+                        onPressed: widget.isValid || !widget.step.isMandatory
+                            ? () => _surveyController.nextStep(
+                                  context,
+                                  widget.resultFunction ??
+                                      () {
+                                        return StepResult<void>(
+                                          id: widget.step.id,
+                                          result: null,
+                                          endTime: DateTime.now(),
+                                          startTime: startTime,
+                                        );
+                                      },
+                                )
+                            : null,
+                        child: Text(
+                          widget.step.buttonText ??
+                              context
+                                  .read<Map<String, String>?>()?['next']
+                                  ?.toUpperCase() ??
+                              'Next',
+                          style: TextStyle(
+                            color: widget.isValid
+                                ? Theme.of(context).primaryColor
+                                : Colors.grey,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
