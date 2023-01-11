@@ -1,10 +1,12 @@
-# 0.2.0
-- INFO: We we completly reworked how survey_kit works
-- 
+# 0.9.1
+- INFO: We we completly reworked how survey_kit works and want to get it to a stable release version 1.0
+  
 - BREAKING: Enum BooleanResult is now lowercase
 - BREAKING: Enum FinishReason is now lowercase
 - BREAKING: Id's are now simple Strings
 - BREAKING: TextChoice is not const anymore
+- BREAKING: SurveyResult: Every Step has now one Result with a generic parameter instead of different objects
+- BREAKING: Return typoe of the boolean step is now a TimeResult objects which wraps TimeOfDay
 - FEATURE: survey_kit is now more dynamic and every content can be used before the question
     - VideoContent
     - AudioContent

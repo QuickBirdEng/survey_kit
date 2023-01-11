@@ -34,8 +34,7 @@ class SurveyResult {
           id == other.id &&
           startTime == other.startTime &&
           endTime == other.endTime &&
-          finishReason == other.finishReason &&
-          results == other.results;
+          finishReason == other.finishReason;
 
   @override
   int get hashCode =>
