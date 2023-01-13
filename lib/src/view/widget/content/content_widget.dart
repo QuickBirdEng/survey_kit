@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/util/extension.dart';
-import 'package:survey_kit/src/view/widget/content/audio_widget.dart';
-import 'package:survey_kit/src/view/widget/content/lottie_widget.dart';
-import 'package:survey_kit/src/view/widget/content/markdown_widget.dart';
-import 'package:survey_kit/src/view/widget/content/text_widget.dart';
-import 'package:survey_kit/src/view/widget/content/video_widget.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class ContentWidget extends StatefulWidget {
@@ -24,20 +19,9 @@ class _ContentWidgetState extends State<ContentWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: widget.content
-          .map((e) {
-            if (e is AudioContent) {
-              return AudioWidget(audioContent: e);
-            } else if (e is VideoContent) {
-              return VideoWidget(videoContent: e);
-            } else if (e is MarkdownContent) {
-              return MarkdownWidget(markdownContent: e);
-            } else if (e is TextContent) {
-              return TextWidget(textContent: e);
-            } else if (e is LottieContent) {
-              return LottieWidget(lottieContent: e);
-            }
-            throw Exception('Content type not supported: ${e.runtimeType}');
-          })
+          .map(
+            (e) => e.createWidget(),
+          )
           .withSeparator(
             const _Separator(
               height: 14,

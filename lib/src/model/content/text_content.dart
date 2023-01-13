@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/content/content.dart';
+import 'package:survey_kit/src/view/widget/content/text_widget.dart';
 
 part 'text_content.g.dart';
 
@@ -21,4 +22,9 @@ class TextContent extends Content {
       _$TextContentFromJson(json);
 
   Map<String, dynamic> toJson() => _$TextContentToJson(this);
+
+  @override
+  Widget createWidget() {
+    return TextWidget(textContent: this);
+  }
 }

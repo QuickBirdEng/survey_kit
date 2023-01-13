@@ -188,27 +188,6 @@ class _MyAppState extends State<MyApp> {
         Step(
           content: const [
             TextContent(
-              text: 'This is a sample for the Audioplayer',
-              fontSize: 22,
-            ),
-            MarkdownContent(
-              text: '''
-Supported audio formats
-
-* .mp3
-* .wav
-* .ogg
-* .aac
-''',
-            ),
-            AudioContent(
-              url: 'https://www2.cs.uic.edu/~i101/SoundFiles/CantinaBand3.wav',
-            ),
-          ],
-        ),
-        Step(
-          content: const [
-            TextContent(
               text: 'How old are you?',
               fontSize: 18,
             ),

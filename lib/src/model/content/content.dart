@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/content/audio_content.dart';
 import 'package:survey_kit/src/model/content/lottie_content.dart';
@@ -6,7 +7,7 @@ import 'package:survey_kit/src/model/content/text_content.dart';
 import 'package:survey_kit/src/model/content/video_content.dart';
 
 @JsonSerializable()
-class Content {
+abstract class Content {
   final String? id;
 
   const Content({this.id});
@@ -30,4 +31,6 @@ class Content {
         throw Exception('Unknown type: $type');
     }
   }
+
+  Widget createWidget();
 }
