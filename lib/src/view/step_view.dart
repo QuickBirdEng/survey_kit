@@ -31,14 +31,14 @@ class _StepViewState extends State<StepView> {
     final _surveyController =
         widget.controller ?? SurveyConfiguration.of(context).surveyController;
 
-    return Center(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-        ),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Container(
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.background,
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Center(
+            child: Container(
               constraints: const BoxConstraints(maxWidth: 600),
               child: SingleChildScrollView(
                 padding: SurveyConfiguration.of(context).padding,
@@ -81,9 +81,9 @@ class _StepViewState extends State<StepView> {
                   ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
