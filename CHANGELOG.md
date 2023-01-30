@@ -20,7 +20,9 @@
 HOW TO MIGRATE:
 - JSON
 - Code-Definition
-
+  
+# 0.1.2
+- INFO: Update dependencies (Flutter 3.7.0)
 
 # 0.1.1
 - INFO: Update dependencies (Flutter 3.0.2)

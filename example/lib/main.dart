@@ -265,7 +265,8 @@ class _MyAppState extends State<MyApp> {
               fontSize: 28,
             ),
             AudioContent(
-              url: 'https://www2.cs.uic.edu/~i101/SoundFiles/CantinaBand3.wav',
+              url:
+                  'https://github.com/QuickBirdEng/survey_kit/blob/main/assets/gong.mp3?raw=true',
             ),
           ],
         ),
