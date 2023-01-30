@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:provider/provider.dart';
 import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/survey_kit.dart';
 
@@ -28,8 +27,9 @@ class _StepViewState extends State<StepView> {
 
   @override
   Widget build(BuildContext context) {
+    final surveyConfiguration = SurveyConfiguration.of(context);
     final _surveyController =
-        widget.controller ?? SurveyConfiguration.of(context).surveyController;
+        widget.controller ?? surveyConfiguration.surveyController;
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -66,8 +66,7 @@ class _StepViewState extends State<StepView> {
                             : null,
                         child: Text(
                           widget.step.buttonText ??
-                              context
-                                  .read<Map<String, String>?>()?['next']
+                              surveyConfiguration.localizations?['next']
                                   ?.toUpperCase() ??
                               'Next',
                           style: TextStyle(
