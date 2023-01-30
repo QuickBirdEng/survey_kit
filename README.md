@@ -119,8 +119,6 @@ The `content` is the general content that you want to display before your questi
 -   `VideoContent`
 -   `AudioContent`
 -   `LottieContent`
-The `buttonText` specifies the text of the button, which will start the survey or brings the user to the next step.
-The `answerFormat` specifies the type of question (the type of answer to the question) you want to ask. Currently there these types supported:
 -   `TextAnswerFormat`
 -   `IntegerAnswerFormat`
 -   `ScaleAnswerFormat`
