@@ -15,7 +15,7 @@ class InstructionView extends StatelessWidget {
       step: instructionStep,
       title: Text(
         instructionStep.title,
-        style: Theme.of(context).textTheme.headline2,
+        style: Theme.of(context).textTheme.displayMedium,
         textAlign: TextAlign.center,
       ),
       resultFunction: () => InstructionStepResult(
@@ -27,7 +27,7 @@ class InstructionView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Text(
           instructionStep.text,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.center,
         ),
       ),

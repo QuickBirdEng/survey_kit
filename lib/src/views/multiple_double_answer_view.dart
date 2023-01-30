@@ -16,7 +16,8 @@ class MultipleDoubleAnswerView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MultipleDoubleAnswerView> createState() => _MultipleDoubleAnswerViewState();
+  State<MultipleDoubleAnswerView> createState() =>
+      _MultipleDoubleAnswerViewState();
 }
 
 class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
@@ -30,7 +31,8 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
   @override
   void initState() {
     super.initState();
-    _multipleDoubleAnswer = widget.questionStep.answerFormat as MultipleDoubleAnswerFormat;
+    _multipleDoubleAnswer =
+        widget.questionStep.answerFormat as MultipleDoubleAnswerFormat;
     _controller = _multipleDoubleAnswer.hints.map((e) {
       return TextEditingController();
     }).toList();
@@ -80,7 +82,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
@@ -92,7 +94,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
               padding: const EdgeInsets.only(bottom: 32.0),
               child: Text(
                 widget.questionStep.text,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -101,7 +103,10 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
                 Divider(
                   color: Colors.grey,
                 ),
-                ..._multipleDoubleAnswer.hints.asMap().entries.map((MapEntry<int, String> md) {
+                ..._multipleDoubleAnswer.hints
+                    .asMap()
+                    .entries
+                    .map((MapEntry<int, String> md) {
                   return TextField(
                     textInputAction: TextInputAction.next,
                     autofocus: true,

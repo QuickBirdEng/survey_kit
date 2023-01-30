@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
-import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
 import 'package:survey_kit/src/result/question/boolean_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class BooleanAnswerView extends StatefulWidget {
@@ -50,7 +50,7 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView> {
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
@@ -61,7 +61,7 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView> {
             padding: const EdgeInsets.only(bottom: 32.0),
             child: Text(
               widget.questionStep.text,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
           ),

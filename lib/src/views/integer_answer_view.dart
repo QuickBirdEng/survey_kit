@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
-import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/result/question/integer_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class IntegerAnswerView extends StatefulWidget {
@@ -29,7 +29,8 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
   @override
   void initState() {
     super.initState();
-    _integerAnswerFormat = widget.questionStep.answerFormat as IntegerAnswerFormat;
+    _integerAnswerFormat =
+        widget.questionStep.answerFormat as IntegerAnswerFormat;
     _controller = TextEditingController();
     _controller.text = widget.result?.result?.toString() ?? '';
     _checkValidation(_controller.text);
@@ -57,13 +58,15 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: int.tryParse(_controller.text) ?? _integerAnswerFormat.defaultValue ?? null,
+        result: int.tryParse(_controller.text) ??
+            _integerAnswerFormat.defaultValue ??
+            null,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
