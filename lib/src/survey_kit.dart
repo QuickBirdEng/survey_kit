@@ -27,6 +27,7 @@ class SurveyKit extends StatefulWidget {
   final SurveyController? surveyController;
 
   /// The appbar that is shown at the top
+  final PreferredSizeWidget? appBar;
 
   // Changes the styling of the progressbar in the appbar
   final SurveyProgressConfiguration? surveyProgressbarConfiguration;
@@ -39,6 +40,7 @@ class SurveyKit extends StatefulWidget {
     required this.onResult,
     this.surveyController,
     this.surveyProgressbarConfiguration,
+    this.appBar,
     this.localizations,
   });
 
@@ -95,11 +97,13 @@ class _SurveyKitState extends State<SurveyKit> {
 class SurveyPage extends StatefulWidget {
   final int length;
   final Function(SurveyResult) onResult;
+  final PreferredSizeWidget? appBar;
 
   const SurveyPage({
     super.key,
     required this.length,
     required this.onResult,
+    this.appBar,
   });
 
   @override
@@ -143,13 +147,14 @@ class _SurveyPageState extends State<SurveyPage>
         if (state is PresentingSurveyState) {
           return Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: const PreferredSize(
-              preferredSize: Size(
-                double.infinity,
-                40,
-              ),
-              child: SurveyAppBar(),
-            ),
+            appBar: widget.appBar ??
+                const PreferredSize(
+                  preferredSize: Size(
+                    double.infinity,
+                    40,
+                  ),
+                  child: SurveyAppBar(),
+                ),
             body: TabBarView(
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
