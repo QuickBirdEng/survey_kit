@@ -24,104 +24,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: Theme.of(context).copyWith(
-        primaryColor: Colors.cyan,
-        appBarTheme: const AppBarTheme(
-          color: Colors.white,
-          iconTheme: IconThemeData(
-            color: Colors.cyan,
-          ),
-          titleTextStyle: TextStyle(
-            color: Colors.cyan,
-          ),
-        ),
-        iconTheme: const IconThemeData(
-          color: Colors.cyan,
-        ),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.cyan,
-          selectionColor: Colors.cyan,
-          selectionHandleColor: Colors.cyan,
-        ),
-        cupertinoOverrideTheme: const CupertinoThemeData(
-          primaryColor: Colors.cyan,
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all(
-              const Size(150.0, 60.0),
-            ),
-            side: MaterialStateProperty.resolveWith(
-              (Set<MaterialState> state) {
-                if (state.contains(MaterialState.disabled)) {
-                  return const BorderSide(
-                    color: Colors.grey,
-                  );
-                }
-                return const BorderSide(
-                  color: Colors.cyan,
-                );
-              },
-            ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-            ),
-            textStyle: MaterialStateProperty.resolveWith(
-              (Set<MaterialState> state) {
-                if (state.contains(MaterialState.disabled)) {
-                  return Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Colors.grey,
-                      );
-                }
-                return Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: Colors.cyan,
-                    );
-              },
-            ),
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            textStyle: MaterialStateProperty.all(
-              Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Colors.cyan,
-                  ),
-            ),
-          ),
-        ),
-        textTheme: const TextTheme(
-          displayMedium: TextStyle(
-            fontSize: 28.0,
-            color: Colors.black,
-          ),
-          headlineSmall: TextStyle(
-            fontSize: 24.0,
-            color: Colors.black,
-          ),
-          bodyMedium: TextStyle(
-            fontSize: 18.0,
-            color: Colors.black,
-          ),
-          titleMedium: TextStyle(
-            fontSize: 18.0,
-            color: Colors.black,
-          ),
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.cyan,
-        )
-            .copyWith(
-              onPrimary: Colors.white,
-            )
-            .copyWith(background: Colors.white),
-      ),
+      theme: theme,
       home: Scaffold(
         body: Container(
           color: Colors.white,
@@ -134,20 +37,8 @@ class _MyAppState extends State<MyApp> {
                     snapshot.hasData &&
                     snapshot.data != null) {
                   final task = snapshot.data!;
-                  return SurveyKit(
-                    onResult: (SurveyResult result) {
-                      log(result.finishReason.toString());
-                      Navigator.pushNamed(context, '/');
-                    },
+                  return SurveyKitView(
                     task: task,
-                    localizations: const {
-                      'cancel': 'Cancel',
-                      'next': 'Next',
-                    },
-                    surveyProgressbarConfiguration: SurveyProgressConfiguration(
-                      backgroundColor: Colors.white,
-                    ),
-                    appBar: const AppBarExample(),
                   );
                 }
                 return const CircularProgressIndicator.adaptive();
@@ -330,5 +221,132 @@ class _MyAppState extends State<MyApp> {
     final taskMap = json.decode(taskJson) as Map<String, dynamic>;
 
     return Task.fromJson(taskMap);
+  }
+
+  ThemeData get theme => Theme.of(context).copyWith(
+        primaryColor: Colors.cyan,
+        appBarTheme: const AppBarTheme(
+          color: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.cyan,
+          ),
+          titleTextStyle: TextStyle(
+            color: Colors.cyan,
+          ),
+        ),
+        iconTheme: const IconThemeData(
+          color: Colors.cyan,
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.cyan,
+          selectionColor: Colors.cyan,
+          selectionHandleColor: Colors.cyan,
+        ),
+        cupertinoOverrideTheme: const CupertinoThemeData(
+          primaryColor: Colors.cyan,
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(
+              const Size(150.0, 60.0),
+            ),
+            side: MaterialStateProperty.resolveWith(
+              (Set<MaterialState> state) {
+                if (state.contains(MaterialState.disabled)) {
+                  return const BorderSide(
+                    color: Colors.grey,
+                  );
+                }
+                return const BorderSide(
+                  color: Colors.cyan,
+                );
+              },
+            ),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            textStyle: MaterialStateProperty.resolveWith(
+              (Set<MaterialState> state) {
+                if (state.contains(MaterialState.disabled)) {
+                  return Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: Colors.grey,
+                      );
+                }
+                return Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Colors.cyan,
+                    );
+              },
+            ),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            textStyle: MaterialStateProperty.all(
+              Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Colors.cyan,
+                  ),
+            ),
+          ),
+        ),
+        textTheme: const TextTheme(
+          displayMedium: TextStyle(
+            fontSize: 28.0,
+            color: Colors.black,
+          ),
+          headlineSmall: TextStyle(
+            fontSize: 24.0,
+            color: Colors.black,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 18.0,
+            color: Colors.black,
+          ),
+          titleMedium: TextStyle(
+            fontSize: 18.0,
+            color: Colors.black,
+          ),
+        ),
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.cyan,
+        )
+            .copyWith(
+              onPrimary: Colors.white,
+            )
+            .copyWith(background: Colors.white),
+      );
+}
+
+class SurveyKitView extends StatelessWidget {
+  const SurveyKitView({
+    super.key,
+    required this.task,
+  });
+
+  final Task task;
+
+  @override
+  Widget build(BuildContext context) {
+    return SurveyKit(
+      onResult: (SurveyResult result) {
+        log(result.finishReason.toString());
+        Navigator.pushNamed(context, '/');
+      },
+      task: task,
+      localizations: const {
+        'cancel': 'Cancel',
+        'next': 'Next',
+      },
+      surveyProgressbarConfiguration: SurveyProgressConfiguration(
+        backgroundColor: Colors.white,
+      ),
+      appBar: const AppBarExample(),
+    );
   }
 }
