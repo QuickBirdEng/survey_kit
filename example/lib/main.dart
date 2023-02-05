@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
+import 'package:surveykit_example/app_bar_example.dart';
 
 void main() {
   runApp(const MyApp());
@@ -146,6 +147,7 @@ class _MyAppState extends State<MyApp> {
                     surveyProgressbarConfiguration: SurveyProgressConfiguration(
                       backgroundColor: Colors.white,
                     ),
+                    appBar: const AppBarExample(),
                   );
                 }
                 return const CircularProgressIndicator.adaptive();

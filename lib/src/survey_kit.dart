@@ -88,6 +88,7 @@ class _SurveyKitState extends State<SurveyKit> {
         child: SurveyPage(
           length: widget.task.steps.length,
           onResult: widget.onResult,
+          appBar: widget.appBar,
         ),
       ),
     );
@@ -147,14 +148,7 @@ class _SurveyPageState extends State<SurveyPage>
         if (state is PresentingSurveyState) {
           return Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: widget.appBar ??
-                const PreferredSize(
-                  preferredSize: Size(
-                    double.infinity,
-                    40,
-                  ),
-                  child: SurveyAppBar(),
-                ),
+            appBar: widget.appBar ?? const SurveyAppBar(),
             body: TabBarView(
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,

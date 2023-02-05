@@ -1,5 +1,6 @@
 library survery_kit;
 
+export 'src/configuration/survey_configuration.dart';
 export 'src/controller/survey_controller.dart';
 export 'src/model/answer/answer_format.dart';
 export 'src/model/answer/boolean_answer_format.dart';
@@ -37,6 +38,7 @@ export 'src/navigator/rules/navigation_rule.dart';
 export 'src/navigator/rules/rule_not_defined_exception.dart';
 export 'src/navigator/task_navigator.dart';
 export 'src/presenter/survey_event.dart';
+export 'src/presenter/survey_presenter_inherited.dart';
 export 'src/presenter/survey_state.dart';
 export 'src/survey_kit.dart';
 export 'src/task/navigable_task.dart';
