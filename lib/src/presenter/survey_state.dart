@@ -50,6 +50,7 @@ class PresentingSurveyState extends SurveyState {
       isPreviousStep.hashCode;
 
   bool get isFirstStep => currentStepIndex == 0;
+  double get progress => currentStepIndex / stepCount;
 }
 
 class SurveyResultState extends SurveyState {
