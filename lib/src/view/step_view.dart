@@ -68,11 +68,6 @@ class _StepViewState extends State<StepView> {
                               surveyConfiguration.localizations?['next']
                                   ?.toUpperCase() ??
                               'Next',
-                          style: TextStyle(
-                            color: widget.isValid
-                                ? Theme.of(context).primaryColor
-                                : Colors.grey,
-                          ),
                         ),
                       ),
                     ),
