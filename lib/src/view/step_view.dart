@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class StepView extends StatefulWidget {
