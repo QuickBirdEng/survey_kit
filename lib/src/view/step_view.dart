@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/survey_kit.dart';
 
+typedef StepShell = Widget Function({
+  required Step step,
+  required Widget child,
+  StepResult Function()? resultFunction,
+  bool isValid,
+  SurveyController? controller,
+});
+
 class StepView extends StatefulWidget {
   final Step step;
   final Widget child;
@@ -29,6 +37,18 @@ class _StepViewState extends State<StepView> {
     final surveyConfiguration = SurveyConfiguration.of(context);
     final _surveyController =
         widget.controller ?? surveyConfiguration.surveyController;
+
+    final stepShell = SurveyPresenterInherited.of(context).stepShell;
+
+    if (stepShell != null) {
+      return stepShell.call(
+        widget.step,
+        widget.child,
+        widget.resultFunction,
+        widget.isValid,
+        _surveyController,
+      );
+    }
 
     return DecoratedBox(
       decoration: BoxDecoration(

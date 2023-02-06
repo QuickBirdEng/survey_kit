@@ -33,12 +33,12 @@ class AppBarExample extends StatelessWidget with PreferredSizeWidget {
         if (!snapshot.hasData ||
             state != null && state is! PresentingSurveyState) AppBar();
 
-        final leading = (state as PresentingSurveyState?)!.isFirstStep
+        final leading = (state as PresentingSurveyState?)?.isFirstStep ?? false
             ? const SizedBox.shrink()
             : backButton;
 
         final title = Text(
-          state!.currentStep.id,
+          state?.currentStep.id ?? '',
         );
 
         return AppBar(
