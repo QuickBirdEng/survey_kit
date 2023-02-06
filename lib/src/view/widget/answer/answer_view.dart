@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/model/result/time_result.dart';
 import 'package:survey_kit/src/view/step_view.dart';
-import 'package:survey_kit/src/view/widget/answer/boolean_answer_view.dart';
-import 'package:survey_kit/src/view/widget/answer/multiple_choice_auto_complete_answer_view.dart';
 import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 import 'package:survey_kit/survey_kit.dart';
 
@@ -33,64 +30,9 @@ class AnswerView extends StatelessWidget {
   }
 
   Widget _buildAnswerView() {
-    switch (answer.runtimeType) {
-      case MultipleChoiceAnswerFormat:
-        return MultipleChoiceAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<List<TextChoice>>?,
-        );
-      case IntegerAnswerFormat:
-        return IntegerAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<int>?,
-        );
-      case BooleanAnswerFormat:
-        return BooleanAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<BooleanResult>?,
-        );
-      case DateAnswerFormat:
-        return DateAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<DateTime?>?,
-        );
-      case DoubleAnswerFormat:
-        return DoubleAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<double>?,
-        );
-      case ImageAnswerFormat:
-        return ImageAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<String>?,
-        );
-      case MultipleChoiceAutoCompleteAnswerFormat:
-        return MultipleChoiceAutoCompleteAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<List<TextChoice>>?,
-        );
-      case ScaleAnswerFormat:
-        return ScaleAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<double>?,
-        );
-      case SingleChoiceAnswerFormat:
-        return SingleChoiceAnswerView(
-          questionStep: step,
-          result: stepResult,
-        );
-      case TextAnswerFormat:
-        return TextAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<String>?,
-        );
-      case TimeAnswerFormat:
-        return TimeAnswerView(
-          questionStep: step,
-          result: stepResult as StepResult<TimeResult>?,
-        );
-      default:
-        throw Exception('Answer type not supported: ${answer.runtimeType}');
+    if (answer == null) {
+      throw Exception('Answer is null');
     }
+    return answer!.createView(step, stepResult);
   }
 }

@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/model/answer/answer_format.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 part 'text_answer_format.g.dart';
 
@@ -28,4 +29,12 @@ class TextAnswerFormat implements AnswerFormat {
   factory TextAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$TextAnswerFormatFromJson(json);
   Map<String, dynamic> toJson() => _$TextAnswerFormatToJson(this);
+
+  @override
+  Widget createView(Step step, StepResult? stepResult) {
+    return TextAnswerView(
+      questionStep: step,
+      result: stepResult,
+    );
+  }
 }

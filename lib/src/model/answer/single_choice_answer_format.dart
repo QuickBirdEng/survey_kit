@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/model/answer/answer_format.dart';
-import 'package:survey_kit/src/model/answer/text_choice.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 part 'single_choice_answer_format.g.dart';
 
@@ -20,4 +20,11 @@ class SingleChoiceAnswerFormat implements AnswerFormat {
       _$SingleChoiceAnswerFormatFromJson(json);
 
   Map<String, dynamic> toJson() => _$SingleChoiceAnswerFormatToJson(this);
+  @override
+  Widget createView(Step step, StepResult? stepResult) {
+    return SingleChoiceAnswerView(
+      questionStep: step,
+      result: stepResult,
+    );
+  }
 }

@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/model/answer/answer_format.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 part 'image_answer_format.g.dart';
 
@@ -19,4 +20,12 @@ class ImageAnswerFormat implements AnswerFormat {
       _$ImageAnswerFormatFromJson(json);
 
   Map<String, dynamic> toJson() => _$ImageAnswerFormatToJson(this);
+
+  @override
+  Widget createView(Step step, StepResult? stepResult) {
+    return ImageAnswerView(
+      questionStep: step,
+      result: stepResult,
+    );
+  }
 }

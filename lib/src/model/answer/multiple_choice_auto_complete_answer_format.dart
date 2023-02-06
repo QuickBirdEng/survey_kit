@@ -1,6 +1,10 @@
+import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/answer/answer_format.dart';
 import 'package:survey_kit/src/model/answer/text_choice.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/view/widget/answer/multiple_choice_auto_complete_answer_view.dart';
 
 part 'multiple_choice_auto_complete_answer_format.g.dart';
 
@@ -29,4 +33,12 @@ class MultipleChoiceAutoCompleteAnswerFormat implements AnswerFormat {
       _$MultipleChoiceAutoCompleteAnswerFormatFromJson(json);
   Map<String, dynamic> toJson() =>
       _$MultipleChoiceAutoCompleteAnswerFormatToJson(this);
+
+  @override
+  Widget createView(Step step, StepResult? stepResult) {
+    return MultipleChoiceAutoCompleteAnswerView(
+      questionStep: step,
+      result: stepResult,
+    );
+  }
 }

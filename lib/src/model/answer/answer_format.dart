@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/answer/boolean_answer_format.dart';
 import 'package:survey_kit/src/model/answer/date_answer_format.dart';
@@ -11,10 +12,14 @@ import 'package:survey_kit/src/model/answer/scale_answer_format.dart';
 import 'package:survey_kit/src/model/answer/single_choice_answer_format.dart';
 import 'package:survey_kit/src/model/answer/text_answer_format.dart';
 import 'package:survey_kit/src/model/answer/time_answer_format.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
 
 @JsonSerializable()
 abstract class AnswerFormat {
   const AnswerFormat();
+
+  Widget createView(Step step, StepResult? stepResult);
 
   factory AnswerFormat.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String?;
