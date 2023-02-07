@@ -347,49 +347,6 @@ class SurveyKitView extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       appBar: const AppBarExample(),
-      // stepShell: (
-      //   Step step,
-      //   Widget? answerWidget,
-      //   BuildContext context,
-      // ) {
-      //   final questionAnswer = QuestionAnswer.of(context);
-      //   final surveyConfiguration = SurveyConfiguration.of(context);
-      //   final surveyController = surveyConfiguration.surveyController;
-
-      //   return ColoredBox(
-      //     color: Colors.white,
-      //     child: Column(
-      //       children: [
-      //         Expanded(
-      //           child: ContentWidget(
-      //             content: step.content,
-      //           ),
-      //         ),
-      //         // if (step.answerFormat != null)
-      //         //   step.answerFormat!.createView(step, stepResult?.call()),
-      //         SafeArea(
-      //           child: Container(
-      //             width: double.infinity,
-      //             height: 80,
-      //             color: Colors.white,
-      //             child: Padding(
-      //               padding: const EdgeInsets.all(16),
-      //               child: OutlinedButton(
-      //                 onPressed: questionAnswer.isValid || !step.isMandatory
-      //                     ? () => surveyController.nextStep(
-      //                           context,
-      //                           questionAnswer.stepResult,
-      //                         )
-      //                     : null,
-      //                 child: const Text('Zur Frage'),
-      //               ),
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   );
-      // },
     );
   }
 }
