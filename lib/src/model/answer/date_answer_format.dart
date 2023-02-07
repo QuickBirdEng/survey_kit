@@ -49,7 +49,7 @@ class DateAnswerFormat implements AnswerFormat {
   Widget createView(Step step, StepResult? stepResult) {
     return DateAnswerView(
       questionStep: step,
-      result: stepResult as StepResult<DateTime>?,
+      result: stepResult,
     );
   }
 }

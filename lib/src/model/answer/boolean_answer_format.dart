@@ -29,7 +29,7 @@ class BooleanAnswerFormat implements AnswerFormat {
   Widget createView(Step step, StepResult? stepResult) {
     return BooleanAnswerView(
       questionStep: step,
-      result: stepResult as StepResult<BooleanResult>?,
+      result: stepResult,
     );
   }
 }

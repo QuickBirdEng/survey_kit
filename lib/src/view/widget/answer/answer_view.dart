@@ -16,20 +16,26 @@ class AnswerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (answer == null) {
-      return StepView(
-        step: step,
-      );
+    Widget? answerView;
+    if (answer != null) {
+      answerView = answer!.createView(step, stepResult);
     }
+    final stepShell = SurveyPresenterInherited.of(context).stepShell;
 
-    return _buildAnswerView();
-  }
-
-  Widget _buildAnswerView() {
-    if (answer == null) {
-      throw Exception('Answer is null');
-    }
-
-    return answer!.createView(step, stepResult);
+    return QuestionAnswer<dynamic>(
+      step: step,
+      child: Builder(
+        builder: (context) => stepShell != null
+            ? stepShell.call(
+                step,
+                answerView,
+                context,
+              )
+            : StepView(
+                step: step,
+                answerView: answerView,
+              ),
+      ),
+    );
   }
 }

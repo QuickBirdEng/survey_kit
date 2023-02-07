@@ -15,7 +15,7 @@ class SurveyController {
   /// ```
   final Function(
     BuildContext context,
-    StepResult Function() resultFunction,
+    StepResult? stepResult,
   )? onNextStep;
 
   /// Defines what should happen if the previous step is called
@@ -29,7 +29,7 @@ class SurveyController {
   /// ```
   final Function(
     BuildContext context,
-    StepResult Function()? resultFunction,
+    StepResult? stepResult,
   )? onStepBack;
 
   /// Defines what should happen if the survey should be closed
@@ -43,7 +43,7 @@ class SurveyController {
   /// ```
   final Function(
     BuildContext context,
-    StepResult Function()? resultFunction,
+    StepResult? stepResult,
   )? onCloseSurvey;
 
   SurveyController({
@@ -54,45 +54,45 @@ class SurveyController {
 
   void nextStep(
     BuildContext context,
-    StepResult Function() resultFunction,
+    StepResult? stepResult,
   ) {
     if (onNextStep != null) {
-      onNextStep!(context, resultFunction);
+      onNextStep!(context, stepResult);
       return;
     }
     SurveyPresenterInherited.of(context).onEvent(
       NextStep(
-        resultFunction.call(),
+        stepResult,
       ),
     );
   }
 
   void stepBack({
     required BuildContext context,
-    StepResult Function()? resultFunction,
+    StepResult? stepResult,
   }) {
     if (onStepBack != null) {
-      onStepBack!(context, resultFunction);
+      onStepBack!(context, stepResult);
       return;
     }
     SurveyPresenterInherited.of(context).onEvent(
       StepBack(
-        resultFunction?.call(),
+        stepResult,
       ),
     );
   }
 
   void closeSurvey({
     required BuildContext context,
-    StepResult Function()? resultFunction,
+    StepResult? stepResult,
   }) {
     if (onCloseSurvey != null) {
-      onCloseSurvey!(context, resultFunction);
+      onCloseSurvey!(context, stepResult);
       return;
     }
     SurveyPresenterInherited.of(context).onEvent(
       CloseSurvey(
-        resultFunction?.call(),
+        stepResult,
       ),
     );
   }

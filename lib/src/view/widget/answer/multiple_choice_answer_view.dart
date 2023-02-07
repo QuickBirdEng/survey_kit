@@ -1,16 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/model/answer/multiple_choice_answer_format.dart';
-import 'package:survey_kit/src/model/answer/text_choice.dart';
-import 'package:survey_kit/src/model/result/step_result.dart';
-import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/step_view.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
   final Step questionStep;
-  final StepResult<List<TextChoice>>? result;
+  final StepResult? result;
 
   const MultipleChoiceAnswerView({
     Key? key,
@@ -23,10 +20,10 @@ class MultipleChoiceAnswerView extends StatefulWidget {
 }
 
 class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
-    with MeasureDateStateMixin {
+    with
+        MeasureDateStateMixin,
+        AnswerMixin<MultipleChoiceAnswerView, List<TextChoice>> {
   late final MultipleChoiceAnswerFormat _multipleChoiceAnswer;
-
-  List<TextChoice> _selectedChoices = [];
 
   @override
   void initState() {
@@ -36,97 +33,94 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
       throw Exception('MultiSelectAnswer is null');
     }
     _multipleChoiceAnswer = answer as MultipleChoiceAnswerFormat;
-    _selectedChoices = (widget.result?.result ??
-            _multipleChoiceAnswer.defaultSelection) as List<TextChoice>? ??
-        [];
+  }
+
+  @override
+  bool isValid(List<TextChoice>? result) {
+    if (widget.questionStep.isMandatory) {
+      return result?.isNotEmpty ?? false;
+    }
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return StepView(
-      step: widget.questionStep,
-      resultFunction: () => StepResult<List<TextChoice>>(
-        id: widget.questionStep.id,
-        startTime: startDate,
-        endTime: DateTime.now(),
-        valueIdentifier:
-            _selectedChoices.map((choices) => choices.value).join(','),
-        result: _selectedChoices,
-      ),
-      isValid: !widget.questionStep.isMandatory || _selectedChoices.isNotEmpty,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0),
-        child: Column(
-          children: [
-            const Divider(
-              color: Colors.grey,
-            ),
-            ..._multipleChoiceAnswer.textChoices
-                .map(
-                  (TextChoice tc) => SelectionListTile(
-                    text: tc.value,
-                    onTap: () {
-                      setState(
-                        () {
-                          if (_selectedChoices.contains(tc)) {
-                            _selectedChoices.remove(tc);
-                          } else {
-                            _selectedChoices = [..._selectedChoices, tc];
-                          }
-                        },
-                      );
-                    },
-                    isSelected: _selectedChoices.contains(tc),
-                  ),
-                )
-                .toList(),
-            if (_multipleChoiceAnswer.otherField) ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                child: ListTile(
-                  title: TextField(
-                    onChanged: (v) {
-                      int? currentIndex;
-                      final otherTextChoice = _selectedChoices
-                          .firstWhereIndexedOrNull((index, element) {
-                        final isOtherField = element.value == 'Other';
+    final _selectedChoices =
+        QuestionAnswer.of(context).stepResult?.result as List<TextChoice>? ??
+            widget.result?.result as List<TextChoice>? ??
+            [];
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+      child: Column(
+        children: [
+          const Divider(
+            color: Colors.grey,
+          ),
+          ..._multipleChoiceAnswer.textChoices
+              .map(
+                (TextChoice tc) => SelectionListTile(
+                  text: tc.value,
+                  onTap: () {
+                    setState(
+                      () {
+                        if (_selectedChoices.contains(tc)) {
+                          _selectedChoices.remove(tc);
+                        } else {}
+                      },
+                    );
+                    onChange([..._selectedChoices, tc]);
+                  },
+                  isSelected: _selectedChoices.contains(tc),
+                ),
+              )
+              .toList(),
+          if (_multipleChoiceAnswer.otherField) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14.0),
+              child: ListTile(
+                title: TextField(
+                  onChanged: (v) {
+                    int? currentIndex;
+                    final otherTextChoice = _selectedChoices
+                        .firstWhereIndexedOrNull((index, element) {
+                      final isOtherField = element.value == 'Other';
 
-                        if (isOtherField) {
-                          currentIndex = index;
+                      if (isOtherField) {
+                        currentIndex = index;
+                      }
+
+                      return isOtherField;
+                    });
+
+                    setState(() {
+                      if (v.isEmpty && otherTextChoice != null) {
+                        _selectedChoices.remove(otherTextChoice);
+                      } else if (v.isNotEmpty) {
+                        final updatedTextChoice =
+                            TextChoice(id: 'Other', value: v, text: v);
+                        if (otherTextChoice == null) {
+                          _selectedChoices.add(updatedTextChoice);
+                        } else if (currentIndex != null) {
+                          _selectedChoices[currentIndex!] = updatedTextChoice;
                         }
-
-                        return isOtherField;
-                      });
-
-                      setState(() {
-                        if (v.isEmpty && otherTextChoice != null) {
-                          _selectedChoices.remove(otherTextChoice);
-                        } else if (v.isNotEmpty) {
-                          final updatedTextChoice =
-                              TextChoice(id: 'Other', value: v, text: v);
-                          if (otherTextChoice == null) {
-                            _selectedChoices.add(updatedTextChoice);
-                          } else if (currentIndex != null) {
-                            _selectedChoices[currentIndex!] = updatedTextChoice;
-                          }
-                        }
-                      });
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Other',
-                      labelStyle: Theme.of(context).textTheme.headlineSmall,
-                      hintText: 'Write other information here',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                    ),
+                      }
+                      onChange(_selectedChoices);
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Other',
+                    labelStyle: Theme.of(context).textTheme.headlineSmall,
+                    hintText: 'Write other information here',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
                 ),
               ),
-              const Divider(
-                color: Colors.grey,
-              ),
-            ],
+            ),
+            const Divider(
+              color: Colors.grey,
+            ),
           ],
-        ),
+        ],
       ),
     );
   }

@@ -28,7 +28,7 @@ class MultipleChoiceAnswerFormat implements AnswerFormat {
   Widget createView(Step step, StepResult? stepResult) {
     return MultipleChoiceAnswerView(
       questionStep: step,
-      result: stepResult as StepResult<List<TextChoice>>?,
+      result: stepResult,
     );
   }
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/model/answer/multi_double.dart';
-import 'package:survey_kit/src/model/answer/multiple_double_answer_format.dart';
-import 'package:survey_kit/src/model/result/step_result.dart';
-import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/step_view.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 class MultipleDoubleAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -22,11 +20,12 @@ class MultipleDoubleAnswerView extends StatefulWidget {
 }
 
 class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView>
-    with MeasureDateStateMixin {
+    with
+        MeasureDateStateMixin,
+        AnswerMixin<MultipleDoubleAnswerView, List<MultiDouble>> {
   late final MultipleDoubleAnswerFormat _multipleDoubleAnswer;
   late final List<TextEditingController> _controller;
 
-  bool _isValid = false;
   List<MultiDouble> _insertedValues = [];
 
   @override
@@ -40,12 +39,6 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView>
     _controller = _multipleDoubleAnswer.hints.map((e) {
       return TextEditingController();
     }).toList();
-
-    for (var element in _controller) {
-      element = TextEditingController()
-        ..text = widget.result?.result?.toString() ?? '';
-      _checkValidation(element.text);
-    }
 
     _insertedValues = List.generate(
       _multipleDoubleAnswer.hints.length,
@@ -64,58 +57,49 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView>
     super.dispose();
   }
 
-  void _checkValidation(String text) {
-    setState(() {
-      _isValid = text.isNotEmpty && double.tryParse(text) != null;
-    });
+  @override
+  bool isValid(List<MultiDouble>? result) {
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return StepView(
-      step: widget.questionStep,
-      resultFunction: () => StepResult<List<MultiDouble>>(
-        id: widget.questionStep.id,
-        startTime: startDate,
-        endTime: DateTime.now(),
-        valueIdentifier: _controller.map((e) => e.text).join(', '),
-        result: _insertedValues,
-      ),
-      isValid: _isValid || !widget.questionStep.isMandatory,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0),
-        child: Column(
-          children: [
-            const Divider(
-              color: Colors.grey,
-            ),
-            ..._multipleDoubleAnswer.hints
-                .asMap()
-                .entries
-                .map((MapEntry<int, String> md) {
-              return TextField(
-                textInputAction: TextInputAction.next,
-                autofocus: true,
-                decoration: InputDecoration(
-                  labelText: md.value,
-                ),
-                controller: _controller[md.key],
-                onChanged: (String value) {
-                  value = value.replaceAll(',', '.');
-
-                  _checkValidation(value);
-
-                  _insertedValues[md.key] = MultiDouble(
-                    text: md.value,
-                    value: double.parse(value),
-                  );
-                },
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-              );
-            }).toList(),
-          ],
-        ),
+    final questionAnswer = QuestionAnswer.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+      child: Column(
+        children: [
+          const Divider(
+            color: Colors.grey,
+          ),
+          ..._multipleDoubleAnswer.hints
+              .asMap()
+              .entries
+              .map((MapEntry<int, String> md) {
+            return TextField(
+              textInputAction: TextInputAction.next,
+              autofocus: true,
+              decoration: InputDecoration(
+                labelText: md.value,
+              ),
+              controller: _controller[md.key],
+              onChanged: (String value) {
+                value = value.replaceAll(',', '.');
+                if (double.tryParse(value) == null) {
+                  questionAnswer.isValid = false;
+                  return;
+                }
+                _insertedValues[md.key] = MultiDouble(
+                  text: md.value,
+                  value: double.parse(value),
+                );
+                onChange(_insertedValues);
+              },
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+            );
+          }).toList(),
+        ],
       ),
     );
   }

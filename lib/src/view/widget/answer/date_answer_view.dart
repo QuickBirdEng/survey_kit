@@ -5,14 +5,14 @@ import 'package:survey_kit/src/model/answer/date_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/step_view.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 
 class DateAnswerView extends StatefulWidget {
   /// [QuestionStep] which includes the [DateAnswerFormat]
   final Step questionStep;
 
   /// [DateQuestionResult] which boxes the result
-  final StepResult<DateTime?>? result;
+  final StepResult? result;
 
   const DateAnswerView({
     Key? key,
@@ -25,7 +25,7 @@ class DateAnswerView extends StatefulWidget {
 }
 
 class _DateAnswerViewState extends State<DateAnswerView>
-    with MeasureDateStateMixin {
+    with MeasureDateStateMixin, AnswerMixin<DateAnswerView, DateTime> {
   final DateFormat _dateFormat = DateFormat('E, MMM d');
   late DateAnswerFormat _dateAnswerFormat;
   DateTime? _result;
@@ -34,35 +34,33 @@ class _DateAnswerViewState extends State<DateAnswerView>
   void initState() {
     super.initState();
     _dateAnswerFormat = widget.questionStep.answerFormat! as DateAnswerFormat;
-    _result = widget.result?.result ??
+    _result = widget.result?.result as DateTime? ??
         _dateAnswerFormat.defaultDate ??
         DateTime.now();
   }
 
-  void _handleDateChanged(DateTime date) {
-    setState(() => _result = date);
+  @override
+  bool isValid(dynamic result) {
+    return !widget.questionStep.isMandatory || result != null;
+  }
+
+  @override
+  void onChange(DateTime? result) {
+    setState(() {
+      _result = result;
+    });
+    super.onChange(result);
   }
 
   @override
   Widget build(BuildContext context) {
-    return StepView(
-      step: widget.questionStep,
-      resultFunction: () => StepResult<DateTime>(
-        id: widget.questionStep.id,
-        startTime: startDate,
-        endTime: DateTime.now(),
-        valueIdentifier: _result?.toIso8601String() ?? 'none',
-        result: _result,
-      ),
-      isValid: !widget.questionStep.isMandatory || _result != null,
-      child: Column(
-        children: [
-          if (Theme.of(context).platform == TargetPlatform.iOS)
-            _iosDatePicker()
-          else
-            _androidDatePicker(),
-        ],
-      ),
+    return Column(
+      children: [
+        if (Theme.of(context).platform == TargetPlatform.iOS)
+          _iosDatePicker()
+        else
+          _androidDatePicker(),
+      ],
     );
   }
 
@@ -106,7 +104,7 @@ class _DateAnswerViewState extends State<DateAnswerView>
                 ),
             initialDate: _result ?? DateTime.now(),
             currentDate: _result,
-            onDateChanged: _handleDateChanged,
+            onDateChanged: onChange,
           ),
         ),
       ],
@@ -116,7 +114,7 @@ class _DateAnswerViewState extends State<DateAnswerView>
   Widget _iosDatePicker() {
     return Container(
       width: double.infinity,
-      height: 400.0,
+      height: 300,
       child: CupertinoDatePicker(
         mode: CupertinoDatePickerMode.date,
         minimumDate: _dateAnswerFormat.minDate,
@@ -128,11 +126,7 @@ class _DateAnswerViewState extends State<DateAnswerView>
               const Duration(hours: 1),
             ),
         initialDateTime: _dateAnswerFormat.defaultDate,
-        onDateTimeChanged: (DateTime value) {
-          setState(() {
-            _result = value;
-          });
-        },
+        onDateTimeChanged: onChange,
       ),
     );
   }

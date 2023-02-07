@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/model/answer/time_answer_format.dart';
-import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/result/time_result.dart';
-import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/step_view.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 class TimeAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -22,9 +20,18 @@ class TimeAnswerView extends StatefulWidget {
 }
 
 class _TimeAnswerViewState extends State<TimeAnswerView>
-    with MeasureDateStateMixin {
+    with MeasureDateStateMixin, AnswerMixin<TimeAnswerView, TimeResult> {
   late TimeAnswerFormat _timeAnswerFormat;
-  late TimeResult? _result;
+
+  late final TimeResult initialValue;
+
+  @override
+  bool isValid(TimeResult? result) {
+    if (widget.questionStep.isMandatory) {
+      return result != null;
+    }
+    return true;
+  }
 
   @override
   void initState() {
@@ -35,7 +42,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
     }
     _timeAnswerFormat = answer as TimeAnswerFormat;
 
-    _result = widget.result?.result != null
+    initialValue = widget.result?.result != null
         ? widget.result?.result as TimeResult
         : _timeAnswerFormat.defaultValue != null
             ? TimeResult(
@@ -49,34 +56,30 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return StepView(
-      step: widget.questionStep,
-      resultFunction: () => StepResult<TimeResult>(
-        id: widget.questionStep.id,
-        startTime: startDate,
-        endTime: DateTime.now(),
-        valueIdentifier: _result.toString(),
-        result: _result,
-      ),
-      isValid: !widget.questionStep.isMandatory || _result != null,
-      child:
-          // TODO(marvin): Create new time picker,
-          _iosTimePicker(),
-    );
+  void onChange(TimeResult? result) {
+    setState(() {
+      super.onChange(result);
+    });
   }
 
-  Widget _iosTimePicker() {
+  @override
+  Widget build(BuildContext context) {
+    return
+        // TODO(marvin): Create new time picker,
+        _iosTimePicker(initialValue);
+  }
+
+  Widget _iosTimePicker(TimeResult timeResult) {
     return Container(
       width: double.infinity,
       height: 450.0,
       child: CupertinoDatePicker(
         mode: CupertinoDatePickerMode.time,
-        onDateTimeChanged: (DateTime newTime) {
-          setState(() {
-            _result = TimeResult(timeOfDay: TimeOfDay.fromDateTime(newTime));
-          });
-        },
+        onDateTimeChanged: (time) => onChange(
+          TimeResult(
+            timeOfDay: TimeOfDay.fromDateTime(time),
+          ),
+        ),
       ),
     );
   }

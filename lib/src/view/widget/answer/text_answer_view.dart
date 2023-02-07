@@ -3,7 +3,7 @@ import 'package:survey_kit/src/model/answer/text_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/step_view.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 import 'package:survey_kit/src/view/widget/decoration/input_decoration.dart';
 
 class TextAnswerView extends StatefulWidget {
@@ -21,11 +21,10 @@ class TextAnswerView extends StatefulWidget {
 }
 
 class _TextAnswerViewState extends State<TextAnswerView>
-    with MeasureDateStateMixin {
+    with MeasureDateStateMixin, AnswerMixin<TextAnswerView, String> {
   late final TextAnswerFormat _textAnswerFormat;
 
   late final TextEditingController _controller;
-  bool _isValid = false;
 
   @override
   void initState() {
@@ -37,18 +36,20 @@ class _TextAnswerViewState extends State<TextAnswerView>
       throw Exception('TextAnswerFormat is null');
     }
     _textAnswerFormat = answer as TextAnswerFormat;
-    _checkValidation(_controller.text);
+    isValid(_controller.text);
   }
 
-  void _checkValidation(String text) {
-    setState(() {
-      if (_textAnswerFormat.validationRegEx != null) {
-        final regExp = RegExp(_textAnswerFormat.validationRegEx!);
-        _isValid = regExp.hasMatch(text);
-      } else {
-        _isValid = true;
-      }
-    });
+  @override
+  bool isValid(String? text) {
+    if (text == null) {
+      return false;
+    }
+    if (_textAnswerFormat.validationRegEx != null) {
+      final regExp = RegExp(_textAnswerFormat.validationRegEx!);
+      return regExp.hasMatch(text);
+    } else {
+      return true;
+    }
   }
 
   @override
@@ -59,29 +60,18 @@ class _TextAnswerViewState extends State<TextAnswerView>
 
   @override
   Widget build(BuildContext context) {
-    return StepView(
-      step: widget.questionStep,
-      resultFunction: () => StepResult<String>(
-        id: widget.questionStep.id,
-        startTime: startDate,
-        endTime: DateTime.now(),
-        valueIdentifier: _controller.text,
-        result: _controller.text,
-      ),
-      isValid: _isValid || !widget.questionStep.isMandatory,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 50.0,
-        child: TextField(
-          textInputAction: TextInputAction.next,
-          autofocus: true,
-          decoration: textFieldInputDecoration(
-            hint: _textAnswerFormat.hint,
-          ),
-          controller: _controller,
-          textAlign: TextAlign.center,
-          onChanged: _checkValidation,
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 50.0,
+      child: TextField(
+        textInputAction: TextInputAction.next,
+        autofocus: true,
+        decoration: textFieldInputDecoration(
+          hint: _textAnswerFormat.hint,
         ),
+        controller: _controller,
+        textAlign: TextAlign.center,
+        onChanged: onChange,
       ),
     );
   }

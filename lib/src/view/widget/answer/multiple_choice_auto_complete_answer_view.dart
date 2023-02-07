@@ -6,7 +6,6 @@ import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/step_view.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
 
 class MultipleChoiceAutoCompleteAnswerView extends StatefulWidget {
@@ -45,101 +44,89 @@ class _MultipleChoiceAutoCompleteAnswerViewState
   // TODO(marvin): refactor the widgets and organize, DRY also
   @override
   Widget build(BuildContext context) {
-    return StepView(
-      step: widget.questionStep,
-      resultFunction: () => StepResult<List<TextChoice>>(
-        id: widget.questionStep.id,
-        startTime: startDate,
-        endTime: DateTime.now(),
-        valueIdentifier:
-            _selectedChoices.map((choices) => choices.value).join(','),
-        result: _selectedChoices,
-      ),
-      isValid: !widget.questionStep.isMandatory || _selectedChoices.isNotEmpty,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0),
-        child: Column(
-          children: [
-            _AutoComplete(
-              suggestions: _multipleChoiceAnswer.suggestions,
-              onSelected: onChoiceSelected,
-              selectedChoices: _selectedChoices,
-            ),
-            const SizedBox(
-              height: 32,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+      child: Column(
+        children: [
+          _AutoComplete(
+            suggestions: _multipleChoiceAnswer.suggestions,
+            onSelected: onChoiceSelected,
+            selectedChoices: _selectedChoices,
+          ),
+          const SizedBox(
+            height: 32,
+          ),
+          const Divider(
+            color: Colors.grey,
+          ),
+          ..._multipleChoiceAnswer.textChoices
+              .map(
+                (TextChoice tc) => SelectionListTile(
+                  text: tc.value,
+                  onTap: () => onChoiceSelected(tc),
+                  isSelected: _selectedChoices.contains(tc),
+                ),
+              )
+              .toList(),
+          ..._selectedChoices
+              .where(
+                (element) =>
+                    !_multipleChoiceAnswer.textChoices.contains(element),
+              )
+              .map(
+                (TextChoice tc) => SelectionListTile(
+                  text: tc.value,
+                  onTap: () => onChoiceSelected(tc),
+                  isSelected: _selectedChoices.contains(tc),
+                ),
+              )
+              .toList(),
+          if (_multipleChoiceAnswer.otherField) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14.0),
+              child: ListTile(
+                title: TextField(
+                  onChanged: (v) {
+                    int? currentIndex;
+                    final otherTextChoice = _selectedChoices
+                        .firstWhereIndexedOrNull((index, element) {
+                      final isOtherField = element.value == 'Other';
+
+                      if (isOtherField) {
+                        currentIndex = index;
+                      }
+
+                      return isOtherField;
+                    });
+
+                    setState(() {
+                      if (v.isEmpty && otherTextChoice != null) {
+                        _selectedChoices.remove(otherTextChoice);
+                      } else if (v.isNotEmpty) {
+                        final updatedTextChoice =
+                            TextChoice(id: 'Other', value: v, text: v);
+                        if (otherTextChoice == null) {
+                          _selectedChoices.add(updatedTextChoice);
+                        } else if (currentIndex != null) {
+                          _selectedChoices[currentIndex!] = updatedTextChoice;
+                        }
+                      }
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Other',
+                    labelStyle: Theme.of(context).textTheme.headlineSmall,
+                    hintText: 'Write other information here',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                  ),
+                ),
+              ),
             ),
             const Divider(
               color: Colors.grey,
             ),
-            ..._multipleChoiceAnswer.textChoices
-                .map(
-                  (TextChoice tc) => SelectionListTile(
-                    text: tc.value,
-                    onTap: () => onChoiceSelected(tc),
-                    isSelected: _selectedChoices.contains(tc),
-                  ),
-                )
-                .toList(),
-            ..._selectedChoices
-                .where(
-                  (element) =>
-                      !_multipleChoiceAnswer.textChoices.contains(element),
-                )
-                .map(
-                  (TextChoice tc) => SelectionListTile(
-                    text: tc.value,
-                    onTap: () => onChoiceSelected(tc),
-                    isSelected: _selectedChoices.contains(tc),
-                  ),
-                )
-                .toList(),
-            if (_multipleChoiceAnswer.otherField) ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                child: ListTile(
-                  title: TextField(
-                    onChanged: (v) {
-                      int? currentIndex;
-                      final otherTextChoice = _selectedChoices
-                          .firstWhereIndexedOrNull((index, element) {
-                        final isOtherField = element.value == 'Other';
-
-                        if (isOtherField) {
-                          currentIndex = index;
-                        }
-
-                        return isOtherField;
-                      });
-
-                      setState(() {
-                        if (v.isEmpty && otherTextChoice != null) {
-                          _selectedChoices.remove(otherTextChoice);
-                        } else if (v.isNotEmpty) {
-                          final updatedTextChoice =
-                              TextChoice(id: 'Other', value: v, text: v);
-                          if (otherTextChoice == null) {
-                            _selectedChoices.add(updatedTextChoice);
-                          } else if (currentIndex != null) {
-                            _selectedChoices[currentIndex!] = updatedTextChoice;
-                          }
-                        }
-                      });
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Other',
-                      labelStyle: Theme.of(context).textTheme.headlineSmall,
-                      hintText: 'Write other information here',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                    ),
-                  ),
-                ),
-              ),
-              const Divider(
-                color: Colors.grey,
-              ),
-            ],
           ],
-        ),
+        ],
       ),
     );
   }

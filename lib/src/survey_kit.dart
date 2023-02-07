@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
-import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/result/survey_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
@@ -19,10 +18,8 @@ import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 typedef StepShell = Widget Function(
   Step step,
-  Widget child,
-  StepResult Function()? stepResult,
-  bool isValid,
-  SurveyController? surveyController,
+  Widget? answerWidget,
+  BuildContext context,
 );
 
 class SurveyKit extends StatefulWidget {

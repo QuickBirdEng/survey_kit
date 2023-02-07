@@ -3,7 +3,7 @@ import 'package:survey_kit/src/model/answer/integer_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/step_view.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 import 'package:survey_kit/src/view/widget/decoration/input_decoration.dart';
 
 class IntegerAnswerView extends StatefulWidget {
@@ -21,11 +21,9 @@ class IntegerAnswerView extends StatefulWidget {
 }
 
 class _IntegerAnswerViewState extends State<IntegerAnswerView>
-    with MeasureDateStateMixin {
+    with MeasureDateStateMixin, AnswerMixin<IntegerAnswerView, int> {
   late final IntegerAnswerFormat _integerAnswerFormat;
   late final TextEditingController _controller;
-
-  bool _isValid = false;
 
   @override
   void initState() {
@@ -37,7 +35,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView>
     _integerAnswerFormat = answer as IntegerAnswerFormat;
     _controller = TextEditingController();
     _controller.text = widget.result?.result?.toString() ?? '';
-    _checkValidation(_controller.text);
+    isValid(int.tryParse(_controller.text));
   }
 
   @override
@@ -46,44 +44,36 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView>
     super.dispose();
   }
 
-  void _checkValidation(String text) {
-    setState(() {
-      final value = int.tryParse(text);
-      _isValid = text.isNotEmpty &&
-          value != null &&
-          value >= _integerAnswerFormat.min &&
-          value <= _integerAnswerFormat.max;
-    });
+  @override
+  bool isValid(int? value) {
+    return value != null &&
+        value >= _integerAnswerFormat.min &&
+        value <= _integerAnswerFormat.max;
   }
 
   @override
   Widget build(BuildContext context) {
-    return StepView(
-      step: widget.questionStep,
-      resultFunction: () => StepResult<int>(
-        id: widget.questionStep.id,
-        startTime: startDate,
-        endTime: DateTime.now(),
-        valueIdentifier: _controller.text,
-        result:
-            int.tryParse(_controller.text) ?? _integerAnswerFormat.defaultValue,
-      ),
-      isValid: _isValid || !widget.questionStep.isMandatory,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 32.0),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: TextField(
-            textInputAction: TextInputAction.next,
-            autofocus: true,
-            decoration: textFieldInputDecoration(
-              hint: _integerAnswerFormat.hint,
-            ),
-            controller: _controller,
-            onChanged: _checkValidation,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: TextField(
+          textInputAction: TextInputAction.next,
+          autofocus: true,
+          decoration: textFieldInputDecoration(
+            hint: _integerAnswerFormat.hint,
           ),
+          controller: _controller,
+          onChanged: (String text) {
+            final number = int.tryParse(text);
+            if (number == null) {
+              onValidationChanged = false;
+              return;
+            }
+            onChange(number);
+          },
+          keyboardType: TextInputType.number,
+          textAlign: TextAlign.center,
         ),
       ),
     );

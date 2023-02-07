@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 typedef StepShell = Widget Function({
@@ -12,18 +11,14 @@ typedef StepShell = Widget Function({
 
 class StepView extends StatefulWidget {
   final Step step;
-  final Widget? child;
-  final StepResult Function()? resultFunction;
-  final bool isValid;
+  final Widget? answerView;
   final SurveyController? controller;
 
   const StepView({
     super.key,
     required this.step,
-    this.child,
-    this.resultFunction,
+    this.answerView,
     this.controller,
-    this.isValid = true,
   });
 
   @override
@@ -39,17 +34,7 @@ class _StepViewState extends State<StepView> {
     final _surveyController =
         widget.controller ?? surveyConfiguration.surveyController;
 
-    final stepShell = SurveyPresenterInherited.of(context).stepShell;
-
-    if (stepShell != null) {
-      return stepShell.call(
-        widget.step,
-        widget.child ?? Container(),
-        widget.resultFunction,
-        widget.isValid,
-        _surveyController,
-      );
-    }
+    final questionAnswer = QuestionAnswer.of(context);
 
     return ColoredBox(
       color: Theme.of(context).colorScheme.background,
@@ -63,25 +48,17 @@ class _StepViewState extends State<StepView> {
                 content: widget.step.content,
               ),
             ),
-            if (widget.child != null)
+            if (widget.answerView != null)
               Expanded(
-                child: widget.child!,
+                child: widget.answerView!,
               ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 14),
               child: OutlinedButton(
-                onPressed: widget.isValid || !widget.step.isMandatory
+                onPressed: questionAnswer.isValid || !widget.step.isMandatory
                     ? () => _surveyController.nextStep(
                           context,
-                          widget.resultFunction ??
-                              () {
-                                return StepResult<void>(
-                                  id: widget.step.id,
-                                  result: null,
-                                  endTime: DateTime.now(),
-                                  startTime: startTime,
-                                );
-                              },
+                          questionAnswer.stepResult,
                         )
                     : null,
                 child: Text(

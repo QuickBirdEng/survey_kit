@@ -7,7 +7,7 @@ abstract class SurveyEvent {
 class StartSurvey extends SurveyEvent {}
 
 class NextStep extends SurveyEvent {
-  final StepResult questionResult;
+  final StepResult? questionResult;
 
   NextStep(this.questionResult);
 }

@@ -4,7 +4,6 @@ import 'package:survey_kit/src/model/answer/image_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
-import 'package:survey_kit/src/view/step_view.dart';
 
 class ImageAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -24,7 +23,6 @@ class _ImageAnswerViewState extends State<ImageAnswerView>
     with MeasureDateStateMixin {
   late final ImageAnswerFormat _imageAnswerFormat;
 
-  final bool _isValid = false;
   String filePath = '';
 
   @override
@@ -44,49 +42,38 @@ class _ImageAnswerViewState extends State<ImageAnswerView>
 
   @override
   Widget build(BuildContext context) {
-    return StepView(
-      step: widget.questionStep,
-      resultFunction: () => StepResult<String>(
-        id: widget.questionStep.id,
-        startTime: startDate,
-        endTime: DateTime.now(),
-        valueIdentifier: filePath,
-        result: filePath,
-      ),
-      isValid: _isValid || !widget.questionStep.isMandatory,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 32.0),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 32.0,
-              vertical: 8.0,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: _optionsDialogBox,
-                  child: Text(_imageAnswerFormat.buttonText),
-                ),
-                if (filePath.isNotEmpty)
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        filePath.split('/')[filePath.split('/').length - 1],
-                        style: const TextStyle(
-                          fontSize: 12,
-                        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 32.0,
+            vertical: 8.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: _optionsDialogBox,
+                child: Text(_imageAnswerFormat.buttonText),
+              ),
+              if (filePath.isNotEmpty)
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      filePath.split('/')[filePath.split('/').length - 1],
+                      style: const TextStyle(
+                        fontSize: 12,
                       ),
                     ),
-                  )
-                else
-                  const SizedBox(),
-              ],
-            ),
+                  ),
+                )
+              else
+                const SizedBox(),
+            ],
           ),
         ),
       ),
