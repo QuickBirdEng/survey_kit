@@ -53,6 +53,7 @@ class _MyAppState extends State<MyApp> {
   Future<Task> getSampleTask() {
     final task = NavigableTask(
       steps: [
+        Step(content: [const TextContent(text: 'Welcome to the Survey')]),
         // Migrate and just use Step
         InstructionStep(
           title: 'Welcome to the\nQuickBird\nHealth Survey',

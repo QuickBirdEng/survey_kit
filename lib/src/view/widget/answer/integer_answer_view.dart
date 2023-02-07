@@ -4,7 +4,6 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/step_view.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 import 'package:survey_kit/src/view/widget/decoration/input_decoration.dart';
 
 class IntegerAnswerView extends StatefulWidget {
@@ -74,23 +73,16 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView>
         padding: const EdgeInsets.symmetric(vertical: 32.0),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              ContentWidget(
-                content: widget.questionStep.content,
-              ),
-              TextField(
-                textInputAction: TextInputAction.next,
-                autofocus: true,
-                decoration: textFieldInputDecoration(
-                  hint: _integerAnswerFormat.hint,
-                ),
-                controller: _controller,
-                onChanged: _checkValidation,
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-              ),
-            ],
+          child: TextField(
+            textInputAction: TextInputAction.next,
+            autofocus: true,
+            decoration: textFieldInputDecoration(
+              hint: _integerAnswerFormat.hint,
+            ),
+            controller: _controller,
+            onChanged: _checkValidation,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
           ),
         ),
       ),

@@ -17,17 +17,20 @@ class ContentWidget extends StatefulWidget {
 class _ContentWidgetState extends State<ContentWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: widget.content
-          .map(
-            (e) => e.createWidget(),
-          )
-          .withSeparator(
-            const _Separator(
-              height: 14,
-            ),
-          )
-          .toList(),
+    return SizedBox.expand(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: widget.content
+            .map(
+              (e) => e.createWidget(),
+            )
+            .withSeparator(
+              const _Separator(
+                height: 14,
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }

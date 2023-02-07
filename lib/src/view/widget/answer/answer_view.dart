@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/view/step_view.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class AnswerView extends StatelessWidget {
@@ -20,9 +19,6 @@ class AnswerView extends StatelessWidget {
     if (answer == null) {
       return StepView(
         step: step,
-        child: ContentWidget(
-          content: step.content,
-        ),
       );
     }
 
@@ -33,6 +29,7 @@ class AnswerView extends StatelessWidget {
     if (answer == null) {
       throw Exception('Answer is null');
     }
+
     return answer!.createView(step, stepResult);
   }
 }

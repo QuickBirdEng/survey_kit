@@ -6,7 +6,6 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/step_view.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 
 class DateAnswerView extends StatefulWidget {
   /// [QuestionStep] which includes the [DateAnswerFormat]
@@ -58,9 +57,6 @@ class _DateAnswerViewState extends State<DateAnswerView>
       isValid: !widget.questionStep.isMandatory || _result != null,
       child: Column(
         children: [
-          ContentWidget(
-            content: widget.questionStep.content,
-          ),
           if (Theme.of(context).platform == TargetPlatform.iOS)
             _iosDatePicker()
           else

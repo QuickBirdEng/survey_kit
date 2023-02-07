@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 typedef StepShell = Widget Function({
@@ -11,7 +12,7 @@ typedef StepShell = Widget Function({
 
 class StepView extends StatefulWidget {
   final Step step;
-  final Widget child;
+  final Widget? child;
   final StepResult Function()? resultFunction;
   final bool isValid;
   final SurveyController? controller;
@@ -19,7 +20,7 @@ class StepView extends StatefulWidget {
   const StepView({
     super.key,
     required this.step,
-    required this.child,
+    this.child,
     this.resultFunction,
     this.controller,
     this.isValid = true,
@@ -43,60 +44,56 @@ class _StepViewState extends State<StepView> {
     if (stepShell != null) {
       return stepShell.call(
         widget.step,
-        widget.child,
+        widget.child ?? Container(),
         widget.resultFunction,
         widget.isValid,
         _surveyController,
       );
     }
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
-      ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return Center(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 600),
-              child: SingleChildScrollView(
-                padding: SurveyConfiguration.of(context).padding,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    widget.child,
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 32.0),
-                      child: OutlinedButton(
-                        onPressed: widget.isValid || !widget.step.isMandatory
-                            ? () => _surveyController.nextStep(
-                                  context,
-                                  widget.resultFunction ??
-                                      () {
-                                        return StepResult<void>(
-                                          id: widget.step.id,
-                                          result: null,
-                                          endTime: DateTime.now(),
-                                          startTime: startTime,
-                                        );
-                                      },
-                                )
-                            : null,
-                        child: Text(
-                          widget.step.buttonText ??
-                              surveyConfiguration.localizations?['next']
-                                  ?.toUpperCase() ??
-                              'Next',
-                        ),
-                      ),
-                    ),
-                  ],
+    return ColoredBox(
+      color: Theme.of(context).colorScheme.background,
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: ContentWidget(
+                content: widget.step.content,
+              ),
+            ),
+            if (widget.child != null)
+              Expanded(
+                child: widget.child!,
+              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: OutlinedButton(
+                onPressed: widget.isValid || !widget.step.isMandatory
+                    ? () => _surveyController.nextStep(
+                          context,
+                          widget.resultFunction ??
+                              () {
+                                return StepResult<void>(
+                                  id: widget.step.id,
+                                  result: null,
+                                  endTime: DateTime.now(),
+                                  startTime: startTime,
+                                );
+                              },
+                        )
+                    : null,
+                child: Text(
+                  widget.step.buttonText ??
+                      surveyConfiguration.localizations?['next']
+                          ?.toUpperCase() ??
+                      'Next',
                 ),
               ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

@@ -6,7 +6,6 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/step_view.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 
 class SingleChoiceAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -55,35 +54,25 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32.0),
-              child: ContentWidget(
-                content: widget.questionStep.content,
-              ),
+            const Divider(
+              color: Colors.grey,
             ),
-            Column(
-              children: [
-                const Divider(
-                  color: Colors.grey,
-                ),
-                ..._singleChoiceAnswerFormat.textChoices.map(
-                  (TextChoice tc) {
-                    return SelectionListTile(
-                      text: tc.value,
-                      onTap: () {
-                        if (_selectedChoice == tc) {
-                          _selectedChoice = null;
-                        } else {
-                          _selectedChoice = tc;
-                        }
-                        setState(() {});
-                      },
-                      isSelected: _selectedChoice == tc,
-                    );
+            ..._singleChoiceAnswerFormat.textChoices.map(
+              (TextChoice tc) {
+                return SelectionListTile(
+                  text: tc.value,
+                  onTap: () {
+                    if (_selectedChoice == tc) {
+                      _selectedChoice = null;
+                    } else {
+                      _selectedChoice = tc;
+                    }
+                    setState(() {});
                   },
-                ).toList(),
-              ],
-            ),
+                  isSelected: _selectedChoice == tc,
+                );
+              },
+            ).toList(),
           ],
         ),
       ),

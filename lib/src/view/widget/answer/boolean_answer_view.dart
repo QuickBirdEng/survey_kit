@@ -5,7 +5,6 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/step_view.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 
 class BooleanAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -56,39 +55,32 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
       isValid: !widget.questionStep.isMandatory || _result != null,
       child: Column(
         children: [
-          Column(
-            children: [
-              ContentWidget(
-                content: widget.questionStep.content,
-              ),
-              const Divider(
-                color: Colors.grey,
-              ),
-              SelectionListTile(
-                text: _answerFormat.positiveAnswer,
-                onTap: () {
-                  if (_result == BooleanResult.positive) {
-                    _result = null;
-                  } else {
-                    _result = BooleanResult.positive;
-                  }
-                  setState(() {});
-                },
-                isSelected: _result == BooleanResult.positive,
-              ),
-              SelectionListTile(
-                text: _answerFormat.negativeAnswer,
-                onTap: () {
-                  if (_result == BooleanResult.negative) {
-                    _result = null;
-                  } else {
-                    _result = BooleanResult.negative;
-                  }
-                  setState(() {});
-                },
-                isSelected: _result == BooleanResult.negative,
-              ),
-            ],
+          const Divider(
+            color: Colors.grey,
+          ),
+          SelectionListTile(
+            text: _answerFormat.positiveAnswer,
+            onTap: () {
+              if (_result == BooleanResult.positive) {
+                _result = null;
+              } else {
+                _result = BooleanResult.positive;
+              }
+              setState(() {});
+            },
+            isSelected: _result == BooleanResult.positive,
+          ),
+          SelectionListTile(
+            text: _answerFormat.negativeAnswer,
+            onTap: () {
+              if (_result == BooleanResult.negative) {
+                _result = null;
+              } else {
+                _result = BooleanResult.negative;
+              }
+              setState(() {});
+            },
+            isSelected: _result == BooleanResult.negative,
           ),
         ],
       ),

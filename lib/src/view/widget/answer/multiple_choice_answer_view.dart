@@ -7,7 +7,6 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/step_view.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -59,81 +58,73 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Column(
           children: [
-            ContentWidget(
-              content: widget.questionStep.content,
+            const Divider(
+              color: Colors.grey,
             ),
-            Column(
-              children: [
-                const Divider(
-                  color: Colors.grey,
-                ),
-                ..._multipleChoiceAnswer.textChoices
-                    .map(
-                      (TextChoice tc) => SelectionListTile(
-                        text: tc.value,
-                        onTap: () {
-                          setState(
-                            () {
-                              if (_selectedChoices.contains(tc)) {
-                                _selectedChoices.remove(tc);
-                              } else {
-                                _selectedChoices = [..._selectedChoices, tc];
-                              }
-                            },
-                          );
+            ..._multipleChoiceAnswer.textChoices
+                .map(
+                  (TextChoice tc) => SelectionListTile(
+                    text: tc.value,
+                    onTap: () {
+                      setState(
+                        () {
+                          if (_selectedChoices.contains(tc)) {
+                            _selectedChoices.remove(tc);
+                          } else {
+                            _selectedChoices = [..._selectedChoices, tc];
+                          }
                         },
-                        isSelected: _selectedChoices.contains(tc),
-                      ),
-                    )
-                    .toList(),
-                if (_multipleChoiceAnswer.otherField) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                    child: ListTile(
-                      title: TextField(
-                        onChanged: (v) {
-                          int? currentIndex;
-                          final otherTextChoice = _selectedChoices
-                              .firstWhereIndexedOrNull((index, element) {
-                            final isOtherField = element.value == 'Other';
+                      );
+                    },
+                    isSelected: _selectedChoices.contains(tc),
+                  ),
+                )
+                .toList(),
+            if (_multipleChoiceAnswer.otherField) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                child: ListTile(
+                  title: TextField(
+                    onChanged: (v) {
+                      int? currentIndex;
+                      final otherTextChoice = _selectedChoices
+                          .firstWhereIndexedOrNull((index, element) {
+                        final isOtherField = element.value == 'Other';
 
-                            if (isOtherField) {
-                              currentIndex = index;
-                            }
+                        if (isOtherField) {
+                          currentIndex = index;
+                        }
 
-                            return isOtherField;
-                          });
+                        return isOtherField;
+                      });
 
-                          setState(() {
-                            if (v.isEmpty && otherTextChoice != null) {
-                              _selectedChoices.remove(otherTextChoice);
-                            } else if (v.isNotEmpty) {
-                              final updatedTextChoice =
-                                  TextChoice(id: 'Other', value: v, text: v);
-                              if (otherTextChoice == null) {
-                                _selectedChoices.add(updatedTextChoice);
-                              } else if (currentIndex != null) {
-                                _selectedChoices[currentIndex!] =
-                                    updatedTextChoice;
-                              }
-                            }
-                          });
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Other',
-                          labelStyle: Theme.of(context).textTheme.headlineSmall,
-                          hintText: 'Write other information here',
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                        ),
-                      ),
+                      setState(() {
+                        if (v.isEmpty && otherTextChoice != null) {
+                          _selectedChoices.remove(otherTextChoice);
+                        } else if (v.isNotEmpty) {
+                          final updatedTextChoice =
+                              TextChoice(id: 'Other', value: v, text: v);
+                          if (otherTextChoice == null) {
+                            _selectedChoices.add(updatedTextChoice);
+                          } else if (currentIndex != null) {
+                            _selectedChoices[currentIndex!] = updatedTextChoice;
+                          }
+                        }
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Other',
+                      labelStyle: Theme.of(context).textTheme.headlineSmall,
+                      hintText: 'Write other information here',
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
                   ),
-                  const Divider(
-                    color: Colors.grey,
-                  ),
-                ],
-              ],
-            ),
+                ),
+              ),
+              const Divider(
+                color: Colors.grey,
+              ),
+            ],
           ],
         ),
       ),

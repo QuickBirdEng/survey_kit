@@ -6,7 +6,6 @@ import 'package:survey_kit/src/model/result/time_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/step_view.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 
 class TimeAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -61,18 +60,9 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
         result: _result,
       ),
       isValid: !widget.questionStep.isMandatory || _result != null,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 14.0),
-            child: ContentWidget(
-              content: widget.questionStep.content,
-            ),
-          ),
+      child:
           // TODO(marvin): Create new time picker,
-          _iosTimePicker()
-        ],
-      ),
+          _iosTimePicker(),
     );
   }
 

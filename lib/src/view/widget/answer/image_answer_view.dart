@@ -5,7 +5,6 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/step_view.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 
 class ImageAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -59,42 +58,35 @@ class _ImageAnswerViewState extends State<ImageAnswerView>
         padding: const EdgeInsets.symmetric(vertical: 32.0),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              ContentWidget(
-                content: widget.questionStep.content,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32.0,
-                  vertical: 8.0,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32.0,
+              vertical: 8.0,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: _optionsDialogBox,
+                  child: Text(_imageAnswerFormat.buttonText),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: _optionsDialogBox,
-                      child: Text(_imageAnswerFormat.buttonText),
-                    ),
-                    if (filePath.isNotEmpty)
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            filePath.split('/')[filePath.split('/').length - 1],
-                            style: const TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
+                if (filePath.isNotEmpty)
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        filePath.split('/')[filePath.split('/').length - 1],
+                        style: const TextStyle(
+                          fontSize: 12,
                         ),
-                      )
-                    else
-                      const SizedBox(),
-                  ],
-                ),
-              ),
-            ],
+                      ),
+                    ),
+                  )
+                else
+                  const SizedBox(),
+              ],
+            ),
           ),
         ),
       ),

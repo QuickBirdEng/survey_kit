@@ -4,7 +4,6 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/step_view.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 import 'package:survey_kit/src/view/widget/decoration/input_decoration.dart';
 
 class TextAnswerView extends StatefulWidget {
@@ -70,30 +69,19 @@ class _TextAnswerViewState extends State<TextAnswerView>
         result: _controller.text,
       ),
       isValid: _isValid || !widget.questionStep.isMandatory,
-      child: Column(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(bottom: 32.0, left: 14.0, right: 14.0),
-            child: ContentWidget(
-              content: widget.questionStep.content,
-            ),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 50.0,
+        child: TextField(
+          textInputAction: TextInputAction.next,
+          autofocus: true,
+          decoration: textFieldInputDecoration(
+            hint: _textAnswerFormat.hint,
           ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50.0,
-            child: TextField(
-              textInputAction: TextInputAction.next,
-              autofocus: true,
-              decoration: textFieldInputDecoration(
-                hint: _textAnswerFormat.hint,
-              ),
-              controller: _controller,
-              textAlign: TextAlign.center,
-              onChanged: _checkValidation,
-            ),
-          ),
-        ],
+          controller: _controller,
+          textAlign: TextAlign.center,
+          onChanged: _checkValidation,
+        ),
       ),
     );
   }

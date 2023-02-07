@@ -5,7 +5,6 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/step_view.dart';
-import 'package:survey_kit/src/view/widget/content/content_widget.dart';
 
 class MultipleDoubleAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -87,44 +86,34 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView>
         padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32.0),
-              child: ContentWidget(
-                content: widget.questionStep.content,
-              ),
+            const Divider(
+              color: Colors.grey,
             ),
-            Column(
-              children: [
-                const Divider(
-                  color: Colors.grey,
+            ..._multipleDoubleAnswer.hints
+                .asMap()
+                .entries
+                .map((MapEntry<int, String> md) {
+              return TextField(
+                textInputAction: TextInputAction.next,
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: md.value,
                 ),
-                ..._multipleDoubleAnswer.hints
-                    .asMap()
-                    .entries
-                    .map((MapEntry<int, String> md) {
-                  return TextField(
-                    textInputAction: TextInputAction.next,
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      labelText: md.value,
-                    ),
-                    controller: _controller[md.key],
-                    onChanged: (String value) {
-                      value = value.replaceAll(',', '.');
+                controller: _controller[md.key],
+                onChanged: (String value) {
+                  value = value.replaceAll(',', '.');
 
-                      _checkValidation(value);
+                  _checkValidation(value);
 
-                      _insertedValues[md.key] = MultiDouble(
-                        text: md.value,
-                        value: double.parse(value),
-                      );
-                    },
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
+                  _insertedValues[md.key] = MultiDouble(
+                    text: md.value,
+                    value: double.parse(value),
                   );
-                }).toList(),
-              ],
-            )
+                },
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+              );
+            }).toList(),
           ],
         ),
       ),
