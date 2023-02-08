@@ -6,9 +6,10 @@ class ContentWidget extends StatefulWidget {
   const ContentWidget({
     super.key,
     required this.content,
+    this.center = true,
   });
-
   final List<Content> content;
+  final bool center;
 
   @override
   State<ContentWidget> createState() => _ContentWidgetState();
@@ -17,7 +18,7 @@ class ContentWidget extends StatefulWidget {
 class _ContentWidgetState extends State<ContentWidget> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
+    final contentView = SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: widget.content
@@ -32,6 +33,8 @@ class _ContentWidgetState extends State<ContentWidget> {
             .toList(),
       ),
     );
+
+    return widget.center ? Center(child: contentView) : contentView;
   }
 }
 
