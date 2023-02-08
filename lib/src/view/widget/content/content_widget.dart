@@ -7,9 +7,11 @@ class ContentWidget extends StatefulWidget {
     super.key,
     required this.content,
     this.center = true,
+    this.padding = const EdgeInsets.all(16),
   });
   final List<Content> content;
   final bool center;
+  final EdgeInsets padding;
 
   @override
   State<ContentWidget> createState() => _ContentWidgetState();
@@ -19,6 +21,7 @@ class _ContentWidgetState extends State<ContentWidget> {
   @override
   Widget build(BuildContext context) {
     final contentView = SingleChildScrollView(
+      padding: widget.padding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: widget.content
