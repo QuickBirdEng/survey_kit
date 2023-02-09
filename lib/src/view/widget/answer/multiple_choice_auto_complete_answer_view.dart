@@ -62,7 +62,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
           ..._multipleChoiceAnswer.textChoices
               .map(
                 (TextChoice tc) => SelectionListTile(
-                  text: tc.value,
+                  text: tc.text,
                   onTap: () => onChoiceSelected(tc),
                   isSelected: _selectedChoices.contains(tc),
                 ),
@@ -75,7 +75,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
               )
               .map(
                 (TextChoice tc) => SelectionListTile(
-                  text: tc.value,
+                  text: tc.text,
                   onTap: () => onChoiceSelected(tc),
                   isSelected: _selectedChoices.contains(tc),
                 ),
@@ -185,14 +185,14 @@ class _AutoComplete extends StatelessWidget {
         onSelected: onSelected,
         selectedChoices: selectedChoices,
       ),
-      displayStringForOption: (tc) => tc.value,
+      displayStringForOption: (tc) => tc.text,
       optionsBuilder: (textEditingValue) {
         if (textEditingValue.text == '') {
           return const Iterable<TextChoice>.empty();
         }
 
         return suggestions.where(
-          (element) => element.value
+          (element) => element.text
               .toLowerCase()
               .contains(textEditingValue.text.toLowerCase()),
         );
@@ -248,7 +248,7 @@ class _OptionsViewBuilder extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(option.value),
+                            Text(option.text),
                             if (selectedChoices.contains(option))
                               const Icon(Icons.done)
                           ],

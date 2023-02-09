@@ -59,7 +59,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
           ..._multipleChoiceAnswer.textChoices
               .map(
                 (TextChoice tc) => SelectionListTile(
-                  text: tc.value,
+                  text: tc.text,
                   onTap: () {
                     setState(
                       () {

@@ -49,7 +49,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
           ..._singleChoiceAnswerFormat.textChoices.map(
             (TextChoice tc) {
               return SelectionListTile(
-                text: tc.value,
+                text: tc.text,
                 onTap: () {
                   if (_selectedChoice == tc) {
                     _selectedChoice = null;

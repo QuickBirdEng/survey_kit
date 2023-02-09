@@ -7,12 +7,12 @@ part 'text_choice.g.dart';
 class TextChoice {
   final String id;
   final String text;
-  final String value;
+  final String? value;
 
   TextChoice({
     String? id,
     required this.text,
-    required this.value,
+    this.value,
   }) : id = id ?? const Uuid().v4();
 
   factory TextChoice.fromJson(Map<String, dynamic> json) =>
