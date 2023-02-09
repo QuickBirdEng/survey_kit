@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/answer/answer_format.dart';
 import 'package:survey_kit/src/model/content/content.dart';
+import 'package:survey_kit/src/survey_kit.dart';
 import 'package:uuid/uuid.dart';
 
 part 'step.g.dart';
@@ -12,6 +13,8 @@ class Step {
   final AnswerFormat? answerFormat;
   final String? buttonText;
   final List<Content> content;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final StepShell? stepShell;
 
   Step({
     String? id,
@@ -19,6 +22,7 @@ class Step {
     this.isMandatory = true,
     this.answerFormat,
     this.buttonText,
+    this.stepShell,
   }) : id = id ?? const Uuid().v4();
 
   factory Step.fromJson(Map<String, dynamic> json) => _$StepFromJson(json);

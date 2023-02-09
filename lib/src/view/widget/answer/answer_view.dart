@@ -20,7 +20,8 @@ class AnswerView extends StatelessWidget {
     if (answer != null) {
       answerView = answer!.createView(step, stepResult);
     }
-    final stepShell = SurveyPresenterInherited.of(context).stepShell;
+    final stepShell =
+        step.stepShell ?? SurveyPresenterInherited.of(context).stepShell;
 
     return QuestionAnswer<dynamic>(
       step: step,
