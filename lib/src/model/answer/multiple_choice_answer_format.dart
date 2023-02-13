@@ -5,7 +5,7 @@ import 'package:survey_kit/survey_kit.dart';
 part 'multiple_choice_answer_format.g.dart';
 
 @JsonSerializable()
-class MultipleChoiceAnswerFormat implements AnswerFormat {
+class MultipleChoiceAnswerFormat extends AnswerFormat {
   static const String type = 'multi';
 
   final List<TextChoice> textChoices;
@@ -17,6 +17,7 @@ class MultipleChoiceAnswerFormat implements AnswerFormat {
     required this.textChoices,
     this.otherField = false,
     this.defaultSelection,
+    super.question,
   });
 
   factory MultipleChoiceAnswerFormat.fromJson(Map<String, dynamic> json) =>

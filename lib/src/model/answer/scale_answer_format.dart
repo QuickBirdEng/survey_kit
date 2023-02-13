@@ -5,7 +5,7 @@ import 'package:survey_kit/survey_kit.dart';
 part 'scale_answer_format.g.dart';
 
 @JsonSerializable()
-class ScaleAnswerFormat implements AnswerFormat {
+class ScaleAnswerFormat extends AnswerFormat {
   static const String type = 'scale';
 
   final double maximumValue;
@@ -22,6 +22,7 @@ class ScaleAnswerFormat implements AnswerFormat {
     required this.step,
     this.maximumValueDescription = '',
     this.minimumValueDescription = '',
+    super.question,
   }) : super();
 
   factory ScaleAnswerFormat.fromJson(Map<String, dynamic> json) =>

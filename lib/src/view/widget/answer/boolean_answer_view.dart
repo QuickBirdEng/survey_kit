@@ -4,6 +4,7 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
 
 class BooleanAnswerView extends StatefulWidget {
@@ -59,8 +60,10 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
 
   @override
   Widget build(BuildContext context) {
+    final questionText = widget.questionStep.answerFormat?.question;
     return Column(
       children: [
+        if (questionText != null) AnswerQuestionText(text: questionText),
         const Divider(
           color: Colors.grey,
         ),

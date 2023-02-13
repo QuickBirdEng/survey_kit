@@ -5,7 +5,7 @@ import 'package:survey_kit/survey_kit.dart';
 part 'date_answer_format.g.dart';
 
 @JsonSerializable()
-class DateAnswerFormat implements AnswerFormat {
+class DateAnswerFormat extends AnswerFormat {
   static const String type = 'date';
 
   /// Default date which will be preselected on datepicker opening
@@ -21,6 +21,7 @@ class DateAnswerFormat implements AnswerFormat {
     this.defaultDate,
     this.minDate,
     this.maxDate,
+    super.question,
   })  : assert(
           minDate == null || maxDate == null || minDate.isBefore(maxDate),
           'mindate must be before maxdate',

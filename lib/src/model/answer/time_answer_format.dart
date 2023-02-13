@@ -5,7 +5,7 @@ import 'package:survey_kit/survey_kit.dart';
 part 'time_answer_format.g.dart';
 
 @JsonSerializable()
-class TimeAnswerFormat implements AnswerFormat {
+class TimeAnswerFormat extends AnswerFormat {
   static const String type = 'time';
 
   @_TimeOfDayJsonConverter()
@@ -13,6 +13,7 @@ class TimeAnswerFormat implements AnswerFormat {
 
   const TimeAnswerFormat({
     this.defaultValue,
+    super.question,
   }) : super();
 
   factory TimeAnswerFormat.fromJson(Map<String, dynamic> json) =>

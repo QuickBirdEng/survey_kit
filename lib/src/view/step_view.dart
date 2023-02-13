@@ -49,8 +49,9 @@ class _StepViewState extends State<StepView> {
               ),
             ),
             if (widget.answerView != null)
-              Expanded(
-                child: widget.answerView!,
+              Padding(
+                padding: const EdgeInsets.all(14),
+                child: widget.answerView,
               ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 14),

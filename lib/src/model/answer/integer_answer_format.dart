@@ -6,7 +6,7 @@ import 'package:survey_kit/survey_kit.dart';
 part 'integer_answer_format.g.dart';
 
 @JsonSerializable()
-class IntegerAnswerFormat implements AnswerFormat {
+class IntegerAnswerFormat extends AnswerFormat {
   static const String type = 'integer';
 
   final int? defaultValue;
@@ -19,6 +19,7 @@ class IntegerAnswerFormat implements AnswerFormat {
     this.hint = '',
     this.min = minInt,
     this.max = maxInt,
+    super.question,
   }) : super();
 
   factory IntegerAnswerFormat.fromJson(Map<String, dynamic> json) =>

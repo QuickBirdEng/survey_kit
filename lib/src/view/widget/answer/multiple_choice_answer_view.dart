@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
 import 'package:survey_kit/survey_kit.dart';
 
@@ -45,6 +46,8 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
 
   @override
   Widget build(BuildContext context) {
+    final questionText = widget.questionStep.answerFormat?.question;
+
     final _selectedChoices =
         QuestionAnswer.of(context).stepResult?.result as List<TextChoice>? ??
             widget.result?.result as List<TextChoice>? ??
@@ -53,6 +56,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
       padding: const EdgeInsets.symmetric(horizontal: 14.0),
       child: Column(
         children: [
+          if (questionText != null) AnswerQuestionText(text: questionText),
           const Divider(
             color: Colors.grey,
           ),

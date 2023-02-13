@@ -68,14 +68,11 @@ class _MyAppState extends State<MyApp> {
               url:
                   'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             ),
-            TextContent(
-              text: 'Did you like the video? ',
-              fontSize: 20,
-            ),
           ],
           answerFormat: const BooleanAnswerFormat(
             positiveAnswer: 'Yes',
             negativeAnswer: 'No',
+            question: 'Did you like the video?',
           ),
         ),
         Step(
@@ -347,64 +344,64 @@ class SurveyKitView extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       appBar: const AppBarExample(),
-      stepShell: (
-        Step step,
-        Widget? answerWidget,
-        BuildContext context,
-      ) {
-        final questionAnswer = QuestionAnswer.of(context);
-        final surveyConfiguration = SurveyConfiguration.of(context);
-        final surveyController = surveyConfiguration.surveyController;
-        final mediaQuery = MediaQuery.of(context);
+      // stepShell: (
+      //   Step step,
+      //   Widget? answerWidget,
+      //   BuildContext context,
+      // ) {
+      //   final questionAnswer = QuestionAnswer.of(context);
+      //   final surveyConfiguration = SurveyConfiguration.of(context);
+      //   final surveyController = surveyConfiguration.surveyController;
+      //   final mediaQuery = MediaQuery.of(context);
 
-        return ColoredBox(
-          color: const Color(0xFFFFF6F0),
-          child: Column(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 24,
-                  ),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: ContentWidget(
-                        content: step.content,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              if (answerWidget != null) answerWidget,
-              Container(
-                width: double.infinity,
-                height: 80 + mediaQuery.viewPadding.bottom,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: SafeArea(
-                    child: OutlinedButton(
-                      onPressed: questionAnswer.isValid || !step.isMandatory
-                          ? () => surveyController.nextStep(
-                                context,
-                                questionAnswer.stepResult,
-                              )
-                          : null,
-                      child: const Text('Zur Frage'),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+      //   return ColoredBox(
+      //     color: const Color(0xFFFFF6F0),
+      //     child: Column(
+      //       children: [
+      //         Expanded(
+      //           child: Padding(
+      //             padding: const EdgeInsets.symmetric(
+      //               horizontal: 16,
+      //               vertical: 24,
+      //             ),
+      //             child: DecoratedBox(
+      //               decoration: BoxDecoration(
+      //                 color: Colors.white,
+      //                 borderRadius: BorderRadius.circular(8),
+      //               ),
+      //               child: Padding(
+      //                 padding: const EdgeInsets.all(16),
+      //                 child: ContentWidget(
+      //                   content: step.content,
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //         ),
+      //         if (answerWidget != null) answerWidget,
+      //         Container(
+      //           width: double.infinity,
+      //           height: 80 + mediaQuery.viewPadding.bottom,
+      //           color: Colors.white,
+      //           child: Padding(
+      //             padding: const EdgeInsets.all(16),
+      //             child: SafeArea(
+      //               child: OutlinedButton(
+      //                 onPressed: questionAnswer.isValid || !step.isMandatory
+      //                     ? () => surveyController.nextStep(
+      //                           context,
+      //                           questionAnswer.stepResult,
+      //                         )
+      //                     : null,
+      //                 child: const Text('Zur Frage'),
+      //               ),
+      //             ),
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   );
+      // },
     );
   }
 }

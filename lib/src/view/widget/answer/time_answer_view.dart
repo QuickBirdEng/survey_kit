@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/model/result/time_result.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class TimeAnswerView extends StatefulWidget {
@@ -64,9 +65,16 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
 
   @override
   Widget build(BuildContext context) {
+    final questionText = widget.questionStep.answerFormat?.question;
+
     return
         // TODO(marvin): Create new time picker,
-        _iosTimePicker(initialValue);
+        Column(
+      children: [
+        if (questionText != null) AnswerQuestionText(text: questionText),
+        _iosTimePicker(initialValue),
+      ],
+    );
   }
 
   Widget _iosTimePicker(TimeResult timeResult) {

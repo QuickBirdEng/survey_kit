@@ -10,7 +10,7 @@ import 'package:survey_kit/src/view/widget/answer/double_answer_view.dart';
 part 'double_answer_format.g.dart';
 
 @JsonSerializable()
-class DoubleAnswerFormat implements AnswerFormat {
+class DoubleAnswerFormat extends AnswerFormat {
   static const String type = 'double';
 
   final double? defaultValue;
@@ -19,6 +19,7 @@ class DoubleAnswerFormat implements AnswerFormat {
   const DoubleAnswerFormat({
     this.defaultValue,
     this.hint = '',
+    super.question,
   }) : super();
 
   factory DoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>

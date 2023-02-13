@@ -4,6 +4,7 @@ import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
 
 class SingleChoiceAnswerView extends StatefulWidget {
@@ -39,10 +40,13 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
 
   @override
   Widget build(BuildContext context) {
+    final questionText = widget.questionStep.answerFormat?.question;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14.0),
       child: Column(
         children: [
+          if (questionText != null) AnswerQuestionText(text: questionText),
           const Divider(
             color: Colors.grey,
           ),

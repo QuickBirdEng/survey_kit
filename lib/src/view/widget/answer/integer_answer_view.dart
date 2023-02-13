@@ -4,6 +4,7 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/src/view/widget/decoration/input_decoration.dart';
 
 class IntegerAnswerView extends StatefulWidget {
@@ -53,28 +54,35 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView>
 
   @override
   Widget build(BuildContext context) {
+    final questionText = widget.questionStep.answerFormat?.question;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 32.0),
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        child: TextField(
-          textInputAction: TextInputAction.next,
-          autofocus: true,
-          decoration: textFieldInputDecoration(
-            hint: _integerAnswerFormat.hint,
+      child: Column(
+        children: [
+          if (questionText != null) AnswerQuestionText(text: questionText),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: TextField(
+              textInputAction: TextInputAction.next,
+              autofocus: true,
+              decoration: textFieldInputDecoration(
+                hint: _integerAnswerFormat.hint,
+              ),
+              controller: _controller,
+              onChanged: (String text) {
+                final number = int.tryParse(text);
+                if (number == null) {
+                  onValidationChanged = false;
+                  return;
+                }
+                onChange(number);
+              },
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+            ),
           ),
-          controller: _controller,
-          onChanged: (String text) {
-            final number = int.tryParse(text);
-            if (number == null) {
-              onValidationChanged = false;
-              return;
-            }
-            onChange(number);
-          },
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.center,
-        ),
+        ],
       ),
     );
   }

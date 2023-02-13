@@ -5,7 +5,7 @@ import 'package:survey_kit/survey_kit.dart';
 part 'single_choice_answer_format.g.dart';
 
 @JsonSerializable()
-class SingleChoiceAnswerFormat implements AnswerFormat {
+class SingleChoiceAnswerFormat extends AnswerFormat {
   static const String type = 'single';
 
   final List<TextChoice> textChoices;
@@ -14,6 +14,7 @@ class SingleChoiceAnswerFormat implements AnswerFormat {
   const SingleChoiceAnswerFormat({
     required this.textChoices,
     this.defaultSelection,
+    super.question,
   });
 
   factory SingleChoiceAnswerFormat.fromJson(Map<String, dynamic> json) =>

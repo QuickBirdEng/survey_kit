@@ -9,7 +9,7 @@ import 'package:survey_kit/src/view/widget/answer/multiple_choice_auto_complete_
 part 'multiple_choice_auto_complete_answer_format.g.dart';
 
 @JsonSerializable()
-class MultipleChoiceAutoCompleteAnswerFormat implements AnswerFormat {
+class MultipleChoiceAutoCompleteAnswerFormat extends AnswerFormat {
   static const String type = 'multiple_auto_complete';
 
   final List<TextChoice> textChoices;
@@ -25,6 +25,7 @@ class MultipleChoiceAutoCompleteAnswerFormat implements AnswerFormat {
     this.defaultSelection = const [],
     this.suggestions = const [],
     this.otherField = false,
+    super.question,
   }) : super();
 
   factory MultipleChoiceAutoCompleteAnswerFormat.fromJson(

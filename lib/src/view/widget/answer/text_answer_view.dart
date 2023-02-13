@@ -4,6 +4,7 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/src/view/widget/decoration/input_decoration.dart';
 
 class TextAnswerView extends StatefulWidget {
@@ -60,19 +61,26 @@ class _TextAnswerViewState extends State<TextAnswerView>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 50.0,
-      child: TextField(
-        textInputAction: TextInputAction.next,
-        autofocus: true,
-        decoration: textFieldInputDecoration(
-          hint: _textAnswerFormat.hint,
+    final questionText = widget.questionStep.answerFormat?.question;
+
+    return Column(
+      children: [
+        if (questionText != null) AnswerQuestionText(text: questionText),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 50.0,
+          child: TextField(
+            textInputAction: TextInputAction.next,
+            autofocus: true,
+            decoration: textFieldInputDecoration(
+              hint: _textAnswerFormat.hint,
+            ),
+            controller: _controller,
+            textAlign: TextAlign.center,
+            onChanged: onChange,
+          ),
         ),
-        controller: _controller,
-        textAlign: TextAlign.center,
-        onChanged: onChange,
-      ),
+      ],
     );
   }
 }

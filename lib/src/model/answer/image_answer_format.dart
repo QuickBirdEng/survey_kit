@@ -5,7 +5,7 @@ import 'package:survey_kit/survey_kit.dart';
 part 'image_answer_format.g.dart';
 
 @JsonSerializable()
-class ImageAnswerFormat implements AnswerFormat {
+class ImageAnswerFormat extends AnswerFormat {
   static const String type = 'image';
 
   final String? defaultValue;
@@ -14,6 +14,7 @@ class ImageAnswerFormat implements AnswerFormat {
   const ImageAnswerFormat({
     this.defaultValue,
     this.buttonText = 'Image: ',
+    super.question,
   }) : super();
 
   factory ImageAnswerFormat.fromJson(Map<String, dynamic> json) =>

@@ -8,7 +8,7 @@ import 'package:survey_kit/src/view/widget/answer/boolean_answer_view.dart';
 part 'boolean_answer_format.g.dart';
 
 @JsonSerializable()
-class BooleanAnswerFormat implements AnswerFormat {
+class BooleanAnswerFormat extends AnswerFormat {
   static const String type = 'bool';
 
   final String positiveAnswer;
@@ -19,6 +19,7 @@ class BooleanAnswerFormat implements AnswerFormat {
     required this.positiveAnswer,
     required this.negativeAnswer,
     this.result = BooleanResult.none,
+    super.question,
   }) : super();
 
   factory BooleanAnswerFormat.fromJson(Map<String, dynamic> json) =>

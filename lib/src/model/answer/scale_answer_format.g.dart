@@ -14,10 +14,12 @@ ScaleAnswerFormat _$ScaleAnswerFormatFromJson(Map<String, dynamic> json) =>
       step: (json['step'] as num).toDouble(),
       maximumValueDescription: json['maximumValueDescription'] as String? ?? '',
       minimumValueDescription: json['minimumValueDescription'] as String? ?? '',
+      question: json['question'] as String?,
     );
 
 Map<String, dynamic> _$ScaleAnswerFormatToJson(ScaleAnswerFormat instance) =>
     <String, dynamic>{
+      'question': instance.question,
       'maximumValue': instance.maximumValue,
       'minimumValue': instance.minimumValue,
       'defaultValue': instance.defaultValue,

@@ -7,9 +7,13 @@ class SurveyKitVideoPlayer extends StatefulWidget {
   const SurveyKitVideoPlayer({
     super.key,
     required this.videoUrl,
+    this.loop = false,
+    this.autoPlay = false,
   });
 
   final String videoUrl;
+  final bool loop;
+  final bool autoPlay;
 
   @override
   State<SurveyKitVideoPlayer> createState() => _SurveyKitVideoPlayerState();
@@ -27,8 +31,8 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
     )..initialize().then((_) {
         _chewieController = ChewieController(
           videoPlayerController: _controller,
-          autoPlay: true,
-          looping: true,
+          autoPlay: widget.autoPlay,
+          looping: widget.loop,
         );
         setState(() {});
       });

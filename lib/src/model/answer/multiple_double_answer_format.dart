@@ -9,7 +9,7 @@ import 'package:survey_kit/src/view/widget/answer/multiple_double_answer_view.da
 part 'multiple_double_answer_format.g.dart';
 
 @JsonSerializable()
-class MultipleDoubleAnswerFormat implements AnswerFormat {
+class MultipleDoubleAnswerFormat extends AnswerFormat {
   static const String type = 'multiple_double';
 
   final List<MultiDouble>? defaultValues;
@@ -19,6 +19,7 @@ class MultipleDoubleAnswerFormat implements AnswerFormat {
   const MultipleDoubleAnswerFormat({
     this.defaultValues,
     required this.hints,
+    super.question,
   }) : super();
 
   factory MultipleDoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>

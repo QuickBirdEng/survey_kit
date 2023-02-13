@@ -4,6 +4,7 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/src/view/widget/question_answer.dart';
 
 class ScaleAnswerView extends StatefulWidget {
@@ -38,12 +39,14 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
   Widget build(BuildContext context) {
     final result = QuestionAnswer.of(context).stepResult?.result as double? ??
         _scaleAnswerFormat.defaultValue;
+    final questionText = widget.questionStep.answerFormat?.question;
     return Padding(
       padding: const EdgeInsets.all(14.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          if (questionText != null) AnswerQuestionText(text: questionText),
           Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(

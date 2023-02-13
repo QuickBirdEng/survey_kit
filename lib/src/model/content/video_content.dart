@@ -8,10 +8,14 @@ part 'video_content.g.dart';
 @JsonSerializable()
 class VideoContent extends Content {
   final String url;
+  final bool autoPlay;
+  final bool loop;
 
   const VideoContent({
     required this.url,
     super.id,
+    this.autoPlay = false,
+    this.loop = false,
   });
 
   factory VideoContent.fromJson(Map<String, dynamic> json) =>

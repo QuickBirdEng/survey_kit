@@ -12,8 +12,16 @@ class VideoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SurveyKitVideoPlayer(
-      videoUrl: videoContent.url,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        minHeight: 100,
+        maxHeight: 400,
+      ),
+      child: SurveyKitVideoPlayer(
+        videoUrl: videoContent.url,
+        autoPlay: videoContent.autoPlay,
+        loop: videoContent.loop,
+      ),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:survey_kit/survey_kit.dart';
 part 'text_answer_format.g.dart';
 
 @JsonSerializable()
-class TextAnswerFormat implements AnswerFormat {
+class TextAnswerFormat extends AnswerFormat {
   static const String type = 'text';
 
   final int? maxLines;
@@ -24,6 +24,7 @@ class TextAnswerFormat implements AnswerFormat {
     this.maxLines,
     this.hint = '',
     this.validationRegEx = r'^(?!s*$).+',
+    super.question,
   }) : super();
 
   factory TextAnswerFormat.fromJson(Map<String, dynamic> json) =>

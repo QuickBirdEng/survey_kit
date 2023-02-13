@@ -12,11 +12,13 @@ IntegerAnswerFormat _$IntegerAnswerFormatFromJson(Map<String, dynamic> json) =>
       hint: json['hint'] as String? ?? '',
       min: json['min'] as int? ?? minInt,
       max: json['max'] as int? ?? maxInt,
+      question: json['question'] as String?,
     );
 
 Map<String, dynamic> _$IntegerAnswerFormatToJson(
         IntegerAnswerFormat instance) =>
     <String, dynamic>{
+      'question': instance.question,
       'defaultValue': instance.defaultValue,
       'hint': instance.hint,
       'min': instance.min,
