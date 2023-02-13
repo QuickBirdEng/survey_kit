@@ -22,21 +22,18 @@ class _ContentWidgetState extends State<ContentWidget> {
   Widget build(BuildContext context) {
     final contentView = Container(
       width: double.infinity,
-      child: SingleChildScrollView(
-        padding: widget.padding,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: widget.content
-              .map(
-                (e) => e.createWidget(),
-              )
-              .withSeparator(
-                const _Separator(
-                  height: 14,
-                ),
-              )
-              .toList(),
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: widget.content
+            .map(
+              (e) => e.createWidget(),
+            )
+            .withSeparator(
+              const _Separator(
+                height: 14,
+              ),
+            )
+            .toList(),
       ),
     );
 

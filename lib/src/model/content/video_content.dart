@@ -10,12 +10,16 @@ class VideoContent extends Content {
   final String url;
   final bool autoPlay;
   final bool loop;
+  final double? width;
+  final double? height;
 
   const VideoContent({
     required this.url,
     super.id,
     this.autoPlay = false,
     this.loop = false,
+    this.width,
+    this.height,
   });
 
   factory VideoContent.fromJson(Map<String, dynamic> json) =>

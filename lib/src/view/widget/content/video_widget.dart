@@ -13,9 +13,10 @@ class VideoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(
+      constraints: BoxConstraints(
         minHeight: 100,
-        maxHeight: 400,
+        maxHeight: videoContent.height ?? 500,
+        maxWidth: videoContent.width ?? double.infinity,
       ),
       child: SurveyKitVideoPlayer(
         videoUrl: videoContent.url,
