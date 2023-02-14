@@ -7,6 +7,7 @@ part 'text_choice.g.dart';
 class TextChoice {
   final String id;
   final String text;
+  @JsonKey(includeIfNull: false)
   final String? value;
 
   TextChoice({

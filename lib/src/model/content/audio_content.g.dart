@@ -11,8 +11,16 @@ AudioContent _$AudioContentFromJson(Map<String, dynamic> json) => AudioContent(
       id: json['id'] as String?,
     );
 
-Map<String, dynamic> _$AudioContentToJson(AudioContent instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'url': instance.url,
-    };
+Map<String, dynamic> _$AudioContentToJson(AudioContent instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['url'] = instance.url;
+  return val;
+}

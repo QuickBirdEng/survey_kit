@@ -8,6 +8,7 @@ import 'package:survey_kit/src/model/content/video_content.dart';
 
 @JsonSerializable()
 abstract class Content {
+  @JsonKey(includeIfNull: false)
   final String? id;
 
   const Content({this.id});

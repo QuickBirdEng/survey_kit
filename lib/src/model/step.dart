@@ -11,6 +11,7 @@ class Step {
   final String id;
   final bool isMandatory;
   final AnswerFormat? answerFormat;
+  @JsonKey(defaultValue: 'Next', includeIfNull: false)
   final String? buttonText;
   final List<Content> content;
   @JsonKey(includeFromJson: false, includeToJson: false)

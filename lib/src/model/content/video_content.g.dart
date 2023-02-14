@@ -15,12 +15,20 @@ VideoContent _$VideoContentFromJson(Map<String, dynamic> json) => VideoContent(
       height: (json['height'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$VideoContentToJson(VideoContent instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'url': instance.url,
-      'autoPlay': instance.autoPlay,
-      'loop': instance.loop,
-      'width': instance.width,
-      'height': instance.height,
-    };
+Map<String, dynamic> _$VideoContentToJson(VideoContent instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['url'] = instance.url;
+  val['autoPlay'] = instance.autoPlay;
+  val['loop'] = instance.loop;
+  val['width'] = instance.width;
+  val['height'] = instance.height;
+  return val;
+}

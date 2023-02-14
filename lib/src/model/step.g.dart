@@ -15,13 +15,23 @@ Step _$StepFromJson(Map<String, dynamic> json) => Step(
       answerFormat: json['answerFormat'] == null
           ? null
           : AnswerFormat.fromJson(json['answerFormat'] as Map<String, dynamic>),
-      buttonText: json['buttonText'] as String?,
+      buttonText: json['buttonText'] as String? ?? 'Next',
     );
 
-Map<String, dynamic> _$StepToJson(Step instance) => <String, dynamic>{
-      'id': instance.id,
-      'isMandatory': instance.isMandatory,
-      'answerFormat': instance.answerFormat,
-      'buttonText': instance.buttonText,
-      'content': instance.content,
-    };
+Map<String, dynamic> _$StepToJson(Step instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'isMandatory': instance.isMandatory,
+    'answerFormat': instance.answerFormat,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('buttonText', instance.buttonText);
+  val['content'] = instance.content;
+  return val;
+}

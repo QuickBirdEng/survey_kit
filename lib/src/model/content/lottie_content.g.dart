@@ -16,12 +16,20 @@ LottieContent _$LottieContentFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
     );
 
-Map<String, dynamic> _$LottieContentToJson(LottieContent instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'url': instance.url,
-      'asset': instance.asset,
-      'repeat': instance.repeat,
-      'width': instance.width,
-      'height': instance.height,
-    };
+Map<String, dynamic> _$LottieContentToJson(LottieContent instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['url'] = instance.url;
+  val['asset'] = instance.asset;
+  val['repeat'] = instance.repeat;
+  val['width'] = instance.width;
+  val['height'] = instance.height;
+  return val;
+}

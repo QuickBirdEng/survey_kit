@@ -14,13 +14,21 @@ TextContent _$TextContentFromJson(Map<String, dynamic> json) => TextContent(
       id: json['id'] as String?,
     );
 
-Map<String, dynamic> _$TextContentToJson(TextContent instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'text': instance.text,
-      'fontSize': instance.fontSize,
-      'textAlign': _$TextAlignEnumMap[instance.textAlign]!,
-    };
+Map<String, dynamic> _$TextContentToJson(TextContent instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['text'] = instance.text;
+  val['fontSize'] = instance.fontSize;
+  val['textAlign'] = _$TextAlignEnumMap[instance.textAlign]!;
+  return val;
+}
 
 const _$TextAlignEnumMap = {
   TextAlign.left: 'left',

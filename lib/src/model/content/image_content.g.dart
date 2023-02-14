@@ -14,14 +14,22 @@ ImageContent _$ImageContentFromJson(Map<String, dynamic> json) => ImageContent(
       height: (json['height'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$ImageContentToJson(ImageContent instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'url': instance.url,
-      'fit': _$BoxFitEnumMap[instance.fit],
-      'width': instance.width,
-      'height': instance.height,
-    };
+Map<String, dynamic> _$ImageContentToJson(ImageContent instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['url'] = instance.url;
+  val['fit'] = _$BoxFitEnumMap[instance.fit];
+  val['width'] = instance.width;
+  val['height'] = instance.height;
+  return val;
+}
 
 const _$BoxFitEnumMap = {
   BoxFit.fill: 'fill',
