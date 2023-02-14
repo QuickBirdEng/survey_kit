@@ -8,7 +8,8 @@ part of 'lottie_content.dart';
 
 LottieContent _$LottieContentFromJson(Map<String, dynamic> json) =>
     LottieContent(
-      asset: json['asset'] as String,
+      url: json['url'] as String?,
+      asset: json['asset'] as String?,
       repeat: json['repeat'] as bool? ?? false,
       id: json['id'] as String?,
     );
@@ -16,6 +17,7 @@ LottieContent _$LottieContentFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$LottieContentToJson(LottieContent instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'url': instance.url,
       'asset': instance.asset,
       'repeat': instance.repeat,
     };

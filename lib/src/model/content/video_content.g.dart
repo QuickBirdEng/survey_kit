@@ -11,6 +11,8 @@ VideoContent _$VideoContentFromJson(Map<String, dynamic> json) => VideoContent(
       id: json['id'] as String?,
       autoPlay: json['autoPlay'] as bool? ?? false,
       loop: json['loop'] as bool? ?? false,
+      width: (json['width'] as num?)?.toDouble(),
+      height: (json['height'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$VideoContentToJson(VideoContent instance) =>
@@ -19,4 +21,6 @@ Map<String, dynamic> _$VideoContentToJson(VideoContent instance) =>
       'url': instance.url,
       'autoPlay': instance.autoPlay,
       'loop': instance.loop,
+      'width': instance.width,
+      'height': instance.height,
     };
