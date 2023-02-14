@@ -155,9 +155,7 @@ class SurveyPresenterInherited extends InheritedWidget {
   ) {
     _addResult(event.questionResult);
 
-    final stepResults = results
-        .map((e) => StepResult<dynamic>.fromQuestion(questionResult: e))
-        .toList();
+    final stepResults = results.map((e) => e).toList();
 
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
@@ -175,9 +173,7 @@ class SurveyPresenterInherited extends InheritedWidget {
 
   //Currently we are only handling one question per step
   SurveyState _handleSurveyFinished(PresentingSurveyState currentState) {
-    final stepResults = results
-        .map((e) => StepResult<dynamic>.fromQuestion(questionResult: e))
-        .toList();
+    final stepResults = results.map((e) => e).toList();
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
       startTime: startDate,
