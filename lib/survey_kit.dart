@@ -46,6 +46,7 @@ export 'src/task/navigable_task.dart';
 export 'src/task/ordered_task.dart';
 export 'src/task/task.dart';
 export 'src/task/task_not_defined_exception.dart';
+export 'src/util/measure_date_state_mixin.dart';
 export 'src/view/widget/answer/date_answer_view.dart';
 export 'src/view/widget/answer/double_answer_view.dart';
 export 'src/view/widget/answer/image_answer_view.dart';
