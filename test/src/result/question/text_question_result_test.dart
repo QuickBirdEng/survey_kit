@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:survey_kit/survey_kit.dart';
 
+import 'mock.dart';
+
 void main() {
   final tResult = StepResult(
     id: 'example1',
@@ -8,6 +10,7 @@ void main() {
     endTime: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'textInput1',
     result: 'some witty input  ',
+    step: sampleStep,
   );
 
   group('serialisation', () {

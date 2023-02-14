@@ -1,16 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:survey_kit/survey_kit.dart';
 
+import '../result/question/mock.dart';
+
 void main() {
   final tQuestionResults = <StepResult>[
     StepResult<void>(
       id: 'example1_intro',
+      step: sampleStep,
       startTime: DateTime(2022, 8, 12, 16, 4),
       endTime: DateTime(2022, 8, 12, 16, 5),
       result: null,
     ),
     StepResult<BooleanResult>(
       id: 'example1_boolean',
+      step: sampleStep,
       startTime: DateTime(2022, 8, 12, 16, 5),
       endTime: DateTime(2022, 8, 12, 16, 10),
       valueIdentifier: 'bool1',
@@ -18,6 +22,7 @@ void main() {
     ),
     StepResult<void>(
       id: 'example1_intro',
+      step: sampleStep,
       startTime: DateTime(2022, 8, 12, 16, 4),
       endTime: DateTime(2022, 8, 12, 16, 5),
       result: null,
@@ -31,6 +36,7 @@ void main() {
     results: [
       StepResult<dynamic>(
         id: 'example1_stepResult',
+        step: sampleStep,
         startTime: DateTime(2022, 8, 12, 16, 5),
         endTime: DateTime(2022, 8, 12, 16, 10),
         result: tQuestionResults,

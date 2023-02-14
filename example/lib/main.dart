@@ -52,30 +52,30 @@ class _MyAppState extends State<MyApp> {
 
   Future<Task> getSampleTask() {
     final task = NavigableTask(
-      navigationRules: {
-        // Migrate and just use Step
-        '2': ConditionalNavigationRule(
-          resultToStepIdentifierMapper: (StepResult? input) {
-            final selectedChoice = input?.result as TextChoice;
-            switch (selectedChoice.text) {
-              case 'Yes':
-                return '13';
-              case 'No':
-                return '99';
-              default:
-                return null;
-            }
-          },
-        ),
+      navigationRules: const {
+        // 'SingleChoice': ConditionalNavigationRule(
+        //   resultToStepIdentifierMapper: (StepResult? input) {
+        //     final selectedChoice = input?.result as TextChoice;
+        //     switch (selectedChoice.text) {
+        //       case 'Yes':
+        //         return 'OnlyConent';
+        //       case 'No':
+        //         return 'Completion';
+        //       default:
+        //         return null;
+        //     }
+        //   },
+        // ),
       },
       steps: [
         // Migrate and just use Step
         InstructionStep(
+          id: 'Intro',
           title: 'Welcome to the\nQuickBird\nHealth Survey',
           text: 'Get ready for a bunch of super random questions!',
         ),
         Step(
-          id: '2',
+          id: 'SingleChoice',
           content: const [
             TextContent(
               text: 'Introduction to SurveyKit',
@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         Step(
-          id: '3',
+          id: 'IntegerAnswer',
           content: const [
             TextContent(
               text: 'How old are you?',
@@ -111,6 +111,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         Step(
+          id: 'ScaleAnswer',
           content: const [
             TextContent(
               text: 'Select your body type',
@@ -125,6 +126,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         Step(
+          id: 'MultipleChoice',
           content: const [
             TextContent(
               text: 'Known allergies',
@@ -144,35 +146,25 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
+        // Step(
+        //   id: 'BooleanAnswer',
+        //   content: const [
+        //     TextContent(
+        //       text: 'Done?',
+        //       fontSize: 22,
+        //     ),
+        //     TextContent(
+        //       text: 'We are done, do you mind to tell us more about yourself?',
+        //       fontSize: 18,
+        //     ),
+        //   ],
+        //   answerFormat: const BooleanAnswerFormat(
+        //     positiveAnswer: 'Yes',
+        //     negativeAnswer: 'No',
+        //   ),
+        // ),
         Step(
-          id: '12',
-          content: const [
-            TextContent(
-              text: 'Done?',
-              fontSize: 22,
-            ),
-            TextContent(
-              text: 'We are done, do you mind to tell us more about yourself?',
-              fontSize: 18,
-            ),
-          ],
-          answerFormat: const BooleanAnswerFormat(
-            positiveAnswer: 'Yes',
-            negativeAnswer: 'No',
-          ),
-        ),
-
-        QuestionStep(
-          id: '13',
-          title: 'Medication?',
-          text: 'Are you using any medication',
-          answerFormat: const BooleanAnswerFormat(
-            positiveAnswer: 'Yes',
-            negativeAnswer: 'No',
-            result: BooleanResult.positive,
-          ),
-        ),
-        Step(
+          id: 'OnlyConent',
           content: const [
             TextContent(
               text: 'Listen carefully!',
@@ -184,25 +176,28 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        QuestionStep(
-          title: 'When did you wake up?',
-          answerFormat: const TimeAnswerFormat(
-            defaultValue: TimeOfDay(
-              hour: 12,
-              minute: 0,
-            ),
-          ),
-        ),
-        QuestionStep(
-          title: 'When was your last holiday?',
-          answerFormat: DateAnswerFormat(
-            minDate: DateTime.utc(1970),
-            defaultDate: DateTime.now(),
-            maxDate: DateTime.now(),
-          ),
-        ),
+        // QuestionStep(
+        //   id: 'TimeAnswer',
+        //   title: 'When did you wake up?',
+        //   answerFormat: const TimeAnswerFormat(
+        //     defaultValue: TimeOfDay(
+        //       hour: 12,
+        //       minute: 0,
+        //     ),
+        //   ),
+        // ),
+        // QuestionStep(
+        //   id: 'DateAnswer',
+        //   title: 'When was your last holiday?',
+        //   answerFormat: DateAnswerFormat(
+        //     minDate: DateTime.utc(1970),
+        //     defaultDate: DateTime.now(),
+        //     maxDate: DateTime.now(),
+        //   ),
+        // ),
         // Migrate and just use Step
         QuestionStep(
+          id: 'TextAnswer',
           title: 'Feedback',
           text: 'What did you like about the survey?',
           answerFormat: const TextAnswerFormat(
@@ -212,7 +207,7 @@ class _MyAppState extends State<MyApp> {
         ),
         // Migrate and just use Step
         CompletionStep(
-          id: '99',
+          id: 'Completion',
           title: 'Done!',
           text: 'Thanks for taking the survey, we will contact you soon!',
         ),
@@ -342,6 +337,7 @@ class SurveyKitView extends StatelessWidget {
     return SurveyKit(
       onResult: (SurveyResult result) {
         log(result.finishReason.toString());
+        log(json.encode(result));
         Navigator.pushNamed(context, '/');
       },
       task: task,

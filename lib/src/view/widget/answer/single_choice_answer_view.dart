@@ -53,6 +53,14 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
   }
 
   @override
+  bool isValid(TextChoice? result) {
+    if (widget.questionStep.isMandatory) {
+      return result != null;
+    }
+    return true;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final questionText = widget.questionStep.answerFormat?.question;
 
@@ -78,13 +86,5 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
         ],
       ),
     );
-  }
-
-  @override
-  bool isValid(TextChoice? result) {
-    if (widget.questionStep.isMandatory) {
-      return _selectedChoice != null;
-    }
-    return true;
   }
 }

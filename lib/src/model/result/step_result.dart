@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/model/step.dart';
 
 part 'step_result.g.dart';
 
@@ -7,9 +8,11 @@ part 'step_result.g.dart';
 @JsonSerializable(genericArgumentFactories: true)
 class StepResult<T> {
   final String id;
+  final Step step;
   final T? result;
   final DateTime startTime;
   final DateTime endTime;
+  @JsonKey(includeIfNull: false)
   final String? valueIdentifier;
 
   const StepResult({
@@ -17,12 +20,14 @@ class StepResult<T> {
     required this.result,
     required this.startTime,
     required this.endTime,
+    required this.step,
     this.valueIdentifier,
   });
 
   factory StepResult.fromQuestion({required StepResult questionResult}) {
     return StepResult(
       id: questionResult.id,
+      step: questionResult.step,
       startTime: questionResult.startTime,
       endTime: questionResult.endTime,
       result: questionResult as T?,

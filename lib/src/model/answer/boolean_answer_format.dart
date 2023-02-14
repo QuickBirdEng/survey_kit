@@ -35,4 +35,5 @@ class BooleanAnswerFormat extends AnswerFormat {
   }
 }
 
+@JsonEnum()
 enum BooleanResult { none, positive, negative }

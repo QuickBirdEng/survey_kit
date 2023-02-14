@@ -21,10 +21,10 @@ class QuestionAnswer<R> extends InheritedWidget {
   void setStepResult(R? result) {
     _stepResult = StepResult<R>(
       id: step.id,
+      step: step,
       result: result,
       startTime: startTime,
       endTime: endTime,
-      valueIdentifier: result.toString(),
     );
   }
 
