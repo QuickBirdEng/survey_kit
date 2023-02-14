@@ -85,6 +85,10 @@ class _MyAppState extends State<MyApp> {
               url:
                   'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             ),
+            ImageContent(
+              url:
+                  'https://quickbirdstudios.com/wp-content/uploads/2022/03/QBS_Logo_RGB_special-01.png',
+            )
           ],
           answerFormat: SingleChoiceAnswerFormat(
             textChoices: [

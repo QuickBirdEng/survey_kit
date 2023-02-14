@@ -19,6 +19,7 @@ export 'src/model/answer/time_answer_format.dart';
 //Content
 export 'src/model/content/audio_content.dart';
 export 'src/model/content/content.dart';
+export 'src/model/content/image_content.dart';
 export 'src/model/content/lottie_content.dart';
 export 'src/model/content/markdown_content.dart';
 export 'src/model/content/text_content.dart';
