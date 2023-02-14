@@ -11,8 +11,8 @@ LottieContent _$LottieContentFromJson(Map<String, dynamic> json) =>
       url: json['url'] as String?,
       asset: json['asset'] as String?,
       repeat: json['repeat'] as bool? ?? false,
-      width: (json['width'] as num?)?.toDouble() ?? 200,
-      height: (json['height'] as num?)?.toDouble() ?? 200,
+      width: (json['width'] as num?)?.toDouble() ?? 100,
+      height: (json['height'] as num?)?.toDouble() ?? 100,
       id: json['id'] as String?,
     );
 

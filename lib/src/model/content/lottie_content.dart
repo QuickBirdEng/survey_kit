@@ -17,8 +17,8 @@ class LottieContent extends Content {
     this.url,
     this.asset,
     this.repeat = false,
-    this.width = 200,
-    this.height = 200,
+    this.width = 100,
+    this.height = 100,
     super.id,
   }) : assert(url != null || asset != null, 'Either url or asset must be set');
 
