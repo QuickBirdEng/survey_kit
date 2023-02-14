@@ -11,6 +11,8 @@ LottieContent _$LottieContentFromJson(Map<String, dynamic> json) =>
       url: json['url'] as String?,
       asset: json['asset'] as String?,
       repeat: json['repeat'] as bool? ?? false,
+      width: (json['width'] as num?)?.toDouble() ?? 200,
+      height: (json['height'] as num?)?.toDouble() ?? 200,
       id: json['id'] as String?,
     );
 
@@ -20,4 +22,6 @@ Map<String, dynamic> _$LottieContentToJson(LottieContent instance) =>
       'url': instance.url,
       'asset': instance.asset,
       'repeat': instance.repeat,
+      'width': instance.width,
+      'height': instance.height,
     };

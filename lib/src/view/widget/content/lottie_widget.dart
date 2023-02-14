@@ -12,20 +12,27 @@ class LottieWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget lottie;
     if (lottieContent.url == null && lottieContent.asset == null) {
-      return const Text('Either url or asset must be set');
+      lottie = const Text('Either url or asset must be set');
     }
 
     if (lottieContent.url != null) {
-      return Lottie.network(
+      lottie = Lottie.network(
         lottieContent.url!,
+        repeat: lottieContent.repeat,
+      );
+    } else {
+      lottie = Lottie.asset(
+        lottieContent.asset!,
         repeat: lottieContent.repeat,
       );
     }
 
-    return Lottie.asset(
-      lottieContent.asset!,
-      repeat: lottieContent.repeat,
+    return Container(
+      width: lottieContent.width,
+      height: lottieContent.height,
+      child: lottie,
     );
   }
 }

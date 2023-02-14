@@ -10,11 +10,15 @@ class LottieContent extends Content {
   final String? url;
   final String? asset;
   final bool repeat;
+  final double width;
+  final double height;
 
   const LottieContent({
     this.url,
     this.asset,
     this.repeat = false,
+    this.width = 200,
+    this.height = 200,
     super.id,
   }) : assert(url != null || asset != null, 'Either url or asset must be set');
 

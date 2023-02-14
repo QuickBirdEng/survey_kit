@@ -11,11 +11,15 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      imageContent.url,
-      fit: imageContent.fit,
+    return Container(
       width: imageContent.width,
       height: imageContent.height,
+      child: Image.network(
+        imageContent.url,
+        fit: imageContent.fit,
+        width: imageContent.width,
+        height: imageContent.height,
+      ),
     );
   }
 }
