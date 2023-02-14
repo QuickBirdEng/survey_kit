@@ -7,14 +7,16 @@ part 'lottie_content.g.dart';
 
 @JsonSerializable()
 class LottieContent extends Content {
-  final String asset;
+  final String? url;
+  final String? asset;
   final bool repeat;
 
   const LottieContent({
-    required this.asset,
+    this.url,
+    this.asset,
     this.repeat = false,
     super.id,
-  });
+  }) : assert(url != null || asset != null, 'Either url or asset must be set');
 
   factory LottieContent.fromJson(Map<String, dynamic> json) =>
       _$LottieContentFromJson(json);
