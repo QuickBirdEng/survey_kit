@@ -55,7 +55,7 @@ class NavigableTaskNavigator extends TaskNavigator {
       return nextInList(step);
     }
     final nextStepIdentifier =
-        rule.resultToStepIdentifierMapper(questionResult.valueIdentifier);
+        rule.resultToStepIdentifierMapper(questionResult);
     if (nextStepIdentifier == null) {
       return nextInList(step);
     }

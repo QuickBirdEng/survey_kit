@@ -52,6 +52,22 @@ class _MyAppState extends State<MyApp> {
 
   Future<Task> getSampleTask() {
     final task = NavigableTask(
+      navigationRules: {
+        // Migrate and just use Step
+        '2': ConditionalNavigationRule(
+          resultToStepIdentifierMapper: (StepResult? input) {
+            final selectedChoice = input?.result as TextChoice;
+            switch (selectedChoice.text) {
+              case 'Yes':
+                return '13';
+              case 'No':
+                return '99';
+              default:
+                return null;
+            }
+          },
+        ),
+      },
       steps: [
         // Migrate and just use Step
         InstructionStep(
@@ -59,6 +75,7 @@ class _MyAppState extends State<MyApp> {
           text: 'Get ready for a bunch of super random questions!',
         ),
         Step(
+          id: '2',
           content: const [
             TextContent(
               text: 'Introduction to SurveyKit',
@@ -69,13 +86,16 @@ class _MyAppState extends State<MyApp> {
                   'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             ),
           ],
-          answerFormat: const BooleanAnswerFormat(
-            positiveAnswer: 'Yes',
-            negativeAnswer: 'No',
+          answerFormat: SingleChoiceAnswerFormat(
+            textChoices: [
+              TextChoice(id: '1', value: 'Yes', text: 'Yes'),
+              TextChoice(id: '2', value: 'No', text: 'No'),
+            ],
             question: 'Did you like the video?',
           ),
         ),
         Step(
+          id: '3',
           content: const [
             TextContent(
               text: 'How old are you?',
@@ -188,26 +208,11 @@ class _MyAppState extends State<MyApp> {
         ),
         // Migrate and just use Step
         CompletionStep(
+          id: '99',
           title: 'Done!',
           text: 'Thanks for taking the survey, we will contact you soon!',
         ),
       ],
-    );
-
-    task.addNavigationRule(
-      forTriggerStepIdentifier: '12',
-      navigationRule: ConditionalNavigationRule(
-        resultToStepIdentifierMapper: (input) {
-          switch (input) {
-            case 'Yes':
-              return '13';
-            case 'No':
-              return task.steps.last.id;
-            default:
-              return null;
-          }
-        },
-      ),
     );
 
     return Future.value(task);

@@ -4,6 +4,7 @@ import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
 
@@ -22,7 +23,9 @@ class SingleChoiceAnswerView extends StatefulWidget {
 }
 
 class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
-    with MeasureDateStateMixin {
+    with
+        MeasureDateStateMixin,
+        AnswerMixin<SingleChoiceAnswerView, TextChoice> {
   late final SingleChoiceAnswerFormat _singleChoiceAnswerFormat;
   TextChoice? _selectedChoice;
 
@@ -36,6 +39,17 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
     _singleChoiceAnswerFormat = answer as SingleChoiceAnswerFormat;
     _selectedChoice = widget.result?.result as TextChoice? ??
         _singleChoiceAnswerFormat.defaultSelection;
+  }
+
+  @override
+  void onChange(TextChoice? choice) {
+    if (_selectedChoice == choice) {
+      _selectedChoice = null;
+    } else {
+      _selectedChoice = choice;
+    }
+    setState(() {});
+    super.onChange(choice);
   }
 
   @override
@@ -55,12 +69,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
               return SelectionListTile(
                 text: tc.text,
                 onTap: () {
-                  if (_selectedChoice == tc) {
-                    _selectedChoice = null;
-                  } else {
-                    _selectedChoice = tc;
-                  }
-                  setState(() {});
+                  onChange(tc);
                 },
                 isSelected: _selectedChoice == tc,
               );
@@ -69,5 +78,13 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
         ],
       ),
     );
+  }
+
+  @override
+  bool isValid(TextChoice? result) {
+    if (widget.questionStep.isMandatory) {
+      return _selectedChoice != null;
+    }
+    return true;
   }
 }

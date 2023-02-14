@@ -24,6 +24,7 @@ class QuestionAnswer<R> extends InheritedWidget {
       result: result,
       startTime: startTime,
       endTime: endTime,
+      valueIdentifier: result.toString(),
     );
   }
 
