@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/model/answer/multi_double.dart';
+import 'package:survey_kit/src/model/answer/multiple_double_answer_format.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
-import 'package:survey_kit/survey_kit.dart';
+import 'package:survey_kit/src/view/widget/question_answer.dart';
 
 class MultipleDoubleAnswerView extends StatefulWidget {
   final Step questionStep;
