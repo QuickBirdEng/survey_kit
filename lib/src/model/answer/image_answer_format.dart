@@ -15,7 +15,9 @@ class ImageAnswerFormat extends AnswerFormat {
     this.defaultValue,
     this.buttonText = 'Image: ',
     super.question,
-  }) : super();
+  }) : super(
+          answerType: type,
+        );
 
   factory ImageAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$ImageAnswerFormatFromJson(json);

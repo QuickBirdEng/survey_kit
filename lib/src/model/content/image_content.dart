@@ -7,6 +7,8 @@ part 'image_content.g.dart';
 
 @JsonSerializable()
 class ImageContent extends Content {
+  static const type = 'image';
+
   final String url;
   final BoxFit? fit;
   final double? width;
@@ -18,7 +20,7 @@ class ImageContent extends Content {
     this.fit,
     this.width,
     this.height,
-  });
+  }) : super(contentType: type);
 
   factory ImageContent.fromJson(Map<String, dynamic> json) =>
       _$ImageContentFromJson(json);

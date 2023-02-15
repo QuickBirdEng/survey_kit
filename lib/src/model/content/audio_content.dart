@@ -7,12 +7,13 @@ part 'audio_content.g.dart';
 
 @JsonSerializable()
 class AudioContent extends Content {
+  static const type = 'audio';
   final String url;
 
   const AudioContent({
     required this.url,
     super.id,
-  });
+  }) : super(contentType: type);
 
   factory AudioContent.fromJson(Map<String, dynamic> json) =>
       _$AudioContentFromJson(json);

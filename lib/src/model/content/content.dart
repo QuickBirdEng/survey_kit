@@ -10,8 +10,13 @@ import 'package:survey_kit/src/model/content/video_content.dart';
 abstract class Content {
   @JsonKey(includeIfNull: false)
   final String? id;
+  @JsonKey(name: 'type')
+  final String contentType;
 
-  const Content({this.id});
+  const Content({
+    this.id,
+    required this.contentType,
+  });
 
   factory Content.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String?;

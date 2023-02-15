@@ -40,7 +40,9 @@ class DateAnswerFormat extends AnswerFormat {
               defaultDate.isBefore(maxDate),
           'defaultDate must be before maxDate',
         ),
-        super();
+        super(
+          answerType: type,
+        );
 
   factory DateAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$DateAnswerFormatFromJson(json);

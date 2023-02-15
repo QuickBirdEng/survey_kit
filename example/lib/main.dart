@@ -81,14 +81,18 @@ class _MyAppState extends State<MyApp> {
               text: 'Introduction to SurveyKit',
               fontSize: 24,
             ),
+            TextContent(text: 'This is a video'),
             VideoContent(
               url:
                   'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             ),
-            ImageContent(
+            LottieContent(
+              repeat: true,
               url:
-                  'https://quickbirdstudios.com/wp-content/uploads/2022/03/QBS_Logo_RGB_special-01.png',
-            )
+                  'https://assets4.lottiefiles.com/packages/lf20_mNvu7WUM7W.json',
+            ),
+            TextContent(text: 'This is a video'),
+            MarkdownContent(text: 'This is markdown')
           ],
           answerFormat: SingleChoiceAnswerFormat(
             textChoices: [

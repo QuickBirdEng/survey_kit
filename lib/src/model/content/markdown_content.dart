@@ -7,12 +7,14 @@ part 'markdown_content.g.dart';
 
 @JsonSerializable()
 class MarkdownContent extends Content {
+  static const type = 'markdown';
+
   final String text;
 
   const MarkdownContent({
     required this.text,
     super.id,
-  });
+  }) : super(contentType: type);
 
   factory MarkdownContent.fromJson(Map<String, dynamic> json) =>
       _$MarkdownContentFromJson(json);

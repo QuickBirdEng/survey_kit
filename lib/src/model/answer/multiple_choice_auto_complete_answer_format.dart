@@ -26,7 +26,9 @@ class MultipleChoiceAutoCompleteAnswerFormat extends AnswerFormat {
     this.suggestions = const [],
     this.otherField = false,
     super.question,
-  }) : super();
+  }) : super(
+          answerType: type,
+        );
 
   factory MultipleChoiceAutoCompleteAnswerFormat.fromJson(
     Map<String, dynamic> json,

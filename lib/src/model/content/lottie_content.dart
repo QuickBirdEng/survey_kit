@@ -7,6 +7,8 @@ part 'lottie_content.g.dart';
 
 @JsonSerializable()
 class LottieContent extends Content {
+  static const type = 'lottie';
+
   final String? url;
   final String? asset;
   final bool repeat;
@@ -20,7 +22,8 @@ class LottieContent extends Content {
     this.width = 100,
     this.height = 100,
     super.id,
-  }) : assert(url != null || asset != null, 'Either url or asset must be set');
+  })  : assert(url != null || asset != null, 'Either url or asset must be set'),
+        super(contentType: type);
 
   factory LottieContent.fromJson(Map<String, dynamic> json) =>
       _$LottieContentFromJson(json);

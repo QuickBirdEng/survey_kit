@@ -7,6 +7,8 @@ part 'text_content.g.dart';
 
 @JsonSerializable()
 class TextContent extends Content {
+  static const type = 'text';
+
   final String text;
   final double fontSize;
   final TextAlign textAlign;
@@ -16,7 +18,7 @@ class TextContent extends Content {
     this.fontSize = 16,
     this.textAlign = TextAlign.center,
     super.id,
-  });
+  }) : super(contentType: type);
 
   factory TextContent.fromJson(Map<String, dynamic> json) =>
       _$TextContentFromJson(json);
