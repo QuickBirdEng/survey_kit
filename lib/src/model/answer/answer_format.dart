@@ -17,11 +17,11 @@ import 'package:survey_kit/src/model/step.dart';
 
 @JsonSerializable()
 abstract class AnswerFormat {
-  const AnswerFormat({required this.answerType, this.question});
+  const AnswerFormat({this.answerType, this.question});
 
   final String? question;
   @JsonKey(name: 'type')
-  final String answerType;
+  final String? answerType;
 
   Widget createView(Step step, StepResult? stepResult);
 

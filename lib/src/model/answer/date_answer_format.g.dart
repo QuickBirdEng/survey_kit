@@ -18,7 +18,7 @@ DateAnswerFormat _$DateAnswerFormatFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['maxDate'] as String),
       question: json['question'] as String?,
-      answerType: json['type'] as String? ?? type,
+      answerType: json['type'] as String?,
     );
 
 Map<String, dynamic> _$DateAnswerFormatToJson(DateAnswerFormat instance) =>

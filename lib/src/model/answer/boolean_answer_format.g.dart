@@ -13,7 +13,7 @@ BooleanAnswerFormat _$BooleanAnswerFormatFromJson(Map<String, dynamic> json) =>
       result: $enumDecodeNullable(_$BooleanResultEnumMap, json['result']) ??
           BooleanResult.none,
       question: json['question'] as String?,
-      answerType: json['type'] as String? ?? type,
+      answerType: json['type'] as String?,
     );
 
 Map<String, dynamic> _$BooleanAnswerFormatToJson(

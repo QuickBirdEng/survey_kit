@@ -16,7 +16,7 @@ MultipleDoubleAnswerFormat _$MultipleDoubleAnswerFormatFromJson(
           (json['hints'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               [],
       question: json['question'] as String?,
-      answerType: json['type'] as String? ?? type,
+      answerType: json['type'] as String?,
     );
 
 Map<String, dynamic> _$MultipleDoubleAnswerFormatToJson(

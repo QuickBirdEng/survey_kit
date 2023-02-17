@@ -11,7 +11,7 @@ TimeAnswerFormat _$TimeAnswerFormatFromJson(Map<String, dynamic> json) =>
       defaultValue: _$JsonConverterFromJson<Map<String, dynamic>, TimeOfDay?>(
           json['defaultValue'], const _TimeOfDayJsonConverter().fromJson),
       question: json['question'] as String?,
-      answerType: json['type'] as String? ?? type,
+      answerType: json['type'] as String?,
     );
 
 Map<String, dynamic> _$TimeAnswerFormatToJson(TimeAnswerFormat instance) =>

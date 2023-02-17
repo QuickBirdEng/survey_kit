@@ -23,7 +23,7 @@ MultipleChoiceAutoCompleteAnswerFormat
               [],
           otherField: json['otherField'] as bool? ?? false,
           question: json['question'] as String?,
-          answerType: json['type'] as String? ?? type,
+          answerType: json['type'] as String?,
         );
 
 Map<String, dynamic> _$MultipleChoiceAutoCompleteAnswerFormatToJson(

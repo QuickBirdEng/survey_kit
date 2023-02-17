@@ -12,7 +12,7 @@ TextAnswerFormat _$TextAnswerFormatFromJson(Map<String, dynamic> json) =>
       hint: json['hint'] as String? ?? '',
       validationRegEx: json['validationRegEx'] as String? ?? r'^(?!s*$).+',
       question: json['question'] as String?,
-      answerType: json['type'] as String? ?? type,
+      answerType: json['type'] as String?,
     );
 
 Map<String, dynamic> _$TextAnswerFormatToJson(TextAnswerFormat instance) =>
