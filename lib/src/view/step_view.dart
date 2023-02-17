@@ -26,7 +26,7 @@ class StepView extends StatefulWidget {
 }
 
 class _StepViewState extends State<StepView> {
-  final startTime = DateTime.now();
+  final startTime = DateTime.now().toUtc();
 
   @override
   Widget build(BuildContext context) {

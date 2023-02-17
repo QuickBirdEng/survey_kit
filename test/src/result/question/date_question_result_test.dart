@@ -10,7 +10,7 @@ void main() {
     endTime: DateTime(2022, 8, 12, 16, 14),
     valueIdentifier: 'date1',
     step: sampleStep,
-    result: DateTime.now(),
+    result: DateTime.now().toUtc(),
   );
 
   group('serialisation', () {
