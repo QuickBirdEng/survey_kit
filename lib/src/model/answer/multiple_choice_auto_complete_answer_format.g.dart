@@ -23,12 +23,14 @@ MultipleChoiceAutoCompleteAnswerFormat
               [],
           otherField: json['otherField'] as bool? ?? false,
           question: json['question'] as String?,
+          answerType: json['type'] as String? ?? type,
         );
 
 Map<String, dynamic> _$MultipleChoiceAutoCompleteAnswerFormatToJson(
         MultipleChoiceAutoCompleteAnswerFormat instance) =>
     <String, dynamic>{
       'question': instance.question,
+      'type': instance.answerType,
       'textChoices': instance.textChoices,
       'defaultSelection': instance.defaultSelection,
       'suggestions': instance.suggestions,

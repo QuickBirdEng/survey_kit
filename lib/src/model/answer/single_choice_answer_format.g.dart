@@ -17,12 +17,14 @@ SingleChoiceAnswerFormat _$SingleChoiceAnswerFormatFromJson(
           : TextChoice.fromJson(
               json['defaultSelection'] as Map<String, dynamic>),
       question: json['question'] as String?,
+      answerType: json['type'] as String? ?? type,
     );
 
 Map<String, dynamic> _$SingleChoiceAnswerFormatToJson(
         SingleChoiceAnswerFormat instance) =>
     <String, dynamic>{
       'question': instance.question,
-      'textChoices': instance.textChoices,
-      'defaultSelection': instance.defaultSelection,
+      'type': instance.answerType,
+      'textChoices': instance.textChoices.map((e) => e.toJson()).toList(),
+      'defaultSelection': instance.defaultSelection?.toJson(),
     };

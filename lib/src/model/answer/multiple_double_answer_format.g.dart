@@ -16,12 +16,14 @@ MultipleDoubleAnswerFormat _$MultipleDoubleAnswerFormatFromJson(
           (json['hints'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               [],
       question: json['question'] as String?,
+      answerType: json['type'] as String? ?? type,
     );
 
 Map<String, dynamic> _$MultipleDoubleAnswerFormatToJson(
         MultipleDoubleAnswerFormat instance) =>
     <String, dynamic>{
       'question': instance.question,
+      'type': instance.answerType,
       'defaultValues': instance.defaultValues,
       'hints': instance.hints,
     };

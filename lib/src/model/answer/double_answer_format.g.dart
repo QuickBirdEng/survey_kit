@@ -11,11 +11,13 @@ DoubleAnswerFormat _$DoubleAnswerFormatFromJson(Map<String, dynamic> json) =>
       defaultValue: (json['defaultValue'] as num?)?.toDouble(),
       hint: json['hint'] as String? ?? '',
       question: json['question'] as String?,
+      answerType: json['type'] as String? ?? type,
     );
 
 Map<String, dynamic> _$DoubleAnswerFormatToJson(DoubleAnswerFormat instance) =>
     <String, dynamic>{
       'question': instance.question,
+      'type': instance.answerType,
       'defaultValue': instance.defaultValue,
       'hint': instance.hint,
     };

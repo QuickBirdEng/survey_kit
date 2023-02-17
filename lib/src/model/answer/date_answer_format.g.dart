@@ -18,11 +18,13 @@ DateAnswerFormat _$DateAnswerFormatFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['maxDate'] as String),
       question: json['question'] as String?,
+      answerType: json['type'] as String? ?? type,
     );
 
 Map<String, dynamic> _$DateAnswerFormatToJson(DateAnswerFormat instance) =>
     <String, dynamic>{
       'question': instance.question,
+      'type': instance.answerType,
       'defaultDate': instance.defaultDate?.toIso8601String(),
       'minDate': instance.minDate?.toIso8601String(),
       'maxDate': instance.maxDate?.toIso8601String(),

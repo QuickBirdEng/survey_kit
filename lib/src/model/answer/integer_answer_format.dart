@@ -20,9 +20,8 @@ class IntegerAnswerFormat extends AnswerFormat {
     this.min = minInt,
     this.max = maxInt,
     super.question,
-  }) : super(
-          answerType: type,
-        );
+    super.answerType = type,
+  }) : super();
 
   factory IntegerAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$IntegerAnswerFormatFromJson(json);

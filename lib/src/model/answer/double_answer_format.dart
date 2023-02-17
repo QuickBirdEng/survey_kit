@@ -20,9 +20,8 @@ class DoubleAnswerFormat extends AnswerFormat {
     this.defaultValue,
     this.hint = '',
     super.question,
-  }) : super(
-          answerType: type,
-        );
+    super.answerType = type,
+  }) : super();
 
   factory DoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$DoubleAnswerFormatFromJson(json);
