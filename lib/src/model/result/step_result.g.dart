@@ -13,8 +13,10 @@ StepResult<T> _$StepResultFromJson<T>(
     StepResult<T>(
       id: json['id'] as String,
       result: _$nullableGenericFromJson(json['result'], fromJsonT),
-      startTime: DateTime.parse(json['startTime'] as String),
-      endTime: DateTime.parse(json['endTime'] as String),
+      startTime:
+          const CustomDateTimeConverter().fromJson(json['startTime'] as String),
+      endTime:
+          const CustomDateTimeConverter().fromJson(json['endTime'] as String),
       step: Step.fromJson(json['step'] as Map<String, dynamic>),
       valueIdentifier: json['valueIdentifier'] as String?,
     );
@@ -27,8 +29,8 @@ Map<String, dynamic> _$StepResultToJson<T>(
     'id': instance.id,
     'step': instance.step,
     'result': _$nullableGenericToJson(instance.result, toJsonT),
-    'startTime': instance.startTime.toIso8601String(),
-    'endTime': instance.endTime.toIso8601String(),
+    'startTime': const CustomDateTimeConverter().toJson(instance.startTime),
+    'endTime': const CustomDateTimeConverter().toJson(instance.endTime),
   };
 
   void writeNotNull(String key, dynamic value) {

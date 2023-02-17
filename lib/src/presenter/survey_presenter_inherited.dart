@@ -13,7 +13,7 @@ class SurveyPresenterInherited extends InheritedWidget {
     required super.child,
     this.stepShell,
   })  : _state = LoadingSurveyState(),
-        startDate = DateTime.now().toUtc() {
+        startDate = DateTime.now() {
     onEvent(StartSurvey());
   }
 
@@ -82,7 +82,7 @@ class SurveyPresenterInherited extends InheritedWidget {
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
       startTime: startDate,
-      endTime: DateTime.now().toUtc(),
+      endTime: DateTime.now(),
       finishReason: FinishReason.completed,
       results: const [],
     );
@@ -160,7 +160,7 @@ class SurveyPresenterInherited extends InheritedWidget {
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
       startTime: startDate,
-      endTime: DateTime.now().toUtc(),
+      endTime: DateTime.now(),
       finishReason: FinishReason.discarded,
       results: stepResults,
     );
@@ -177,7 +177,7 @@ class SurveyPresenterInherited extends InheritedWidget {
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
       startTime: startDate,
-      endTime: DateTime.now().toUtc(),
+      endTime: DateTime.now(),
       finishReason: FinishReason.completed,
       results: stepResults,
     );

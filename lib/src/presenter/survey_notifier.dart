@@ -22,7 +22,7 @@ class SurveyNotifier extends ChangeNotifier {
   late SurveyState state;
 
   final Set<StepResult> results = {};
-  final DateTime startDate = DateTime.now().toUtc();
+  final DateTime startDate = DateTime.now();
 
   SurveyState startSurvey() {
     final step = taskNavigator.firstStep();
@@ -41,7 +41,7 @@ class SurveyNotifier extends ChangeNotifier {
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
       startTime: startDate,
-      endTime: DateTime.now().toUtc(),
+      endTime: DateTime.now(),
       finishReason: FinishReason.completed,
       results: const [],
     );
@@ -121,7 +121,7 @@ class SurveyNotifier extends ChangeNotifier {
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
       startTime: startDate,
-      endTime: DateTime.now().toUtc(),
+      endTime: DateTime.now(),
       finishReason: FinishReason.discarded,
       results: stepResults,
     );
@@ -139,7 +139,7 @@ class SurveyNotifier extends ChangeNotifier {
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
       startTime: startDate,
-      endTime: DateTime.now().toUtc(),
+      endTime: DateTime.now(),
       finishReason: FinishReason.completed,
       results: stepResults,
     );

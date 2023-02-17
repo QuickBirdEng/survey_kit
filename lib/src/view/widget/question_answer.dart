@@ -9,7 +9,7 @@ class QuestionAnswer<R> extends InheritedWidget {
     required this.step,
   });
 
-  DateTime startTime = DateTime.now().toUtc();
+  DateTime startTime = DateTime.now();
 
   final Step step;
 
@@ -23,7 +23,7 @@ class QuestionAnswer<R> extends InheritedWidget {
       step: step,
       result: result,
       startTime: startTime,
-      endTime: DateTime.now().toUtc(),
+      endTime: DateTime.now(),
     );
   }
 

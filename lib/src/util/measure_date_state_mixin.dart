@@ -5,6 +5,6 @@ mixin MeasureDateStateMixin<T extends StatefulWidget> on State<T> {
   @override
   void initState() {
     super.initState();
-    startDate = DateTime.now().toUtc();
+    startDate = DateTime.now();
   }
 }
