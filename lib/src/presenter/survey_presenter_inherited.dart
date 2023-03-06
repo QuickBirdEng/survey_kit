@@ -164,6 +164,7 @@ class SurveyPresenterInherited extends InheritedWidget {
       finishReason: FinishReason.discarded,
       results: stepResults,
     );
+    onResult(taskResult);
     return SurveyResultState(
       result: taskResult,
       stepResult: currentState.result,
@@ -181,6 +182,8 @@ class SurveyPresenterInherited extends InheritedWidget {
       finishReason: FinishReason.completed,
       results: stepResults,
     );
+
+    onResult(taskResult);
     return SurveyResultState(
       result: taskResult,
       currentStep: currentState.currentStep,

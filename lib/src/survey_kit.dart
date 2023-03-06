@@ -144,15 +144,13 @@ class _SurveyPageState extends State<SurveyPage>
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: SurveyPresenterInherited.of(context).surveyStateStream.stream,
-      builder: (_, __) {
+      builder: (_, AsyncSnapshot<SurveyState> snapshot) {
         final state = SurveyPresenterInherited.of(context).state;
 
         if (state is SurveyResultState) {
-          Future<dynamic>.microtask(
-            () => widget.onResult.call(state.result),
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
           );
-
-          return const SizedBox.shrink();
         }
         if (state is PresentingSurveyState) {
           tabController.animateTo(state.currentStepIndex);
