@@ -40,7 +40,7 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return _controller.value.isInitialized
+    final videoWidget = _controller.value.isInitialized
         ? AspectRatio(
             aspectRatio: _chewieController.aspectRatio ?? 16 / 9,
             child: VisibilityDetector(
@@ -61,6 +61,8 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
               child: CircularProgressIndicator.adaptive(),
             ),
           );
+
+    return videoWidget;
   }
 
   @override
