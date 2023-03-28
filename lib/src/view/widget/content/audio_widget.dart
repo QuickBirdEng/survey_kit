@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/model/content/audio_content.dart';
-import 'package:survey_kit/src/widget/survey_kit_audio_player.dart';
+import 'package:survey_kit/src/widget/test_audio.dart';
 
 class AudioWidget extends StatelessWidget {
   const AudioWidget({
@@ -12,7 +12,7 @@ class AudioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SurveyKitAudioPlayer(
+    return JustAudioWidget(
       audioUrl: audioContent.url,
     );
   }
