@@ -1,8 +1,11 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
+import 'package:survey_kit/src/widget/platform_view_registry/platform_view_registry.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:visibility_detector/visibility_detector.dart';
 
+// TODO(rinzin): Temporary fix for web until
+// [https://github.com/fluttercommunity/chewie/issues/688]
+// is fixed on chewie
 class WebVideoPlayer extends StatefulWidget {
   const WebVideoPlayer(
     this.src, {
@@ -10,6 +13,7 @@ class WebVideoPlayer extends StatefulWidget {
     this.autoplay = true,
     this.controls = true,
     this.startAt = 0,
+    this.aspectRatio = 16 / 9,
   });
 
   final String src;
@@ -18,40 +22,60 @@ class WebVideoPlayer extends StatefulWidget {
   final bool autoplay;
 
   final bool controls;
+  final double aspectRatio;
 
   @override
   State<WebVideoPlayer> createState() => _WebVideoPlayerState();
 }
 
 class _WebVideoPlayerState extends State<WebVideoPlayer> {
+  late final html.VideoElement video;
+
   @override
   void initState() {
     super.initState();
-    // String? url = 'http://www.website.com/pathtovideo' '#t=${widget.startAt}';
-    // Do not remove the below comment - Fix for missing ui.platformViewRegistry in dart.ui
-    // ignore: undefined_prefixed_name, avoid_dynamic_calls
-    ui.platformViewRegistry.registerViewFactory(widget.src, (int viewId) {
-      //https: //api.flutter.dev/flutter/dart-html/VideoElement-class.html
-      final video = html.VideoElement()
-        ..src = widget.src
-        ..autoplay = widget.autoplay
-        ..controls = widget.controls
-        ..style.border = 'none'
-        ..style.borderColor = 'red'
-        ..style.height = '100%'
-        ..style.width = '100%'
-        ..attributes['controlsList'] = 'nodownload'
+    final url = '${widget.src}' '#t=${widget.startAt}';
 
-        // Allows Safari iOS to play the video inline
-        // ignore: cascade_invocations
-        ..setAttribute('playsinline', 'true');
+    video = html.VideoElement()
+      ..src = url
+      ..autoplay = widget.autoplay
+      ..controls = widget.controls
+      ..style.border = 'none'
+      ..style.height = '100%'
+      ..style.width = '100%'
 
-      return video;
-    });
+      //Remove the download option from controls
+      ..setAttribute('controlsList', 'nodownload')
+
+      // Allows Safari iOS to play the video inline
+      // ignore: cascade_invocations
+      ..setAttribute('playsinline', 'true');
+
+    platformViewRegistry.registerViewFactory(
+      widget.src,
+      (int viewId) => video,
+    );
+  }
+
+  @override
+  void dispose() {
+    video.remove();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return HtmlElementView(viewType: widget.src);
+    return AspectRatio(
+      aspectRatio: widget.aspectRatio,
+      child: VisibilityDetector(
+        key: Key(widget.src),
+        onVisibilityChanged: (info) {
+          if (info.visibleFraction == 0 && mounted) {
+            video.pause();
+          }
+        },
+        child: HtmlElementView(viewType: widget.src),
+      ),
+    );
   }
 }
