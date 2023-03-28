@@ -31,6 +31,8 @@ class WebVideoPlayer extends StatefulWidget {
 class _WebVideoPlayerState extends State<WebVideoPlayer> {
   late final html.VideoElement video;
 
+  bool _isVideoLoaded = false;
+
   @override
   void initState() {
     super.initState();
@@ -49,7 +51,15 @@ class _WebVideoPlayerState extends State<WebVideoPlayer> {
 
       // Allows Safari iOS to play the video inline
       // ignore: cascade_invocations
-      ..setAttribute('playsinline', 'true');
+      ..setAttribute('playsinline', 'true')
+      ..addEventListener(
+        'canplaythrough',
+        (_) {
+          setState(() {
+            _isVideoLoaded = true;
+          });
+        },
+      );
 
     platformViewRegistry.registerViewFactory(
       widget.src,
@@ -65,17 +75,24 @@ class _WebVideoPlayerState extends State<WebVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: widget.aspectRatio,
-      child: VisibilityDetector(
-        key: Key(widget.src),
-        onVisibilityChanged: (info) {
-          if (info.visibleFraction == 0 && mounted) {
-            video.pause();
-          }
-        },
-        child: HtmlElementView(viewType: widget.src),
-      ),
-    );
+    return _isVideoLoaded
+        ? AspectRatio(
+            aspectRatio: widget.aspectRatio,
+            child: VisibilityDetector(
+              key: Key(widget.src),
+              onVisibilityChanged: (info) {
+                if (info.visibleFraction == 0 && mounted) {
+                  video.pause();
+                }
+              },
+              child: HtmlElementView(viewType: widget.src),
+            ),
+          )
+        : Container(
+            height: 200,
+            child: const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
+          );
   }
 }
