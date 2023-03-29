@@ -203,72 +203,67 @@ class SeekBarState extends State<SeekBar> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Row(
+    return Stack(
       children: [
-        Stack(
-          children: [
-            SliderTheme(
-              data: _sliderThemeData.copyWith(
-                thumbShape: HiddenThumbComponentShape(),
-                activeTrackColor: _sliderThemeData.activeTrackColor ??
-                    theme.primaryColor.withOpacity(0.1),
-                inactiveTrackColor:
-                    _sliderThemeData.inactiveTrackColor ?? Colors.grey.shade300,
+        SliderTheme(
+          data: _sliderThemeData.copyWith(
+            thumbShape: HiddenThumbComponentShape(),
+            activeTrackColor: _sliderThemeData.activeTrackColor ??
+                theme.primaryColor.withOpacity(0.1),
+            inactiveTrackColor:
+                _sliderThemeData.inactiveTrackColor ?? Colors.grey.shade300,
+          ),
+          child: ExcludeSemantics(
+            child: Slider(
+              min: 0.0,
+              max: widget.duration.inMilliseconds.toDouble(),
+              value: min(
+                widget.bufferedPosition.inMilliseconds.toDouble(),
+                widget.duration.inMilliseconds.toDouble(),
               ),
-              child: ExcludeSemantics(
-                child: Slider(
-                  min: 0.0,
-                  max: widget.duration.inMilliseconds.toDouble(),
-                  value: min(
-                    widget.bufferedPosition.inMilliseconds.toDouble(),
-                    widget.duration.inMilliseconds.toDouble(),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _dragValue = value;
-                    });
-                    if (widget.onChanged != null) {
-                      widget.onChanged!(Duration(milliseconds: value.round()));
-                    }
-                  },
-                  onChangeEnd: (value) {
-                    if (widget.onChangeEnd != null) {
-                      widget
-                          .onChangeEnd!(Duration(milliseconds: value.round()));
-                    }
-                    _dragValue = null;
-                  },
-                ),
-              ),
+              onChanged: (value) {
+                setState(() {
+                  _dragValue = value;
+                });
+                if (widget.onChanged != null) {
+                  widget.onChanged!(Duration(milliseconds: value.round()));
+                }
+              },
+              onChangeEnd: (value) {
+                if (widget.onChangeEnd != null) {
+                  widget.onChangeEnd!(Duration(milliseconds: value.round()));
+                }
+                _dragValue = null;
+              },
             ),
-            SliderTheme(
-              data: _sliderThemeData.copyWith(
-                inactiveTrackColor: Colors.transparent,
-              ),
-              child: Slider(
-                min: 0.0,
-                max: widget.duration.inMilliseconds.toDouble(),
-                value: min(
-                  _dragValue ?? widget.position.inMilliseconds.toDouble(),
-                  widget.duration.inMilliseconds.toDouble(),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _dragValue = value;
-                  });
-                  if (widget.onChanged != null) {
-                    widget.onChanged!(Duration(milliseconds: value.round()));
-                  }
-                },
-                onChangeEnd: (value) {
-                  if (widget.onChangeEnd != null) {
-                    widget.onChangeEnd!(Duration(milliseconds: value.round()));
-                  }
-                  _dragValue = null;
-                },
-              ),
+          ),
+        ),
+        SliderTheme(
+          data: _sliderThemeData.copyWith(
+            inactiveTrackColor: Colors.transparent,
+          ),
+          child: Slider(
+            min: 0.0,
+            max: widget.duration.inMilliseconds.toDouble(),
+            value: min(
+              _dragValue ?? widget.position.inMilliseconds.toDouble(),
+              widget.duration.inMilliseconds.toDouble(),
             ),
-          ],
+            onChanged: (value) {
+              setState(() {
+                _dragValue = value;
+              });
+              if (widget.onChanged != null) {
+                widget.onChanged!(Duration(milliseconds: value.round()));
+              }
+            },
+            onChangeEnd: (value) {
+              if (widget.onChangeEnd != null) {
+                widget.onChangeEnd!(Duration(milliseconds: value.round()));
+              }
+              _dragValue = null;
+            },
+          ),
         ),
       ],
     );
