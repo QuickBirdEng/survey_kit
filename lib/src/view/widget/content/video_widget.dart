@@ -14,8 +14,6 @@ class VideoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) return WebVideoPlayer(videoContent.url);
-
     final widget = kIsWeb
         ? WebVideoPlayer(videoContent.url)
         : SurveyKitVideoPlayer(
