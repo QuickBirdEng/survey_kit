@@ -176,7 +176,7 @@ class _MyAppState extends State<MyApp> {
             ),
             AudioContent(
               url:
-                  'https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3',
+                  'https://github.com/QuickBirdEng/survey_kit/raw/main/assets/gong.mp3',
             ),
           ],
         ),
