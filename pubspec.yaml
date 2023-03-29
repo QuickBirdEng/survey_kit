@@ -10,8 +10,6 @@ environment:
   flutter: ">=2.0.0"
 
 dependencies:
-  audioplayers: ^3.0.1
-  audio_session: ^0.1.13
   chewie: ^1.4.0
   collection: ^1.17.0
   cupertino_icons: ^1.0.2

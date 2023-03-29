@@ -229,6 +229,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   ThemeData get theme => Theme.of(context).copyWith(
+        useMaterial3: true,
         primaryColor: Colors.cyan,
         appBarTheme: const AppBarTheme(
           color: Colors.white,
