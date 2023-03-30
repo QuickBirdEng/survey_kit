@@ -1,210 +1,292 @@
-import 'dart:async';
+import 'dart:math';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:rxdart/rxdart.dart';
 
 class SurveyKitAudioPlayer extends StatefulWidget {
-  const SurveyKitAudioPlayer({
-    super.key,
-    required this.audioUrl,
-  });
   final String audioUrl;
 
+  const SurveyKitAudioPlayer({super.key, required this.audioUrl});
+
   @override
-  State<SurveyKitAudioPlayer> createState() => _SurveyKitAudioPlayerState();
+  _SurveyKitAudioPlayerState createState() => _SurveyKitAudioPlayerState();
 }
 
-class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer> {
-  late final AudioPlayer player;
-  late final Future<void> audioReady;
+class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
+    with WidgetsBindingObserver {
+  late final AudioPlayer _audioPlayer;
 
   @override
   void initState() {
     super.initState();
-    player = AudioPlayer();
-    audioReady = player.setSourceUrl(widget.audioUrl);
+    _audioPlayer = AudioPlayer();
+    _audioPlayer.setUrl(widget.audioUrl);
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Stream<PositionData> get _positionDataStream =>
+      Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
+        _audioPlayer.positionStream,
+        _audioPlayer.bufferedPositionStream,
+        _audioPlayer.durationStream,
+        (position, bufferedPosition, duration) => PositionData(
+          position,
+          bufferedPosition,
+          duration ?? Duration.zero,
+        ),
+      );
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      // Release the player's resources when not in use. We use "stop" so that
+      // if the app resumes later, it will still remember what position to
+      // resume from.
+      _audioPlayer.stop();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
-      height: 100,
-      width: double.infinity,
-      child: FutureBuilder<void>(
-        future: audioReady,
-        builder: (_, snapshot) {
-          return _PlayerWidget(
-            player: player,
-            isLoading: ConnectionState.done != snapshot.connectionState,
-          );
-        },
+      height: 84,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
+        color: theme.colorScheme.primary.withOpacity(0.1),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          StreamBuilder<PlayerState>(
+            stream: _audioPlayer.playerStateStream,
+            builder: (context, snapshot) {
+              final playerState = snapshot.data;
+              final processingState = playerState?.processingState;
+              final playing = playerState?.playing;
+              if (processingState == ProcessingState.loading ||
+                  processingState == ProcessingState.buffering) {
+                return Container(
+                  margin: const EdgeInsets.all(8.0),
+                  width: 48,
+                  height: 48,
+                  child: const CircularProgressIndicator(),
+                );
+              } else if (playing != true) {
+                return AudioActionButton(
+                  icon: Icons.play_arrow,
+                  onPressed: _audioPlayer.play,
+                );
+              } else if (processingState != ProcessingState.completed) {
+                return AudioActionButton(
+                  icon: Icons.pause,
+                  onPressed: _audioPlayer.pause,
+                );
+              } else {
+                return AudioActionButton(
+                  icon: Icons.replay,
+                  onPressed: () => _audioPlayer.seek(Duration.zero),
+                );
+              }
+            },
+          ),
+          StreamBuilder<PositionData>(
+            stream: _positionDataStream,
+            builder: (context, snapshot) {
+              final positionData = snapshot.data;
+              return SeekBar(
+                duration: positionData?.duration ?? Duration.zero,
+                position: positionData?.position ?? Duration.zero,
+                bufferedPosition:
+                    positionData?.bufferedPosition ?? Duration.zero,
+                onChangeEnd: _audioPlayer.seek,
+              );
+            },
+          ),
+          StreamBuilder<PositionData>(
+            stream: _positionDataStream,
+            builder: (context, snapshot) {
+              final positionData = snapshot.data;
+              final remaining = (positionData?.duration ?? Duration.zero) -
+                  (positionData?.position ?? Duration.zero);
+
+              return Text(
+                RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})\.\d+$')
+                        .firstMatch('$remaining')
+                        ?.group(1) ??
+                    '$remaining',
+              );
+            },
+          ),
+          const SizedBox(
+            width: 24,
+          ),
+        ],
       ),
     );
   }
 }
 
-class _PlayerWidget extends StatefulWidget {
-  final AudioPlayer player;
-  final bool isLoading;
+class PositionData {
+  final Duration position;
+  final Duration bufferedPosition;
+  final Duration duration;
 
-  const _PlayerWidget({
-    required this.player,
-    required this.isLoading,
+  PositionData(this.position, this.bufferedPosition, this.duration);
+}
+
+class AudioActionButton extends StatelessWidget {
+  const AudioActionButton({
+    super.key,
+    required this.onPressed,
+    required this.icon,
   });
 
+  final VoidCallback onPressed;
+
+  final IconData icon;
+
   @override
-  State<StatefulWidget> createState() {
-    return _PlayerWidgetState();
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(icon),
+      iconSize: 48.0,
+      onPressed: onPressed,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+    );
   }
 }
 
-class _PlayerWidgetState extends State<_PlayerWidget>
-    with SingleTickerProviderStateMixin {
-  Duration? _duration;
-  Duration? _position;
+class SeekBar extends StatefulWidget {
+  final Duration duration;
+  final Duration position;
+  final Duration bufferedPosition;
+  final ValueChanged<Duration>? onChanged;
+  final ValueChanged<Duration>? onChangeEnd;
 
-  PlayerState _playerState = PlayerState.stopped;
-  StreamSubscription? _durationSubscription;
-  StreamSubscription? _positionSubscription;
-  StreamSubscription? _playerCompleteSubscription;
-  StreamSubscription? _playerStateChangeSubscription;
-
-  bool get _isPlaying => _playerState == PlayerState.playing;
-  String get _durationText =>
-      _duration?.toString().split('.').first ?? '0:00:00';
-  String get _positionText =>
-      _position?.toString().split('.').first ?? '0:00:00';
-
-  AudioPlayer get player => widget.player;
-
-  late final AnimationController controller;
-  late final Animation<double> animation;
+  const SeekBar({
+    Key? key,
+    required this.duration,
+    required this.position,
+    required this.bufferedPosition,
+    this.onChanged,
+    this.onChangeEnd,
+  }) : super(key: key);
 
   @override
-  void initState() {
-    super.initState();
-    _initStreams();
+  SeekBarState createState() => SeekBarState();
+}
 
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 100),
+class SeekBarState extends State<SeekBar> {
+  double? _dragValue;
+  late SliderThemeData _sliderThemeData;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _sliderThemeData = SliderTheme.of(context).copyWith(
+      trackHeight: 2.0,
     );
-    animation = Tween<double>(begin: 0.0, end: 1.0).animate(controller);
-  }
-
-  @override
-  void setState(VoidCallback fn) {
-    if (mounted) {
-      super.setState(fn);
-    }
-  }
-
-  @override
-  void dispose() {
-    _durationSubscription?.cancel();
-    _positionSubscription?.cancel();
-    _playerCompleteSubscription?.cancel();
-    _playerStateChangeSubscription?.cancel();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              key: const Key('play_button'),
-              onPressed: widget.isLoading
-                  ? null
-                  : _isPlaying
-                      ? _pause
-                      : _play,
-              iconSize: 32,
-              icon: AnimatedIcon(
-                icon: AnimatedIcons.play_pause,
-                progress: animation,
-                size: 32,
-                semanticLabel: 'Play/Pause',
+    final theme = Theme.of(context);
+
+    return Stack(
+      children: [
+        SliderTheme(
+          data: _sliderThemeData.copyWith(
+            thumbShape: HiddenThumbComponentShape(),
+            activeTrackColor: _sliderThemeData.activeTrackColor ??
+                theme.primaryColor.withOpacity(0.1),
+            inactiveTrackColor:
+                _sliderThemeData.inactiveTrackColor ?? Colors.grey.shade300,
+          ),
+          child: ExcludeSemantics(
+            child: Slider(
+              min: 0.0,
+              max: widget.duration.inMilliseconds.toDouble(),
+              value: min(
+                widget.bufferedPosition.inMilliseconds.toDouble(),
+                widget.duration.inMilliseconds.toDouble(),
               ),
-              color: widget.isLoading
-                  ? Colors.grey
-                  : Theme.of(context).primaryColor,
+              onChanged: (value) {
+                setState(() {
+                  _dragValue = value;
+                });
+                if (widget.onChanged != null) {
+                  widget.onChanged!(Duration(milliseconds: value.round()));
+                }
+              },
+              onChangeEnd: (value) {
+                if (widget.onChangeEnd != null) {
+                  widget.onChangeEnd!(Duration(milliseconds: value.round()));
+                }
+                _dragValue = null;
+              },
             ),
-            if (widget.isLoading)
-              const CircularProgressIndicator.adaptive()
-            else
-              Text(
-                _position != null
-                    ? '$_positionText / $_durationText'
-                    : _duration != null
-                        ? _durationText
-                        : '',
-                style: const TextStyle(fontSize: 16.0),
-              ),
-          ],
+          ),
         ),
-        const SizedBox(width: 14),
-        Slider(
-          onChanged: (v) {
-            final duration = _duration;
-            if (duration == null) {
-              return;
-            }
-            final position = v * duration.inMilliseconds;
-            player.seek(Duration(milliseconds: position.round()));
-          },
-          thumbColor: widget.isLoading
-              ? Colors.grey
-              : Theme.of(context).sliderTheme.thumbColor,
-          inactiveColor: widget.isLoading
-              ? Colors.grey
-              : Theme.of(context).sliderTheme.activeTrackColor,
-          value: (_position != null &&
-                  _duration != null &&
-                  _position!.inMilliseconds > 0 &&
-                  _position!.inMilliseconds < _duration!.inMilliseconds)
-              ? _position!.inMilliseconds / _duration!.inMilliseconds
-              : 0.0,
+        SliderTheme(
+          data: _sliderThemeData.copyWith(
+            inactiveTrackColor: Colors.transparent,
+          ),
+          child: Slider(
+            min: 0.0,
+            max: widget.duration.inMilliseconds.toDouble(),
+            value: min(
+              _dragValue ?? widget.position.inMilliseconds.toDouble(),
+              widget.duration.inMilliseconds.toDouble(),
+            ),
+            onChanged: (value) {
+              setState(() {
+                _dragValue = value;
+              });
+              if (widget.onChanged != null) {
+                widget.onChanged!(Duration(milliseconds: value.round()));
+              }
+            },
+            onChangeEnd: (value) {
+              if (widget.onChangeEnd != null) {
+                widget.onChangeEnd!(Duration(milliseconds: value.round()));
+              }
+              _dragValue = null;
+            },
+          ),
         ),
       ],
     );
   }
+}
 
-  void _initStreams() {
-    _durationSubscription = player.onDurationChanged.listen((duration) {
-      setState(() => _duration = duration);
-    });
+class HiddenThumbComponentShape extends SliderComponentShape {
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) => Size.zero;
 
-    _positionSubscription = player.onPositionChanged.listen(
-      (p) => setState(() => _position = p),
-    );
-
-    _playerCompleteSubscription = player.onPlayerComplete.listen((event) {
-      setState(() {
-        _playerState = PlayerState.stopped;
-        _position = Duration.zero;
-      });
-    });
-  }
-
-  Future<void> _play() async {
-    final position = _position;
-    if (position != null && position.inMilliseconds > 0) {
-      await player.seek(position);
-    }
-    await player.resume();
-    unawaited(controller.forward());
-
-    setState(() => _playerState = PlayerState.playing);
-  }
-
-  Future<void> _pause() async {
-    await player.pause();
-    unawaited(controller.reverse());
-    setState(() => _playerState = PlayerState.paused);
-  }
+  @override
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {}
 }

@@ -10,7 +10,6 @@ environment:
   flutter: ">=2.0.0"
 
 dependencies:
-  audioplayers: ^3.0.1
   chewie: ^1.4.0
   collection: ^1.17.0
   cupertino_icons: ^1.0.2
@@ -20,7 +19,9 @@ dependencies:
   image_picker: ^0.8.5+3
   intl: ^0.18.0
   json_annotation: ^4.0.1
+  just_audio: ^0.9.32
   lottie: ^2.1.0
+  rxdart: ^0.27.7
   universal_html: ^2.2.1
   uuid: ^3.0.4
   video_player: ^2.6.0

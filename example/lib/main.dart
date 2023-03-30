@@ -176,7 +176,7 @@ class _MyAppState extends State<MyApp> {
             ),
             AudioContent(
               url:
-                  'https://github.com/QuickBirdEng/survey_kit/blob/main/assets/gong.mp3?raw=true',
+                  'https://github.com/QuickBirdEng/survey_kit/raw/main/assets/gong.mp3',
             ),
           ],
         ),
@@ -229,6 +229,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   ThemeData get theme => Theme.of(context).copyWith(
+        useMaterial3: true,
         primaryColor: Colors.cyan,
         appBarTheme: const AppBarTheme(
           color: Colors.white,
