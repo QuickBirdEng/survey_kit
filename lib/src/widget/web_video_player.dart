@@ -9,8 +9,9 @@ class WebVideoPlayer extends StatefulWidget {
   const WebVideoPlayer(
     this.src, {
     super.key,
-    this.autoplay = true,
+    this.autoplay = false,
     this.controls = true,
+    this.loop = false,
     this.startAt = 0,
     this.aspectRatio = 16 / 9,
   });
@@ -19,6 +20,7 @@ class WebVideoPlayer extends StatefulWidget {
   final double startAt;
 
   final bool autoplay;
+  final bool loop;
 
   final bool controls;
   final double aspectRatio;
@@ -39,6 +41,7 @@ class _WebVideoPlayerState extends State<WebVideoPlayer> {
         final video = html.VideoElement()
           ..src = url
           ..autoplay = widget.autoplay
+          ..loop = widget.loop
           ..controls = widget.controls
           ..style.border = 'none'
           ..style.height = '100%'

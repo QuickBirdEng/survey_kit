@@ -15,7 +15,11 @@ class VideoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widget = kIsWeb
-        ? WebVideoPlayer(videoContent.url)
+        ? WebVideoPlayer(
+            videoContent.url,
+            autoplay: videoContent.autoPlay,
+            loop: videoContent.loop,
+          )
         : SurveyKitVideoPlayer(
             videoUrl: videoContent.url,
             autoPlay: videoContent.autoPlay,
