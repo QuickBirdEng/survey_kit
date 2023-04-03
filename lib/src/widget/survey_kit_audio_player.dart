@@ -7,7 +7,10 @@ import 'package:rxdart/rxdart.dart';
 class SurveyKitAudioPlayer extends StatefulWidget {
   final String audioUrl;
 
-  const SurveyKitAudioPlayer({super.key, required this.audioUrl});
+  const SurveyKitAudioPlayer({
+    super.key,
+    required this.audioUrl,
+  });
 
   @override
   _SurveyKitAudioPlayerState createState() => _SurveyKitAudioPlayerState();
