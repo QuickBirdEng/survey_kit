@@ -30,16 +30,18 @@ class _AnswerViewState extends State<AnswerView> {
 
     return QuestionAnswer<dynamic>(
       step: widget.step,
-      child: stepShell != null
-          ? stepShell.call(
-              widget.step,
-              answerView,
-              context,
-            )
-          : StepView(
-              step: widget.step,
-              answerView: answerView,
-            ),
+      child: Builder(
+        builder: (context) => stepShell != null
+            ? stepShell.call(
+                widget.step,
+                answerView,
+                context,
+              )
+            : StepView(
+                step: widget.step,
+                answerView: answerView,
+              ),
+      ),
     );
   }
 }
