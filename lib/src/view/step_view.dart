@@ -61,20 +61,25 @@ class _StepViewState extends State<StepView> {
                         ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        child: OutlinedButton(
-                          onPressed:
-                              questionAnswer.isValid || !widget.step.isMandatory
+                        child: AnimatedBuilder(
+                          animation: questionAnswer.isValid,
+                          builder: (context, child) {
+                            return OutlinedButton(
+                              onPressed: questionAnswer.isValid.value ||
+                                      !widget.step.isMandatory
                                   ? () => _surveyController.nextStep(
                                         context,
                                         questionAnswer.stepResult,
                                       )
                                   : null,
-                          child: Text(
-                            widget.step.buttonText ??
-                                surveyConfiguration.localizations?['next']
-                                    ?.toUpperCase() ??
-                                'Next',
-                          ),
+                              child: Text(
+                                widget.step.buttonText ??
+                                    surveyConfiguration.localizations?['next']
+                                        ?.toUpperCase() ??
+                                    'Next',
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],

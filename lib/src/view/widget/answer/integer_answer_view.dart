@@ -36,7 +36,6 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView>
     _integerAnswerFormat = answer as IntegerAnswerFormat;
     _controller = TextEditingController();
     _controller.text = widget.result?.result?.toString() ?? '';
-    isValid(int.tryParse(_controller.text));
   }
 
   @override

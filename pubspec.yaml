@@ -11,7 +11,7 @@ environment:
 
 dependencies:
   chewie: ^1.4.0
-  collection: ^1.17.0
+  collection: ^1.16.0
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter

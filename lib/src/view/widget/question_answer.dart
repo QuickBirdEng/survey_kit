@@ -13,7 +13,11 @@ class QuestionAnswer<R> extends InheritedWidget {
 
   final Step step;
 
-  bool isValid = true;
+  final ValueNotifier<bool> isValid = ValueNotifier<bool>(true);
+  // ignore: avoid_positional_boolean_parameters, use_setters_to_change_properties
+  void setIsValid(bool isValid) {
+    this.isValid.value = isValid;
+  }
 
   StepResult<R?>? _stepResult;
   StepResult<R?>? get stepResult => _stepResult;
@@ -34,5 +38,9 @@ class QuestionAnswer<R> extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(QuestionAnswer oldWidget) => false;
+  bool updateShouldNotify(QuestionAnswer oldWidget) {
+    return oldWidget.step != step ||
+        oldWidget.isValid != isValid ||
+        oldWidget.stepResult != stepResult;
+  }
 }
