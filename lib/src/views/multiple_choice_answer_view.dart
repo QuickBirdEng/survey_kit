@@ -84,7 +84,9 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
                               if (_selectedChoices.contains(tc)) {
                                 _selectedChoices.remove(tc);
                               } else {
-                                _selectedChoices = [..._selectedChoices, tc];
+                                if(_multipleChoiceAnswer.maxAnswers > _selectedChoices.length){
+                                  _selectedChoices = [..._selectedChoices, tc];
+                                }
                               }
                             },
                           );
