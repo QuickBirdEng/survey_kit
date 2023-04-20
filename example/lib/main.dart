@@ -83,15 +83,27 @@ class _MyAppState extends State<MyApp> {
             ),
             TextContent(text: 'This is a video'),
             VideoContent(
+              title: 'This is an video about a bear',
               url:
                   'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+              externalLink:
+                  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+              width: 900,
             ),
-            LottieContent(
-              repeat: true,
+            AudioContent(
+              title: 'This is an audio',
+              subtitle: 'This is an good subtitle about stuff',
+              externalLink:
+                  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
               url:
-                  'https://assets4.lottiefiles.com/packages/lf20_mNvu7WUM7W.json',
+                  'https://github.com/QuickBirdEng/survey_kit/raw/main/assets/gong.mp3',
             ),
-            TextContent(text: 'This is a video'),
+            // LottieContent(
+            //   repeat: true,
+            //   url:
+            //       'https://assets4.lottiefiles.com/packages/lf20_mNvu7WUM7W.json',
+            // ),
+            // TextContent(text: 'This is a video'),
             MarkdownContent(text: 'This is markdown')
           ],
           answerFormat: SingleChoiceAnswerFormat(
@@ -175,6 +187,8 @@ class _MyAppState extends State<MyApp> {
               fontSize: 28,
             ),
             AudioContent(
+              title: 'This is an audio',
+              subtitle: 'This is a good subtitle for the video',
               url:
                   'https://github.com/QuickBirdEng/survey_kit/raw/main/assets/gong.mp3',
             ),

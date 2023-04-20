@@ -14,6 +14,9 @@ class VideoContent extends Content {
   final bool loop;
   final double? width;
   final double? height;
+  final String? title;
+  final String? subtitle;
+  final String? externalLink;
 
   const VideoContent({
     required this.url,
@@ -22,6 +25,9 @@ class VideoContent extends Content {
     this.loop = false,
     this.width,
     this.height,
+    this.title,
+    this.subtitle,
+    this.externalLink,
   }) : super(contentType: type);
 
   factory VideoContent.fromJson(Map<String, dynamic> json) =>

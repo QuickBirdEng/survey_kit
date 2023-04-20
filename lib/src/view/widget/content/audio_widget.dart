@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/model/content/audio_content.dart';
+import 'package:survey_kit/src/util/ui_utils.dart';
+import 'package:survey_kit/src/widget/link.dart';
 import 'package:survey_kit/src/widget/survey_kit_audio_player.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 class AudioWidget extends StatelessWidget {
   const AudioWidget({
@@ -12,8 +15,35 @@ class AudioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SurveyKitAudioPlayer(
-      audioUrl: audioContent.url,
+    final theme = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (audioContent.title != null) ...[
+          Text(
+            audioContent.title!,
+            style: theme.textTheme.titleLarge,
+          ),
+          smallVerticalSpacer,
+        ],
+        SurveyKitAudioPlayer(
+          audioUrl: audioContent.url,
+        ),
+        if (audioContent.subtitle != null) ...[
+          smallVerticalSpacer,
+          Text(
+            audioContent.subtitle!,
+            style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),
+          ),
+        ],
+        if (audioContent.externalLink != null) ...[
+          smallVerticalSpacer,
+          LinkText(
+            link: audioContent.externalLink!,
+          )
+        ],
+      ],
     );
   }
 }

@@ -60,7 +60,7 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
     final theme = Theme.of(context);
 
     return Container(
-      height: 84,
+      height: 74,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         color: theme.colorScheme.primary.withOpacity(0.1),
@@ -161,7 +161,7 @@ class AudioActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(icon),
-      iconSize: 48.0,
+      iconSize: 38.0,
       onPressed: onPressed,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
