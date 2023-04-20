@@ -66,7 +66,6 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
         color: theme.colorScheme.primary.withOpacity(0.1),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           StreamBuilder<PlayerState>(
@@ -101,18 +100,20 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
               }
             },
           ),
-          StreamBuilder<PositionData>(
-            stream: _positionDataStream,
-            builder: (context, snapshot) {
-              final positionData = snapshot.data;
-              return SeekBar(
-                duration: positionData?.duration ?? Duration.zero,
-                position: positionData?.position ?? Duration.zero,
-                bufferedPosition:
-                    positionData?.bufferedPosition ?? Duration.zero,
-                onChangeEnd: _audioPlayer.seek,
-              );
-            },
+          Expanded(
+            child: StreamBuilder<PositionData>(
+              stream: _positionDataStream,
+              builder: (context, snapshot) {
+                final positionData = snapshot.data;
+                return SeekBar(
+                  duration: positionData?.duration ?? Duration.zero,
+                  position: positionData?.position ?? Duration.zero,
+                  bufferedPosition:
+                      positionData?.bufferedPosition ?? Duration.zero,
+                  onChangeEnd: _audioPlayer.seek,
+                );
+              },
+            ),
           ),
           StreamBuilder<PositionData>(
             stream: _positionDataStream,

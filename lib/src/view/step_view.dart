@@ -41,27 +41,23 @@ class _StepViewState extends State<StepView> {
       child: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraint) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraint.maxHeight),
-                child: IntrinsicHeight(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: ContentWidget(
-                          content: widget.step.content,
+            return Padding(
+              padding: const EdgeInsets.all(30),
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraint.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ContentWidget(
+                            content: widget.step.content,
+                          ),
                         ),
-                      ),
-                      if (widget.answerView != null)
-                        Padding(
-                          padding: const EdgeInsets.all(14),
-                          child: widget.answerView,
-                        ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        child: AnimatedBuilder(
+                        if (widget.answerView != null) widget.answerView!,
+                        AnimatedBuilder(
                           animation: questionAnswer.isValid,
                           builder: (context, child) {
                             return OutlinedButton(
@@ -81,8 +77,8 @@ class _StepViewState extends State<StepView> {
                             );
                           },
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
