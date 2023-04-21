@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/model/content/section_content.dart';
 import 'package:survey_kit/src/util/ui_utils.dart';
+import 'package:survey_kit/src/view/widget/content/styled_text_widget.dart';
 
 class SectionWidget extends StatelessWidget {
   const SectionWidget({
@@ -20,31 +21,6 @@ class SectionWidget extends StatelessWidget {
           )
           .separate(verySmallVerticalSpacer)
           .toList(),
-    );
-  }
-}
-
-class StyledTextWidget extends StatelessWidget {
-  const StyledTextWidget({
-    super.key,
-    required this.content,
-  });
-
-  final StyledText content;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return SelectableText(
-      content.text,
-      style: theme.textTheme.bodyMedium?.copyWith(
-        decoration:
-            content.underlined ? TextDecoration.underline : TextDecoration.none,
-        fontSize: content.fontSize,
-        fontWeight: content.bold ? FontWeight.bold : FontWeight.normal,
-        fontStyle: content.italic ? FontStyle.italic : FontStyle.normal,
-      ),
     );
   }
 }

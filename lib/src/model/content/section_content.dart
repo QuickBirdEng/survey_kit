@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/model/content/content.dart';
 import 'package:survey_kit/src/view/widget/content/section_widget.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 part 'section_content.g.dart';
 
@@ -9,9 +9,9 @@ part 'section_content.g.dart';
 class SectionContent extends Content {
   static const type = 'section';
 
-  final StyledText title;
-  final StyledText subtitle;
-  final StyledText text;
+  final StyledTextContent title;
+  final StyledTextContent subtitle;
+  final StyledTextContent text;
 
   const SectionContent({
     required this.title,
@@ -30,30 +30,8 @@ class SectionContent extends Content {
   }
 }
 
-@JsonSerializable()
-class StyledText {
-  final String text;
-  final double fontSize;
-  final bool bold;
-  final bool italic;
-  final bool underlined;
-
-  const StyledText({
-    required this.text,
-    this.fontSize = 16,
-    this.bold = false,
-    this.italic = false,
-    this.underlined = false,
-  });
-
-  factory StyledText.fromJson(Map<String, dynamic> json) =>
-      _$StyledTextFromJson(json);
-
-  Map<String, dynamic> toJson() => _$StyledTextToJson(this);
-}
-
 extension SectionContentExt on SectionContent {
-  List<StyledText> get toList {
+  List<StyledTextContent> get toList {
     return [title, subtitle, text];
   }
 }
