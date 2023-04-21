@@ -33,7 +33,7 @@ class VideoWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (videoContent.title != null) ...[
-          Text(
+          SelectableText(
             videoContent.title!,
             style: theme.textTheme.titleLarge,
           ),
@@ -49,7 +49,7 @@ class VideoWidget extends StatelessWidget {
         ),
         if (videoContent.subtitle != null) ...[
           smallVerticalSpacer,
-          Text(
+          SelectableText(
             videoContent.subtitle!,
             style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),
           ),

@@ -81,7 +81,24 @@ class _MyAppState extends State<MyApp> {
               text: 'Introduction to SurveyKit',
               fontSize: 24,
             ),
-            TextContent(text: 'This is a video'),
+            SectionContent(
+              title: StyledText(
+                text: 'ColorScheme class',
+                bold: true,
+                fontSize: 24,
+              ),
+              subtitle: StyledText(
+                text:
+                    'A set of 30 colors based on the Material spec that can be used to configure the color properties of most components.',
+                fontSize: 12,
+                italic: true,
+                underlined: true,
+              ),
+              text: StyledText(
+                text:
+                    'The main accent color groups in the scheme are primary, secondary, and tertiary.Primary colors are used, for key components across the UI, such as the FAB, prominent buttons, and active states. Secondary colors are used for less prominent components in the UI, such as filter chips, while expanding the opportunity for color expression. Tertiary colors are used for contrasting accents that can be used to balance primary and secondary colors or bring heightened attention to an element, such as an input field. The tertiary colors are left for makers to use at their discretion and are intended to support broader color expression in products. The remaining colors of the scheme are comprised of neutral colors used for backgrounds and surfaces, as well as specific colors for errors, dividers and shadows.',
+              ),
+            ),
             VideoContent(
               title: 'This is an video about a bear',
               url:
@@ -92,18 +109,17 @@ class _MyAppState extends State<MyApp> {
             ),
             AudioContent(
               title: 'This is an audio',
-              subtitle: 'This is an good subtitle about stuff',
+              subtitle: 'The audio is gong',
               externalLink:
-                  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                  'https://github.com/QuickBirdEng/survey_kit/raw/main/assets/gong.mp3',
               url:
                   'https://github.com/QuickBirdEng/survey_kit/raw/main/assets/gong.mp3',
             ),
-            // LottieContent(
-            //   repeat: true,
-            //   url:
-            //       'https://assets4.lottiefiles.com/packages/lf20_mNvu7WUM7W.json',
-            // ),
-            // TextContent(text: 'This is a video'),
+            LottieContent(
+              repeat: true,
+              url:
+                  'https://assets4.lottiefiles.com/packages/lf20_mNvu7WUM7W.json',
+            ),
             MarkdownContent(text: 'This is markdown')
           ],
           answerFormat: SingleChoiceAnswerFormat(

@@ -21,7 +21,7 @@ class AudioWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (audioContent.title != null) ...[
-          Text(
+          SelectableText(
             audioContent.title!,
             style: theme.textTheme.titleLarge,
           ),
@@ -32,7 +32,7 @@ class AudioWidget extends StatelessWidget {
         ),
         if (audioContent.subtitle != null) ...[
           smallVerticalSpacer,
-          Text(
+          SelectableText(
             audioContent.subtitle!,
             style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),
           ),
