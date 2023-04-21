@@ -30,18 +30,18 @@ class AudioWidget extends StatelessWidget {
         SurveyKitAudioPlayer(
           audioUrl: audioContent.url,
         ),
+        if (audioContent.externalLink != null) ...[
+          smallVerticalSpacer,
+          LinkText(
+            link: audioContent.externalLink!,
+          )
+        ],
         if (audioContent.subtitle != null) ...[
           smallVerticalSpacer,
           SelectableText(
             audioContent.subtitle!,
             style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),
           ),
-        ],
-        if (audioContent.externalLink != null) ...[
-          smallVerticalSpacer,
-          LinkText(
-            link: audioContent.externalLink!,
-          )
         ],
       ],
     );

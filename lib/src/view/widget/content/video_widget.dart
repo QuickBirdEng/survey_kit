@@ -47,16 +47,16 @@ class VideoWidget extends StatelessWidget {
           ),
           child: widget,
         ),
+        if (videoContent.externalLink != null) ...[
+          smallVerticalSpacer,
+          LinkText(link: videoContent.externalLink!)
+        ],
         if (videoContent.subtitle != null) ...[
           smallVerticalSpacer,
           SelectableText(
             videoContent.subtitle!,
             style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),
           ),
-        ],
-        if (videoContent.externalLink != null) ...[
-          smallVerticalSpacer,
-          LinkText(link: videoContent.externalLink!)
         ],
       ],
     );
