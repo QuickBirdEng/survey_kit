@@ -22,6 +22,8 @@ export 'src/model/content/content.dart';
 export 'src/model/content/image_content.dart';
 export 'src/model/content/lottie_content.dart';
 export 'src/model/content/markdown_content.dart';
+export 'src/model/content/section_content.dart';
+export 'src/model/content/styled_text_content.dart';
 export 'src/model/content/text_content.dart';
 export 'src/model/content/video_content.dart';
 export 'src/model/predifined/completion_step.dart';

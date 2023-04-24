@@ -9,10 +9,16 @@ part 'audio_content.g.dart';
 class AudioContent extends Content {
   static const type = 'audio';
   final String url;
+  final String? title;
+  final String? subtitle;
+  final String? externalLink;
 
   const AudioContent({
     required this.url,
     super.id,
+    this.title,
+    this.subtitle,
+    this.externalLink,
   }) : super(contentType: type);
 
   factory AudioContent.fromJson(Map<String, dynamic> json) =>

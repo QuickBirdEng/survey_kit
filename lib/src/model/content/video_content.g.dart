@@ -13,6 +13,9 @@ VideoContent _$VideoContentFromJson(Map<String, dynamic> json) => VideoContent(
       loop: json['loop'] as bool? ?? false,
       width: (json['width'] as num?)?.toDouble(),
       height: (json['height'] as num?)?.toDouble(),
+      title: json['title'] as String?,
+      subtitle: json['subtitle'] as String?,
+      externalLink: json['externalLink'] as String?,
     );
 
 Map<String, dynamic> _$VideoContentToJson(VideoContent instance) {
@@ -30,5 +33,8 @@ Map<String, dynamic> _$VideoContentToJson(VideoContent instance) {
   val['loop'] = instance.loop;
   val['width'] = instance.width;
   val['height'] = instance.height;
+  val['title'] = instance.title;
+  val['subtitle'] = instance.subtitle;
+  val['externalLink'] = instance.externalLink;
   return val;
 }

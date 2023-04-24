@@ -23,6 +23,7 @@ dependencies:
   lottie: ^2.1.0
   rxdart: ^0.27.7
   universal_html: ^2.2.1
+  url_launcher: ^6.1.10
   uuid: ^3.0.4
   video_player: ^2.6.0
   visibility_detector: ^0.3.3
