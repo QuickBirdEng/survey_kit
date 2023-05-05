@@ -74,6 +74,7 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
               final playerState = snapshot.data;
               final processingState = playerState?.processingState;
               final playing = playerState?.playing;
+
               if (processingState == ProcessingState.loading ||
                   processingState == ProcessingState.buffering) {
                 return Container(
@@ -82,22 +83,24 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
                   height: 48,
                   child: const CircularProgressIndicator(),
                 );
-              } else if (playing != true) {
+              }
+              if (playing != true) {
                 return AudioActionButton(
                   icon: Icons.play_arrow,
                   onPressed: _audioPlayer.play,
                 );
-              } else if (processingState != ProcessingState.completed) {
+              }
+
+              if (processingState != ProcessingState.completed) {
                 return AudioActionButton(
                   icon: Icons.pause,
                   onPressed: _audioPlayer.pause,
                 );
-              } else {
-                return AudioActionButton(
-                  icon: Icons.replay,
-                  onPressed: () => _audioPlayer.seek(Duration.zero),
-                );
               }
+              return AudioActionButton(
+                icon: Icons.replay,
+                onPressed: () => _audioPlayer.seek(Duration.zero),
+              );
             },
           ),
           Expanded(
@@ -123,10 +126,7 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
                   (positionData?.position ?? Duration.zero);
 
               return Text(
-                RegExp(r'((^0*[1-9]\d*:)?\d{2}:\d{2})\.\d+$')
-                        .firstMatch('$remaining')
-                        ?.group(1) ??
-                    '$remaining',
+                remaining.text,
               );
             },
           ),
@@ -293,4 +293,8 @@ class HiddenThumbComponentShape extends SliderComponentShape {
     required double textScaleFactor,
     required Size sizeWithOverflow,
   }) {}
+}
+
+extension on Duration {
+  String get text => toString().split('.').first;
 }
