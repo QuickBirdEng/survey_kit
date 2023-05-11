@@ -8,7 +8,7 @@ class AppBarExample extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     final surveyController = SurveyConfiguration.of(context).surveyController;
     final surveyStream =
-        SurveyPresenterInherited.of(context).surveyStateStream.stream;
+        SurveyStateProvider.of(context).surveyStateStream.stream;
 
     final cancelButton = IconButton(
       icon: const Icon(Icons.close),

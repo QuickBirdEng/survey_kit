@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/configuration/survey_configuration.dart';
-import 'package:survey_kit/src/presenter/survey_presenter_inherited.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
+import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 
 class SurveyProgress extends StatefulWidget {
   const SurveyProgress({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class _SurveyProgressState extends State<SurveyProgress> {
     final progressbarConfiguration =
         SurveyConfiguration.of(context).surveyProgressConfiguration;
     return StreamBuilder<SurveyState>(
-      stream: SurveyPresenterInherited.of(context).surveyStateStream.stream,
+      stream: SurveyStateProvider.of(context).surveyStateStream.stream,
       builder: (context, snapshot) {
         if (snapshot.data == null || snapshot.data is! PresentingSurveyState) {
           return const SizedBox.shrink();

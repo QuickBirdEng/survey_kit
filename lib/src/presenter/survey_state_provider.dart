@@ -5,8 +5,8 @@ import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/survey_kit.dart';
 
 // ignore: must_be_immutable
-class SurveyPresenterInherited extends InheritedWidget {
-  SurveyPresenterInherited({
+class SurveyStateProvider extends InheritedWidget {
+  SurveyStateProvider({
     super.key,
     required this.taskNavigator,
     required this.onResult,
@@ -31,15 +31,15 @@ class SurveyPresenterInherited extends InheritedWidget {
   late StreamController<SurveyState> surveyStateStream =
       StreamController<SurveyState>.broadcast();
 
-  static SurveyPresenterInherited of(BuildContext context) {
+  static SurveyStateProvider of(BuildContext context) {
     final result =
-        context.dependOnInheritedWidgetOfExactType<SurveyPresenterInherited>();
+        context.dependOnInheritedWidgetOfExactType<SurveyStateProvider>();
     assert(result != null, 'No SurveyPresenterInherited found in context');
     return result!;
   }
 
   @override
-  bool updateShouldNotify(SurveyPresenterInherited oldWidget) =>
+  bool updateShouldNotify(SurveyStateProvider oldWidget) =>
       taskNavigator != oldWidget.taskNavigator ||
       onResult != oldWidget.onResult ||
       _state != oldWidget._state;

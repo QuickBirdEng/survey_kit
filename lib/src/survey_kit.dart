@@ -7,8 +7,8 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
 import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
-import 'package:survey_kit/src/presenter/survey_presenter_inherited.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
+import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
@@ -94,7 +94,7 @@ class _SurveyKitState extends State<SurveyKit> {
       surveyController: widget.surveyController ?? SurveyController(),
       localizations: widget.localizations,
       padding: const EdgeInsets.all(14),
-      child: SurveyPresenterInherited(
+      child: SurveyStateProvider(
         taskNavigator: _taskNavigator,
         onResult: widget.onResult,
         stepShell: widget.stepShell,
@@ -126,26 +126,14 @@ class SurveyPage extends StatefulWidget {
 
 class _SurveyPageState extends State<SurveyPage>
     with SingleTickerProviderStateMixin {
-  late final TabController tabController;
-
-  @override
-  void initState() {
-    tabController = TabController(length: widget.length, vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: SurveyPresenterInherited.of(context).surveyStateStream.stream,
+      stream: SurveyStateProvider.of(context).surveyStateStream.stream,
       builder: (_, AsyncSnapshot<SurveyState> snapshot) {
-        final state = SurveyPresenterInherited.of(context).state;
+        final state = SurveyStateProvider.of(context).state;
 
         if (state is SurveyResultState) {
           return const Center(
@@ -153,32 +141,32 @@ class _SurveyPageState extends State<SurveyPage>
           );
         }
         if (state is PresentingSurveyState) {
-          tabController.animateTo(state.currentStepIndex);
+          _navigatorKey.currentState?.pushNamed('/');
         }
 
         if (state is PresentingSurveyState) {
           return Scaffold(
             backgroundColor: Colors.transparent,
             appBar: widget.appBar ?? const SurveyAppBar(),
-            body: TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: tabController,
-              children: state.steps
-                  .map(
-                    (e) => _SurveyView(
-                      id: e.id,
-                      createView: () {
-                        return AnswerView(
-                          answer: e.answerFormat,
-                          step: e,
-                          stepResult: state.questionResults.firstWhereOrNull(
-                            (element) => element.id == e.id,
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                  .toList(),
+            body: Navigator(
+              key: _navigatorKey,
+              onGenerateRoute: (_) => MaterialPageRoute<Widget>(
+                builder: (_) {
+                  final step = state.currentStep;
+                  return _SurveyView(
+                    id: step.id,
+                    createView: () {
+                      return AnswerView(
+                        answer: step.answerFormat,
+                        step: step,
+                        stepResult: state.questionResults.firstWhereOrNull(
+                          (element) => element.id == step.id,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           );
         }

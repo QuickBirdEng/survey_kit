@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
-import 'package:survey_kit/src/presenter/survey_presenter_inherited.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
+import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 import 'package:survey_kit/src/widget/survey_progress.dart';
 
 class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -18,7 +18,7 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
     final surveyController =
         controller ?? SurveyConfiguration.of(context).surveyController;
     final surveyStream =
-        SurveyPresenterInherited.of(context).surveyStateStream.stream;
+        SurveyStateProvider.of(context).surveyStateStream.stream;
 
     final cancelButton = TextButton(
       child: Text(
