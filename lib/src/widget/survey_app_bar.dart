@@ -5,7 +5,7 @@ import 'package:survey_kit/src/presenter/survey_presenter_inherited.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
 import 'package:survey_kit/src/widget/survey_progress.dart';
 
-class SurveyAppBar extends StatelessWidget with PreferredSizeWidget {
+class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final SurveyController? controller;
 
   const SurveyAppBar({
