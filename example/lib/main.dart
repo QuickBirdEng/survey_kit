@@ -359,54 +359,67 @@ class SurveyKitView extends StatelessWidget {
         final surveyController = surveyConfiguration.surveyController;
         final mediaQuery = MediaQuery.of(context);
 
-        return SingleChildScrollView(
-          child: ColoredBox(
-            color: const Color(0xFFFFF6F0),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 24,
-                    ),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: ContentWidget(
-                          content: step.content,
+        return ColoredBox(
+          color: Colors.white,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: constraints.maxWidth,
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 24,
+                            ),
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: ContentWidget(
+                                  content: step.content,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        if (answerWidget != null) answerWidget,
+                        Container(
+                          width: double.infinity,
+                          height: 80 + mediaQuery.viewPadding.bottom,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: SafeArea(
+                              child: OutlinedButton(
+                                onPressed: questionAnswer.isValid.value ||
+                                        !step.isMandatory
+                                    ? () => surveyController.nextStep(
+                                          context,
+                                          questionAnswer.stepResult,
+                                        )
+                                    : null,
+                                child: const Text('Zur Frage'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                if (answerWidget != null) answerWidget,
-                Container(
-                  width: double.infinity,
-                  height: 80 + mediaQuery.viewPadding.bottom,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: SafeArea(
-                      child: OutlinedButton(
-                        onPressed:
-                            questionAnswer.isValid.value || !step.isMandatory
-                                ? () => surveyController.nextStep(
-                                      context,
-                                      questionAnswer.stepResult,
-                                    )
-                                : null,
-                        child: const Text('Zur Frage'),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         );
       },

@@ -11,15 +11,15 @@ class SurveyStateProvider extends InheritedWidget {
     required this.taskNavigator,
     required this.onResult,
     required super.child,
+    required this.navigatorKey,
     this.stepShell,
   })  : _state = LoadingSurveyState(),
-        startDate = DateTime.now() {
-    onEvent(StartSurvey());
-  }
+        startDate = DateTime.now();
 
   final TaskNavigator taskNavigator;
   final Function(SurveyResult) onResult;
   final StepShell? stepShell;
+  final GlobalKey<NavigatorState> navigatorKey;
 
   late SurveyState _state;
   SurveyState get state => _state;
@@ -49,18 +49,32 @@ class SurveyStateProvider extends InheritedWidget {
 
   void onEvent(SurveyEvent event) {
     if (event is StartSurvey) {
-      updateState(_handleInitialStep());
+      final newState = _handleInitialStep();
+      updateState(newState);
+      navigatorKey.currentState?.pushNamed(
+        '/',
+        arguments: newState,
+      );
     } else if (event is NextStep) {
       if (state is PresentingSurveyState) {
-        updateState(_handleNextStep(event, state as PresentingSurveyState));
+        final newState = _handleNextStep(event, state as PresentingSurveyState);
+        updateState(newState);
+        navigatorKey.currentState?.pushNamed(
+          '/',
+          arguments: newState,
+        );
       }
     } else if (event is StepBack) {
       if (state is PresentingSurveyState) {
-        updateState(_handleStepBack(event, state as PresentingSurveyState));
+        final newState = _handleStepBack(event, state as PresentingSurveyState);
+        updateState(newState);
+        navigatorKey.currentState?.pop();
       }
     } else if (event is CloseSurvey) {
       if (state is PresentingSurveyState) {
-        updateState(_handleClose(event, state as PresentingSurveyState));
+        final newState = _handleClose(event, state as PresentingSurveyState);
+        updateState(newState);
+        navigatorKey.currentState?.pop();
       }
     }
   }
@@ -86,6 +100,7 @@ class SurveyStateProvider extends InheritedWidget {
       finishReason: FinishReason.completed,
       results: const [],
     );
+
     return SurveyResultState(
       result: taskResult,
       currentStep: null,
@@ -125,6 +140,8 @@ class SurveyStateProvider extends InheritedWidget {
     _addResult(event.questionResult);
     final previousStep = taskNavigator.previousInList(currentState.currentStep);
 
+    //If theres no previous step we can't go back further
+
     if (previousStep != null) {
       final questionResult = _getResultByStepIdentifier(previousStep.id);
 
@@ -139,7 +156,6 @@ class SurveyStateProvider extends InheritedWidget {
       );
     }
 
-    //If theres no previous step we can't go back further
     return state;
   }
 

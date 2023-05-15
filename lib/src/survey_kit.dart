@@ -7,6 +7,7 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
 import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
+import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
 import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
@@ -62,6 +63,7 @@ class SurveyKit extends StatefulWidget {
 
 class _SurveyKitState extends State<SurveyKit> {
   late TaskNavigator _taskNavigator;
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -98,10 +100,12 @@ class _SurveyKitState extends State<SurveyKit> {
         taskNavigator: _taskNavigator,
         onResult: widget.onResult,
         stepShell: widget.stepShell,
+        navigatorKey: _navigatorKey,
         child: SurveyPage(
           length: widget.task.steps.length,
           onResult: widget.onResult,
           appBar: widget.appBar,
+          navigatorKey: _navigatorKey,
         ),
       ),
     );
@@ -112,11 +116,13 @@ class SurveyPage extends StatefulWidget {
   final int length;
   final Function(SurveyResult) onResult;
   final PreferredSizeWidget? appBar;
+  final GlobalKey<NavigatorState> navigatorKey;
 
   const SurveyPage({
     super.key,
     required this.length,
     required this.onResult,
+    required this.navigatorKey,
     this.appBar,
   });
 
@@ -126,54 +132,48 @@ class SurveyPage extends StatefulWidget {
 
 class _SurveyPageState extends State<SurveyPage>
     with SingleTickerProviderStateMixin {
-  final _navigatorKey = GlobalKey<NavigatorState>();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => SurveyStateProvider.of(context).onEvent(
+        StartSurvey(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: SurveyStateProvider.of(context).surveyStateStream.stream,
-      builder: (_, AsyncSnapshot<SurveyState> snapshot) {
-        final state = SurveyStateProvider.of(context).state;
+    return Scaffold(
+      appBar: widget.appBar ?? const SurveyAppBar(),
+      body: Navigator(
+        key: widget.navigatorKey,
+        onGenerateRoute: (settings) => MaterialPageRoute<Widget>(
+          builder: (_) {
+            if (settings.arguments is! PresentingSurveyState) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            }
 
-        if (state is SurveyResultState) {
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
-        }
-        if (state is PresentingSurveyState) {
-          _navigatorKey.currentState?.pushNamed('/');
-        }
+            final currentState = settings.arguments! as PresentingSurveyState;
 
-        if (state is PresentingSurveyState) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: widget.appBar ?? const SurveyAppBar(),
-            body: Navigator(
-              key: _navigatorKey,
-              onGenerateRoute: (_) => MaterialPageRoute<Widget>(
-                builder: (_) {
-                  final step = state.currentStep;
-                  return _SurveyView(
-                    id: step.id,
-                    createView: () {
-                      return AnswerView(
-                        answer: step.answerFormat,
-                        step: step,
-                        stepResult: state.questionResults.firstWhereOrNull(
-                          (element) => element.id == step.id,
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-          );
-        }
-        return const Center(
-          child: CircularProgressIndicator.adaptive(),
-        );
-      },
+            final step = currentState.currentStep;
+            return _SurveyView(
+              id: step.id,
+              createView: () {
+                return AnswerView(
+                  answer: step.answerFormat,
+                  step: step,
+                  stepResult: currentState.questionResults.firstWhereOrNull(
+                    (element) => element.id == step.id,
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }
