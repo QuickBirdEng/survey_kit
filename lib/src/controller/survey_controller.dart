@@ -6,43 +6,46 @@ import 'package:survey_kit/src/result/question_result.dart';
 
 class SurveyController {
   /// Defines what should happen if the next step is called
-  /// Default behavior is:
-  /// ```dart
-  /// BlocProvider.of<SurveyPresenter>(context).add(
-  ///    NextStep(
-  ///      resultFunction.call(),
-  ///    ),
-  /// );
-  /// ```
-  final Function(
+  ///
+  /// If the function returns `true`, the default behavior will still be executed after it.
+  ///
+  /// Parameters:
+  /// - [context]: The build context of the widget triggering the next step.
+  /// - [resultFunction]: A function that returns a [QuestionResult] object.
+  ///
+  /// Returns:
+  /// - `true` if the default behavior should still be executed after this function, `false` otherwise.
+  final bool Function(
     BuildContext context,
     QuestionResult Function() resultFunction,
   )? onNextStep;
 
-  /// Defines what should happen if the previous step is called
-  /// Default behavior is:
-  /// ```dart
-  /// BlocProvider.of<SurveyPresenter>(context).add(
-  ///    StepBack(
-  ///      resultFunction.call(),
-  ///    ),
-  /// );
-  /// ```
-  final Function(
+  /// Defines what should happen if the previus step is called
+  ///
+  /// If the function returns `true`, the default behavior will still be executed after it.
+  ///
+  /// Parameters:
+  /// - [context]: The build context of the widget triggering the next step.
+  /// - [resultFunction]: A function that returns a [QuestionResult] object.
+  ///
+  /// Returns:
+  /// - `true` if the default behavior should still be executed after this function, `false` otherwise.
+  final bool Function(
     BuildContext context,
     QuestionResult Function()? resultFunction,
   )? onStepBack;
 
   /// Defines what should happen if the survey should be closed
-  /// Default behavior is:
-  /// ```dart
-  /// BlocProvider.of<SurveyPresenter>(context).add(
-  ///    CloseSurvey(
-  ///      resultFunction.call(),
-  ///    ),
-  /// );
-  /// ```
-  final Function(
+  ///
+  /// If the function returns `true`, the default behavior will still be executed after it.
+  ///
+  /// Parameters:
+  /// - [context]: The build context of the widget triggering the next step.
+  /// - [resultFunction]: A function that returns a [QuestionResult] object.
+  ///
+  /// Returns:
+  /// - `true` if the default behavior should still be executed after this function, `false` otherwise.
+  final bool Function(
     BuildContext context,
     QuestionResult Function()? resultFunction,
   )? onCloseSurvey;
@@ -58,8 +61,7 @@ class SurveyController {
     QuestionResult Function() resultFunction,
   ) {
     if (onNextStep != null) {
-      onNextStep!(context, resultFunction);
-      return;
+      if (!onNextStep!(context, resultFunction)) return;
     }
     BlocProvider.of<SurveyPresenter>(context).add(
       NextStep(
@@ -73,8 +75,7 @@ class SurveyController {
     QuestionResult Function()? resultFunction,
   }) {
     if (onStepBack != null) {
-      onStepBack!(context, resultFunction);
-      return;
+      if (!onStepBack!(context, resultFunction)) return;
     }
     BlocProvider.of<SurveyPresenter>(context).add(
       StepBack(
@@ -88,8 +89,7 @@ class SurveyController {
     QuestionResult Function()? resultFunction,
   }) {
     if (onCloseSurvey != null) {
-      onCloseSurvey!(context, resultFunction);
-      return;
+      if (!onCloseSurvey!(context, resultFunction)) return;
     }
     BlocProvider.of<SurveyPresenter>(context).add(
       CloseSurvey(
