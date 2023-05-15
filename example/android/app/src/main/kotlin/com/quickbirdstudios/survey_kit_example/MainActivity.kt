@@ -1,4 +1,4 @@
-package com.quickbirdstudios.surveykit_example
+package com.quickbirdstudios.survey_kit_example
 
 import io.flutter.embedding.android.FlutterActivity
 
