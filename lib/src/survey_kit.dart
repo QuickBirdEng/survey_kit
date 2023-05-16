@@ -21,6 +21,7 @@ typedef StepShell = Widget Function(
   Step step,
   Widget? answerWidget,
   BuildContext context,
+  GlobalKey<NavigatorState> navigatorKey,
 );
 
 class SurveyKit extends StatefulWidget {
@@ -46,6 +47,9 @@ class SurveyKit extends StatefulWidget {
   /// Step shell
   final StepShell? stepShell;
 
+  /// Decoration which is applied to the survey container
+  final BoxDecoration? decoration;
+
   const SurveyKit({
     super.key,
     required this.task,
@@ -55,6 +59,7 @@ class SurveyKit extends StatefulWidget {
     this.appBar,
     this.localizations,
     this.stepShell,
+    this.decoration,
   });
 
   @override
@@ -63,12 +68,13 @@ class SurveyKit extends StatefulWidget {
 
 class _SurveyKitState extends State<SurveyKit> {
   late TaskNavigator _taskNavigator;
-  final _navigatorKey = GlobalKey<NavigatorState>();
+  late final GlobalKey<NavigatorState> _navigatorKey;
 
   @override
   void initState() {
     super.initState();
     _taskNavigator = _createTaskNavigator();
+    _navigatorKey = GlobalKey<NavigatorState>();
   }
 
   TaskNavigator _createTaskNavigator() {
@@ -106,6 +112,7 @@ class _SurveyKitState extends State<SurveyKit> {
           onResult: widget.onResult,
           appBar: widget.appBar,
           navigatorKey: _navigatorKey,
+          decoration: widget.decoration,
         ),
       ),
     );
@@ -117,6 +124,7 @@ class SurveyPage extends StatefulWidget {
   final Function(SurveyResult) onResult;
   final PreferredSizeWidget? appBar;
   final GlobalKey<NavigatorState> navigatorKey;
+  final Decoration? decoration;
 
   const SurveyPage({
     super.key,
@@ -124,6 +132,7 @@ class SurveyPage extends StatefulWidget {
     required this.onResult,
     required this.navigatorKey,
     this.appBar,
+    this.decoration,
   });
 
   @override
@@ -161,15 +170,15 @@ class _SurveyPageState extends State<SurveyPage>
             final step = currentState.currentStep;
             return _SurveyView(
               id: step.id,
-              createView: () {
-                return AnswerView(
-                  answer: step.answerFormat,
-                  step: step,
-                  stepResult: currentState.questionResults.firstWhereOrNull(
-                    (element) => element.id == step.id,
-                  ),
-                );
-              },
+              decoration: widget.decoration,
+              createView: () => AnswerView(
+                answer: step.answerFormat,
+                step: step,
+                stepResult: currentState.questionResults.firstWhereOrNull(
+                  (element) => element.id == step.id,
+                ),
+                navigatorKey: widget.navigatorKey,
+              ),
             );
           },
         ),
@@ -179,14 +188,20 @@ class _SurveyPageState extends State<SurveyPage>
 }
 
 class _SurveyView extends StatelessWidget {
-  const _SurveyView({required this.id, required this.createView});
+  const _SurveyView({
+    required this.id,
+    required this.createView,
+    this.decoration,
+  });
 
   final String id;
+  final Decoration? decoration;
   final Widget Function() createView;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: decoration,
       key: ValueKey<String>(
         id,
       ),

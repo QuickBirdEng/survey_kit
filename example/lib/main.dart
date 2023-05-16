@@ -353,6 +353,7 @@ class SurveyKitView extends StatelessWidget {
         Step step,
         Widget? answerWidget,
         BuildContext context,
+        GlobalKey<NavigatorState> navigatorKey,
       ) {
         final questionAnswer = QuestionAnswer.of(context);
         final surveyConfiguration = SurveyConfiguration.of(context);
