@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/survey_kit.dart';
 
-class AppBarExample extends StatelessWidget with PreferredSizeWidget {
+class AppBarExample extends StatelessWidget implements PreferredSizeWidget {
   const AppBarExample({super.key});
 
   @override

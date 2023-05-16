@@ -155,32 +155,34 @@ class _SurveyPageState extends State<SurveyPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: widget.appBar ?? const SurveyAppBar(),
-      body: Navigator(
-        key: widget.navigatorKey,
-        onGenerateRoute: (settings) => MaterialPageRoute<Widget>(
-          builder: (_) {
-            if (settings.arguments is! PresentingSurveyState) {
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-            }
+      body: Container(
+        decoration: widget.decoration,
+        child: Navigator(
+          key: widget.navigatorKey,
+          onGenerateRoute: (settings) => MaterialPageRoute<Widget>(
+            builder: (_) {
+              if (settings.arguments is! PresentingSurveyState) {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              }
 
-            final currentState = settings.arguments! as PresentingSurveyState;
+              final currentState = settings.arguments! as PresentingSurveyState;
 
-            final step = currentState.currentStep;
-            return _SurveyView(
-              id: step.id,
-              decoration: widget.decoration,
-              createView: () => AnswerView(
-                answer: step.answerFormat,
-                step: step,
-                stepResult: currentState.questionResults.firstWhereOrNull(
-                  (element) => element.id == step.id,
+              final step = currentState.currentStep;
+              return _SurveyView(
+                id: step.id,
+                createView: () => AnswerView(
+                  answer: step.answerFormat,
+                  step: step,
+                  stepResult: currentState.questionResults.firstWhereOrNull(
+                    (element) => element.id == step.id,
+                  ),
+                  navigatorKey: widget.navigatorKey,
                 ),
-                navigatorKey: widget.navigatorKey,
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -191,17 +193,14 @@ class _SurveyView extends StatelessWidget {
   const _SurveyView({
     required this.id,
     required this.createView,
-    this.decoration,
   });
 
   final String id;
-  final Decoration? decoration;
   final Widget Function() createView;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: decoration,
       key: ValueKey<String>(
         id,
       ),
