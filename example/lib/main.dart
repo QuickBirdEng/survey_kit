@@ -349,79 +349,85 @@ class SurveyKitView extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       appBar: const AppBarExample(),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.cyan,
+            Colors.white,
+          ],
+        ),
+      ),
       stepShell: (
         Step step,
         Widget? answerWidget,
         BuildContext context,
-        GlobalKey<NavigatorState> navigatorKey,
       ) {
         final questionAnswer = QuestionAnswer.of(context);
         final surveyConfiguration = SurveyConfiguration.of(context);
         final surveyController = surveyConfiguration.surveyController;
         final mediaQuery = MediaQuery.of(context);
 
-        return ColoredBox(
-          color: Colors.white,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: constraints.maxWidth,
-                    minHeight: constraints.maxHeight,
-                  ),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 24,
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: constraints.maxWidth,
+                  minHeight: constraints.maxHeight,
+                ),
+                child: IntrinsicHeight(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 24,
+                          ),
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: ContentWidget(
-                                  content: step.content,
-                                ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: ContentWidget(
+                                content: step.content,
                               ),
                             ),
                           ),
                         ),
-                        if (answerWidget != null) answerWidget,
-                        Container(
-                          width: double.infinity,
-                          height: 80 + mediaQuery.viewPadding.bottom,
-                          color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: SafeArea(
-                              child: OutlinedButton(
-                                onPressed: questionAnswer.isValid.value ||
-                                        !step.isMandatory
-                                    ? () => surveyController.nextStep(
-                                          context,
-                                          questionAnswer.stepResult,
-                                        )
-                                    : null,
-                                child: const Text('Zur Frage'),
-                              ),
+                      ),
+                      if (answerWidget != null) answerWidget,
+                      Container(
+                        width: double.infinity,
+                        height: 80 + mediaQuery.viewPadding.bottom,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: SafeArea(
+                            child: OutlinedButton(
+                              onPressed: questionAnswer.isValid.value ||
+                                      !step.isMandatory
+                                  ? () => surveyController.nextStep(
+                                        context,
+                                        questionAnswer.stepResult,
+                                      )
+                                  : null,
+                              child: const Text('Zur Frage'),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         );
       },
     );

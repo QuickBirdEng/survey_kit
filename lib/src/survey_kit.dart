@@ -21,7 +21,6 @@ typedef StepShell = Widget Function(
   Step step,
   Widget? answerWidget,
   BuildContext context,
-  GlobalKey<NavigatorState> navigatorKey,
 );
 
 class SurveyKit extends StatefulWidget {
@@ -153,14 +152,24 @@ class _SurveyPageState extends State<SurveyPage>
 
   @override
   Widget build(BuildContext context) {
+    print('Rebuild SurveyPage');
     return Scaffold(
       appBar: widget.appBar ?? const SurveyAppBar(),
       body: Container(
         decoration: widget.decoration,
         child: Navigator(
           key: widget.navigatorKey,
-          onGenerateRoute: (settings) => MaterialPageRoute<Widget>(
-            builder: (_) {
+          onGenerateRoute: (settings) => PageRouteBuilder<Widget>(
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            ),
+            pageBuilder: (_, __, ___) {
               if (settings.arguments is! PresentingSurveyState) {
                 return const Center(
                   child: CircularProgressIndicator.adaptive(),
@@ -178,7 +187,6 @@ class _SurveyPageState extends State<SurveyPage>
                   stepResult: currentState.questionResults.firstWhereOrNull(
                     (element) => element.id == step.id,
                   ),
-                  navigatorKey: widget.navigatorKey,
                 ),
               );
             },

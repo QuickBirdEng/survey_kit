@@ -8,13 +8,11 @@ class AnswerView extends StatefulWidget {
     required this.answer,
     required this.step,
     required this.stepResult,
-    required this.navigatorKey,
   });
   final AnswerFormat? answer;
 
   final Step step;
   final StepResult? stepResult;
-  final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   State<AnswerView> createState() => _AnswerViewState();
@@ -38,7 +36,6 @@ class _AnswerViewState extends State<AnswerView> {
                 widget.step,
                 answerView,
                 context,
-                widget.navigatorKey,
               )
             : StepView(
                 step: widget.step,
