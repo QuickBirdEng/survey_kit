@@ -77,14 +77,15 @@ class _SurveyKitState extends State<SurveyKit> {
   }
 
   TaskNavigator _createTaskNavigator() {
-    switch (widget.task.runtimeType) {
-      case OrderedTask:
-        return OrderedTaskNavigator(widget.task);
-      case NavigableTask:
-        return NavigableTaskNavigator(widget.task);
-      default:
-        return OrderedTaskNavigator(widget.task);
+    final task = widget.task;
+    if (task is OrderedTask) {
+      return OrderedTaskNavigator(widget.task);
     }
+    if (task is NavigableTask) {
+      return NavigableTaskNavigator(widget.task);
+    }
+
+    throw Exception('Task must be either OrderedTask or NavigableTask');
   }
 
   @override
