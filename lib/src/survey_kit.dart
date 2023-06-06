@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
@@ -16,6 +15,7 @@ import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_view.dart';
 import 'package:survey_kit/src/widget/survey_app_bar.dart';
+import 'package:survey_kit/src/widget/survey_kit_page_route_builder.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 typedef StepShell = Widget Function(
@@ -160,8 +160,17 @@ class _SurveyPageState extends State<SurveyPage>
         decoration: widget.decoration,
         child: Navigator(
           key: widget.navigatorKey,
-          onGenerateRoute: (settings) => CupertinoPageRoute<Widget>(
-            builder: (context) {
+          onGenerateRoute: (settings) => SurveyKitPageRouteBuilder<Widget>(
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            ),
+            pageBuilder: (_, __, ___) {
               if (settings.arguments is! PresentingSurveyState) {
                 return const Center(
                   child: CircularProgressIndicator.adaptive(),
