@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
@@ -153,24 +154,14 @@ class _SurveyPageState extends State<SurveyPage>
 
   @override
   Widget build(BuildContext context) {
-    print('Rebuild SurveyPage');
     return Scaffold(
       appBar: widget.appBar ?? const SurveyAppBar(),
       body: Container(
         decoration: widget.decoration,
         child: Navigator(
           key: widget.navigatorKey,
-          onGenerateRoute: (settings) => PageRouteBuilder<Widget>(
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(1.0, 0.0),
-                end: Offset.zero,
-              ).animate(animation),
-              child: child,
-            ),
-            pageBuilder: (_, __, ___) {
+          onGenerateRoute: (settings) => CupertinoPageRoute<Widget>(
+            builder: (context) {
               if (settings.arguments is! PresentingSurveyState) {
                 return const Center(
                   child: CircularProgressIndicator.adaptive(),
