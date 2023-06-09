@@ -5,8 +5,9 @@ description: Demonstrates how to use the surveykit plugin.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-environment:
-  sdk: '>=2.12.0-0 <3.0.0'
+environment:  
+  sdk: ">=3.0.0 <4.0.0"
+
 
 dependencies:
   flutter:
