@@ -11,7 +11,11 @@ abstract class TaskNavigator {
   TaskNavigator(this.task);
 
   Step? firstStep();
-  Step? nextStep({required Step step, StepResult? questionResult});
+  Step? nextStep({
+    required Step step,
+    required List<StepResult> previousResults,
+    StepResult? questionResult,
+  });
   Step? previousInList(Step step);
 
   Step? nextInList(Step? step) {

@@ -10,7 +10,11 @@ class NavigableTaskNavigator extends TaskNavigator {
   NavigableTaskNavigator(Task task) : super(task);
 
   @override
-  Step? nextStep({required Step step, StepResult? questionResult}) {
+  Step? nextStep({
+    required Step step,
+    required List<StepResult> previousResults,
+    StepResult? questionResult,
+  }) {
     record(step);
     final navigableTask = task as NavigableTask;
     final rule = navigableTask.getRuleByStepIdentifier(step.id);
@@ -28,6 +32,7 @@ class NavigableTaskNavigator extends TaskNavigator {
         return evaluateNextStep(
           step,
           rule as ConditionalNavigationRule,
+          previousResults,
           questionResult,
         );
     }
@@ -45,6 +50,7 @@ class NavigableTaskNavigator extends TaskNavigator {
   Step? evaluateNextStep(
     Step? step,
     ConditionalNavigationRule rule,
+    List<StepResult> previousResults,
     StepResult? questionResult,
   ) {
     if (questionResult == null) {
@@ -55,7 +61,7 @@ class NavigableTaskNavigator extends TaskNavigator {
       return nextInList(step);
     }
     final nextStepIdentifier =
-        rule.resultToStepIdentifierMapper(questionResult);
+        rule.resultToStepIdentifierMapper(previousResults, questionResult);
     if (nextStepIdentifier == null) {
       return nextInList(step);
     }
@@ -67,6 +73,7 @@ class NavigableTaskNavigator extends TaskNavigator {
     final previousStep = peekHistory();
     return previousStep == null
         ? task.initalStep ?? task.steps.first
-        : nextStep(step: previousStep, questionResult: null);
+        : nextStep(
+            step: previousStep, previousResults: [], questionResult: null);
   }
 }

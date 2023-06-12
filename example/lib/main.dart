@@ -54,7 +54,8 @@ class _MyAppState extends State<MyApp> {
     final task = NavigableTask(
       navigationRules: {
         'SingleChoice': ConditionalNavigationRule(
-          resultToStepIdentifierMapper: (StepResult? input) {
+          resultToStepIdentifierMapper:
+              (List<StepResult> results, StepResult? input) {
             final selectedChoice = input?.result as TextChoice;
             switch (selectedChoice.text) {
               case 'Yes':

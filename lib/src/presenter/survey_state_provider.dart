@@ -114,6 +114,7 @@ class SurveyStateProvider extends InheritedWidget {
     _addResult(event.questionResult);
     final nextStep = taskNavigator.nextStep(
       step: currentState.currentStep,
+      previousResults: results.toList(),
       questionResult: event.questionResult,
     );
 
