@@ -53,13 +53,6 @@ class NavigableTaskNavigator extends TaskNavigator {
     List<StepResult> previousResults,
     StepResult? questionResult,
   ) {
-    if (questionResult == null) {
-      return nextInList(step);
-    }
-    final dynamic result = questionResult.result;
-    if (result == null) {
-      return nextInList(step);
-    }
     final nextStepIdentifier =
         rule.resultToStepIdentifierMapper(previousResults, questionResult);
     if (nextStepIdentifier == null) {
@@ -74,6 +67,9 @@ class NavigableTaskNavigator extends TaskNavigator {
     return previousStep == null
         ? task.initalStep ?? task.steps.first
         : nextStep(
-            step: previousStep, previousResults: [], questionResult: null);
+            step: previousStep,
+            previousResults: [],
+            questionResult: null,
+          );
   }
 }
