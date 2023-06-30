@@ -69,7 +69,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                   vertical: 8.0,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ElevatedButton(
@@ -113,16 +113,34 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                 GestureDetector(
                   child: Text('Take a picture'),
                   onTap: () {
-                    _openCamera();
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text(
+                          'Como a foto deve ficar',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        content: Text('Aqui vai a foto de exemplo'),
+                        actions: [
+                          TextButton(
+                              onPressed: () => _openCamera(),
+                              child: Text('Open Camera')),
+                        ],
+                      ),
+                    );
+
+                    // _openCamera();
                   },
                 ),
                 Padding(padding: EdgeInsets.all(8.0)),
-                GestureDetector(
-                  child: Text('Select from Gallery'),
-                  onTap: () {
-                    _openGallery();
-                  },
-                ),
+                _imageAnswerFormat.useGallery
+                    ? GestureDetector(
+                        child: Text('Select from Gallery'),
+                        onTap: () {
+                          _openGallery();
+                        },
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
@@ -132,6 +150,8 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   }
 
   Future<void> _openCamera() async {
+    Container();
+
     var picture = await ImagePicker().pickImage(
       source: ImageSource.camera,
     );
