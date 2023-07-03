@@ -1764,7 +1764,8 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField> {
     //
     // resolved, remove the window check for semantics being enabled on web.
     final String? hintText = MediaQuery.of(context).accessibleNavigation ||
-            ui.window.semanticsEnabled
+            WidgetsBinding.instance.window.semanticsEnabled
+            // ui.window.semanticsEnabled
         ? widget.semanticHintText
         : (focusNode.hasFocus ? null : _formattedValue);
     inputDecoration = inputDecoration.copyWith(
