@@ -80,14 +80,13 @@
                 "id": "3"
             },
             "type": "question",
-            "title": "Upload a selfie",
+            "title": "Medication?",
+            "text": "Are you using any medication",
             "answerFormat": {
-                "type": "file",
-                "defaultValue": "https://www.maxicolor.com.br/wp-content/uploads/2019/11/placeholder-3x4-450x600.jpg",
-                "buttonText": "Selfie",
-                "useGallery": true,
-                "hintImage": "https://www.maxicolor.com.br/wp-content/uploads/2019/11/placeholder-3x4-450x600.jpg",
-                "hintTitle": "How the image should look"
+                "type": "bool",
+                "positiveAnswer": "Yes",
+                "negativeAnswer": "No",
+                "result": "POSITIVE"
             }
         },
         {
@@ -291,6 +290,21 @@
                         "value": "Small Animal"
                     }
                 ]
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "12"
+            },
+            "type": "question",
+            "title": "Upload a selfie",
+            "answerFormat": {
+                "type": "file",
+                "defaultValue": "https://www.maxicolor.com.br/wp-content/uploads/2019/11/placeholder-3x4-450x600.jpg",
+                "buttonText": "Selfie",
+                "useGallery": true,
+                "hintImage": "https://www.maxicolor.com.br/wp-content/uploads/2019/11/placeholder-3x4-450x600.jpg",
+                "hintTitle": "How the image should look"
             }
         }
     ]
