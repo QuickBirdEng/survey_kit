@@ -247,6 +247,13 @@ class _MyAppState extends State<MyApp> {
             maxDate: DateTime.now(),
           ),
         ),
+        QuestionStep(
+          title: 'Upload a image of you',
+          answerFormat: ImageAnswerFormat(
+            buttonText: 'Upload your photo',
+            useGallery: true,
+          ),
+        ),
         CompletionStep(
           stepIdentifier: StepIdentifier(id: '321'),
           text: 'Thanks for taking the survey, we will contact you soon!',

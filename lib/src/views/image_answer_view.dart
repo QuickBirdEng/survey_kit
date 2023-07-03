@@ -113,23 +113,28 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                 GestureDetector(
                   child: Text('Take a picture'),
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text(
-                          'Como a foto deve ficar',
-                          style: TextStyle(color: Colors.black),
+                    if (_imageAnswerFormat.hintImage != null &&
+                        _imageAnswerFormat.hintTitle != null) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text(
+                            _imageAnswerFormat.hintTitle.toString(),
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          content: Image.network(
+                            _imageAnswerFormat.hintImage.toString(),
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () => _openCamera(),
+                                child: Text('Open Camera')),
+                          ],
                         ),
-                        content: Text('Aqui vai a foto de exemplo'),
-                        actions: [
-                          TextButton(
-                              onPressed: () => _openCamera(),
-                              child: Text('Open Camera')),
-                        ],
-                      ),
-                    );
-
-                    // _openCamera();
+                      );
+                    } else {
+                      _openCamera();
+                    }
                   },
                 ),
                 Padding(padding: EdgeInsets.all(8.0)),
