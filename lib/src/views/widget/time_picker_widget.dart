@@ -9,7 +9,6 @@
 
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -1765,7 +1764,6 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField> {
     // resolved, remove the window check for semantics being enabled on web.
     final String? hintText = MediaQuery.of(context).accessibleNavigation ||
             WidgetsBinding.instance.window.semanticsEnabled
-            // ui.window.semanticsEnabled
         ? widget.semanticHintText
         : (focusNode.hasFocus ? null : _formattedValue);
     inputDecoration = inputDecoration.copyWith(
