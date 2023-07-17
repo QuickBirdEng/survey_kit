@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.white,
+  ));
   runApp(MyApp());
 }
 
