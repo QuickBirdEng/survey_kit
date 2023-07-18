@@ -7,7 +7,11 @@ class OrderedTaskNavigator extends TaskNavigator {
   OrderedTaskNavigator(Task task) : super(task);
 
   @override
-  Step? nextStep({required Step step, StepResult? questionResult}) {
+  Step? nextStep({
+    required Step step,
+    required List<StepResult> previousResults,
+    StepResult? questionResult,
+  }) {
     record(step);
     return nextInList(step);
   }

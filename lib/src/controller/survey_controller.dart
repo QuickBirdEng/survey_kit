@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
-import 'package:survey_kit/src/presenter/survey_presenter_inherited.dart';
+import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 
 class SurveyController {
   /// Defines what should happen if the next step is called
@@ -60,7 +60,7 @@ class SurveyController {
       onNextStep!(context, stepResult);
       return;
     }
-    SurveyPresenterInherited.of(context).onEvent(
+    SurveyStateProvider.of(context).onEvent(
       NextStep(
         stepResult,
       ),
@@ -75,7 +75,7 @@ class SurveyController {
       onStepBack!(context, stepResult);
       return;
     }
-    SurveyPresenterInherited.of(context).onEvent(
+    SurveyStateProvider.of(context).onEvent(
       StepBack(
         stepResult,
       ),
@@ -90,7 +90,7 @@ class SurveyController {
       onCloseSurvey!(context, stepResult);
       return;
     }
-    SurveyPresenterInherited.of(context).onEvent(
+    SurveyStateProvider.of(context).onEvent(
       CloseSurvey(
         stepResult,
       ),

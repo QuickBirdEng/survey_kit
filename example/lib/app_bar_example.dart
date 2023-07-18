@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/survey_kit.dart';
 
-class AppBarExample extends StatelessWidget with PreferredSizeWidget {
+class AppBarExample extends StatelessWidget implements PreferredSizeWidget {
   const AppBarExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     final surveyController = SurveyConfiguration.of(context).surveyController;
     final surveyStream =
-        SurveyPresenterInherited.of(context).surveyStateStream.stream;
+        SurveyStateProvider.of(context).surveyStateStream.stream;
 
     final cancelButton = IconButton(
       icon: const Icon(Icons.close),
@@ -31,9 +31,11 @@ class AppBarExample extends StatelessWidget with PreferredSizeWidget {
         final state = snapshot.data;
 
         if (!snapshot.hasData ||
-            state != null && state is! PresentingSurveyState) AppBar();
+            state != null && state is! PresentingSurveyState) {
+          return AppBar();
+        }
 
-        final leading = (state as PresentingSurveyState?)?.isFirstStep ?? false
+        final leading = (state as PresentingSurveyState?)?.isFirstStep ?? true
             ? const SizedBox.shrink()
             : backButton;
 

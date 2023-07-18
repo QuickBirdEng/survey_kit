@@ -58,6 +58,7 @@ class SurveyNotifier extends ChangeNotifier {
     _addResult(event.questionResult);
     final nextStep = taskNavigator.nextStep(
       step: currentState.currentStep,
+      previousResults: results.toList(),
       questionResult: event.questionResult,
     );
 

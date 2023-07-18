@@ -45,7 +45,8 @@ class _StepViewState extends State<StepView> {
               padding: const EdgeInsets.all(30),
               child: SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraint.maxHeight),
+                  constraints:
+                      BoxConstraints(minHeight: constraint.maxHeight - 60),
                   child: IntrinsicHeight(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

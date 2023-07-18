@@ -26,7 +26,7 @@ class _AnswerViewState extends State<AnswerView> {
       answerView = widget.answer!.createView(widget.step, widget.stepResult);
     }
     final stepShell =
-        widget.step.stepShell ?? SurveyPresenterInherited.of(context).stepShell;
+        widget.step.stepShell ?? SurveyStateProvider.of(context).stepShell;
 
     return QuestionAnswer<dynamic>(
       step: widget.step,

@@ -7,13 +7,15 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
 import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
-import 'package:survey_kit/src/presenter/survey_presenter_inherited.dart';
+import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
+import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
 import 'package:survey_kit/src/task/ordered_task.dart';
 import 'package:survey_kit/src/task/task.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_view.dart';
 import 'package:survey_kit/src/widget/survey_app_bar.dart';
+import 'package:survey_kit/src/widget/survey_kit_page_route_builder.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 typedef StepShell = Widget Function(
@@ -45,6 +47,9 @@ class SurveyKit extends StatefulWidget {
   /// Step shell
   final StepShell? stepShell;
 
+  /// Decoration which is applied to the survey container
+  final BoxDecoration? decoration;
+
   const SurveyKit({
     super.key,
     required this.task,
@@ -54,6 +59,7 @@ class SurveyKit extends StatefulWidget {
     this.appBar,
     this.localizations,
     this.stepShell,
+    this.decoration,
   });
 
   @override
@@ -62,22 +68,25 @@ class SurveyKit extends StatefulWidget {
 
 class _SurveyKitState extends State<SurveyKit> {
   late TaskNavigator _taskNavigator;
+  late final GlobalKey<NavigatorState> _navigatorKey;
 
   @override
   void initState() {
     super.initState();
     _taskNavigator = _createTaskNavigator();
+    _navigatorKey = GlobalKey<NavigatorState>();
   }
 
   TaskNavigator _createTaskNavigator() {
-    switch (widget.task.runtimeType) {
-      case OrderedTask:
-        return OrderedTaskNavigator(widget.task);
-      case NavigableTask:
-        return NavigableTaskNavigator(widget.task);
-      default:
-        return OrderedTaskNavigator(widget.task);
+    final task = widget.task;
+    if (task is OrderedTask) {
+      return OrderedTaskNavigator(widget.task);
     }
+    if (task is NavigableTask) {
+      return NavigableTaskNavigator(widget.task);
+    }
+
+    throw Exception('Task must be either OrderedTask or NavigableTask');
   }
 
   @override
@@ -94,14 +103,17 @@ class _SurveyKitState extends State<SurveyKit> {
       surveyController: widget.surveyController ?? SurveyController(),
       localizations: widget.localizations,
       padding: const EdgeInsets.all(14),
-      child: SurveyPresenterInherited(
+      child: SurveyStateProvider(
         taskNavigator: _taskNavigator,
         onResult: widget.onResult,
         stepShell: widget.stepShell,
+        navigatorKey: _navigatorKey,
         child: SurveyPage(
           length: widget.task.steps.length,
           onResult: widget.onResult,
           appBar: widget.appBar,
+          navigatorKey: _navigatorKey,
+          decoration: widget.decoration,
         ),
       ),
     );
@@ -112,12 +124,16 @@ class SurveyPage extends StatefulWidget {
   final int length;
   final Function(SurveyResult) onResult;
   final PreferredSizeWidget? appBar;
+  final GlobalKey<NavigatorState> navigatorKey;
+  final Decoration? decoration;
 
   const SurveyPage({
     super.key,
     required this.length,
     required this.onResult,
+    required this.navigatorKey,
     this.appBar,
+    this.decoration,
   });
 
   @override
@@ -126,72 +142,67 @@ class SurveyPage extends StatefulWidget {
 
 class _SurveyPageState extends State<SurveyPage>
     with SingleTickerProviderStateMixin {
-  late final TabController tabController;
-
   @override
   void initState() {
-    tabController = TabController(length: widget.length, vsync: this);
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => SurveyStateProvider.of(context).onEvent(
+        StartSurvey(),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: SurveyPresenterInherited.of(context).surveyStateStream.stream,
-      builder: (_, AsyncSnapshot<SurveyState> snapshot) {
-        final state = SurveyPresenterInherited.of(context).state;
-
-        if (state is SurveyResultState) {
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
-        }
-        if (state is PresentingSurveyState) {
-          tabController.animateTo(state.currentStepIndex);
-        }
-
-        if (state is PresentingSurveyState) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: widget.appBar ?? const SurveyAppBar(),
-            body: TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: tabController,
-              children: state.steps
-                  .map(
-                    (e) => _SurveyView(
-                      id: e.id,
-                      createView: () {
-                        return AnswerView(
-                          answer: e.answerFormat,
-                          step: e,
-                          stepResult: state.questionResults.firstWhereOrNull(
-                            (element) => element.id == e.id,
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                  .toList(),
+    return Scaffold(
+      appBar: widget.appBar ?? const SurveyAppBar(),
+      body: Container(
+        decoration: widget.decoration,
+        child: Navigator(
+          key: widget.navigatorKey,
+          onGenerateRoute: (settings) => SurveyKitPageRouteBuilder<Widget>(
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
             ),
-          );
-        }
-        return const Center(
-          child: CircularProgressIndicator.adaptive(),
-        );
-      },
+            pageBuilder: (_, __, ___) {
+              if (settings.arguments is! PresentingSurveyState) {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              }
+
+              final currentState = settings.arguments! as PresentingSurveyState;
+
+              final step = currentState.currentStep;
+              return _SurveyView(
+                id: step.id,
+                createView: () => AnswerView(
+                  answer: step.answerFormat,
+                  step: step,
+                  stepResult: currentState.questionResults.firstWhereOrNull(
+                    (element) => element.id == step.id,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
 
 class _SurveyView extends StatelessWidget {
-  const _SurveyView({required this.id, required this.createView});
+  const _SurveyView({
+    required this.id,
+    required this.createView,
+  });
 
   final String id;
   final Widget Function() createView;

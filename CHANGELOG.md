@@ -1,3 +1,7 @@
+# 1.0.0-dev.2
+- BREAKING: `resultToStepIdentifierMapper` now also returns the previous results
+  - (StepResult? result) -> (List<StepResult> results, StepResult? result)
+- BUGFIX: Fixed a bug where `resultToStepIdentifierMapper` was not called when the result was null
 # 1.0.0-dev.1
 - INFO: We we completly reworked how survey_kit works and want to get it to a stable release version 1.0
   
