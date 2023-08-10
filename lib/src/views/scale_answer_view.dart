@@ -66,30 +66,47 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Text(
-                    _sliderValue.toInt().toString(),
-                    style: Theme.of(context).textTheme.headlineSmall,
+                if (_scaleAnswerFormat.showValue)
+                  Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Text(
+                      _sliderValue.toInt().toString(),
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
                   ),
-                ),
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            _scaleAnswerFormat.minimumValueDescription,
-                            style: TextStyle(
-                              fontSize: 16.0,
+                          Expanded(
+                            child: Text(
+                              _scaleAnswerFormat.minimumValueDescription,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                              ),
+                              maxLines: 6,
+                              overflow: TextOverflow.ellipsis,
+                              textDirection: TextDirection.ltr,
+                              textAlign: TextAlign.start,
                             ),
                           ),
-                          Text(
-                            _scaleAnswerFormat.maximumValueDescription,
-                            style: TextStyle(
-                              fontSize: 16.0,
+                          SizedBox(
+                            width: 32.0,
+                          ),
+                          Expanded(
+                            child: Text(
+                              _scaleAnswerFormat.maximumValueDescription,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                              ),
+                              maxLines: 6,
+                              overflow: TextOverflow.ellipsis,
+                              textDirection: TextDirection.rtl,
+                              textAlign: TextAlign.start,
                             ),
                           ),
                         ],
