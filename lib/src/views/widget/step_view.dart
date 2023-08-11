@@ -51,10 +51,8 @@ class StepView extends StatelessWidget {
                             surveyController.nextStep(context, resultFunction)
                         : null,
                     child: Text(
-                      step.buttonText?.toUpperCase() ??
-                          context
-                              .read<Map<String, String>?>()?['next']
-                              ?.toUpperCase() ??
+                      context.read<Map<String, String>?>()?['next'] ??
+                          step.buttonText ??
                           'Next',
                       style: TextStyle(
                         color: isValid

@@ -1,3 +1,7 @@
+# 0.1.3
+- INFO: Update dependencies (Flutter 3.10)
+- FIX: Fix validation of boolean answer format
+- FIX: Fix localization of next button
 # 0.1.2
 - INFO: Update dependencies (Flutter 3.7.0)
 
