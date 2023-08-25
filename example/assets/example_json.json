@@ -1,7 +1,8 @@
 {
     "id": "123",
     "type": "navigable",
-    "rules": [{
+    "rules": [
+        {
             "type": "conditional",
             "triggerStepIdentifier": {
                 "id": "7"
@@ -52,7 +53,8 @@
             }
         }
     ],
-    "steps": [{
+    "steps": [
+        {
             "stepIdentifier": {
                 "id": "1"
             },
@@ -124,7 +126,8 @@
             "title": "Known allergies",
             "answerFormat": {
                 "type": "multiple",
-                "textChoices": [{
+                "textChoices": [
+                    {
                         "text": "Penicillin",
                         "value": "Penicillin"
                     },
@@ -152,7 +155,8 @@
             "text": "We are done, do you mind to tell us more about yourself?",
             "answerFormat": {
                 "type": "single",
-                "textChoices": [{
+                "textChoices": [
+                    {
                         "text": "Yes",
                         "value": "Yes"
                     },
@@ -199,7 +203,8 @@
             "answerFormat": {
                 "type": "multiple",
                 "otherField": true,
-                "textChoices": [{
+                "textChoices": [
+                    {
                         "text": "Penicillin",
                         "value": "Penicillin"
                     },
@@ -227,7 +232,8 @@
             "answerFormat": {
                 "type": "multiple_auto_complete",
                 "otherField": true,
-                "textChoices": [{
+                "textChoices": [
+                    {
                         "text": "Penicillin",
                         "value": "Penicillin"
                     },
@@ -235,9 +241,9 @@
                         "text": "Latex",
                         "value": "Latex"
                     }
-
                 ],
-                "suggestions": [{
+                "suggestions": [
+                    {
                         "text": "Pet",
                         "value": "Pet"
                     },
@@ -266,7 +272,8 @@
             "text": "What type of pet(s) do you have?",
             "answerFormat": {
                 "type": "multiple",
-                "textChoices": [{
+                "textChoices": [
+                    {
                         "text": "Dog",
                         "value": "Dog"
                     },
@@ -283,6 +290,21 @@
                         "value": "Small Animal"
                     }
                 ]
+            }
+        },
+        {
+            "stepIdentifier": {
+                "id": "12"
+            },
+            "type": "question",
+            "title": "Upload a selfie",
+            "answerFormat": {
+                "type": "file",
+                "defaultValue": "https://www.maxicolor.com.br/wp-content/uploads/2019/11/placeholder-3x4-450x600.jpg",
+                "buttonText": "Selfie",
+                "useGallery": true,
+                "hintImage": "https://www.maxicolor.com.br/wp-content/uploads/2019/11/placeholder-3x4-450x600.jpg",
+                "hintTitle": "How the image should look"
             }
         }
     ]
