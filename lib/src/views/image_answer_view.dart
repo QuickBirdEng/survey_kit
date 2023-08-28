@@ -49,7 +49,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
         valueIdentifier: filePath,
         result: filePath,
       ),
-      // isValid: _isValid || widget.questionStep.isOptional,
+      isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
@@ -167,6 +167,10 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
 
     setState(() {
       filePath = picture!.path;
+
+      if (filePath.isNotEmpty) {
+        _isValid = true;
+      }
     });
   }
 
@@ -180,6 +184,10 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
     picture?.readAsBytes().then((value) {
       setState(() {
         filePath = picture.path;
+
+        if (filePath.isNotEmpty) {
+          _isValid = true;
+        }
       });
     });
   }
