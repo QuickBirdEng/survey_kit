@@ -49,7 +49,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
         valueIdentifier: filePath,
         result: filePath,
       ),
-      isValid: _isValid || widget.questionStep.isOptional,
+      // isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
@@ -105,6 +105,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   Future<void> _optionsDialogBox() {
     return showDialog(
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         return AlertDialog(
           content: SingleChildScrollView(
@@ -127,7 +128,9 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                           ),
                           actions: [
                             TextButton(
-                                onPressed: () => _openCamera(),
+                                onPressed: () async {
+                                  await _openCamera();
+                                },
                                 child: Text('Open Camera')),
                           ],
                         ),
@@ -155,18 +158,15 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   }
 
   Future<void> _openCamera() async {
-    Container();
-
     var picture = await ImagePicker().pickImage(
+      preferredCameraDevice: CameraDevice.rear,
       source: ImageSource.camera,
     );
 
-    Navigator.pop(context);
+    Navigator.of(context).pop();
 
-    picture?.readAsBytes().then((value) {
-      setState(() {
-        filePath = picture.path;
-      });
+    setState(() {
+      filePath = picture!.path;
     });
   }
 
@@ -175,7 +175,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
       source: ImageSource.gallery,
     );
 
-    Navigator.pop(context);
+    Navigator.of(context).pop();
 
     picture?.readAsBytes().then((value) {
       setState(() {
