@@ -22,18 +22,15 @@ class SelectionListTile extends StatelessWidget {
             title: Text(
               text,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: isSelected
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).textTheme.headlineSmall?.color,
+                    color:
+                        isSelected ? Colors.blue : Theme.of(context).textTheme.headlineSmall?.color,
                   ),
             ),
             trailing: isSelected
                 ? Icon(
                     Icons.check,
                     size: 32,
-                    color: isSelected
-                        ? Theme.of(context).primaryColor
-                        : Colors.black,
+                    color: isSelected ? Colors.blue : Colors.black,
                   )
                 : Container(
                     width: 32,
