@@ -15,8 +15,7 @@ class SurveyAppBar extends StatelessWidget {
 
   @override
   AppBar build(BuildContext context) {
-    final _showProgress =
-        appBarConfiguration.showProgress ?? context.read<bool>();
+    final _showProgress = appBarConfiguration.showProgress ?? context.read<bool>();
     final _canGoBack = appBarConfiguration.canBack ?? true;
 
     final surveyController = controller ?? context.read<SurveyController>();
@@ -33,20 +32,6 @@ class SurveyAppBar extends StatelessWidget {
               )
           : Container(),
       title: _showProgress ? SurveyProgress() : SizedBox.shrink(),
-      actions: [
-        TextButton(
-          child: appBarConfiguration.trailing ??
-              Text(
-                context.read<Map<String, String>?>()?['cancel'] ?? 'Cancel',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-          onPressed: () => surveyController.closeSurvey(
-            context: context,
-          ),
-        ),
-      ],
     );
   }
 }
