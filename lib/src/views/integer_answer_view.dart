@@ -25,6 +25,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
   late final DateTime _startDate;
 
   bool _isValid = false;
+  FocusNode inputFocus = FocusNode();
 
   @override
   void initState() {
@@ -35,6 +36,10 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
     _controller.text = widget.result?.result?.toString() ?? '';
     _checkValidation(_controller.text);
     _startDate = DateTime.now();
+
+    Future.delayed(Duration(seconds: 0), () {
+      inputFocus.requestFocus();
+    });
   }
 
   @override
@@ -76,7 +81,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
           width: MediaQuery.of(context).size.width,
           child: TextField(
             textInputAction: TextInputAction.next,
-            autofocus: true,
+            focusNode: inputFocus,
             decoration: textFieldInputDecoration(
               hint: _integerAnswerFormat.hint,
             ),

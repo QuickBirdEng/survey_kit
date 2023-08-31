@@ -49,7 +49,7 @@ class QuestionStep extends Step {
   final String title;
   @JsonKey(defaultValue: '')
   final String text;
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  // @JsonKey(includeFromJson: false, includeToJson: false)
   final Widget content;
   final AnswerFormat answerFormat;
 

@@ -25,6 +25,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
   late final DateTime _startDate;
 
   bool _isValid = false;
+  FocusNode inputFocus = FocusNode();
 
   @override
   void initState() {
@@ -35,6 +36,10 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
     _controller.text = widget.result?.result?.toString() ?? '';
     _checkValidation(_controller.text);
     _startDate = DateTime.now();
+
+    Future.delayed(Duration(seconds: 0), () {
+      inputFocus.requestFocus();
+    });
   }
 
   @override
@@ -75,7 +80,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: TextField(
-            autofocus: true,
+            focusNode: inputFocus,
             decoration: textFieldInputDecoration(
               hint: _doubleAnswerFormat.hint,
             ),
