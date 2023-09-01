@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
           child: Align(
             alignment: Alignment.center,
             child: FutureBuilder<Task>(
-              future: getJsonTask(),
+              future: getSampleTask(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData &&
@@ -173,11 +173,11 @@ class _MyAppState extends State<MyApp> {
         ),
         QuestionStep(
           title: 'How old are you?',
-          answerFormat: IntegerAnswerFormat(
-            defaultValue: 25,
-            hint: 'Please enter your age',
+          answerFormat: DoubleAnswerFormat(
+            defaultValue: 0.0,
+            hint: 'enter the double number',
           ),
-          isOptional: true,
+          isOptional: false,
         ),
         QuestionStep(
           title: 'Medication?',

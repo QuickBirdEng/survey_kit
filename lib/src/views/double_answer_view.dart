@@ -50,7 +50,8 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
 
   void _checkValidation(String text) {
     setState(() {
-      _isValid = text.isNotEmpty && double.tryParse(text) != null;
+      _isValid =
+          text.isNotEmpty && double.tryParse(text.replaceAll(',', '.')) != null;
     });
   }
 
