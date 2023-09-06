@@ -1,3 +1,4 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/multi_double.dart';
 import 'package:survey_kit/src/answer_format/multiple_double_answer_format.dart';
@@ -63,12 +64,18 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
 
   void _checkValidation(String text) {
     setState(() {
-      _isValid = text.isNotEmpty && double.tryParse(text) != null;
+      _isValid =
+          text.isNotEmpty && double.tryParse(text.replaceAll(',', '.')) != null;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
+      locale: 'pt_BR',
+      symbol: 'R\$',
+    );
+
     return StepView(
       step: widget.questionStep,
       resultFunction: () => MultipleDoubleQuestionResult(
@@ -108,6 +115,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
                     .entries
                     .map((MapEntry<int, String> md) {
                   return TextField(
+                    inputFormatters: [_formatter],
                     textInputAction: TextInputAction.next,
                     autofocus: true,
                     decoration: InputDecoration(
@@ -115,7 +123,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
                     ),
                     controller: _controller[md.key],
                     onChanged: (String value) {
-                      value = value.replaceAll(',', '.');
+                      value = _formatter.getUnformattedValue().toString();
 
                       _checkValidation(value);
 
