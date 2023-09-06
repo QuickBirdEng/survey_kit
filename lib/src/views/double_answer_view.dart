@@ -1,3 +1,4 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/double_answer_format.dart';
 import 'package:survey_kit/src/result/question/double_question_result.dart';
@@ -49,6 +50,8 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
   }
 
   void _checkValidation(String text) {
+    print('text: $text');
+
     setState(() {
       _isValid =
           text.isNotEmpty && double.tryParse(text.replaceAll(',', '.')) != null;
@@ -57,6 +60,11 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
 
   @override
   Widget build(BuildContext context) {
+    CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
+      locale: 'pt_BR',
+      symbol: 'R\$',
+    );
+
     return StepView(
       step: widget.questionStep,
       resultFunction: () => DoubleQuestionResult(
@@ -81,13 +89,14 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: TextField(
+            inputFormatters: [_formatter],
             focusNode: inputFocus,
             decoration: textFieldInputDecoration(
               hint: _doubleAnswerFormat.hint,
             ),
             controller: _controller,
             onChanged: (String value) {
-              _checkValidation(value);
+              _checkValidation(_formatter.getUnformattedValue().toString());
             },
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
