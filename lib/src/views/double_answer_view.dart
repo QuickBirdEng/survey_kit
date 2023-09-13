@@ -31,11 +31,10 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
   @override
   void initState() {
     super.initState();
-    _doubleAnswerFormat =
-        widget.questionStep.answerFormat as DoubleAnswerFormat;
+    _doubleAnswerFormat = widget.questionStep.answerFormat as DoubleAnswerFormat;
     _controller = TextEditingController();
     _controller.text = widget.result?.result?.toString() ?? '';
-    _checkValidation(_controller.text);
+    _checkValidation(_controller.text, _controller.text);
     _startDate = DateTime.now();
 
     Future.delayed(Duration(seconds: 0), () {
@@ -49,11 +48,10 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
     super.dispose();
   }
 
-  void _checkValidation(String text) {
+  void _checkValidation(String text, String value) {
     setState(() {
-      _isValid = text.isNotEmpty &&
-          double.tryParse(text.replaceAll(',', '.')) != null &&
-          text != '0.0';
+      _isValid =
+          value.isNotEmpty && text.isNotEmpty && double.tryParse(text.replaceAll(',', '.')) != null;
     });
   }
 
@@ -71,9 +69,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: double.tryParse(_controller.text) ??
-            _doubleAnswerFormat.defaultValue ??
-            null,
+        result: double.tryParse(_controller.text) ?? _doubleAnswerFormat.defaultValue ?? null,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -95,7 +91,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
             ),
             controller: _controller,
             onChanged: (String value) {
-              _checkValidation(_formatter.getUnformattedValue().toString());
+              _checkValidation(_formatter.getUnformattedValue().toString(), value);
             },
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
