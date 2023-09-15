@@ -24,6 +24,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
   late final DoubleAnswerFormat _doubleAnswerFormat;
   late final TextEditingController _controller;
   late final DateTime _startDate;
+  double? _value;
 
   bool _isValid = false;
   FocusNode inputFocus = FocusNode();
@@ -75,7 +76,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: double.tryParse(_controller.text) ?? _doubleAnswerFormat.defaultValue ?? null,
+        result: _value,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -97,6 +98,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
             ),
             controller: _controller,
             onChanged: (String value) {
+              _value = _formatter.getUnformattedValue().toDouble();
               _checkValidation(_formatter.getUnformattedValue().toString(), value);
             },
             keyboardType: TextInputType.number,
