@@ -1,22 +1,9 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/configuration/survey_configuration.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
-import 'package:survey_kit/src/model/result/survey_result.dart';
-import 'package:survey_kit/src/model/step.dart';
-import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
-import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
-import 'package:survey_kit/src/navigator/task_navigator.dart';
-import 'package:survey_kit/src/presenter/survey_event.dart';
-import 'package:survey_kit/src/presenter/survey_state.dart';
-import 'package:survey_kit/src/presenter/survey_state_provider.dart';
-import 'package:survey_kit/src/task/navigable_task.dart';
-import 'package:survey_kit/src/task/ordered_task.dart';
-import 'package:survey_kit/src/task/task.dart';
+import 'package:provider/provider.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_view.dart';
-import 'package:survey_kit/src/widget/survey_app_bar.dart';
-import 'package:survey_kit/src/widget/survey_kit_page_route_builder.dart';
-import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 typedef StepShell = Widget Function(
   Step step,
@@ -103,18 +90,22 @@ class _SurveyKitState extends State<SurveyKit> {
       surveyController: widget.surveyController ?? SurveyController(),
       localizations: widget.localizations,
       padding: const EdgeInsets.all(14),
-      child: SurveyStateProvider(
-        taskNavigator: _taskNavigator,
-        onResult: widget.onResult,
-        stepShell: widget.stepShell,
-        navigatorKey: _navigatorKey,
-        child: SurveyPage(
-          length: widget.task.steps.length,
+      child: ChangeNotifierProvider<SurveyStateProvider>(
+        create: (_) => SurveyStateProvider(
+          taskNavigator: _taskNavigator,
           onResult: widget.onResult,
-          appBar: widget.appBar,
+          stepShell: widget.stepShell,
           navigatorKey: _navigatorKey,
-          decoration: widget.decoration,
         ),
+        builder: (context, child) {
+          return SurveyPage(
+            length: widget.task.steps.length,
+            onResult: widget.onResult,
+            appBar: widget.appBar,
+            navigatorKey: _navigatorKey,
+            decoration: widget.decoration,
+          );
+        },
       ),
     );
   }
@@ -146,7 +137,7 @@ class _SurveyPageState extends State<SurveyPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => SurveyStateProvider.of(context).onEvent(
+      (_) => Provider.of<SurveyStateProvider>(context, listen: false).onEvent(
         StartSurvey(),
       ),
     );
@@ -154,45 +145,43 @@ class _SurveyPageState extends State<SurveyPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: widget.appBar ?? const SurveyAppBar(),
-      body: Container(
-        decoration: widget.decoration,
-        child: Navigator(
-          key: widget.navigatorKey,
-          onGenerateRoute: (settings) => SurveyKitPageRouteBuilder<Widget>(
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(1.0, 0.0),
-                end: Offset.zero,
-              ).animate(animation),
-              child: child,
-            ),
-            pageBuilder: (_, __, ___) {
-              if (settings.arguments is! PresentingSurveyState) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
-              }
-
-              final currentState = settings.arguments! as PresentingSurveyState;
-
-              final step = currentState.currentStep;
-              return _SurveyView(
-                id: step.id,
-                createView: () => AnswerView(
-                  answer: step.answerFormat,
-                  step: step,
-                  stepResult: currentState.questionResults.firstWhereOrNull(
-                    (element) => element.id == step.id,
-                  ),
-                ),
-              );
-            },
+    print('Rebuild survey page');
+    Widget scaffold(Widget child) => Scaffold(
+          appBar: widget.appBar ?? const SurveyAppBar(),
+          body: Container(
+            decoration: widget.decoration,
+            child: child,
           ),
-        ),
+        );
+
+    return Navigator(
+      key: widget.navigatorKey,
+      onGenerateRoute: (settings) => CupertinoPageRoute<Widget>(
+        builder: (_) {
+          if (settings.arguments is! SurveyState) {
+            return scaffold(
+              const Center(
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            );
+          }
+
+          final state = settings.arguments! as SurveyState;
+
+          final step = state.currentStep;
+          return scaffold(
+            _SurveyView(
+              id: step!.id,
+              createView: () => AnswerView(
+                answer: step.answerFormat,
+                step: step,
+                stepResult: state.questionResults.firstWhereOrNull(
+                  (element) => element.id == step.id,
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

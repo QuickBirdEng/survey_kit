@@ -56,8 +56,8 @@ class _MyAppState extends State<MyApp> {
         'SingleChoice': ConditionalNavigationRule(
           resultToStepIdentifierMapper:
               (List<StepResult> results, StepResult? input) {
-            final selectedChoice = input?.result as TextChoice;
-            switch (selectedChoice.text) {
+            final selectedChoice = input?.result as TextChoice?;
+            switch (selectedChoice?.text) {
               case 'Yes':
                 return 'OnlyConent';
               case 'No':
@@ -121,7 +121,7 @@ class _MyAppState extends State<MyApp> {
               url:
                   'https://assets4.lottiefiles.com/packages/lf20_mNvu7WUM7W.json',
             ),
-            MarkdownContent(text: 'This is markdown')
+            MarkdownContent(text: 'This is markdown'),
           ],
           answerFormat: SingleChoiceAnswerFormat(
             textChoices: [

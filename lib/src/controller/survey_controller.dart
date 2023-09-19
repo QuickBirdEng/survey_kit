@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state_provider.dart';
@@ -60,7 +61,7 @@ class SurveyController {
       onNextStep!(context, stepResult);
       return;
     }
-    SurveyStateProvider.of(context).onEvent(
+    Provider.of<SurveyStateProvider>(context, listen: false).onEvent(
       NextStep(
         stepResult,
       ),
@@ -75,7 +76,7 @@ class SurveyController {
       onStepBack!(context, stepResult);
       return;
     }
-    SurveyStateProvider.of(context).onEvent(
+    Provider.of<SurveyStateProvider>(context, listen: false).onEvent(
       StepBack(
         stepResult,
       ),
@@ -90,7 +91,7 @@ class SurveyController {
       onCloseSurvey!(context, stepResult);
       return;
     }
-    SurveyStateProvider.of(context).onEvent(
+    Provider.of<SurveyStateProvider>(context, listen: false).onEvent(
       CloseSurvey(
         stepResult,
       ),

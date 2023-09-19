@@ -7,8 +7,6 @@ class AppBarExample extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final surveyController = SurveyConfiguration.of(context).surveyController;
-    final surveyStream =
-        SurveyStateProvider.of(context).surveyStateStream.stream;
 
     final cancelButton = IconButton(
       icon: const Icon(Icons.close),
@@ -25,33 +23,22 @@ class AppBarExample extends StatelessWidget implements PreferredSizeWidget {
       },
     );
 
-    return StreamBuilder<SurveyState>(
-      stream: surveyStream,
-      builder: (context, snapshot) {
-        final state = snapshot.data;
+    final state = SurveyStateProvider.of(context);
 
-        if (!snapshot.hasData ||
-            state != null && state is! PresentingSurveyState) {
-          return AppBar();
-        }
+    final leading =
+        state?.isFirstStep ?? true ? const SizedBox.shrink() : backButton;
 
-        final leading = (state as PresentingSurveyState?)?.isFirstStep ?? true
-            ? const SizedBox.shrink()
-            : backButton;
+    final title = Text(
+      state?.currentStep?.id ?? '',
+    );
 
-        final title = Text(
-          state?.currentStep.id ?? '',
-        );
-
-        return AppBar(
-          elevation: 0,
-          leading: leading,
-          title: title,
-          actions: [
-            cancelButton,
-          ],
-        );
-      },
+    return AppBar(
+      elevation: 0,
+      leading: leading,
+      title: title,
+      actions: [
+        cancelButton,
+      ],
     );
   }
 

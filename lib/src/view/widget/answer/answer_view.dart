@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Step;
+import 'package:provider/provider.dart';
 import 'package:survey_kit/src/view/step_view.dart';
 import 'package:survey_kit/survey_kit.dart';
 
@@ -25,8 +26,8 @@ class _AnswerViewState extends State<AnswerView> {
     if (widget.answer != null) {
       answerView = widget.answer!.createView(widget.step, widget.stepResult);
     }
-    final stepShell =
-        widget.step.stepShell ?? SurveyStateProvider.of(context).stepShell;
+    final stepShell = widget.step.stepShell ??
+        Provider.of<SurveyStateProvider>(context).stepShell;
 
     return QuestionAnswer<dynamic>(
       step: widget.step,

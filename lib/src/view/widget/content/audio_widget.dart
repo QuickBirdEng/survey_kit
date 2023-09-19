@@ -34,7 +34,7 @@ class AudioWidget extends StatelessWidget {
           smallVerticalSpacer,
           LinkText(
             link: audioContent.externalLink!,
-          )
+          ),
         ],
         if (audioContent.subtitle != null) ...[
           smallVerticalSpacer,

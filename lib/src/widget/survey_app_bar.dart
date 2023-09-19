@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:survey_kit/src/configuration/survey_configuration.dart';
-import 'package:survey_kit/src/controller/survey_controller.dart';
-import 'package:survey_kit/src/presenter/survey_state.dart';
-import 'package:survey_kit/src/presenter/survey_state_provider.dart';
-import 'package:survey_kit/src/widget/survey_progress.dart';
+import 'package:provider/provider.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final SurveyController? controller;
@@ -17,8 +14,8 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final surveyController =
         controller ?? SurveyConfiguration.of(context).surveyController;
-    final surveyStream =
-        SurveyStateProvider.of(context).surveyStateStream.stream;
+    final state =
+        Provider.of<SurveyStateProvider>(context, listen: false).state;
 
     final cancelButton = TextButton(
       child: Text(
@@ -33,6 +30,7 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
 
     final backButton = BackButton(
+      color: Colors.red,
       onPressed: () {
         surveyController.stepBack(
           context: context,
@@ -42,20 +40,8 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       elevation: 0,
-      leading: StreamBuilder<SurveyState>(
-        stream: surveyStream,
-        builder: (context, snapshot) {
-          if (snapshot.data == null) {
-            return const SizedBox.shrink();
-          }
-
-          final state = snapshot.data!;
-
-          return (state as PresentingSurveyState).isFirstStep
-              ? const SizedBox.shrink()
-              : backButton;
-        },
-      ),
+      leading:
+          state?.isFirstStep ?? true ? const SizedBox.shrink() : backButton,
       title: const SurveyProgress(),
       actions: [
         cancelButton,
