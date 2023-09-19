@@ -37,6 +37,9 @@ class SurveyKit extends StatefulWidget {
   /// Decoration which is applied to the survey container
   final BoxDecoration? decoration;
 
+  /// Widget which is shown while the survey is loading (isLoading = true)
+  final Widget? loadingState;
+
   const SurveyKit({
     super.key,
     required this.task,
@@ -47,6 +50,7 @@ class SurveyKit extends StatefulWidget {
     this.localizations,
     this.stepShell,
     this.decoration,
+    this.loadingState,
   });
 
   @override
@@ -104,6 +108,7 @@ class _SurveyKitState extends State<SurveyKit> {
             appBar: widget.appBar,
             navigatorKey: _navigatorKey,
             decoration: widget.decoration,
+            loadingState: widget.loadingState,
           );
         },
       ),
@@ -117,6 +122,7 @@ class SurveyPage extends StatefulWidget {
   final PreferredSizeWidget? appBar;
   final GlobalKey<NavigatorState> navigatorKey;
   final Decoration? decoration;
+  final Widget? loadingState;
 
   const SurveyPage({
     super.key,
@@ -125,6 +131,7 @@ class SurveyPage extends StatefulWidget {
     required this.navigatorKey,
     this.appBar,
     this.decoration,
+    this.loadingState,
   });
 
   @override
@@ -145,7 +152,6 @@ class _SurveyPageState extends State<SurveyPage>
 
   @override
   Widget build(BuildContext context) {
-    print('Rebuild survey page');
     Widget scaffold(Widget child) => Scaffold(
           appBar: widget.appBar ?? const SurveyAppBar(),
           body: Container(
@@ -160,9 +166,10 @@ class _SurveyPageState extends State<SurveyPage>
         builder: (_) {
           if (settings.arguments is! SurveyState) {
             return scaffold(
-              const Center(
-                child: CircularProgressIndicator.adaptive(),
-              ),
+              widget.loadingState ??
+                  const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
             );
           }
 
