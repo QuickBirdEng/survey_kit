@@ -40,6 +40,8 @@ class SurveyKit extends StatefulWidget {
   /// Widget which is shown while the survey is loading (isLoading = true)
   final Widget? loadingState;
 
+  final bool keepLastStateAlive;
+
   const SurveyKit({
     super.key,
     required this.task,
@@ -51,6 +53,7 @@ class SurveyKit extends StatefulWidget {
     this.stepShell,
     this.decoration,
     this.loadingState,
+    this.keepLastStateAlive = false,
   });
 
   @override
@@ -109,6 +112,7 @@ class _SurveyKitState extends State<SurveyKit> {
             navigatorKey: _navigatorKey,
             decoration: widget.decoration,
             loadingState: widget.loadingState,
+            keepLastStateAlive: widget.keepLastStateAlive,
           );
         },
       ),
@@ -121,8 +125,9 @@ class SurveyPage extends StatefulWidget {
   final Function(SurveyResult) onResult;
   final PreferredSizeWidget? appBar;
   final GlobalKey<NavigatorState> navigatorKey;
-  final Decoration? decoration;
+  final BoxDecoration? decoration;
   final Widget? loadingState;
+  final bool keepLastStateAlive;
 
   const SurveyPage({
     super.key,
@@ -132,6 +137,7 @@ class SurveyPage extends StatefulWidget {
     this.appBar,
     this.decoration,
     this.loadingState,
+    this.keepLastStateAlive = false,
   });
 
   @override
@@ -152,33 +158,28 @@ class _SurveyPageState extends State<SurveyPage>
 
   @override
   Widget build(BuildContext context) {
-    Widget scaffold(Widget child) => Scaffold(
-          appBar: widget.appBar ?? const SurveyAppBar(),
-          body: Container(
-            decoration: widget.decoration,
-            child: child,
-          ),
-        );
-
-    return Navigator(
-      key: widget.navigatorKey,
-      onGenerateRoute: (settings) => CupertinoPageRoute<Widget>(
-        builder: (_) {
-          if (settings.arguments is! SurveyState) {
-            return scaffold(
-              widget.loadingState ??
+    return Scaffold(
+      appBar: widget.appBar ?? const SurveyAppBar(),
+      body: Navigator(
+        key: widget.navigatorKey,
+        onGenerateRoute: (settings) => CupertinoPageRoute<Widget>(
+          builder: (_) {
+            final arg = settings.arguments;
+            if (arg == null || arg is! SurveyState) {
+              return widget.loadingState ??
                   const Center(
                     child: CircularProgressIndicator.adaptive(),
-                  ),
-            );
-          }
+                  );
+            }
+            final state = settings.arguments! as SurveyState;
 
-          final state = settings.arguments! as SurveyState;
-
-          final step = state.currentStep;
-          return scaffold(
-            _SurveyView(
-              id: step!.id,
+            final step = state.currentStep;
+            return _SurveyView(
+              key: ValueKey<String>(
+                step!.id,
+              ),
+              id: step.id,
+              decoration: widget.decoration,
               createView: () => AnswerView(
                 answer: step.answerFormat,
                 step: step,
@@ -186,9 +187,9 @@ class _SurveyPageState extends State<SurveyPage>
                   (element) => element.id == step.id,
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -196,19 +197,23 @@ class _SurveyPageState extends State<SurveyPage>
 
 class _SurveyView extends StatelessWidget {
   const _SurveyView({
+    super.key,
     required this.id,
     required this.createView,
+    this.decoration,
   });
 
   final String id;
   final Widget Function() createView;
+  final Decoration? decoration;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: ValueKey<String>(
-        id,
-      ),
+    return DecoratedBox(
+      decoration: decoration ??
+          const BoxDecoration(
+            color: Colors.white,
+          ),
       child: createView(),
     );
   }
