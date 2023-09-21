@@ -35,10 +35,7 @@ class SurveyStateProvider extends ChangeNotifier {
     if (event is StartSurvey) {
       final newState = _handleInitialStep();
       updateState(newState);
-      navigatorKey.currentState?.pushNamed(
-        '/',
-        arguments: newState,
-      );
+
       return;
     }
     if (state != null) {
@@ -46,12 +43,12 @@ class SurveyStateProvider extends ChangeNotifier {
         final newState = _handleNextStep(event, state!);
         updateState(newState);
         navigatorKey.currentState?.pushNamed(
-          '/',
+          '/${newState.currentStep?.id}',
           arguments: newState,
         );
         return;
       } else if (event is StepBack) {
-        final newState = _handleStepBack(event, state!);
+        final newState = handleStepBack(event, state!);
         updateState(newState);
         navigatorKey.currentState?.pop();
         return;
@@ -108,7 +105,7 @@ class SurveyStateProvider extends ChangeNotifier {
     );
   }
 
-  SurveyState _handleStepBack(
+  SurveyState handleStepBack(
     StepBack event,
     SurveyState currentState,
   ) {
@@ -127,7 +124,6 @@ class SurveyStateProvider extends ChangeNotifier {
         steps: taskNavigator.task.steps,
         questionResults: results,
         currentStepIndex: currentStepIndex(previousStep),
-        isPreviousStep: true,
         stepCount: countSteps,
       );
     }

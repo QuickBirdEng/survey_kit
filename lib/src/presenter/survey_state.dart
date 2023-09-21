@@ -11,7 +11,6 @@ class SurveyState {
   final StepResult? result;
   final int currentStepIndex;
   final int stepCount;
-  final bool isPreviousStep;
   final SurveyResult? surveyResult;
   final bool isLoading;
 
@@ -22,7 +21,6 @@ class SurveyState {
     required this.questionResults,
     this.result,
     this.currentStepIndex = 0,
-    this.isPreviousStep = false,
     this.surveyResult,
     this.isLoading = false,
   });
@@ -36,7 +34,6 @@ class SurveyState {
       other.questionResults == questionResults &&
       other.result == result &&
       other.currentStepIndex == currentStepIndex &&
-      other.isPreviousStep == isPreviousStep &&
       other.surveyResult == surveyResult &&
       other.isLoading == isLoading;
   @override
@@ -47,7 +44,6 @@ class SurveyState {
       questionResults.hashCode ^
       result.hashCode ^
       currentStepIndex.hashCode ^
-      isPreviousStep.hashCode ^
       surveyResult.hashCode ^
       isLoading.hashCode;
 
@@ -58,7 +54,6 @@ class SurveyState {
     Set<StepResult>? questionResults,
     StepResult? result,
     int? currentStepIndex,
-    bool? isPreviousStep,
     SurveyResult? surveyResult,
     bool? isLoading,
   }) =>
@@ -69,7 +64,6 @@ class SurveyState {
         questionResults: questionResults ?? this.questionResults,
         result: result ?? this.result,
         currentStepIndex: currentStepIndex ?? this.currentStepIndex,
-        isPreviousStep: isPreviousStep ?? this.isPreviousStep,
         surveyResult: surveyResult ?? this.surveyResult,
         isLoading: isLoading ?? this.isLoading,
       );

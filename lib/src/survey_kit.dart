@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:provider/provider.dart';
+import 'package:survey_kit/src/survey_route_observer.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_view.dart';
 import 'package:survey_kit/survey_kit.dart';
 
@@ -63,12 +64,20 @@ class SurveyKit extends StatefulWidget {
 class _SurveyKitState extends State<SurveyKit> {
   late TaskNavigator _taskNavigator;
   late final GlobalKey<NavigatorState> _navigatorKey;
+  late final SurveyStateProvider surveyStateProvide;
 
   @override
   void initState() {
     super.initState();
     _taskNavigator = _createTaskNavigator();
     _navigatorKey = GlobalKey<NavigatorState>();
+
+    surveyStateProvide = SurveyStateProvider(
+      taskNavigator: _taskNavigator,
+      onResult: widget.onResult,
+      stepShell: widget.stepShell,
+      navigatorKey: _navigatorKey,
+    );
   }
 
   TaskNavigator _createTaskNavigator() {
@@ -98,12 +107,7 @@ class _SurveyKitState extends State<SurveyKit> {
       localizations: widget.localizations,
       padding: const EdgeInsets.all(14),
       child: ChangeNotifierProvider<SurveyStateProvider>(
-        create: (_) => SurveyStateProvider(
-          taskNavigator: _taskNavigator,
-          onResult: widget.onResult,
-          stepShell: widget.stepShell,
-          navigatorKey: _navigatorKey,
-        ),
+        create: (_) => surveyStateProvide,
         builder: (context, child) {
           return SurveyPage(
             length: widget.task.steps.length,
@@ -113,6 +117,8 @@ class _SurveyKitState extends State<SurveyKit> {
             decoration: widget.decoration,
             loadingState: widget.loadingState,
             keepLastStateAlive: widget.keepLastStateAlive,
+            step: widget.task.steps.first,
+            surveyStateProvider: surveyStateProvide,
           );
         },
       ),
@@ -128,12 +134,16 @@ class SurveyPage extends StatefulWidget {
   final BoxDecoration? decoration;
   final Widget? loadingState;
   final bool keepLastStateAlive;
+  final Step step;
+  final SurveyStateProvider surveyStateProvider;
 
   const SurveyPage({
     super.key,
     required this.length,
     required this.onResult,
     required this.navigatorKey,
+    required this.step,
+    required this.surveyStateProvider,
     this.appBar,
     this.decoration,
     this.loadingState,
@@ -144,11 +154,13 @@ class SurveyPage extends StatefulWidget {
   _SurveyPageState createState() => _SurveyPageState();
 }
 
-class _SurveyPageState extends State<SurveyPage>
-    with SingleTickerProviderStateMixin {
+class _SurveyPageState extends State<SurveyPage> {
+  late final SurveyRouteObserver routeObserver;
+
   @override
   void initState() {
     super.initState();
+    routeObserver = SurveyRouteObserver(widget.surveyStateProvider);
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => Provider.of<SurveyStateProvider>(context, listen: false).onEvent(
         StartSurvey(),
@@ -162,34 +174,36 @@ class _SurveyPageState extends State<SurveyPage>
       appBar: widget.appBar ?? const SurveyAppBar(),
       body: Navigator(
         key: widget.navigatorKey,
-        onGenerateRoute: (settings) => CupertinoPageRoute<Widget>(
-          builder: (_) {
-            final arg = settings.arguments;
-            if (arg == null || arg is! SurveyState) {
-              return widget.loadingState ??
-                  const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-            }
-            final state = settings.arguments! as SurveyState;
+        observers: [routeObserver],
+        onGenerateRoute: (settings) {
+          final arg = settings.arguments;
+          var step = widget.step;
+          SurveyState? surveyState;
+          if (arg is SurveyState) {
+            surveyState = settings.arguments! as SurveyState;
 
-            final step = state.currentStep;
-            return _SurveyView(
-              key: ValueKey<String>(
-                step!.id,
-              ),
-              id: step.id,
-              decoration: widget.decoration,
-              createView: () => AnswerView(
-                answer: step.answerFormat,
-                step: step,
-                stepResult: state.questionResults.firstWhereOrNull(
-                  (element) => element.id == step.id,
+            step = surveyState.currentStep!;
+          }
+          return CupertinoPageRoute<Widget>(
+            settings: settings,
+            builder: (_) {
+              return _SurveyView(
+                key: ValueKey<String>(
+                  step.id,
                 ),
-              ),
-            );
-          },
-        ),
+                id: step.id,
+                decoration: widget.decoration,
+                createView: () => AnswerView(
+                  answer: step.answerFormat,
+                  step: step,
+                  stepResult: surveyState?.questionResults.firstWhereOrNull(
+                    (element) => element.id == step.id,
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

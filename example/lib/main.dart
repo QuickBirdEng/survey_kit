@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
             final selectedChoice = input?.result as TextChoice?;
             switch (selectedChoice?.text) {
               case 'Yes':
-                return 'OnlyConent';
+                return 'OnlyContent';
               case 'No':
                 return 'Completion';
               default:
@@ -181,7 +181,7 @@ class _MyAppState extends State<MyApp> {
         ),
 
         Step(
-          id: 'OnlyConent',
+          id: 'OnlyContent',
           content: const [
             TextContent(
               text: 'Listen carefully!',
