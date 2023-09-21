@@ -41,7 +41,7 @@ class SurveyKit extends StatefulWidget {
   /// Widget which is shown while the survey is loading (isLoading = true)
   final Widget? loadingState;
 
-  final bool keepLastStateAlive;
+  final Color? backgroundColor;
 
   const SurveyKit({
     super.key,
@@ -54,7 +54,7 @@ class SurveyKit extends StatefulWidget {
     this.stepShell,
     this.decoration,
     this.loadingState,
-    this.keepLastStateAlive = false,
+    this.backgroundColor,
   });
 
   @override
@@ -116,9 +116,9 @@ class _SurveyKitState extends State<SurveyKit> {
             navigatorKey: _navigatorKey,
             decoration: widget.decoration,
             loadingState: widget.loadingState,
-            keepLastStateAlive: widget.keepLastStateAlive,
             step: widget.task.steps.first,
             surveyStateProvider: surveyStateProvide,
+            backgroundColor: widget.backgroundColor,
           );
         },
       ),
@@ -133,9 +133,9 @@ class SurveyPage extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final BoxDecoration? decoration;
   final Widget? loadingState;
-  final bool keepLastStateAlive;
   final Step step;
   final SurveyStateProvider surveyStateProvider;
+  final Color? backgroundColor;
 
   const SurveyPage({
     super.key,
@@ -147,7 +147,7 @@ class SurveyPage extends StatefulWidget {
     this.appBar,
     this.decoration,
     this.loadingState,
-    this.keepLastStateAlive = false,
+    this.backgroundColor,
   });
 
   @override
@@ -171,6 +171,7 @@ class _SurveyPageState extends State<SurveyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.backgroundColor,
       appBar: widget.appBar ?? const SurveyAppBar(),
       body: Navigator(
         key: widget.navigatorKey,
