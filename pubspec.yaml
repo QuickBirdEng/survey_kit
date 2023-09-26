@@ -18,7 +18,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
-  flutter_platform_widgets: ^2.2.6
+  flutter_platform_widgets: ^3.3.5
   go_router: ^6.0.1
   image_picker: ^0.8.5+3
   intl: ^0.18.0
