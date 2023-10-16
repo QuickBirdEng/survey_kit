@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
-import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/result/question/integer_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 
 class IntegerAnswerView extends StatefulWidget {
@@ -66,7 +66,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
@@ -75,6 +75,8 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: TextField(
+            textInputAction: TextInputAction.next,
+            autofocus: true,
             decoration: textFieldInputDecoration(
               hint: _integerAnswerFormat.hint,
             ),

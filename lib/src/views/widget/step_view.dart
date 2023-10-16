@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/steps/step.dart' as surveystep;
-import 'package:provider/provider.dart';
 
 class StepView extends StatelessWidget {
   final surveystep.Step step;
@@ -31,7 +31,7 @@ class StepView extends StatelessWidget {
   Widget _content(SurveyController surveyController, BuildContext context) {
     return SizedBox.expand(
       child: Container(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -51,10 +51,8 @@ class StepView extends StatelessWidget {
                             surveyController.nextStep(context, resultFunction)
                         : null,
                     child: Text(
-                      step.buttonText?.toUpperCase() ??
-                          context
-                              .read<Map<String, String>?>()?['next']
-                              ?.toUpperCase() ??
+                      context.read<Map<String, String>?>()?['next'] ??
+                          step.buttonText ??
                           'Next',
                       style: TextStyle(
                         color: isValid

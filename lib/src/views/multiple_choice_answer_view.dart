@@ -1,9 +1,10 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/text_choice.dart';
-import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
 import 'package:survey_kit/src/result/question/multiple_choice_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
+import 'package:survey_kit/src/views/widget/selection_list_tile.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
 import 'package:collection/collection.dart';
 
@@ -53,7 +54,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
@@ -65,7 +66,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
               padding: const EdgeInsets.only(bottom: 32.0),
               child: Text(
                 widget.questionStep.text,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -84,7 +85,9 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
                               if (_selectedChoices.contains(tc)) {
                                 _selectedChoices.remove(tc);
                               } else {
-                                _selectedChoices = [..._selectedChoices, tc];
+                                if(_multipleChoiceAnswer.maxAnswers > _selectedChoices.length){
+                                  _selectedChoices = [..._selectedChoices, tc];
+                                }
                               }
                             },
                           );
@@ -128,7 +131,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
                         },
                         decoration: InputDecoration(
                           labelText: 'Other',
-                          labelStyle: Theme.of(context).textTheme.headline5,
+                          labelStyle: Theme.of(context).textTheme.headlineSmall,
                           hintText: 'Write other information here',
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                         ),

@@ -21,6 +21,7 @@ class SurveyAppBar extends StatelessWidget {
 
     final surveyController = controller ?? context.read<SurveyController>();
     return AppBar(
+      elevation: 0,
       leading: _canGoBack
           ? appBarConfiguration.leading ??
               BackButton(
