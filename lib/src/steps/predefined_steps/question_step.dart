@@ -34,7 +34,6 @@ import 'package:survey_kit/src/views/double_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_auto_complete_answer_view.dart';
 import 'package:survey_kit/src/views/image_answer_view.dart';
 import 'package:survey_kit/src/views/integer_answer_view.dart';
-import 'package:survey_kit/src/views/multiple_auto_complete_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_choice_answer_view.dart';
 import 'package:survey_kit/src/views/multiple_double_answer_view.dart';
 import 'package:survey_kit/src/views/scale_answer_view.dart';
