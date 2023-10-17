@@ -6,6 +6,7 @@ part 'text_answer_format.g.dart';
 @JsonSerializable()
 class TextAnswerFormat implements AnswerFormat {
   final int? maxLines;
+  final String? defaultValue;
   @JsonKey(defaultValue: '')
   final String hint;
 
@@ -20,6 +21,7 @@ class TextAnswerFormat implements AnswerFormat {
   const TextAnswerFormat({
     this.maxLines,
     this.hint = '',
+    this.defaultValue,
     this.validationRegEx = '^(?!\s*\$).+',
   }) : super();
 

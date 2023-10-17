@@ -23,7 +23,7 @@ Map<String, dynamic> _$SurveyResultToJson(SurveyResult instance) =>
       'id': instance.id?.toJson(),
       'startDate': instance.startDate.toIso8601String(),
       'endDate': instance.endDate.toIso8601String(),
-      'finishReason': _$FinishReasonEnumMap[instance.finishReason],
+      'finishReason': _$FinishReasonEnumMap[instance.finishReason]!,
       'results': instance.results.map((e) => e.toJson()).toList(),
     };
 

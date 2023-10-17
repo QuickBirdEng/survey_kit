@@ -28,7 +28,9 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView> {
   void initState() {
     super.initState();
     _answerFormat = widget.questionStep.answerFormat as BooleanAnswerFormat;
-    _result = widget.result?.result ?? _answerFormat.result;
+    _result = widget.result?.result ??
+        _answerFormat.defaultValue ??
+        _answerFormat.result;
     _startDate = DateTime.now();
   }
 

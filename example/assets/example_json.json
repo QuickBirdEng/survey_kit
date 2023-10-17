@@ -1,8 +1,7 @@
 {
     "id": "123",
     "type": "navigable",
-    "rules": [
-        {
+    "rules": [{
             "type": "conditional",
             "triggerStepIdentifier": {
                 "id": "7"
@@ -53,8 +52,7 @@
             }
         }
     ],
-    "steps": [
-        {
+    "steps": [{
             "stepIdentifier": {
                 "id": "1"
             },
@@ -126,8 +124,7 @@
             "title": "Known allergies",
             "answerFormat": {
                 "type": "multiple",
-                "textChoices": [
-                    {
+                "textChoices": [{
                         "text": "Penicillin",
                         "value": "Penicillin"
                     },
@@ -155,8 +152,7 @@
             "text": "We are done, do you mind to tell us more about yourself?",
             "answerFormat": {
                 "type": "single",
-                "textChoices": [
-                    {
+                "textChoices": [{
                         "text": "Yes",
                         "value": "Yes"
                     },
@@ -272,8 +268,7 @@
             "text": "What type of pet(s) do you have?",
             "answerFormat": {
                 "type": "multiple",
-                "textChoices": [
-                    {
+                "textChoices": [{
                         "text": "Dog",
                         "value": "Dog"
                     },

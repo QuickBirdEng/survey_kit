@@ -8,11 +8,13 @@ class BooleanAnswerFormat implements AnswerFormat {
   final String positiveAnswer;
   final String negativeAnswer;
   final BooleanResult result;
+  final BooleanResult? defaultValue;
 
   const BooleanAnswerFormat({
     required this.positiveAnswer,
     required this.negativeAnswer,
     this.result = BooleanResult.NONE,
+    this.defaultValue,
   }) : super();
 
   factory BooleanAnswerFormat.fromJson(Map<String, dynamic> json) =>
