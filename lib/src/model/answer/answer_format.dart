@@ -58,4 +58,10 @@ abstract class AnswerFormat {
         throw Exception('Unknown type: $type');
     }
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'type': answerType,
+    };
+  }
 }

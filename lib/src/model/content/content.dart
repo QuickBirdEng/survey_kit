@@ -38,5 +38,12 @@ abstract class Content {
     }
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'type': contentType,
+    };
+  }
+
   Widget createWidget();
 }
