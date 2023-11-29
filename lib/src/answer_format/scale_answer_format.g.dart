@@ -14,6 +14,7 @@ ScaleAnswerFormat _$ScaleAnswerFormatFromJson(Map<String, dynamic> json) =>
       step: (json['step'] as num).toDouble(),
       maximumValueDescription: json['maximumValueDescription'] as String? ?? '',
       minimumValueDescription: json['minimumValueDescription'] as String? ?? '',
+      showValue: json['showValue'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$ScaleAnswerFormatToJson(ScaleAnswerFormat instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$ScaleAnswerFormatToJson(ScaleAnswerFormat instance) =>
       'step': instance.step,
       'maximumValueDescription': instance.maximumValueDescription,
       'minimumValueDescription': instance.minimumValueDescription,
+      'showValue': instance.showValue,
     };

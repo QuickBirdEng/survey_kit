@@ -51,7 +51,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
@@ -63,7 +63,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
               padding: const EdgeInsets.only(bottom: 32.0),
               child: Text(
                 widget.questionStep.text,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -135,7 +135,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                         },
                         decoration: InputDecoration(
                           labelText: 'Other',
-                          labelStyle: Theme.of(context).textTheme.headline5,
+                          labelStyle: Theme.of(context).textTheme.headlineSmall,
                           hintText: 'Write other information here',
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                         ),
@@ -238,7 +238,7 @@ class _OptionsViewBuilder extends StatelessWidget {
         alignment: Alignment.topLeft,
         child: Material(
           elevation: 4.0,
-          textStyle: Theme.of(context).textTheme.bodyText1,
+          textStyle: Theme.of(context).textTheme.bodyLarge,
           child: ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 200),
             child: ListView.builder(

@@ -58,7 +58,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
@@ -68,7 +68,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
             padding: const EdgeInsets.only(bottom: 32.0),
             child: Text(
               widget.questionStep.text,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
           ),

@@ -49,7 +49,7 @@ class QuestionStep extends Step {
   final String title;
   @JsonKey(defaultValue: '')
   final String text;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   final Widget content;
   final AnswerFormat answerFormat;
 
@@ -93,6 +93,7 @@ class QuestionStep extends Step {
           result: questionResult as TextQuestionResult?,
         );
       case SingleChoiceAnswerFormat:
+        FocusManager.instance.primaryFocus?.unfocus();
         return SingleChoiceAnswerView(
           key: key,
           questionStep: this,
