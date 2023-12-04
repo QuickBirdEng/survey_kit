@@ -41,7 +41,7 @@ void main() {
     await tester.pumpWidget(surveyWidget);
     await tester.pumpAndSettle();
 
-    final introButton = find.text('Let\'s go!'.toUpperCase());
+    final introButton = find.text('Let\'s go!');
     expect(introButton, findsOneWidget);
     await tester.tap(introButton);
 
@@ -49,12 +49,12 @@ void main() {
     final textField = find.byType(TextField);
     await tester.enterText(textField, '20');
     await tester.pumpAndSettle();
-    final questionButton = find.text('Next'.toUpperCase());
+    final questionButton = find.text('Next');
     expect(questionButton, findsOneWidget);
     await tester.tap(questionButton);
 
     await tester.pumpAndSettle();
-    final completeButtom = find.text('Submit survey'.toUpperCase());
+    final completeButtom = find.text('Submit survey');
     expect(completeButtom, findsOneWidget);
     await tester.tap(completeButtom);
   });
