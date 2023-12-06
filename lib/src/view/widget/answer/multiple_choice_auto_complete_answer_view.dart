@@ -254,7 +254,7 @@ class _OptionsViewBuilder extends StatelessWidget {
                           children: [
                             Text(option.text),
                             if (selectedChoices.contains(option))
-                              const Icon(Icons.done)
+                              const Icon(Icons.done),
                           ],
                         ),
                       );

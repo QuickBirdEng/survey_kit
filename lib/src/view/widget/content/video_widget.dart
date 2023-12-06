@@ -49,7 +49,7 @@ class VideoWidget extends StatelessWidget {
         ),
         if (videoContent.externalLink != null) ...[
           smallVerticalSpacer,
-          LinkText(link: videoContent.externalLink!)
+          LinkText(link: videoContent.externalLink!),
         ],
         if (videoContent.subtitle != null) ...[
           smallVerticalSpacer,
