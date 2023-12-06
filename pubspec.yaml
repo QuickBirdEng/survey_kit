@@ -15,7 +15,7 @@ flutter:
         pluginClass: SurveyKitPlugin
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=2.17.0 <4.0.0"
   flutter: ">=2.0.0"
 
 dependencies:
