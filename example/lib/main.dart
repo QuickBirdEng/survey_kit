@@ -130,6 +130,10 @@ class _MyAppState extends State<MyApp> {
                           fontSize: 18.0,
                           color: Colors.black,
                         ),
+                        bodySmall: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.black,
+                        ),
                         titleMedium: TextStyle(
                           fontSize: 18.0,
                           color: Colors.black,

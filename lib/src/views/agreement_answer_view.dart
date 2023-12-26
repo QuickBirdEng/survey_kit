@@ -56,7 +56,7 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.center,
             )
           : widget.questionStep.content,
@@ -68,7 +68,7 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
               padding: const EdgeInsets.only(bottom: 32.0),
               child: Text(
                 widget.questionStep.text,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -109,7 +109,7 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
                       },
                       child: MarkdownBody(
                         styleSheet: markDownStyleSheet.copyWith(
-                          p: theme.textTheme.caption,
+                          p: theme.textTheme.bodySmall,
                         ),
                         data:
                             _agreementAnswerFormat.markdownAgreementText ?? '',
