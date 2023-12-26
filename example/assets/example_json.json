@@ -17,7 +17,7 @@
                 "id": "1"
             },
             "destinationStepIdentifier": {
-                "id": "3"
+                "id": "13"
             }
         },
         {
@@ -63,7 +63,7 @@
         },
         {
             "stepIdentifier": {
-                "id": "11112"
+                "id": "13"
             },
             "type": "question",
             "title": "Before we begin",
@@ -213,8 +213,7 @@
             "answerFormat": {
                 "type": "multiple",
                 "otherField": true,
-                "textChoices": [
-                    {
+                "textChoices": [{
                         "text": "Penicillin",
                         "value": "Penicillin"
                     },
@@ -242,8 +241,7 @@
             "answerFormat": {
                 "type": "multiple_auto_complete",
                 "otherField": true,
-                "textChoices": [
-                    {
+                "textChoices": [{
                         "text": "Penicillin",
                         "value": "Penicillin"
                     },
@@ -252,8 +250,7 @@
                         "value": "Latex"
                     }
                 ],
-                "suggestions": [
-                    {
+                "suggestions": [{
                         "text": "Pet",
                         "value": "Pet"
                     },
