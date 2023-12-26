@@ -294,7 +294,7 @@ class _HourMinuteControl extends StatelessWidget {
               text,
               style: style.copyWith(
                   color: MaterialStateProperty.resolveAs(textColor, states)),
-              textScaleFactor: 1.0,
+              textScaler: TextScaler.linear(1.0),
             ),
           ),
         ),
@@ -414,7 +414,7 @@ class _StringFragment extends StatelessWidget {
             style: hourMinuteStyle.apply(
                 color: MaterialStateProperty.resolveAs(
                     textColor, <MaterialState>{})),
-            textScaleFactor: 1.0,
+            textScaler: TextScaler.linear(1.0),
           ),
         ),
       ),
@@ -583,9 +583,6 @@ class _DayPeriodControl extends StatelessWidget {
       side: borderSide,
     );
 
-    final double buttonTextScaleFactor =
-        math.min(MediaQuery.of(context).textScaleFactor, 2.0);
-
     final Widget amButton = Material(
       color: MaterialStateProperty.resolveAs(backgroundColor, amStates),
       child: InkWell(
@@ -598,7 +595,6 @@ class _DayPeriodControl extends StatelessWidget {
             child: Text(
               materialLocalizations.anteMeridiemAbbreviation,
               style: amStyle,
-              textScaleFactor: buttonTextScaleFactor,
             ),
           ),
         ),
@@ -617,7 +613,6 @@ class _DayPeriodControl extends StatelessWidget {
             child: Text(
               materialLocalizations.postMeridiemAbbreviation,
               style: pmStyle,
-              textScaleFactor: buttonTextScaleFactor,
             ),
           ),
         ),
@@ -1202,14 +1197,12 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
   _TappableLabel _buildTappableLabel(TextTheme textTheme, Color color,
       int value, String label, VoidCallback onTap) {
     final TextStyle style = textTheme.bodyLarge!.copyWith(color: color);
-    final double labelScaleFactor =
-        math.min(MediaQuery.of(context).textScaleFactor, 2.0);
+
     return _TappableLabel(
       value: value,
       painter: TextPainter(
         text: TextSpan(style: style, text: label),
         textDirection: TextDirection.ltr,
-        textScaleFactor: labelScaleFactor,
       )..layout(),
       onTap: onTap,
     );
@@ -1776,7 +1769,8 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField> {
     return SizedBox(
       height: _kTimePickerHeaderControlHeight,
       child: MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        data:
+            MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
         child: TextFormField(
           autofocus: widget.autofocus ?? false,
           expands: true,
@@ -1996,11 +1990,6 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
   Size _dialogSize(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final ThemeData theme = Theme.of(context);
-    // Constrain the textScaleFactor to prevent layout issues. Since only some
-    // parts of the time picker scale up with textScaleFactor, we cap the factor
-    // to 1.1 as that provides enough space to reasonably fit all the content.
-    final double textScaleFactor =
-        math.min(MediaQuery.of(context).textScaleFactor, 1.1);
 
     final double timePickerWidth;
     final double timePickerHeight;
@@ -2015,7 +2004,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
                     : _kTimePickerHeightPortraitCollapsed;
             break;
           case Orientation.landscape:
-            timePickerWidth = _kTimePickerWidthLandscape * textScaleFactor;
+            timePickerWidth = _kTimePickerWidthLandscape;
             timePickerHeight =
                 theme.materialTapTargetSize == MaterialTapTargetSize.padded
                     ? _kTimePickerHeightLandscape
@@ -2028,7 +2017,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
         timePickerHeight = _kTimePickerHeightInput;
         break;
     }
-    return Size(timePickerWidth, timePickerHeight * textScaleFactor);
+    return Size(timePickerWidth, timePickerHeight);
   }
 
   @override

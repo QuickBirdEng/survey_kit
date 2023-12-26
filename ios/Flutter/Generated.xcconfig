@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/saifulislam/Development/flutter_sdk/flutter
-FLUTTER_APPLICATION_PATH=/Users/saifulislam/Development/apexlabs/djangoflow/survey_kit
+FLUTTER_ROOT=/Users/marvin/flutter
+FLUTTER_APPLICATION_PATH=/Users/marvin/repositories/survey_kit
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build

@@ -1,3 +1,5 @@
+# 0.2.0
+- INFO: Updated dependencies (Flutter 3.13.2)
 # 0.1.3
 - INFO: Update dependencies (Flutter 3.10)
 - FIX: Fix validation of boolean answer format

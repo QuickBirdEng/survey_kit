@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Step;
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.white,
   ));
   runApp(MyApp());
@@ -28,11 +28,11 @@ class _MyAppState extends State<MyApp> {
             alignment: Alignment.center,
             child: FutureBuilder<Task>(
               future: getJsonTask(),
-              builder: (context, snapshot) {
+              builder: (BuildContext context, AsyncSnapshot<Task> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData &&
                     snapshot.data != null) {
-                  final task = snapshot.data!;
+                  final Task task = snapshot.data!;
                   return SurveyKit(
                     onResult: (SurveyResult result) {
                       print(result.finishReason);
@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
                     },
                     task: task,
                     showProgress: true,
-                    localizations: {
+                    localizations: const <String, String>{
                       'cancel': 'Cancel',
                       'next': 'Next',
                     },
@@ -58,27 +58,27 @@ class _MyAppState extends State<MyApp> {
                       iconTheme: const IconThemeData(
                         color: Colors.cyan,
                       ),
-                      textSelectionTheme: TextSelectionThemeData(
+                      textSelectionTheme: const TextSelectionThemeData(
                         cursorColor: Colors.cyan,
                         selectionColor: Colors.cyan,
                         selectionHandleColor: Colors.cyan,
                       ),
-                      cupertinoOverrideTheme: CupertinoThemeData(
+                      cupertinoOverrideTheme: const CupertinoThemeData(
                         primaryColor: Colors.cyan,
                       ),
                       outlinedButtonTheme: OutlinedButtonThemeData(
                         style: ButtonStyle(
                           minimumSize: MaterialStateProperty.all(
-                            Size(150.0, 60.0),
+                            const Size(150.0, 60.0),
                           ),
                           side: MaterialStateProperty.resolveWith(
                             (Set<MaterialState> state) {
                               if (state.contains(MaterialState.disabled)) {
-                                return BorderSide(
+                                return const BorderSide(
                                   color: Colors.grey,
                                 );
                               }
-                              return BorderSide(
+                              return const BorderSide(
                                 color: Colors.cyan,
                               );
                             },
@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> {
                           ),
                         ),
                       ),
-                      textTheme: TextTheme(
+                      textTheme: const TextTheme(
                         displayMedium: TextStyle(
                           fontSize: 28.0,
                           color: Colors.black,
@@ -135,7 +135,7 @@ class _MyAppState extends State<MyApp> {
                           color: Colors.black,
                         ),
                       ),
-                      inputDecorationTheme: InputDecorationTheme(
+                      inputDecorationTheme: const InputDecorationTheme(
                         labelStyle: TextStyle(
                           color: Colors.black,
                         ),
@@ -153,7 +153,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                   );
                 }
-                return CircularProgressIndicator.adaptive();
+                return const CircularProgressIndicator.adaptive();
               },
             ),
           ),
@@ -163,9 +163,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<Task> getSampleTask() {
-    var task = NavigableTask(
+    final NavigableTask task = NavigableTask(
       id: TaskIdentifier(),
-      steps: [
+      steps: <Step>[
         InstructionStep(
           title: 'Welcome to the\nQuickBird Studios\nHealth Survey',
           text: 'Get ready for a bunch of super random questions!',
@@ -173,7 +173,7 @@ class _MyAppState extends State<MyApp> {
         ),
         QuestionStep(
           title: 'How old are you?',
-          answerFormat: IntegerAnswerFormat(
+          answerFormat: const IntegerAnswerFormat(
             defaultValue: 25,
             hint: 'Please enter your age',
           ),
@@ -182,7 +182,7 @@ class _MyAppState extends State<MyApp> {
         QuestionStep(
           title: 'Medication?',
           text: 'Are you using any medication',
-          answerFormat: BooleanAnswerFormat(
+          answerFormat: const BooleanAnswerFormat(
             positiveAnswer: 'Yes',
             negativeAnswer: 'No',
             result: BooleanResult.POSITIVE,
@@ -192,14 +192,14 @@ class _MyAppState extends State<MyApp> {
           title: 'Tell us about you',
           text:
               'Tell us about yourself and why you want to improve your health.',
-          answerFormat: TextAnswerFormat(
+          answerFormat: const TextAnswerFormat(
             maxLines: 5,
-            validationRegEx: "^(?!\s*\$).+",
+            validationRegEx: r'^(?!\s*\$).+',
           ),
         ),
         QuestionStep(
           title: 'Select your body type',
-          answerFormat: ScaleAnswerFormat(
+          answerFormat: const ScaleAnswerFormat(
             step: 1,
             minimumValue: 1,
             maximumValue: 5,
@@ -212,8 +212,8 @@ class _MyAppState extends State<MyApp> {
           title: 'Known allergies',
           text: 'Do you have any allergies that we should be aware of?',
           isOptional: false,
-          answerFormat: MultipleChoiceAnswerFormat(
-            textChoices: [
+          answerFormat: const MultipleChoiceAnswerFormat(
+            textChoices: <TextChoice>[
               TextChoice(text: 'Penicillin', value: 'Penicillin'),
               TextChoice(text: 'Latex', value: 'Latex'),
               TextChoice(text: 'Pet', value: 'Pet'),
@@ -225,8 +225,8 @@ class _MyAppState extends State<MyApp> {
           title: 'Done?',
           text: 'We are done, do you mind to tell us more about yourself?',
           isOptional: true,
-          answerFormat: SingleChoiceAnswerFormat(
-            textChoices: [
+          answerFormat: const SingleChoiceAnswerFormat(
+            textChoices: <TextChoice>[
               TextChoice(text: 'Yes', value: 'Yes'),
               TextChoice(text: 'No', value: 'No'),
             ],
@@ -235,7 +235,7 @@ class _MyAppState extends State<MyApp> {
         ),
         QuestionStep(
           title: 'When did you wake up?',
-          answerFormat: TimeAnswerFormat(
+          answerFormat: const TimeAnswerFormat(
             defaultValue: TimeOfDay(
               hour: 12,
               minute: 0,
@@ -252,7 +252,7 @@ class _MyAppState extends State<MyApp> {
         ),
         QuestionStep(
           title: 'Upload a image of you',
-          answerFormat: ImageAnswerFormat(
+          answerFormat: const ImageAnswerFormat(
             buttonText: 'Upload your photo',
             useGallery: true,
           ),
@@ -268,11 +268,11 @@ class _MyAppState extends State<MyApp> {
     task.addNavigationRule(
       forTriggerStepIdentifier: task.steps[6].stepIdentifier,
       navigationRule: ConditionalNavigationRule(
-        resultToStepIdentifierMapper: (input) {
+        resultToStepIdentifierMapper: (String? input) {
           switch (input) {
-            case "Yes":
+            case 'Yes':
               return task.steps[0].stepIdentifier;
-            case "No":
+            case 'No':
               return task.steps[7].stepIdentifier;
             default:
               return null;
@@ -280,12 +280,13 @@ class _MyAppState extends State<MyApp> {
         },
       ),
     );
-    return Future.value(task);
+    return Future<Task>.value(task);
   }
 
   Future<Task> getJsonTask() async {
-    final taskJson = await rootBundle.loadString('assets/example_json.json');
-    final taskMap = json.decode(taskJson);
+    final String taskJson =
+        await rootBundle.loadString('assets/example_json.json');
+    final Map<String, dynamic> taskMap = json.decode(taskJson);
 
     return Task.fromJson(taskMap);
   }
