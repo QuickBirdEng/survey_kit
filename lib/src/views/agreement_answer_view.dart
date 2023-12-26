@@ -104,7 +104,11 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
                         child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          _result = BooleanResult.POSITIVE;
+                          if (_result == BooleanResult.POSITIVE) {
+                            _result = BooleanResult.NEGATIVE;
+                          } else {
+                            _result = BooleanResult.POSITIVE;
+                          }
                         });
                       },
                       child: MarkdownBody(
