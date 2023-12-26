@@ -17,7 +17,7 @@
                 "id": "1"
             },
             "destinationStepIdentifier": {
-                "id": "13"
+                "id": "14"
             }
         },
         {
@@ -63,9 +63,10 @@
         },
         {
             "stepIdentifier": {
-                "id": "13"
+                "id": "14"
             },
             "type": "question",
+            "isOptional": true,
             "title": "Before we begin",
             "text": "In order to provide our services, this app will collect and use your sensitive health data based on your consent.",
             "answerFormat": {
