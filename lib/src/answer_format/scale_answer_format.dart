@@ -11,6 +11,7 @@ class ScaleAnswerFormat implements AnswerFormat {
   final double step;
   final String maximumValueDescription;
   final String minimumValueDescription;
+  final bool showValue;
 
   const ScaleAnswerFormat({
     required this.maximumValue,
@@ -19,6 +20,7 @@ class ScaleAnswerFormat implements AnswerFormat {
     required this.step,
     this.maximumValueDescription = '',
     this.minimumValueDescription = '',
+    this.showValue = true,
   }) : super();
 
   factory ScaleAnswerFormat.fromJson(Map<String, dynamic> json) =>
