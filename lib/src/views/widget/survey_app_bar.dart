@@ -43,9 +43,7 @@ class SurveyAppBar extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
-            onPressed: () => surveyController.closeSurvey(
-              context: context,
-            ),
+            onPressed: () => surveyController.closeSurvey(context),
           ),
       ],
     );
