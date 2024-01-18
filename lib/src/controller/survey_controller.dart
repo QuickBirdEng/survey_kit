@@ -84,8 +84,8 @@ class SurveyController {
     );
   }
 
-  void closeSurvey({
-    required BuildContext context,
+  void closeSurvey(
+    BuildContext context, {
     QuestionResult Function()? resultFunction,
   }) {
     if (onCloseSurvey != null) {
