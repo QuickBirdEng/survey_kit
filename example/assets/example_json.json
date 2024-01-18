@@ -17,7 +17,7 @@
                 "id": "1"
             },
             "destinationStepIdentifier": {
-                "id": "3"
+                "id": "14"
             }
         },
         {
@@ -60,6 +60,21 @@
             "title": "Welcome to the\nQuickBird Studios\nHealth Survey",
             "text": "Get ready for a bunch of super random questions!",
             "buttonText": "Let's go!"
+        },
+        {
+            "stepIdentifier": {
+                "id": "14"
+            },
+            "type": "question",
+            "isOptional": true,
+            "title": "Before we begin",
+            "text": "In order to provide our services, this app will collect and use your sensitive health data based on your consent.",
+            "answerFormat": {
+                "type": "agreement",
+                "defaultValue": "NEGATIVE",
+                "markdownDescription": "Please read our [Privacy Notice](https://www.healthylongevity.cafe/privacy) carefully to ensure that you understand it fully.",
+                "markdownAgreementText": "By clicking this option you consent to the collection and processing of your personal data according to our [Privacy Notice](https://www.healthylongevity.cafe/privacy)"
+            }
         },
         {
             "stepIdentifier": {
@@ -199,8 +214,7 @@
             "answerFormat": {
                 "type": "multiple",
                 "otherField": true,
-                "textChoices": [
-                    {
+                "textChoices": [{
                         "text": "Penicillin",
                         "value": "Penicillin"
                     },
@@ -228,8 +242,7 @@
             "answerFormat": {
                 "type": "multiple_auto_complete",
                 "otherField": true,
-                "textChoices": [
-                    {
+                "textChoices": [{
                         "text": "Penicillin",
                         "value": "Penicillin"
                     },
@@ -238,8 +251,7 @@
                         "value": "Latex"
                     }
                 ],
-                "suggestions": [
-                    {
+                "suggestions": [{
                         "text": "Pet",
                         "value": "Pet"
                     },

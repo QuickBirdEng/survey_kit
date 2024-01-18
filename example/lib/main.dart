@@ -130,6 +130,10 @@ class _MyAppState extends State<MyApp> {
                           fontSize: 18.0,
                           color: Colors.black,
                         ),
+                        bodySmall: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.black,
+                        ),
                         titleMedium: TextStyle(
                           fontSize: 18.0,
                           color: Colors.black,
@@ -284,10 +288,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<Task> getJsonTask() async {
-    final String taskJson =
-        await rootBundle.loadString('assets/example_json.json');
-    final Map<String, dynamic> taskMap = json.decode(taskJson);
+    try {
+      final String taskJson =
+          await rootBundle.loadString('assets/example_json.json');
+      final Map<String, dynamic> taskMap = json.decode(taskJson);
 
-    return Task.fromJson(taskMap);
+      return Task.fromJson(taskMap);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

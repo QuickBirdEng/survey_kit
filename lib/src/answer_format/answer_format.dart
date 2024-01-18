@@ -9,6 +9,7 @@ import 'package:survey_kit/src/answer_format/image_answer_format.dart';
 import 'package:survey_kit/src/answer_format/integer_answer_format.dart';
 import 'package:survey_kit/src/answer_format/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/scale_answer_format.dart';
+import 'package:survey_kit/src/answer_format/agreement_answer_format.dart';
 import 'package:survey_kit/src/answer_format/single_choice_answer_format.dart';
 import 'package:survey_kit/src/answer_format/text_answer_format.dart';
 import 'package:survey_kit/src/answer_format/time_answer_formart.dart';
@@ -41,6 +42,8 @@ abstract class AnswerFormat {
         return ScaleAnswerFormat.fromJson(json);
       case 'time':
         return TimeAnswerFormat.fromJson(json);
+      case 'agreement':
+        return AgreementAnswerFormat.fromJson(json);
       case 'file':
         return ImageAnswerFormat.fromJson(json);
       default:
