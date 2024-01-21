@@ -6,7 +6,6 @@ import io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyc
 import io.flutter.plugins.imagepicker.ImagePickerPlugin;
 import dev.flutter.plugins.integration_test.IntegrationTestPlugin;
 import io.flutter.plugins.urllauncher.UrlLauncherPlugin;
-import io.flutter.plugins.videoplayer.VideoPlayerPlugin;
 
 /**
  * Generated file. Do not edit.
@@ -21,7 +20,6 @@ public final class GeneratedPluginRegistrant {
     ImagePickerPlugin.registerWith(registry.registrarFor("io.flutter.plugins.imagepicker.ImagePickerPlugin"));
     IntegrationTestPlugin.registerWith(registry.registrarFor("dev.flutter.plugins.integration_test.IntegrationTestPlugin"));
     UrlLauncherPlugin.registerWith(registry.registrarFor("io.flutter.plugins.urllauncher.UrlLauncherPlugin"));
-    VideoPlayerPlugin.registerWith(registry.registrarFor("io.flutter.plugins.videoplayer.VideoPlayerPlugin"));
   }
 
   private static boolean alreadyRegisteredWith(PluginRegistry registry) {

@@ -85,16 +85,18 @@ class _TextAnswerViewState extends State<TextAnswerView> {
             ),
           ),
           Container(
+            padding: const EdgeInsets.only(left: 14.0, right: 14.0),
             width: MediaQuery.of(context).size.width,
-            height: 50.0,
             child: TextField(
-              textInputAction: TextInputAction.next,
-              autofocus: true,
-              decoration: textFieldInputDecoration(
-                hint: _textAnswerFormat.hint,
-              ),
+              minLines: _textAnswerFormat.maxLines,
+              maxLines: _textAnswerFormat.maxLines,
+              decoration: _textAnswerFormat.decoration
+                      ?.copyWith(hintText: _textAnswerFormat.hint) ??
+                  textFieldInputDecoration(
+                    hint: _textAnswerFormat.hint,
+                  ),
               controller: _controller,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
               onChanged: (String text) {
                 _checkValidation(text);
               },
