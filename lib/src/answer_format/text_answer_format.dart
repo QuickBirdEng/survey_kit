@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/answer_format/answer_format.dart';
 
@@ -9,6 +10,9 @@ class TextAnswerFormat implements AnswerFormat {
   final String? defaultValue;
   @JsonKey(defaultValue: '')
   final String hint;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final InputDecoration? decoration;
 
   /// Regular expression by which the text gets validated
   /// default: '^(?!\s*$).+' that checks if the entered text is empty
@@ -23,6 +27,7 @@ class TextAnswerFormat implements AnswerFormat {
     this.hint = '',
     this.defaultValue,
     this.validationRegEx = '^(?!\s*\$).+',
+    this.decoration,
   }) : super();
 
   factory TextAnswerFormat.fromJson(Map<String, dynamic> json) =>
