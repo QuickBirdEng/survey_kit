@@ -26,10 +26,10 @@ dependencies:
     sdk: flutter
   flutter_markdown: ^0.6.13
   image_picker: ^1.0.4
-  intl: ^0.18.0
+  intl: ^0.19.0
   json_annotation: ^4.0.1
   just_audio: ^0.9.32
-  lottie: ^2.1.0
+  lottie: ^3.0.0
   rxdart: ^0.27.7
   universal_html: ^2.2.1
   url_launcher: ^6.1.10
