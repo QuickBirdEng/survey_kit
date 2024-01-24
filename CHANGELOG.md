@@ -1,3 +1,5 @@
+# 1.0.0-dev.4
+- INFO: Revert intl dependency to 0.18.0
 # 1.0.0-dev.3
 - INFO: Update dependencies
 # 1.0.0-dev.2
