@@ -1,3 +1,5 @@
+# 1.0.0-dev.3
+- INFO: Update dependencies
 # 1.0.0-dev.2
 - BREAKING: `resultToStepIdentifierMapper` now also returns the previous results
   - (StepResult? result) -> (List<StepResult> results, StepResult? result)
