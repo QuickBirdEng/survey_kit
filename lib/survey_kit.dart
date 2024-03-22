@@ -62,7 +62,6 @@ export 'src/views/completion_view.dart';
 export 'src/views/date_answer_view.dart';
 export 'src/views/decoration/input_decoration.dart';
 export 'src/views/double_answer_view.dart';
-export 'src/views/image_answer_view.dart';
 export 'src/views/instruction_view.dart';
 export 'src/views/integer_answer_view.dart';
 export 'src/views/multiple_choice_answer_view.dart';
