@@ -1,3 +1,5 @@
+# 1.0.0-dev.6
+- INFO: Revert intl dependency to 0.18.1 because of Flutter incompatibility issues
 # 1.0.0-dev.5
 - INFO: Updated dependencies to latest Flutter Version 3.19.5
 # 1.0.0-dev.4
