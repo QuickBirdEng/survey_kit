@@ -1,4 +1,4 @@
-import '../../../survey_kit.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 /// It is uppercase to support previous implementions of the QuestionStep
 @Deprecated('Create Step from Step.dart')

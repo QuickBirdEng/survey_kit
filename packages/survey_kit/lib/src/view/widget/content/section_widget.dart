@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../model/content/section_content.dart';
-import '../../../util/ui_utils.dart';
-import 'styled_text_widget.dart';
+import 'package:survey_kit/src/model/content/section_content.dart';
+import 'package:survey_kit/src/util/ui_utils.dart';
+import 'package:survey_kit/src/view/widget/content/styled_text_widget.dart';
 
 class SectionWidget extends StatelessWidget {
   const SectionWidget({

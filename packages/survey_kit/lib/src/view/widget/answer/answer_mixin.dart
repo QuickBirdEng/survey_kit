@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../question_answer.dart';
+import 'package:survey_kit/src/view/widget/question_answer.dart';
 
 mixin AnswerMixin<T extends StatefulWidget, R> on State<T> {
   void onChange(R? result) {

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../util/datetime_convert.dart';
-import 'step_result.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/util/datetime_convert.dart';
 
 part 'survey_result.g.dart';
 

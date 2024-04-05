@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../../survey_kit.dart';
-import '../../view/widget/content/styled_text_widget.dart';
+import 'package:survey_kit/src/view/widget/content/styled_text_widget.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 part 'styled_text_content.g.dart';
 

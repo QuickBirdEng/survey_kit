@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../configuration/survey_configuration.dart';
-import '../controller/survey_controller.dart';
-import '../presenter/survey_state.dart';
-import '../presenter/survey_state_provider.dart';
-import 'survey_progress.dart';
+import 'package:survey_kit/src/configuration/survey_configuration.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/presenter/survey_state.dart';
+import 'package:survey_kit/src/presenter/survey_state_provider.dart';
+import 'package:survey_kit/src/widget/survey_progress.dart';
 
 class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final SurveyController? controller;

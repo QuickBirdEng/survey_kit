@@ -1,6 +1,6 @@
-import '../model/step.dart';
-import '../navigator/rules/navigation_rule.dart';
-import 'task.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
+import 'package:survey_kit/src/task/task.dart';
 
 /// Definition of task which can handle routing between [Tasks]
 /// The [navigationRules] defines on which Step [StepIdentifier] which next Step

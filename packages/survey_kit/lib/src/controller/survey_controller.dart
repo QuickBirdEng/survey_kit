@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
-
-import '../model/result/step_result.dart';
-import '../presenter/survey_event.dart';
-import '../presenter/survey_state_provider.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/presenter/survey_event.dart';
+import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 
 class SurveyController {
   /// Defines what should happen if the next step is called

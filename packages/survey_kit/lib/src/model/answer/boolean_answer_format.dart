@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../view/widget/answer/boolean_answer_view.dart';
-import '../result/step_result.dart';
-import '../step.dart';
-import 'answer_format.dart';
+import 'package:survey_kit/src/model/answer/answer_format.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/view/widget/answer/boolean_answer_view.dart';
 
 part 'boolean_answer_format.g.dart';
 

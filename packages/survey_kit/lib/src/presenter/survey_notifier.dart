@@ -1,12 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
-
-import '../model/result/step_result.dart';
-import '../model/result/survey_result.dart';
-import '../model/step.dart';
-import '../navigator/task_navigator.dart';
-import 'survey_event.dart';
-import 'survey_state.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/result/survey_result.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/navigator/task_navigator.dart';
+import 'package:survey_kit/src/presenter/survey_event.dart';
+import 'package:survey_kit/src/presenter/survey_state.dart';
 
 class SurveyNotifier extends ChangeNotifier {
   SurveyNotifier({

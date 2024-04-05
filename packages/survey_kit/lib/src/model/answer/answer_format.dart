@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-
-import '../result/step_result.dart';
-import '../step.dart';
-import 'boolean_answer_format.dart';
-import 'date_answer_format.dart';
-import 'double_answer_format.dart';
-import 'image_answer_format.dart';
-import 'integer_answer_format.dart';
-import 'multiple_choice_answer_format.dart';
-import 'multiple_choice_auto_complete_answer_format.dart';
-import 'multiple_double_answer_format.dart';
-import 'scale_answer_format.dart';
-import 'single_choice_answer_format.dart';
-import 'text_answer_format.dart';
-import 'time_answer_format.dart';
+import 'package:survey_kit/src/model/answer/boolean_answer_format.dart';
+import 'package:survey_kit/src/model/answer/date_answer_format.dart';
+import 'package:survey_kit/src/model/answer/double_answer_format.dart';
+import 'package:survey_kit/src/model/answer/image_answer_format.dart';
+import 'package:survey_kit/src/model/answer/integer_answer_format.dart';
+import 'package:survey_kit/src/model/answer/multiple_choice_answer_format.dart';
+import 'package:survey_kit/src/model/answer/multiple_choice_auto_complete_answer_format.dart';
+import 'package:survey_kit/src/model/answer/multiple_double_answer_format.dart';
+import 'package:survey_kit/src/model/answer/scale_answer_format.dart';
+import 'package:survey_kit/src/model/answer/single_choice_answer_format.dart';
+import 'package:survey_kit/src/model/answer/text_answer_format.dart';
+import 'package:survey_kit/src/model/answer/time_answer_format.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
 
 @JsonSerializable()
 abstract class AnswerFormat {

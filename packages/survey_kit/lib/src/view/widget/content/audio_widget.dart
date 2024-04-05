@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../../survey_kit.dart';
-import '../../../model/content/audio_content.dart';
-import '../../../util/ui_utils.dart';
-import '../../../widget/link.dart';
-import '../../../widget/survey_kit_audio_player.dart';
+import 'package:survey_kit/src/util/ui_utils.dart';
+import 'package:survey_kit/src/widget/survey_kit_audio_player.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 class AudioWidget extends StatelessWidget {
   const AudioWidget({

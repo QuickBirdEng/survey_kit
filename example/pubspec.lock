@@ -308,10 +308,10 @@ packages:
     dependency: transitive
     description:
       name: intl
-      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
       url: "https://pub.dev"
     source: hosted
-    version: "0.18.1"
+    version: "0.19.0"
   js:
     dependency: transitive
     description:
@@ -600,10 +600,18 @@ packages:
   survey_kit:
     dependency: "direct main"
     description:
-      path: "../packages/survey_kit"
+      name: survey_kit
+      sha256: "760dd45a0dcde46a363c35409a53073eeb3928912f199a250f7f042c4486cad3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0-dev.5"
+  survey_kit_video:
+    dependency: "direct main"
+    description:
+      path: "../packages/survey_kit_video"
       relative: true
     source: path
-    version: "1.0.0-dev.5"
+    version: "0.0.1"
   term_glyph:
     dependency: transitive
     description:
@@ -764,6 +772,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  visibility_detector:
+    dependency: transitive
+    description:
+      name: visibility_detector
+      sha256: dd5cc11e13494f432d15939c3aa8ae76844c42b723398643ce9addb88a5ed420
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0+2"
   vm_service:
     dependency: transitive
     description:

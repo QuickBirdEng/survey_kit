@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:survey_kit/src/model/result/time_result.dart';
+import 'package:survey_kit/survey_kit.dart';
 
-import '../../../../lib/src/model/result/time_result.dart';
-import '../../../../lib/survey_kit.dart';
 import 'mock.dart';
 
 void main() {

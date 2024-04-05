@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../controller/survey_controller.dart';
-import '../navigator/task_navigator.dart';
-import '../widget/survey_progress_configuration.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/navigator/task_navigator.dart';
+import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 class SurveyConfiguration extends InheritedWidget {
   const SurveyConfiguration({

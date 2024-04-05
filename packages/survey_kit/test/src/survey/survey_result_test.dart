@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:survey_kit/survey_kit.dart';
 
-import '../../../lib/survey_kit.dart';
 import '../result/question/mock.dart';
 
 void main() {

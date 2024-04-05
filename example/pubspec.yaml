@@ -12,8 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  survey_kit:
-    path: ../packages/survey_kit
+  survey_kit: ^1.0.0-dev.5
   survey_kit_video:
     path: ../packages/survey_kit_video
 

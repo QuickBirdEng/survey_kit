@@ -55,9 +55,9 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
               ),
             ),
           )
-        : Container(
+        : const SizedBox(
             height: 200,
-            child: const Center(
+            child: Center(
               child: CircularProgressIndicator.adaptive(),
             ),
           );

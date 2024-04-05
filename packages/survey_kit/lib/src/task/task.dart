@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/task/navigable_task.dart';
+import 'package:survey_kit/src/task/ordered_task.dart';
+import 'package:survey_kit/src/task/task_not_defined_exception.dart';
 import 'package:uuid/uuid.dart';
-
-import '../model/step.dart';
-import 'navigable_task.dart';
-import 'ordered_task.dart';
-import 'task_not_defined_exception.dart';
 
 /// Abstract definition of survey task
 ///

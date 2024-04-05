@@ -1,5 +1,5 @@
-import '../content/text_content.dart';
-import '../step.dart';
+import 'package:survey_kit/src/model/content/text_content.dart';
+import 'package:survey_kit/src/model/step.dart';
 
 /// It is uppercase to support previous implementions of the InstructionStep
 @Deprecated('Create Step from Step.dart')

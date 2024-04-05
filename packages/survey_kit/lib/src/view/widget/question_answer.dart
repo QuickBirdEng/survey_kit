@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide Step;
-
-import '../../../survey_kit.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 // ignore: must_be_immutable
 class QuestionAnswer<R> extends InheritedWidget {

@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-
-import 'navigation_rule.dart';
+import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
 
 part 'direct_navigation_rule.g.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../../survey_kit.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 part 'multiple_choice_answer_format.g.dart';
 

@@ -1,23 +1,22 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
-
-import 'configuration/survey_configuration.dart';
-import 'controller/survey_controller.dart';
-import 'model/result/survey_result.dart';
-import 'model/step.dart';
-import 'navigator/navigable_task_navigator.dart';
-import 'navigator/ordered_task_navigator.dart';
-import 'navigator/task_navigator.dart';
-import 'presenter/survey_event.dart';
-import 'presenter/survey_state.dart';
-import 'presenter/survey_state_provider.dart';
-import 'task/navigable_task.dart';
-import 'task/ordered_task.dart';
-import 'task/task.dart';
-import 'view/widget/answer/answer_view.dart';
-import 'widget/survey_app_bar.dart';
-import 'widget/survey_kit_page_route_builder.dart';
-import 'widget/survey_progress_configuration.dart';
+import 'package:survey_kit/src/configuration/survey_configuration.dart';
+import 'package:survey_kit/src/controller/survey_controller.dart';
+import 'package:survey_kit/src/model/result/survey_result.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
+import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
+import 'package:survey_kit/src/navigator/task_navigator.dart';
+import 'package:survey_kit/src/presenter/survey_event.dart';
+import 'package:survey_kit/src/presenter/survey_state.dart';
+import 'package:survey_kit/src/presenter/survey_state_provider.dart';
+import 'package:survey_kit/src/task/navigable_task.dart';
+import 'package:survey_kit/src/task/ordered_task.dart';
+import 'package:survey_kit/src/task/task.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_view.dart';
+import 'package:survey_kit/src/widget/survey_app_bar.dart';
+import 'package:survey_kit/src/widget/survey_kit_page_route_builder.dart';
+import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 typedef StepShell = Widget Function(
   Step step,

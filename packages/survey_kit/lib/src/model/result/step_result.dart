@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../util/datetime_convert.dart';
-import '../step.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/util/datetime_convert.dart';
 
 part 'step_result.g.dart';
 

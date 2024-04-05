@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart' hide Step;
-
-import '../../../model/answer/single_choice_answer_format.dart';
-import '../../../model/answer/text_choice.dart';
-import '../../../model/result/step_result.dart';
-import '../../../model/step.dart';
-import '../../../util/measure_date_state_mixin.dart';
-import 'answer_mixin.dart';
-import 'answer_question_text.dart';
-import 'selection_list_tile.dart';
+import 'package:survey_kit/src/model/answer/single_choice_answer_format.dart';
+import 'package:survey_kit/src/model/answer/text_choice.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
+import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
 
 class SingleChoiceAnswerView extends StatefulWidget {
   final Step questionStep;

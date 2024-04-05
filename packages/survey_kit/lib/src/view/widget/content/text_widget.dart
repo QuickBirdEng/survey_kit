@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../model/content/text_content.dart';
+import 'package:survey_kit/src/model/content/text_content.dart';
 
 class TextWidget extends StatelessWidget {
   const TextWidget({

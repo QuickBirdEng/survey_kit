@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:image_picker/image_picker.dart';
-
-import '../../../model/answer/image_answer_format.dart';
-import '../../../model/result/step_result.dart';
-import '../../../model/step.dart';
-import '../../../util/measure_date_state_mixin.dart';
-import 'answer_question_text.dart';
+import 'package:survey_kit/src/model/answer/image_answer_format.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 
 class ImageAnswerView extends StatefulWidget {
   final Step questionStep;

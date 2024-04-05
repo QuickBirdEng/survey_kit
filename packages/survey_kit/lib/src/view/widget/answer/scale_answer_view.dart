@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart' hide Step;
-
-import '../../../model/answer/scale_answer_format.dart';
-import '../../../model/result/step_result.dart';
-import '../../../model/step.dart';
-import '../../../util/measure_date_state_mixin.dart';
-import '../question_answer.dart';
-import 'answer_mixin.dart';
-import 'answer_question_text.dart';
+import 'package:survey_kit/src/model/answer/scale_answer_format.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
+import 'package:survey_kit/src/view/widget/question_answer.dart';
 
 class ScaleAnswerView extends StatefulWidget {
   final Step questionStep;

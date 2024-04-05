@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
-import '../../../../survey_kit.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 class LottieWidget extends StatelessWidget {
   const LottieWidget({

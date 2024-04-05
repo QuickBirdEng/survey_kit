@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../configuration/survey_configuration.dart';
-import '../presenter/survey_state.dart';
-import '../presenter/survey_state_provider.dart';
+import 'package:survey_kit/src/configuration/survey_configuration.dart';
+import 'package:survey_kit/src/presenter/survey_state.dart';
+import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 
 class SurveyProgress extends StatefulWidget {
   const SurveyProgress({Key? key}) : super(key: key);

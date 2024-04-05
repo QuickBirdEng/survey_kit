@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../view/widget/answer/multiple_double_answer_view.dart';
-import '../result/step_result.dart';
-import '../step.dart';
-import 'answer_format.dart';
-import 'multi_double.dart';
+import 'package:survey_kit/src/model/answer/answer_format.dart';
+import 'package:survey_kit/src/model/answer/multi_double.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
+import 'package:survey_kit/src/view/widget/answer/multiple_double_answer_view.dart';
 
 part 'multiple_double_answer_format.g.dart';
 

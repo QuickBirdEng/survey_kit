@@ -1,9 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/model/answer/answer_format.dart';
+import 'package:survey_kit/src/model/content/content.dart';
+import 'package:survey_kit/src/survey_kit.dart';
 import 'package:uuid/uuid.dart';
-
-import '../survey_kit.dart';
-import 'answer/answer_format.dart';
-import 'content/content.dart';
 
 part 'step.g.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide Step;
-
-import '../../survey_kit.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 typedef StepShell = Widget Function({
   required Step step,

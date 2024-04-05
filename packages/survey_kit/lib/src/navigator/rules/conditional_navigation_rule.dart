@@ -1,5 +1,5 @@
-import '../../model/result/step_result.dart';
-import 'navigation_rule.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
 
 class ConditionalNavigationRule implements NavigationRule {
   final String? Function(List<StepResult>, StepResult?)
