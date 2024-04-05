@@ -6,7 +6,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:flutter/services.dart';
-import 'package:survey_kit/survey_kit.dart';
+import 'package:survey_kit/survey_kit.dart' hide VideoContent, AudioContent;
+import 'package:survey_kit_audio/audio_content.dart';
+import 'package:survey_kit_video/survey_kit_video.dart';
 import 'package:surveykit_example/app_bar_example.dart';
 
 void main() {

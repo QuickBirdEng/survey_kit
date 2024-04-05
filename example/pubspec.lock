@@ -605,6 +605,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0-dev.5"
+  survey_kit_audio:
+    dependency: "direct main"
+    description:
+      path: "../packages/survey_kit_audio"
+      relative: true
+    source: path
+    version: "0.0.1"
   survey_kit_video:
     dependency: "direct main"
     description:

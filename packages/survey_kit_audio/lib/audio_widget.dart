@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:survey_kit/src/util/ui_utils.dart';
-import 'package:survey_kit/src/widget/survey_kit_audio_player.dart';
-import 'package:survey_kit/survey_kit.dart';
+import 'package:survey_kit_audio/audio_content.dart';
+import 'package:survey_kit_audio/link.dart';
+import 'package:survey_kit_audio/survey_kit_audio_player.dart';
 
 class AudioWidget extends StatelessWidget {
   const AudioWidget({
@@ -23,19 +23,25 @@ class AudioWidget extends StatelessWidget {
             audioContent.title!,
             style: theme.textTheme.titleLarge,
           ),
-          smallVerticalSpacer,
+          const SizedBox(
+            height: 12,
+          ),
         ],
         SurveyKitAudioPlayer(
           audioUrl: audioContent.url,
         ),
         if (audioContent.externalLink != null) ...[
-          smallVerticalSpacer,
+          const SizedBox(
+            height: 12,
+          ),
           LinkText(
             link: audioContent.externalLink!,
           ),
         ],
         if (audioContent.subtitle != null) ...[
-          smallVerticalSpacer,
+          const SizedBox(
+            height: 12,
+          ),
           SelectableText(
             audioContent.subtitle!,
             style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),

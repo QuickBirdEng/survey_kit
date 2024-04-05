@@ -17,7 +17,6 @@ export 'src/model/answer/text_answer_format.dart';
 export 'src/model/answer/text_choice.dart';
 export 'src/model/answer/time_answer_format.dart';
 //Content
-export 'src/model/content/audio_content.dart';
 export 'src/model/content/content.dart';
 export 'src/model/content/image_content.dart';
 export 'src/model/content/lottie_content.dart';
