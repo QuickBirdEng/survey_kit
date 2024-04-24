@@ -98,6 +98,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
               textCapitalization: _textAnswerFormat.textCapitalization,
               keyboardType: _textAnswerFormat.keyboardType,
               validator: _textAnswerFormat.validator,
+              autovalidateMode: _textAnswerFormat.autovalidateMode,
               onChanged: (String text) {
                 _checkValidation(text);
               },
