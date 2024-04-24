@@ -97,6 +97,9 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                   ),
               controller: _controller,
               textAlign: TextAlign.left,
+              inputFormatters: _textAnswerFormat.inputFormatters,
+              textCapitalization: _textAnswerFormat.textCapitalization,
+              keyboardType: _textAnswerFormat.keyboardType,
               onChanged: (String text) {
                 _checkValidation(text);
               },
