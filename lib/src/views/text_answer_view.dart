@@ -73,21 +73,18 @@ class _TextAnswerViewState extends State<TextAnswerView> {
             )
           : widget.questionStep.content,
       isValid: _isValid || widget.questionStep.isOptional,
-      child: Column(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(bottom: 32.0, left: 14.0, right: 14.0),
-            child: Text(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
               widget.questionStep.text,
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 14.0, right: 14.0),
-            width: MediaQuery.of(context).size.width,
-            child: TextField(
+            const SizedBox(height: 32),
+            TextField(
               minLines: _textAnswerFormat.maxLines,
               maxLines: _textAnswerFormat.maxLines,
               decoration: _textAnswerFormat.decoration
@@ -104,8 +101,8 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                 _checkValidation(text);
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
