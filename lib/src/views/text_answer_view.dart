@@ -84,7 +84,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
-            TextField(
+            TextFormField(
               minLines: _textAnswerFormat.maxLines,
               maxLines: _textAnswerFormat.maxLines,
               decoration: _textAnswerFormat.decoration
@@ -97,6 +97,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
               inputFormatters: _textAnswerFormat.inputFormatters,
               textCapitalization: _textAnswerFormat.textCapitalization,
               keyboardType: _textAnswerFormat.keyboardType,
+              validator: _textAnswerFormat.validator,
               onChanged: (String text) {
                 _checkValidation(text);
               },

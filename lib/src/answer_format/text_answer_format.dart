@@ -16,6 +16,7 @@ class TextAnswerFormat implements AnswerFormat {
     this.inputFormatters,
     this.textCapitalization = TextCapitalization.none,
     this.keyboardType,
+    this.validator,
   });
 
   factory TextAnswerFormat.fromJson(Map<String, dynamic> json) =>
@@ -38,6 +39,9 @@ class TextAnswerFormat implements AnswerFormat {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   final TextInputType? keyboardType;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final String? Function(String?)? validator;
 
   /// Regular expression by which the text gets validated
   /// default: '^(?!\s*$).+' that checks if the entered text is empty
