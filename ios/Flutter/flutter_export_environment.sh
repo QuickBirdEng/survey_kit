@@ -1,12 +1,12 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/marvin/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/marvin/repositories/survey_kit"
+export "FLUTTER_ROOT=/Users/lmm/fvm/versions/3.22.1"
+export "FLUTTER_APPLICATION_PATH=/Users/lmm/development/git/survey_kit"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
-export "FLUTTER_BUILD_NAME=0.1.2"
-export "FLUTTER_BUILD_NUMBER=0.1.2"
+export "FLUTTER_BUILD_NAME=0.2.0"
+export "FLUTTER_BUILD_NUMBER=0.2.0"
 export "DART_OBFUSCATION=false"
 export "TRACK_WIDGET_CREATION=true"
 export "TREE_SHAKE_ICONS=false"
