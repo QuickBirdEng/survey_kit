@@ -31,7 +31,7 @@ class StepView extends StatelessWidget {
   Widget _content(SurveyController surveyController, BuildContext context) {
     return SizedBox.expand(
       child: Container(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         child: Center(
           child: SingleChildScrollView(
             child: Column(
