@@ -1,3 +1,10 @@
+# 0.2.1
+- INFO: Updated dependencies (Flutter 3.24.3)
+- FEATURE: Added agreement step
+- FEATURE: Cancel button is configurable now
+- FIX: Hide keyboard when going to the next step
+- FIX: Survey not ending after first completion step
+- FIX: Use BuildContext as default param in survey_controller.dart
 # 0.2.0
 - INFO: Updated dependencies (Flutter 3.13.2)
 # 0.1.3
