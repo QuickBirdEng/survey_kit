@@ -23,7 +23,7 @@ Map<String, dynamic> _$VideoStepResultToJson(VideoStepResult instance) =>
     };
 
 VideoResult _$VideoResultFromJson(Map<String, dynamic> json) => VideoResult(
-      leftVideoAt: Duration(microseconds: json['leftVideoAt'] as int),
+      leftVideoAt: Duration(microseconds: (json['leftVideoAt'] as num).toInt()),
       stayedInVideo: DateTime.parse(json['stayedInVideo'] as String),
     );
 

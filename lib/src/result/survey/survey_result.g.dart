@@ -28,8 +28,8 @@ Map<String, dynamic> _$SurveyResultToJson(SurveyResult instance) =>
     };
 
 const _$FinishReasonEnumMap = {
-  FinishReason.SAVED: 'SAVED',
-  FinishReason.DISCARDED: 'DISCARDED',
-  FinishReason.COMPLETED: 'COMPLETED',
-  FinishReason.FAILED: 'FAILED',
+  FinishReason.saved: 'saved',
+  FinishReason.discarded: 'discarded',
+  FinishReason.completed: 'completed',
+  FinishReason.failed: 'failed',
 };

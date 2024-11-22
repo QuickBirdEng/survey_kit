@@ -1,0 +1,21 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    close_sinks: ignore
+    missing_required_param: error
+    missing_return: error
+    # Ignored because of freezed and JsonKey (https://github.com/rrousselGit/freezed/issues/488)
+    invalid_annotation_target: ignore
+    body_might_complete_normally_nullable: ignore
+    depend_on_referenced_packages: ignore
+    avoid_function_literals_in_foreach_calls: ignore
+
+  exclude:
+    - test/.test_coverage.dart
+    - lib/generated_plugin_registrant.dart
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
+linter:
+  rules:

@@ -6,7 +6,7 @@ abstract class Result extends Equatable {
   final DateTime startDate;
   final DateTime endDate;
 
-  Result({
+  const Result({
     required this.id,
     required this.startDate,
     required this.endDate,

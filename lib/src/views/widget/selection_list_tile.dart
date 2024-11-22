@@ -6,11 +6,11 @@ class SelectionListTile extends StatelessWidget {
   final bool isSelected;
 
   const SelectionListTile({
-    Key? key,
+    super.key,
     required this.text,
     required this.onTap,
     this.isSelected = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class SelectionListTile extends StatelessWidget {
                         ? Theme.of(context).primaryColor
                         : Colors.black,
                   )
-                : Container(
+                : SizedBox(
                     width: 32,
                     height: 32,
                   ),

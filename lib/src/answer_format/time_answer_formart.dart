@@ -15,6 +15,7 @@ class TimeAnswerFormat implements AnswerFormat {
 
   factory TimeAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$TimeAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$TimeAnswerFormatToJson(this);
 }
 

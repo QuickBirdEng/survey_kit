@@ -32,7 +32,7 @@ void main() {
             ],
           ),
           onResult: (result) {
-            expect(result.finishReason, FinishReason.COMPLETED);
+            expect(result.finishReason, FinishReason.completed);
           },
         ),
       ),

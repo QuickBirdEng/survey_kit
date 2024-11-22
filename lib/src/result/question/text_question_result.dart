@@ -7,19 +7,13 @@ part 'text_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class TextQuestionResult extends QuestionResult<String?> {
-  TextQuestionResult({
-    required Identifier id,
-    required DateTime startDate,
-    required DateTime endDate,
-    required String valueIdentifier,
-    required String? result,
-  }) : super(
-          id: id,
-          startDate: startDate,
-          endDate: endDate,
-          valueIdentifier: valueIdentifier,
-          result: result,
-        );
+  const TextQuestionResult({
+    required Identifier super.id,
+    required super.startDate,
+    required super.endDate,
+    required String super.valueIdentifier,
+    required super.result,
+  });
 
   factory TextQuestionResult.fromJson(Map<String, dynamic> json) => _$TextQuestionResultFromJson(json);
 

@@ -45,8 +45,8 @@ abstract class TaskNavigator {
 
   // Discard count of multiple completion steps and count only one if present
   int get countSteps =>
-      task.steps.where((step) => !(step is CompletionStep)).length +
-      (task.steps.where((step) => step is CompletionStep).isEmpty ? 0 : 1);
+      task.steps.where((step) => step is! CompletionStep).length +
+      (task.steps.whereType<CompletionStep>().isEmpty ? 0 : 1);
 
   int currentStepIndex(Step step) {
     return task.steps.indexOf(step);

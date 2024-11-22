@@ -17,5 +17,6 @@ class DoubleAnswerFormat implements AnswerFormat {
 
   factory DoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$DoubleAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$DoubleAnswerFormatToJson(this);
 }

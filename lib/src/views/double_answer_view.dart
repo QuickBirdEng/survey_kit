@@ -10,13 +10,13 @@ class DoubleAnswerView extends StatefulWidget {
   final DoubleQuestionResult? result;
 
   const DoubleAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
-  _DoubleAnswerViewState createState() => _DoubleAnswerViewState();
+  State<DoubleAnswerView> createState() => _DoubleAnswerViewState();
 }
 
 class _DoubleAnswerViewState extends State<DoubleAnswerView> {
@@ -59,8 +59,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
         result: double.tryParse(_controller.text) ??
-            _doubleAnswerFormat.defaultValue ??
-            null,
+            _doubleAnswerFormat.defaultValue,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -72,7 +71,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView> {
           : widget.questionStep.content,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32.0),
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: TextField(
             autofocus: true,

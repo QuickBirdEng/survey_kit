@@ -42,11 +42,13 @@ abstract class Step {
 
   Map<String, dynamic> toJson();
 
-  bool operator ==(o) =>
-      o is Step &&
-      o.stepIdentifier == stepIdentifier &&
-      o.isOptional == isOptional &&
-      o.buttonText == buttonText;
+  @override
+  bool operator ==(other) =>
+      other is Step &&
+      other.stepIdentifier == stepIdentifier &&
+      other.isOptional == isOptional &&
+      other.buttonText == buttonText;
+  @override
   int get hashCode =>
       stepIdentifier.hashCode ^ isOptional.hashCode ^ buttonText.hashCode;
 }

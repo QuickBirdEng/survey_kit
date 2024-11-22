@@ -79,7 +79,7 @@ class SurveyController {
     }
     BlocProvider.of<SurveyPresenter>(context).add(
       StepBack(
-        resultFunction != null ? resultFunction.call() : null,
+        resultFunction?.call(),
       ),
     );
   }
@@ -93,7 +93,7 @@ class SurveyController {
     }
     BlocProvider.of<SurveyPresenter>(context).add(
       CloseSurvey(
-        resultFunction != null ? resultFunction.call() : null,
+        resultFunction?.call(),
       ),
     );
   }

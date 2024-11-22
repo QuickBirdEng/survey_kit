@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 import 'package:survey_kit/src/answer_format/agreement_answer_format.dart';
+import 'package:survey_kit/src/answer_format/boolean_answer_format.dart';
 import 'package:survey_kit/src/result/question/agreement_question_result.dart';
 import 'package:survey_kit/src/steps/predefined_steps/question_step.dart';
 import 'package:survey_kit/src/views/widget/step_view.dart';
@@ -12,13 +12,13 @@ class AgreementAnswerView extends StatefulWidget {
   final AgreementQuestionResult? result;
 
   const AgreementAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
-  _AgreementAnswerViewState createState() => _AgreementAnswerViewState();
+  State<AgreementAnswerView> createState() => _AgreementAnswerViewState();
 }
 
 class _AgreementAnswerViewState extends State<AgreementAnswerView> {
@@ -33,7 +33,7 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
         widget.questionStep.answerFormat as AgreementAnswerFormat;
     _result = widget.result?.result ??
         _agreementAnswerFormat.defaultValue ??
-        BooleanResult.NEGATIVE;
+        BooleanResult.negative;
     _startDate = DateTime.now();
   }
 
@@ -52,7 +52,7 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
         result: _result,
       ),
       isValid: widget.questionStep.isOptional ||
-          (_result != null && _result == BooleanResult.POSITIVE),
+          (_result != null && _result == BooleanResult.positive),
       title: widget.questionStep.title.isNotEmpty
           ? Text(
               widget.questionStep.title,
@@ -91,7 +91,7 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
                   children: [
                     Radio<BooleanResult>(
                         groupValue: _result,
-                        value: BooleanResult.POSITIVE,
+                        value: BooleanResult.positive,
                         onChanged: (v) {
                           setState(() {
                             _result = v;
@@ -104,10 +104,10 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
                         child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          if (_result == BooleanResult.POSITIVE) {
-                            _result = BooleanResult.NEGATIVE;
+                          if (_result == BooleanResult.positive) {
+                            _result = BooleanResult.negative;
                           } else {
-                            _result = BooleanResult.POSITIVE;
+                            _result = BooleanResult.positive;
                           }
                         });
                       },

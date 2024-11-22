@@ -8,21 +8,21 @@ class SurveyAppBar extends StatelessWidget {
   final AppBarConfiguration appBarConfiguration;
   final SurveyController? controller;
 
-  const SurveyAppBar({
+  const SurveyAppBar({super.key, 
     required this.appBarConfiguration,
     this.controller,
   });
 
   @override
   AppBar build(BuildContext context) {
-    final _showProgress =
+    final showProgress =
         appBarConfiguration.showProgress ?? context.read<bool>();
-    final _canGoBack = appBarConfiguration.canBack ?? true;
+    final canGoBack = appBarConfiguration.canBack ?? true;
 
     final surveyController = controller ?? context.read<SurveyController>();
     return AppBar(
       elevation: 0,
-      leading: _canGoBack
+      leading: canGoBack
           ? appBarConfiguration.leading ??
               BackButton(
                 onPressed: () {
@@ -32,7 +32,7 @@ class SurveyAppBar extends StatelessWidget {
                 },
               )
           : Container(),
-      title: _showProgress ? SurveyProgress() : SizedBox.shrink(),
+      title: showProgress ? SurveyProgress() : SizedBox.shrink(),
       actions: [
         if (appBarConfiguration.showCancelButton ?? true)
           TextButton(

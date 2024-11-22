@@ -21,11 +21,7 @@ abstract class Task {
     this.steps = const [],
     this.initalStep,
   }) {
-    if (id == null) {
-      id = TaskIdentifier();
-      return;
-    }
-    this.id = id;
+    this.id = id ?? TaskIdentifier();
   }
 
   /// Creates a task from a Map. The task needs to have a type definition of
@@ -43,6 +39,8 @@ abstract class Task {
 
   Map<String, dynamic> toJson();
 
-  bool operator ==(o) => o is Task && o.id == id;
+  @override
+  bool operator ==(other) => other is Task && other.id == id;
+  @override
   int get hashCode => id.hashCode ^ steps.hashCode;
 }

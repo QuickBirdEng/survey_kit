@@ -8,16 +8,12 @@ part 'video_step_result.g.dart';
 @JsonSerializable(explicitToJson: true)
 class VideoStepResult extends QuestionResult<VideoResult> {
   VideoStepResult({
-    required Identifier id,
-    required DateTime startDate,
-    required DateTime endDate,
-    required VideoResult result,
+    required Identifier super.id,
+    required super.startDate,
+    required super.endDate,
+    required VideoResult super.result,
   }) : super(
-          id: id,
-          startDate: startDate,
-          endDate: endDate,
           valueIdentifier: id.id,
-          result: result,
         );
   factory VideoStepResult.fromJson(Map<String, dynamic> json) =>
       _$VideoStepResultFromJson(json);

@@ -5,10 +5,9 @@ import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/result/question_result.dart';
 import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/task/navigable_task.dart';
-import 'package:survey_kit/src/task/task.dart';
 
 class NavigableTaskNavigator extends TaskNavigator {
-  NavigableTaskNavigator(Task task) : super(task);
+  NavigableTaskNavigator(super.task);
 
   @override
   Step? nextStep({required Step step, QuestionResult? questionResult}) {

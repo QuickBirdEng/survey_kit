@@ -8,10 +8,10 @@ class MultipleChoiceAutoCompleteAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
   final MultipleChoiceQuestionResult? result;
   const MultipleChoiceAutoCompleteAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     this.result,
-  }) : super(key: key);
+  });
 
   @override
   State<MultipleChoiceAutoCompleteAnswerView> createState() =>
@@ -88,7 +88,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                         isSelected: _selectedChoices.contains(tc),
                       ),
                     )
-                    .toList(),
+                    ,
                 ..._selectedChoices
                     .where((element) =>
                         !_multipleChoiceAnswer.textChoices.contains(element))
@@ -99,7 +99,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
                         isSelected: _selectedChoices.contains(tc),
                       ),
                     )
-                    .toList(),
+                    ,
                 if (_multipleChoiceAnswer.otherField) ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 14.0),
@@ -169,11 +169,10 @@ class _MultipleChoiceAutoCompleteAnswerViewState
 
 class _AutoComplete extends StatelessWidget {
   const _AutoComplete({
-    Key? key,
     required this.suggestions,
     required this.onSelected,
     required this.selectedChoices,
-  }) : super(key: key);
+  });
 
   final List<TextChoice> suggestions;
   final void Function(TextChoice) onSelected;
@@ -224,11 +223,10 @@ class _AutoComplete extends StatelessWidget {
 
 class _OptionsViewBuilder extends StatelessWidget {
   const _OptionsViewBuilder({
-    Key? key,
     required this.options,
     required this.onSelected,
     required this.selectedChoices,
-  }) : super(key: key);
+  });
 
   final Iterable<TextChoice> options;
   final void Function(TextChoice) onSelected;

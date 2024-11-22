@@ -10,13 +10,13 @@ class TextAnswerView extends StatefulWidget {
   final TextQuestionResult? result;
 
   const TextAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
-  _TextAnswerViewState createState() => _TextAnswerViewState();
+  State<TextAnswerView> createState() => _TextAnswerViewState();
 }
 
 class _TextAnswerViewState extends State<TextAnswerView> {
@@ -40,7 +40,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
   void _checkValidation(String text) {
     setState(() {
       if (_textAnswerFormat.validationRegEx != null) {
-        RegExp regExp = new RegExp(_textAnswerFormat.validationRegEx!);
+        RegExp regExp = RegExp(_textAnswerFormat.validationRegEx!);
         _isValid = regExp.hasMatch(text);
       } else {
         _isValid = true;
@@ -84,7 +84,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
               textAlign: TextAlign.center,
             ),
           ),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 50.0,
             child: TextField(

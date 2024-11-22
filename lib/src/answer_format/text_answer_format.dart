@@ -15,17 +15,18 @@ class TextAnswerFormat implements AnswerFormat {
   /// to allow any type of an answer including an empty one;
   /// set it explicitly to null.
   ///
-  @JsonKey(defaultValue: '^(?!\s*\$).+')
+  @JsonKey(defaultValue: '^(?!s*\$).+')
   final String? validationRegEx;
 
   const TextAnswerFormat({
     this.maxLines,
     this.hint = '',
     this.defaultValue,
-    this.validationRegEx = '^(?!\s*\$).+',
+    this.validationRegEx = '^(?!s*\$).+',
   }) : super();
 
   factory TextAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$TextAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$TextAnswerFormatToJson(this);
 }

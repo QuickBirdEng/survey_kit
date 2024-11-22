@@ -10,10 +10,10 @@ class ImageAnswerView extends StatefulWidget {
   final ImageQuestionResult? result;
 
   const ImageAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
   State<ImageAnswerView> createState() => _ImageAnswerViewState();
@@ -23,7 +23,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   late final ImageAnswerFormat _imageAnswerFormat;
   late final DateTime _startDate;
 
-  bool _isValid = false;
+  final bool _isValid = false;
   String filePath = '';
 
   @override
@@ -59,7 +59,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
           : widget.questionStep.content,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32.0),
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
@@ -155,12 +155,11 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
   }
 
   Future<void> _openCamera() async {
-    Container();
-
     var picture = await ImagePicker().pickImage(
       source: ImageSource.camera,
     );
 
+    if (!mounted) return;
     Navigator.pop(context);
 
     picture?.readAsBytes().then((value) {
@@ -175,6 +174,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
       source: ImageSource.gallery,
     );
 
+    if (!mounted) return;
     Navigator.pop(context);
 
     picture?.readAsBytes().then((value) {

@@ -31,5 +31,6 @@ class DateAnswerFormat implements AnswerFormat {
 
   factory DateAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$DateAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$DateAnswerFormatToJson(this);
 }

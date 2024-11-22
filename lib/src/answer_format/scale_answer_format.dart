@@ -25,5 +25,6 @@ class ScaleAnswerFormat implements AnswerFormat {
 
   factory ScaleAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$ScaleAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$ScaleAnswerFormatToJson(this);
 }

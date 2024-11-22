@@ -12,13 +12,13 @@ class MultipleChoiceAnswerView extends StatefulWidget {
   final MultipleChoiceQuestionResult? result;
 
   const MultipleChoiceAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
-  _MultipleChoiceAnswerView createState() => _MultipleChoiceAnswerView();
+  State<MultipleChoiceAnswerView> createState() => _MultipleChoiceAnswerView();
 }
 
 class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
@@ -74,28 +74,26 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView> {
                 Divider(
                   color: Colors.grey,
                 ),
-                ..._multipleChoiceAnswer.textChoices
-                    .map(
-                      (TextChoice tc) => SelectionListTile(
-                        text: tc.text,
-                        onTap: () {
-                          setState(
-                            () {
-                              if (_selectedChoices.contains(tc)) {
-                                _selectedChoices.remove(tc);
-                              } else {
-                                if (_multipleChoiceAnswer.maxAnswers >
-                                    _selectedChoices.length) {
-                                  _selectedChoices = [..._selectedChoices, tc];
-                                }
-                              }
-                            },
-                          );
+                ..._multipleChoiceAnswer.textChoices.map(
+                  (TextChoice tc) => SelectionListTile(
+                    text: tc.text,
+                    onTap: () {
+                      setState(
+                        () {
+                          if (_selectedChoices.contains(tc)) {
+                            _selectedChoices.remove(tc);
+                          } else {
+                            if (_multipleChoiceAnswer.maxAnswers >
+                                _selectedChoices.length) {
+                              _selectedChoices = [..._selectedChoices, tc];
+                            }
+                          }
                         },
-                        isSelected: _selectedChoices.contains(tc),
-                      ),
-                    )
-                    .toList(),
+                      );
+                    },
+                    isSelected: _selectedChoices.contains(tc),
+                  ),
+                ),
                 if (_multipleChoiceAnswer.otherField) ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 14.0),

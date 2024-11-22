@@ -20,5 +20,6 @@ class ConditionalNavigationRule implements NavigationRule {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() => {'values': {}};
 }

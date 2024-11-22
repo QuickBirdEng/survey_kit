@@ -13,7 +13,7 @@ void main() {
       startDate: DateTime(2022, 8, 12, 16, 5),
       endDate: DateTime(2022, 8, 12, 16, 10),
       valueIdentifier: 'bool1',
-      result: BooleanResult.NEGATIVE,
+      result: BooleanResult.negative,
     ),
     CompletionStepResult(
       Identifier(id: 'example1_completion'),
@@ -25,7 +25,7 @@ void main() {
     id: Identifier(id: 'example1'),
     startDate: DateTime(2022, 8, 12, 16, 4),
     endDate: DateTime(2022, 8, 12, 16, 14),
-    finishReason: FinishReason.COMPLETED,
+    finishReason: FinishReason.completed,
     results: [
       StepResult(
         id: Identifier(id: 'example1_stepResult'),

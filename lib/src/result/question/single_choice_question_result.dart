@@ -8,19 +8,13 @@ part 'single_choice_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class SingleChoiceQuestionResult extends QuestionResult<TextChoice?> {
-  SingleChoiceQuestionResult({
-    required Identifier id,
-    required DateTime startDate,
-    required DateTime endDate,
-    required String valueIdentifier,
-    required TextChoice? result,
-  }) : super(
-          id: id,
-          startDate: startDate,
-          endDate: endDate,
-          valueIdentifier: valueIdentifier,
-          result: result,
-        );
+  const SingleChoiceQuestionResult({
+    required Identifier super.id,
+    required super.startDate,
+    required super.endDate,
+    required String super.valueIdentifier,
+    required super.result,
+  });
 
   factory SingleChoiceQuestionResult.fromJson(Map<String, dynamic> json) => _$SingleChoiceQuestionResultFromJson(json);
 

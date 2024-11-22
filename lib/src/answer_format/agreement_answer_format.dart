@@ -12,7 +12,7 @@ class AgreementAnswerFormat implements AnswerFormat {
   final String? markdownAgreementText;
 
   const AgreementAnswerFormat({
-    this.result = BooleanResult.NEGATIVE,
+    this.result = BooleanResult.negative,
     this.defaultValue,
     this.markdownDescription,
     this.markdownAgreementText,
@@ -20,5 +20,6 @@ class AgreementAnswerFormat implements AnswerFormat {
 
   factory AgreementAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$AgreementAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$AgreementAnswerFormatToJson(this);
 }

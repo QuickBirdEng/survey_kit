@@ -8,19 +8,13 @@ part 'multiple_choice_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class MultipleChoiceQuestionResult extends QuestionResult<List<TextChoice>?> {
-  MultipleChoiceQuestionResult({
-    required Identifier id,
-    required DateTime startDate,
-    required DateTime endDate,
-    required String valueIdentifier,
-    required List<TextChoice>? result,
-  }) : super(
-          id: id,
-          startDate: startDate,
-          endDate: endDate,
-          valueIdentifier: valueIdentifier,
-          result: result,
-        );
+  const MultipleChoiceQuestionResult({
+    required Identifier super.id,
+    required super.startDate,
+    required super.endDate,
+    required String super.valueIdentifier,
+    required super.result,
+  });
 
   factory MultipleChoiceQuestionResult.fromJson(Map<String, dynamic> json) =>
       _$MultipleChoiceQuestionResultFromJson(json);

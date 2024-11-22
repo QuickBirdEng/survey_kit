@@ -57,24 +57,19 @@ class QuestionStep extends Step {
   final AnswerFormat answerFormat;
 
   QuestionStep({
-    bool isOptional = false,
-    String buttonText = 'Next',
-    StepIdentifier? stepIdentifier,
-    bool showAppBar = true,
+    super.isOptional,
+    String super.buttonText,
+    super.stepIdentifier,
+    super.showAppBar,
     this.title = '',
     this.text = '',
     this.content = const SizedBox.shrink(),
     required this.answerFormat,
-  }) : super(
-          stepIdentifier: stepIdentifier,
-          isOptional: isOptional,
-          buttonText: buttonText,
-          showAppBar: showAppBar,
-        );
+  });
 
   @override
   Widget createView({required QuestionResult? questionResult}) {
-    final key = ObjectKey(this.stepIdentifier.id);
+    final key = ObjectKey(stepIdentifier.id);
 
     switch (answerFormat.runtimeType) {
       case IntegerAnswerFormat:
@@ -163,5 +158,6 @@ class QuestionStep extends Step {
 
   factory QuestionStep.fromJson(Map<String, dynamic> json) =>
       _$QuestionStepFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$QuestionStepToJson(this);
 }

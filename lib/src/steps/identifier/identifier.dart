@@ -13,6 +13,8 @@ class Identifier {
       _$IdentifierFromJson(json);
   Map<String, dynamic> toJson() => _$IdentifierToJson(this);
 
-  bool operator ==(o) => o is Identifier && o.id == id;
+  @override
+  bool operator ==(other) => other is Identifier && other.id == id;
+  @override
   int get hashCode => id.hashCode;
 }

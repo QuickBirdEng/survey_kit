@@ -10,10 +10,10 @@ class MultipleDoubleAnswerView extends StatefulWidget {
   final MultipleDoubleQuestionResult? result;
 
   const MultipleDoubleAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
   State<MultipleDoubleAnswerView> createState() =>
@@ -127,7 +127,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView> {
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                   );
-                }).toList(),
+                }),
               ],
             )
           ],

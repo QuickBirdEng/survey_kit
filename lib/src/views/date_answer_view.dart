@@ -15,13 +15,13 @@ class DateAnswerView extends StatefulWidget {
   final DateQuestionResult? result;
 
   const DateAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
-  _DateAnswerViewState createState() => _DateAnswerViewState();
+  State<DateAnswerView> createState() => _DateAnswerViewState();
 }
 
 class _DateAnswerViewState extends State<DateAnswerView> {
@@ -108,7 +108,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           width: double.infinity,
           height: 300.0,
           child: CalendarDatePicker(
@@ -129,7 +129,7 @@ class _DateAnswerViewState extends State<DateAnswerView> {
   }
 
   Widget _iosDatePicker() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 400.0,
       child: CupertinoDatePicker(

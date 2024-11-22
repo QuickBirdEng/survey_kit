@@ -12,7 +12,7 @@ class StepView extends StatelessWidget {
   final bool isValid;
   final SurveyController? controller;
 
-  const StepView({
+  const StepView({super.key, 
     required this.step,
     required this.child,
     required this.title,
@@ -23,9 +23,9 @@ class StepView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _surveyController = controller ?? context.read<SurveyController>();
+    final surveyController = controller ?? context.read<SurveyController>();
 
-    return _content(_surveyController, context);
+    return _content(surveyController, context);
   }
 
   Widget _content(SurveyController surveyController, BuildContext context) {
