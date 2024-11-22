@@ -12,5 +12,6 @@ class DirectNavigationRule implements NavigationRule {
 
   factory DirectNavigationRule.fromJson(Map<String, dynamic> json) =>
       _$DirectNavigationRuleFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$DirectNavigationRuleToJson(this);
 }

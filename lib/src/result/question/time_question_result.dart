@@ -9,19 +9,13 @@ part 'time_question_result.g.dart';
 @JsonSerializable(explicitToJson: true)
 @TimeOfDayConverter()
 class TimeQuestionResult extends QuestionResult<TimeOfDay?> {
-  TimeQuestionResult({
-    required Identifier id,
-    required DateTime startDate,
-    required DateTime endDate,
-    required String valueIdentifier,
-    required TimeOfDay? result,
-  }) : super(
-          id: id,
-          startDate: startDate,
-          endDate: endDate,
-          valueIdentifier: valueIdentifier,
-          result: result,
-        );
+  const TimeQuestionResult({
+    required Identifier super.id,
+    required super.startDate,
+    required super.endDate,
+    required String super.valueIdentifier,
+    required super.result,
+  });
 
   factory TimeQuestionResult.fromJson(Map<String, dynamic> json) =>
       _$TimeQuestionResultFromJson(json);
@@ -41,7 +35,7 @@ class TimeOfDayConverter extends JsonConverter<TimeOfDay?, String?> {
       return null;
     }
 
-    String _removeLeadingZeroIfNeeded(String value) {
+    String removeLeadingZeroIfNeeded(String value) {
       if (value.startsWith('0')) {
         const indexOfSecondCharacter = 1;
         return value.substring(indexOfSecondCharacter);
@@ -51,8 +45,8 @@ class TimeOfDayConverter extends JsonConverter<TimeOfDay?, String?> {
     }
 
     final elements = json.split(':');
-    final hourString = _removeLeadingZeroIfNeeded(elements.first);
-    final minuteString = _removeLeadingZeroIfNeeded(elements.last);
+    final hourString = removeLeadingZeroIfNeeded(elements.first);
+    final minuteString = removeLeadingZeroIfNeeded(elements.last);
 
     final hour = int.tryParse(hourString);
     final minute = int.tryParse(minuteString);
@@ -70,14 +64,15 @@ class TimeOfDayConverter extends JsonConverter<TimeOfDay?, String?> {
       return null;
     }
 
-    String _addLeadingZeroIfNeeded(int value) {
-      if (value < 10)
+    String addLeadingZeroIfNeeded(int value) {
+      if (value < 10) {
         return '0$value';
+      }
       return value.toString();
     }
 
-    final String hourLabel = _addLeadingZeroIfNeeded(object.hour);
-    final String minuteLabel = _addLeadingZeroIfNeeded(object.minute);
+    final String hourLabel = addLeadingZeroIfNeeded(object.hour);
+    final String minuteLabel = addLeadingZeroIfNeeded(object.minute);
 
     return '$hourLabel:$minuteLabel';
   }

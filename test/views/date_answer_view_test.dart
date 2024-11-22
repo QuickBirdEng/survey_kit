@@ -10,7 +10,7 @@ import 'package:survey_kit/src/views/date_answer_view.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 void main() {
-  DateAnswerView _validDateAnswerView() => DateAnswerView(
+  DateAnswerView validDateAnswerView() => DateAnswerView(
         questionStep: QuestionStep(
           answerFormat: DateAnswerFormat(
             minDate: DateTime.now().subtract(const Duration(days: 365 * 70)),
@@ -37,7 +37,7 @@ void main() {
               value: SurveyProgressConfiguration(),
             ),
           ],
-          child: _validDateAnswerView(),
+          child: validDateAnswerView(),
         ),
       ),
     );
@@ -62,7 +62,7 @@ void main() {
                 value: SurveyProgressConfiguration(),
               ),
             ],
-            child: _validDateAnswerView(),
+            child: validDateAnswerView(),
           ),
         ),
       ),

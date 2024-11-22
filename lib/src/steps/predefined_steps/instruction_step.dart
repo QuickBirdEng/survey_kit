@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/result/question_result.dart';
-import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
+import 'package:survey_kit/src/steps/step.dart';
 import 'package:survey_kit/src/views/instruction_view.dart';
 
 part 'instruction_step.g.dart';
@@ -15,19 +15,15 @@ class InstructionStep extends Step {
   InstructionStep({
     required this.title,
     required this.text,
-    bool isOptional = false,
-    String buttonText = 'Next',
-    StepIdentifier? stepIdentifier,
+    super.isOptional,
+    String super.buttonText,
+    super.stepIdentifier,
     bool? canGoBack,
     bool? showProgress,
-    bool showAppBar = true,
+    super.showAppBar,
   }) : super(
-          stepIdentifier: stepIdentifier,
-          isOptional: isOptional,
-          buttonText: buttonText,
           canGoBack: canGoBack ?? false,
           showProgress: showProgress ?? false,
-          showAppBar: showAppBar,
         );
 
   @override
@@ -39,12 +35,15 @@ class InstructionStep extends Step {
 
   factory InstructionStep.fromJson(Map<String, dynamic> json) =>
       _$InstructionStepFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$InstructionStepToJson(this);
 
-  bool operator ==(o) =>
-      super == (o) &&
-      o is InstructionStep &&
-      o.title == title &&
-      o.text == text;
+  @override
+  bool operator ==(other) =>
+      super == (other) &&
+      other is InstructionStep &&
+      other.title == title &&
+      other.text == text;
+  @override
   int get hashCode => super.hashCode ^ title.hashCode ^ text.hashCode;
 }

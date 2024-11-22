@@ -16,6 +16,9 @@ class TextChoice {
       _$TextChoiceFromJson(json);
   Map<String, dynamic> toJson() => _$TextChoiceToJson(this);
 
-  bool operator ==(o) => o is TextChoice && text == o.text && value == o.value;
+  @override
+  bool operator ==(other) =>
+      other is TextChoice && text == other.text && value == other.value;
+  @override
   int get hashCode => text.hashCode ^ value.hashCode;
 }

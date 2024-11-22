@@ -10,13 +10,13 @@ class IntegerAnswerView extends StatefulWidget {
   final IntegerQuestionResult? result;
 
   const IntegerAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
-  _IntegerAnswerViewState createState() => _IntegerAnswerViewState();
+  State<IntegerAnswerView> createState() => _IntegerAnswerViewState();
 }
 
 class _IntegerAnswerViewState extends State<IntegerAnswerView> {
@@ -58,9 +58,8 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
         startDate: _startDate,
         endDate: DateTime.now(),
         valueIdentifier: _controller.text,
-        result: int.tryParse(_controller.text) ??
-            _integerAnswerFormat.defaultValue ??
-            null,
+        result:
+            int.tryParse(_controller.text) ?? _integerAnswerFormat.defaultValue,
       ),
       isValid: _isValid || widget.questionStep.isOptional,
       title: widget.questionStep.title.isNotEmpty
@@ -72,7 +71,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView> {
           : widget.questionStep.content,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 32.0),
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: TextField(
             textInputAction: TextInputAction.next,

@@ -8,19 +8,13 @@ part 'agreement_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AgreementQuestionResult extends QuestionResult<BooleanResult?> {
-  AgreementQuestionResult({
-    required Identifier id,
-    required DateTime startDate,
-    required DateTime endDate,
-    required String valueIdentifier,
-    required BooleanResult? result,
-  }) : super(
-          id: id,
-          startDate: startDate,
-          endDate: endDate,
-          valueIdentifier: valueIdentifier,
-          result: result,
-        );
+  const AgreementQuestionResult({
+    required Identifier super.id,
+    required super.startDate,
+    required super.endDate,
+    required String super.valueIdentifier,
+    required super.result,
+  });
 
   factory AgreementQuestionResult.fromJson(Map<String, dynamic> json) =>
       _$AgreementQuestionResultFromJson(json);

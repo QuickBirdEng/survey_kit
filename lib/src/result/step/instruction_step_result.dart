@@ -7,7 +7,7 @@ part 'instruction_step_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class InstructionStepResult extends QuestionResult {
-  InstructionStepResult(
+  const InstructionStepResult(
     Identifier id,
     DateTime startDate,
     DateTime endDate,

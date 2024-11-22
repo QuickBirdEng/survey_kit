@@ -9,12 +9,10 @@ part 'ordered_task.g.dart';
 @JsonSerializable(createFactory: false)
 class OrderedTask extends Task {
   OrderedTask({
-    required TaskIdentifier id,
-    required List<Step> steps,
+    required TaskIdentifier super.id,
+    required super.steps,
     Step? initialStep,
   }) : super(
-          id: id,
-          steps: steps,
           initalStep: initialStep,
         );
 
@@ -27,5 +25,6 @@ class OrderedTask extends Task {
             : [],
       );
 
+  @override
   Map<String, dynamic> toJson() => _$OrderedTaskToJson(this);
 }

@@ -9,13 +9,13 @@ class ScaleAnswerView extends StatefulWidget {
   final ScaleQuestionResult? result;
 
   const ScaleAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
-  _ScaleAnswerViewState createState() => _ScaleAnswerViewState();
+  State<ScaleAnswerView> createState() => _ScaleAnswerViewState();
 }
 
 class _ScaleAnswerViewState extends State<ScaleAnswerView> {

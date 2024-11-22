@@ -25,12 +25,11 @@ class StepResult extends Result {
   @_Converter()
   final List<QuestionResult> results;
 
-  StepResult(
-      {required Identifier? id,
-      required DateTime startDate,
-      required DateTime endDate,
-      required this.results})
-      : super(id: id, startDate: startDate, endDate: endDate);
+  const StepResult(
+      {required super.id,
+      required super.startDate,
+      required super.endDate,
+      required this.results});
 
   factory StepResult.fromQuestion({required QuestionResult questionResult}) {
     return StepResult(

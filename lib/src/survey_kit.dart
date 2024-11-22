@@ -42,6 +42,7 @@ class SurveyKit extends StatefulWidget {
   final Map<String, String>? localizations;
 
   const SurveyKit({
+    super.key,
     required this.task,
     required this.onResult,
     this.themeData,
@@ -53,7 +54,7 @@ class SurveyKit extends StatefulWidget {
   });
 
   @override
-  _SurveyKitState createState() => _SurveyKitState();
+  State<SurveyKit> createState() => _SurveyKitState();
 }
 
 class _SurveyKitState extends State<SurveyKit> {
@@ -119,13 +120,14 @@ class SurveyPage extends StatefulWidget {
   final Function(SurveyResult) onResult;
 
   const SurveyPage({
+    super.key,
     required this.length,
     required this.onResult,
     this.appBar,
   });
 
   @override
-  _SurveyPageState createState() => _SurveyPageState();
+  State<SurveyPage> createState() => _SurveyPageState();
 }
 
 class _SurveyPageState extends State<SurveyPage>

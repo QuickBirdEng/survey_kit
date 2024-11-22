@@ -5,12 +5,15 @@ part 'step_identifier.g.dart';
 
 @JsonSerializable()
 class StepIdentifier extends Identifier {
-  StepIdentifier({String? id}) : super(id: id);
+  StepIdentifier({super.id});
 
   factory StepIdentifier.fromJson(Map<String, dynamic> json) =>
       _$StepIdentifierFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$StepIdentifierToJson(this);
 
-  bool operator ==(o) => o is StepIdentifier && id == o.id;
+  @override
+  bool operator ==(other) => other is StepIdentifier && id == other.id;
+  @override
   int get hashCode => id.hashCode;
 }

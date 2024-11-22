@@ -27,7 +27,7 @@ Map<String, dynamic> _$BooleanQuestionResultToJson(
     };
 
 const _$BooleanResultEnumMap = {
-  BooleanResult.NONE: 'NONE',
-  BooleanResult.POSITIVE: 'POSITIVE',
-  BooleanResult.NEGATIVE: 'NEGATIVE',
+  BooleanResult.none: 'none',
+  BooleanResult.positive: 'positive',
+  BooleanResult.negative: 'negative',
 };

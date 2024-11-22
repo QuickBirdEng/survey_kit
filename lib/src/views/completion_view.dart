@@ -9,7 +9,7 @@ class CompletionView extends StatelessWidget {
   final DateTime _startDate = DateTime.now();
   final String assetPath;
 
-  CompletionView({required this.completionStep, this.assetPath = ""});
+  CompletionView({super.key, required this.completionStep, this.assetPath = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class CompletionView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 32.0),
-              child: Container(
+              child: SizedBox(
                 width: 150.0,
                 height: 150.0,
                 child: assetPath.isNotEmpty

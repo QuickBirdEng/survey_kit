@@ -13,14 +13,12 @@ class NavigableTask extends Task {
   final Map<StepIdentifier, NavigationRule> navigationRules;
 
   NavigableTask({
-    TaskIdentifier? id,
-    List<Step> steps = const [],
+    super.id,
+    super.steps,
     Step? initialStep,
     Map<StepIdentifier, NavigationRule>? navigationRules,
-  })  : this.navigationRules = navigationRules ?? {},
+  })  : navigationRules = navigationRules ?? {},
         super(
-          id: id,
-          steps: steps,
           initalStep: initialStep,
         );
 
@@ -62,6 +60,7 @@ class NavigableTask extends Task {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'id': id.toJson(),
         'steps': steps.map((step) => step.toJson()).toList(),

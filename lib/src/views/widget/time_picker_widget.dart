@@ -680,11 +680,10 @@ class _DayPeriodControl extends StatelessWidget {
 /// A widget to pad the area around the [_DayPeriodControl]'s inner [Material].
 class _DayPeriodInputPadding extends SingleChildRenderObjectWidget {
   const _DayPeriodInputPadding({
-    Key? key,
-    required Widget child,
+    required Widget super.child,
     required this.minSize,
     required this.orientation,
-  }) : super(key: key, child: child);
+  });
 
   final Size minSize;
   final Orientation orientation;
@@ -1236,7 +1235,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
       ];
 
   List<_TappableLabel> _buildMinutes(TextTheme textTheme, Color color) {
-    const List<TimeOfDay> _minuteMarkerValues = <TimeOfDay>[
+    const List<TimeOfDay> minuteMarkerValues = <TimeOfDay>[
       TimeOfDay(hour: 0, minute: 0),
       TimeOfDay(hour: 0, minute: 5),
       TimeOfDay(hour: 0, minute: 10),
@@ -1252,7 +1251,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
     ];
 
     return <_TappableLabel>[
-      for (final TimeOfDay timeOfDay in _minuteMarkerValues)
+      for (final TimeOfDay timeOfDay in minuteMarkerValues)
         _buildTappableLabel(
           textTheme,
           color,
@@ -1328,13 +1327,12 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
 
 class _TimePickerInput extends StatefulWidget {
   const _TimePickerInput({
-    Key? key,
     required this.initialSelectedTime,
     required this.helpText,
     required this.autofocusHour,
     required this.autofocusMinute,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   /// The time initially selected when the dialog is shown.
   final TimeOfDay initialSelectedTime;
@@ -1590,14 +1588,13 @@ class _TimePickerInputState extends State<_TimePickerInput> {
 
 class _HourTextField extends StatelessWidget {
   const _HourTextField({
-    Key? key,
     required this.selectedTime,
     required this.style,
     required this.autofocus,
     required this.validator,
     required this.onSavedSubmitted,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final TimeOfDay selectedTime;
   final TextStyle style;
@@ -1623,13 +1620,12 @@ class _HourTextField extends StatelessWidget {
 
 class _MinuteTextField extends StatelessWidget {
   const _MinuteTextField({
-    Key? key,
     required this.selectedTime,
     required this.style,
     required this.autofocus,
     required this.validator,
     required this.onSavedSubmitted,
-  }) : super(key: key);
+  });
 
   final TimeOfDay selectedTime;
   final TextStyle style;
@@ -1653,7 +1649,6 @@ class _MinuteTextField extends StatelessWidget {
 
 class _HourMinuteTextField extends StatefulWidget {
   const _HourMinuteTextField({
-    Key? key,
     required this.selectedTime,
     required this.isHour,
     required this.autofocus,
@@ -1662,7 +1657,7 @@ class _HourMinuteTextField extends StatefulWidget {
     required this.validator,
     required this.onSavedSubmitted,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   final TimeOfDay selectedTime;
   final bool isHour;
@@ -1804,14 +1799,14 @@ class TimePickerWidget extends StatefulWidget {
   ///
   /// [initialTime] must not be null.
   const TimePickerWidget({
-    Key? key,
+    super.key,
     required this.initialTime,
     required this.timeChanged,
     this.cancelText = '',
     this.confirmText = '',
     this.helpText = '',
     this.initialEntryMode = TimePickerEntryMode.dial,
-  }) : super(key: key);
+  });
 
   final Function(TimeOfDay time) timeChanged;
 
@@ -1835,7 +1830,7 @@ class TimePickerWidget extends StatefulWidget {
   final String? helpText;
 
   @override
-  _TimePickerWidgetState createState() => _TimePickerWidgetState();
+  State<TimePickerWidget> createState() => _TimePickerWidgetState();
 }
 
 class _TimePickerWidgetState extends State<TimePickerWidget> {

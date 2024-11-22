@@ -7,19 +7,13 @@ part 'scale_question_result.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ScaleQuestionResult extends QuestionResult<double?> {
-  ScaleQuestionResult({
-    required Identifier id,
-    required DateTime startDate,
-    required DateTime endDate,
-    required String valueIdentifier,
-    required double? result,
-  }) : super(
-          id: id,
-          startDate: startDate,
-          endDate: endDate,
-          valueIdentifier: valueIdentifier,
-          result: result,
-        );
+  const ScaleQuestionResult({
+    required Identifier super.id,
+    required super.startDate,
+    required super.endDate,
+    required String super.valueIdentifier,
+    required super.result,
+  });
 
   factory ScaleQuestionResult.fromJson(Map<String, dynamic> json) => _$ScaleQuestionResultFromJson(json);
 

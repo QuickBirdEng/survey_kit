@@ -7,7 +7,7 @@ part 'multiple_choice_answer_format.g.dart';
 @JsonSerializable()
 class MultipleChoiceAnswerFormat implements AnswerFormat {
   final List<TextChoice> textChoices;
-  @JsonKey(defaultValue: const [])
+  @JsonKey(defaultValue: [])
   final List<TextChoice> defaultSelection;
   @JsonKey(defaultValue: false)
   final bool otherField;
@@ -23,5 +23,6 @@ class MultipleChoiceAnswerFormat implements AnswerFormat {
 
   factory MultipleChoiceAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$MultipleChoiceAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$MultipleChoiceAnswerFormatToJson(this);
 }

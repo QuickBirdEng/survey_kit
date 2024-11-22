@@ -17,7 +17,7 @@ MultipleChoiceAnswerFormat _$MultipleChoiceAnswerFormatFromJson(
               .toList() ??
           [],
       otherField: json['otherField'] as bool? ?? false,
-      maxAnswers: json['maxAnswers'] as int? ?? 100,
+      maxAnswers: (json['maxAnswers'] as num?)?.toInt() ?? 100,
     );
 
 Map<String, dynamic> _$MultipleChoiceAnswerFormatToJson(

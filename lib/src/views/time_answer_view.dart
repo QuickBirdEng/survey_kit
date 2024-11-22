@@ -13,13 +13,13 @@ class TimeAnswerView extends StatefulWidget {
   final TimeQuestionResult? result;
 
   const TimeAnswerView({
-    Key? key,
+    super.key,
     required this.questionStep,
     required this.result,
-  }) : super(key: key);
+  });
 
   @override
-  _TimeAnswerViewState createState() => _TimeAnswerViewState();
+  State<TimeAnswerView> createState() => _TimeAnswerViewState();
 }
 
 class _TimeAnswerViewState extends State<TimeAnswerView> {
@@ -77,7 +77,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
   }
 
   Widget _androidTimePicker() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 450.0,
       child: surveywidget.TimePickerWidget(
@@ -95,7 +95,7 @@ class _TimeAnswerViewState extends State<TimeAnswerView> {
   }
 
   Widget _iosTimePicker() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 450.0,
       child: CupertinoDatePicker(

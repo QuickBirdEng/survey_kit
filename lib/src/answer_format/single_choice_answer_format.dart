@@ -16,5 +16,6 @@ class SingleChoiceAnswerFormat implements AnswerFormat {
 
   factory SingleChoiceAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$SingleChoiceAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$SingleChoiceAnswerFormatToJson(this);
 }

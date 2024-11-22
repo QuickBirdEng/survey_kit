@@ -5,7 +5,7 @@ import 'package:survey_kit/src/presenter/survey_state.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
 class SurveyProgress extends StatefulWidget {
-  const SurveyProgress({Key? key}) : super(key: key);
+  const SurveyProgress({super.key});
 
   @override
   State<SurveyProgress> createState() => _SurveyProgressState();

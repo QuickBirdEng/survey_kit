@@ -13,13 +13,14 @@ class BooleanAnswerFormat implements AnswerFormat {
   const BooleanAnswerFormat({
     required this.positiveAnswer,
     required this.negativeAnswer,
-    this.result = BooleanResult.NONE,
+    this.result = BooleanResult.none,
     this.defaultValue,
   }) : super();
 
   factory BooleanAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$BooleanAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$BooleanAnswerFormatToJson(this);
 }
 
-enum BooleanResult { NONE, POSITIVE, NEGATIVE }
+enum BooleanResult { none, positive, negative }
