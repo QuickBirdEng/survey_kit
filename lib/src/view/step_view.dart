@@ -37,7 +37,7 @@ class _StepViewState extends State<StepView> {
     final questionAnswer = QuestionAnswer.of(context);
 
     return ColoredBox(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       child: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraint) {
