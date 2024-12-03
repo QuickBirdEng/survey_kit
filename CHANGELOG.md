@@ -1,3 +1,5 @@
+# 1.0.0-dev.8
+- INFO: Support AGP 8.x, bump compileSdk to 34
 # 1.0.0-dev.7
 - INFO: Updated dependencies to latest Flutter Version 3.24.5
 # 1.0.0-dev.6
