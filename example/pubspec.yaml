@@ -12,13 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  survey_kit:
-    # When depending on this package from a real application you should use:
-    #   survey_kit: ^x.y.z
-    # See https://dart.dev/tools/pub/dependencies#version-constraints
-    # The example app is bundled with the plugin so we use a path dependency on
-    # the parent directory to use the current plugin's version.
-    path: ../
+  survey_kit: ^0.2.1
+  
+  survey_kit_image_answer:
+    path: ../packages/survey_kit_image_answer
 
 dev_dependencies:
   flutter_test:

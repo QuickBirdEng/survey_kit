@@ -1,3 +1,6 @@
+# 0.3.0
+- BREAKING: ImageAnswer got moved into its own separate package (https://pub.dev/packages/survey_kit_image_answer)
+  - To use it, import survey_kit_image_answer and add it to your dependencies
 # 0.2.1
 - INFO: Updated dependencies (Flutter 3.24.3)
 - FEATURE: Added agreement step

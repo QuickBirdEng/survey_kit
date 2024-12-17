@@ -8,7 +8,7 @@ part of 'text_answer_format.dart';
 
 TextAnswerFormat _$TextAnswerFormatFromJson(Map<String, dynamic> json) =>
     TextAnswerFormat(
-      maxLines: json['maxLines'] as int?,
+      maxLines: (json['maxLines'] as num?)?.toInt(),
       hint: json['hint'] as String? ?? '',
       defaultValue: json['defaultValue'] as String?,
       validationRegEx: json['validationRegEx'] as String? ?? r'^(?!s*$).+',
