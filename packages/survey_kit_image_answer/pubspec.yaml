@@ -11,6 +11,8 @@ environment:
 
 dependencies:
   camera: ^0.11.0+1
+  flutter:
+    sdk: flutter
   image_picker: ^1.0.4
   json_annotation: ^4.0.1
   survey_kit: ^0.2.1

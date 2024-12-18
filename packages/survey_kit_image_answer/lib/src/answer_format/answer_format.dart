@@ -9,5 +9,6 @@ abstract class ImageAnswerFormat extends AnswerFormat {
         throw AnswerFormatNotDefinedException();
     }
   }
+  @override
   Map<String, dynamic> toJson();
 }
