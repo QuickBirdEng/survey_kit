@@ -20,7 +20,7 @@ AgreementAnswerFormat _$AgreementAnswerFormatFromJson(
 Map<String, dynamic> _$AgreementAnswerFormatToJson(
         AgreementAnswerFormat instance) =>
     <String, dynamic>{
-      'result': _$BooleanResultEnumMap[instance.result],
+      'result': _$BooleanResultEnumMap[instance.result]!,
       'defaultValue': _$BooleanResultEnumMap[instance.defaultValue],
       'markdownDescription': instance.markdownDescription,
       'markdownAgreementText': instance.markdownAgreementText,

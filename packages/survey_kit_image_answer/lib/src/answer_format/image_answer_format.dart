@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/answer_format/answer_format.dart';
+import 'package:survey_kit/survey_kit.dart';
 
 part 'image_answer_format.g.dart';
 
@@ -17,11 +17,11 @@ class ImageAnswerFormat implements AnswerFormat {
     this.useGallery = true,
     this.hintImage,
     this.hintTitle,
-
   }) : super();
 
   factory ImageAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$ImageAnswerFormatFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$ImageAnswerFormatToJson(this);
 }
