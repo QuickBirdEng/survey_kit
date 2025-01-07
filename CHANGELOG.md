@@ -1,3 +1,6 @@
+
+# 1.0.0-dev.9
+- CHORE: Expose backgroundColor param for SurveyPage
 # 1.0.0-dev.8
 - INFO: Support AGP 8.x, bump compileSdk to 34
 # 1.0.0-dev.7
