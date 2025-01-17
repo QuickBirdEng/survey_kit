@@ -3,7 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/answer/boolean_answer_format.dart';
 import 'package:survey_kit/src/model/answer/date_answer_format.dart';
 import 'package:survey_kit/src/model/answer/double_answer_format.dart';
-import 'package:survey_kit/src/model/answer/image_answer_format.dart';
 import 'package:survey_kit/src/model/answer/integer_answer_format.dart';
 import 'package:survey_kit/src/model/answer/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/model/answer/multiple_choice_auto_complete_answer_format.dart';
@@ -42,8 +41,6 @@ abstract class AnswerFormat {
         return DoubleAnswerFormat.fromJson(json);
       case IntegerAnswerFormat.type:
         return IntegerAnswerFormat.fromJson(json);
-      case ImageAnswerFormat.type:
-        return ImageAnswerFormat.fromJson(json);
       case TextAnswerFormat.type:
         return TextAnswerFormat.fromJson(json);
       case TimeAnswerFormat.type:

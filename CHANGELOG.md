@@ -1,4 +1,6 @@
 
+# 1.0.0-dev.10
+- BREAKING: Removed image_picker for to avoid permission issues (Will be readded with 1.0.0 as separate package)
 # 1.0.0-dev.9
 - CHORE: Expose backgroundColor param for SurveyPage
 # 1.0.0-dev.8

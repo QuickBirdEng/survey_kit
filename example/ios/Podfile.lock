@@ -2,8 +2,6 @@ PODS:
   - audio_session (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - image_picker_ios (0.0.1):
-    - Flutter
   - just_audio (0.0.1):
     - Flutter
   - package_info_plus (0.4.5):
@@ -24,7 +22,6 @@ PODS:
 DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - Flutter (from `Flutter`)
-  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -38,8 +35,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/audio_session/ios"
   Flutter:
     :path: Flutter
-  image_picker_ios:
-    :path: ".symlinks/plugins/image_picker_ios/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
   package_info_plus:
@@ -58,7 +53,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
