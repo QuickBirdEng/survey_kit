@@ -459,7 +459,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.0.0-dev.9"
+    version: "1.0.0-dev.10"
   term_glyph:
     dependency: transitive
     description:
