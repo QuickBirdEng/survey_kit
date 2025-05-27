@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  survey_kit: ^0.2.1
+  survey_kit: ^0.3.0
   
   survey_kit_image_answer:
     path: ../packages/survey_kit_image_answer
