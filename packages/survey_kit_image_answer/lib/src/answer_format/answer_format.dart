@@ -6,7 +6,7 @@ abstract class ImageAnswerFormat extends AnswerFormat {
       case 'file':
         return ImageAnswerFormat.fromJson(json);
       default:
-        throw AnswerFormatNotDefinedException();
+        throw const AnswerFormatNotDefinedException();
     }
   }
   @override

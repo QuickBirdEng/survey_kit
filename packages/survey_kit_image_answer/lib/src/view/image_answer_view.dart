@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:survey_kit/survey_kit.dart';
+import '../answer_format/image_answer_format.dart';
+import '../result/image_question_result.dart';
 
 class ImageAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
@@ -82,13 +84,13 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                               child: Text(
                                 filePath
                                     .split('/')[filePath.split('/').length - 1],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                 ),
                               ),
                             ),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -108,7 +110,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
             child: ListBody(
               children: <Widget>[
                 GestureDetector(
-                  child: Text('Take a picture'),
+                  child: const Text('Take a picture'),
                   onTap: () {
                     if (_imageAnswerFormat.hintImage != null &&
                         _imageAnswerFormat.hintTitle != null) {
@@ -117,7 +119,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                         builder: (context) => AlertDialog(
                           title: Text(
                             _imageAnswerFormat.hintTitle.toString(),
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                           content: Image.network(
                             _imageAnswerFormat.hintImage.toString(),
@@ -125,7 +127,7 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                           actions: [
                             TextButton(
                                 onPressed: () => _openCamera(),
-                                child: Text('Open Camera')),
+                                child: const Text('Open Camera')),
                           ],
                         ),
                       );
@@ -134,15 +136,15 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
                     }
                   },
                 ),
-                Padding(padding: EdgeInsets.all(8.0)),
+                const Padding(padding: EdgeInsets.all(8.0)),
                 _imageAnswerFormat.useGallery
                     ? GestureDetector(
-                        child: Text('Select from Gallery'),
+                        child: const Text('Select from Gallery'),
                         onTap: () {
                           _openGallery();
                         },
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ],
             ),
           ),
@@ -158,9 +160,11 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
       source: ImageSource.camera,
     );
 
+    if (!mounted) return;
     Navigator.pop(context);
 
     picture?.readAsBytes().then((value) {
+      if (!mounted) return;
       setState(() {
         filePath = picture.path;
       });
@@ -172,9 +176,11 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
       source: ImageSource.gallery,
     );
 
+    if (!mounted) return;
     Navigator.pop(context);
 
     picture?.readAsBytes().then((value) {
+      if (!mounted) return;
       setState(() {
         filePath = picture.path;
       });
