@@ -21,7 +21,7 @@ dev_dependencies:
   build_runner: ^2.4.11
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   json_serializable: ^6.8.0
   integration_test:
     sdk: flutter
