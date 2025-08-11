@@ -1,31 +1,50 @@
+# 0.3.1
+
+- INFO: Updated dependencies (Flutter 3.32.1)
+
 # 0.3.0
+
 - BREAKING: ImageAnswer got moved into its own separate package (https://github.com/QuickBirdEng/survey_kit/tree/main/packages/survey_kit_image_answer)
   - To use it, import survey_kit_image_answer and add it to your dependencies
   - This will be released as a separate package on pub.dev soon
+
 # 0.2.1
+
 - INFO: Updated dependencies (Flutter 3.24.3)
 - FEATURE: Added agreement step
 - FEATURE: Cancel button is configurable now
 - FIX: Hide keyboard when going to the next step
 - FIX: Survey not ending after first completion step
 - FIX: Use BuildContext as default param in survey_controller.dart
+
 # 0.2.0
+
 - INFO: Updated dependencies (Flutter 3.13.2)
+
 # 0.1.3
+
 - INFO: Update dependencies (Flutter 3.10)
 - FIX: Fix validation of boolean answer format
 - FIX: Fix localization of next button
+
 # 0.1.2
+
 - INFO: Update dependencies (Flutter 3.7.0)
 
 # 0.1.1
+
 - INFO: Update dependencies (Flutter 3.0.2)
+
 # 0.1.0
+
 - INFO: Updated dependencies
+
 # 0.0.21
+
 - BREAKING: Adapated text styles to to TextThemes - You can find a complete list in the README.md
 
 # 0.0.20
+
 - BREAKING: Value identifier for Single-/Multiplechoice answers is now the value
 - BREAKING: You now have to close the survey yourself when finished in onResult
 - BREAKING: Remove video player step for now because of dependency issues (If you rely on it use https://github.com/quickbirdstudios/survey_kit.git)
@@ -41,6 +60,7 @@
 - INFO: Updated dependencies
 
 # 0.0.12
+
 - FEATURE: Video-Step
 
 - BUGFIX: isOptional Parameter works now as expected
