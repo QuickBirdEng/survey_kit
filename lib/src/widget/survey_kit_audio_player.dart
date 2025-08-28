@@ -63,7 +63,7 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
       height: 74,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
-        color: theme.colorScheme.primary.withOpacity(0.1),
+        color: theme.colorScheme.primary.withValues(alpha: .1),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -213,7 +213,7 @@ class SeekBarState extends State<SeekBar> {
           data: _sliderThemeData.copyWith(
             thumbShape: HiddenThumbComponentShape(),
             activeTrackColor: _sliderThemeData.activeTrackColor ??
-                theme.primaryColor.withOpacity(0.1),
+                theme.primaryColor.withValues(alpha: 1),
             inactiveTrackColor:
                 _sliderThemeData.inactiveTrackColor ?? Colors.grey.shade300,
           ),

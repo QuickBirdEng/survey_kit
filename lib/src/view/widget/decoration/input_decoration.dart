@@ -10,13 +10,13 @@ InputDecoration textFieldInputDecoration({String hint = ''}) => InputDecoration(
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.zero,
         borderSide: BorderSide(
-          color: Colors.black.withOpacity(0.2),
+          color: Colors.black.withValues(alpha: .2),
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.zero,
         borderSide: BorderSide(
-          color: Colors.black.withOpacity(0.2),
+          color: Colors.black.withValues(alpha: .2),
         ),
       ),
       hintText: hint,
