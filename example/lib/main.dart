@@ -56,8 +56,8 @@ class _MyAppState extends State<MyApp> {
         'SingleChoice': ConditionalNavigationRule(
           resultToStepIdentifierMapper:
               (List<StepResult> results, StepResult? input) {
-            final selectedChoice = input?.result as TextChoice;
-            switch (selectedChoice.text) {
+            final selectedChoice = input?.result as TextChoice?;
+            switch (selectedChoice?.text) {
               case 'Yes':
                 return 'OnlyConent';
               case 'No':

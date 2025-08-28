@@ -1,27 +1,48 @@
+# 1.0.1
+
+- CHORE: Upgrade dependencies to latest Flutter Version 3.35.2
 
 # 1.0.0-dev.10
+
 - BREAKING: Removed image_picker for to avoid permission issues (Will be readded with 1.0.0 as separate package)
+
 # 1.0.0-dev.9
+
 - CHORE: Expose backgroundColor param for SurveyPage
+
 # 1.0.0-dev.8
+
 - INFO: Support AGP 8.x, bump compileSdk to 34
+
 # 1.0.0-dev.7
+
 - INFO: Updated dependencies to latest Flutter Version 3.24.5
+
 # 1.0.0-dev.6
+
 - INFO: Revert intl dependency to 0.18.1 because of Flutter incompatibility issues
+
 # 1.0.0-dev.5
+
 - INFO: Updated dependencies to latest Flutter Version 3.19.5
+
 # 1.0.0-dev.4
+
 - INFO: Revert intl dependency to 0.18.0
+
 # 1.0.0-dev.3
+
 - INFO: Update dependencies
+
 # 1.0.0-dev.2
+
 - BREAKING: `resultToStepIdentifierMapper` now also returns the previous results
   - (StepResult? result) -> (List<StepResult> results, StepResult? result)
 - BUGFIX: Fixed a bug where `resultToStepIdentifierMapper` was not called when the result was null
+
 # 1.0.0-dev.1
+
 - INFO: We we completly reworked how survey_kit works and want to get it to a stable release version 1.0
-  
 - BREAKING: Enum BooleanResult is now lowercase
 - BREAKING: Enum FinishReason is now lowercase
 - BREAKING: Id's are now simple Strings
@@ -29,30 +50,38 @@
 - BREAKING: SurveyResult: Every Step has now one Result with a generic parameter instead of different objects
 - BREAKING: Return typoe of the boolean step is now a TimeResult objects which wraps TimeOfDay
 - FEATURE: survey_kit is now more dynamic and every content can be used before the question
-    - VideoContent
-    - AudioContent
-    - MarkdownContent
-    - TextContent
-    - LottieContent
+  - VideoContent
+  - AudioContent
+  - MarkdownContent
+  - TextContent
+  - LottieContent
 - FEATURE: MeasureDateStateMixin to measure when the user entered and left a step
 - FEATURE: PreviousStepResultMixin: If one of your steps depends on a previous step just implement this mixin and you can access the previous result
 - CHORE: Updated dependecies
 
 HOW TO MIGRATE:
+
 - JSON
 - Code-Definition
-  
+
 # 0.1.2
+
 - INFO: Update dependencies (Flutter 3.7.0)
 
 # 0.1.1
+
 - INFO: Update dependencies (Flutter 3.0.2)
+
 # 0.1.0
+
 - INFO: Updated dependencies
+
 # 0.0.21
+
 - BREAKING: Adapated text styles to to TextThemes - You can find a complete list in the README.md
 
 # 0.0.20
+
 - BREAKING: Value identifier for Single-/Multiplechoice answers is now the value
 - BREAKING: You now have to close the survey yourself when finished in onResult
 - BREAKING: Remove video player step for now because of dependency issues (If you rely on it use https://github.com/quickbirdstudios/survey_kit.git)
@@ -68,6 +97,7 @@ HOW TO MIGRATE:
 - INFO: Updated dependencies
 
 # 0.0.12
+
 - FEATURE: Video-Step
 
 - BUGFIX: isOptional Parameter works now as expected
