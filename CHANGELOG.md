@@ -1,3 +1,7 @@
+# 1.0.2
+
+- INFO: Update use `dart:ui_web`instead if `dart:ui`
+
 # 1.0.1
 
 - CHORE: Upgrade dependencies to latest Flutter Version 3.35.2
