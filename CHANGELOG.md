@@ -1,3 +1,7 @@
+# 1.0.3
+
+- CHORE: Removed depracted lint `package_api_docs`
+
 # 1.0.2
 
 - INFO: Update use `dart:ui_web`instead if `dart:ui`
