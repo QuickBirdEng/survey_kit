@@ -1,3 +1,3 @@
 import 'package:survey_kit/src/model/step.dart';
 
-Step get sampleStep => Step(content: []);
+Step get sampleStep => Step(id: 'sample-step-id', content: []);

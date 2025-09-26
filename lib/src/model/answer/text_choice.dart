@@ -20,4 +20,16 @@ class TextChoice {
       _$TextChoiceFromJson(json);
 
   Map<String, dynamic> toJson() => _$TextChoiceToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TextChoice &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          text == other.text &&
+          value == other.value;
+
+  @override
+  int get hashCode => Object.hash(id, text, value);
 }

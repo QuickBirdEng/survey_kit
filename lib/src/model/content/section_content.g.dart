@@ -9,8 +9,9 @@ part of 'section_content.dart';
 SectionContent _$SectionContentFromJson(Map<String, dynamic> json) =>
     SectionContent(
       title: StyledTextContent.fromJson(json['title'] as Map<String, dynamic>),
-      subtitle:
-          StyledTextContent.fromJson(json['subtitle'] as Map<String, dynamic>),
+      subtitle: StyledTextContent.fromJson(
+        json['subtitle'] as Map<String, dynamic>,
+      ),
       text: StyledTextContent.fromJson(json['text'] as Map<String, dynamic>),
     );
 

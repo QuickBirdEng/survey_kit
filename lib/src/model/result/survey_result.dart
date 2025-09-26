@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
@@ -36,7 +37,8 @@ class SurveyResult {
           id == other.id &&
           startTime == other.startTime &&
           endTime == other.endTime &&
-          finishReason == other.finishReason;
+          finishReason == other.finishReason &&
+          listEquals(results, other.results);
 
   @override
   int get hashCode =>

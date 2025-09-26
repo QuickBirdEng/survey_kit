@@ -1,3 +1,12 @@
+# 2.0.0
+
+- FIX: Fixed DateTime timezone handling in CustomDateTimeConverter to preserve UTC timestamps during serialization
+- FIX: Added missing JSON serialization methods for TimeResult class
+- FIX: Updated test infrastructure with deterministic Step IDs to ensure reliable test execution
+- CHORE: Updated Android Gradle Plugin to 8.1.4 and Gradle to 8.4 for SDK 35 compatibility
+- CHORE: Updated json_annotation dependency to 4.9.0 for better compatibility
+
+
 # 1.0.3
 
 - CHORE: Removed depracted lint `package_api_docs`

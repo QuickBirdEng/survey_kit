@@ -11,6 +11,21 @@ class TimeResult {
   const TimeResult({
     required this.timeOfDay,
   });
+
+  factory TimeResult.fromJson(Map<String, dynamic> json) =>
+      _$TimeResultFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TimeResultToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TimeResult &&
+          runtimeType == other.runtimeType &&
+          timeOfDay == other.timeOfDay;
+
+  @override
+  int get hashCode => timeOfDay.hashCode;
 }
 
 class _TimeOfDayConverter extends JsonConverter<TimeOfDay, String?> {

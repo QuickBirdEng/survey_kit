@@ -22,7 +22,7 @@ class DateAnswerFormat extends AnswerFormat {
     this.minDate,
     this.maxDate,
     super.question,
-    super.answerType = type,
+    super.answerType = DateAnswerFormat.type,
   })  : assert(
           minDate == null || maxDate == null || minDate.isBefore(maxDate),
           'mindate must be before maxdate',

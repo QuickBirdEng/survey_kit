@@ -10,16 +10,26 @@ class CustomDateTimeConverter implements JsonConverter<DateTime, String> {
 
   @override
   String toJson(DateTime json) {
-    //Ignore microseconds
-    final date = DateTime(
-      json.year,
-      json.month,
-      json.day,
-      json.hour,
-      json.minute,
-      json.second,
-      json.millisecond,
-    ).toUtc();
+    // Ignore microseconds and preserve timezone
+    final date = json.isUtc 
+        ? DateTime.utc(
+            json.year,
+            json.month,
+            json.day,
+            json.hour,
+            json.minute,
+            json.second,
+            json.millisecond,
+          )
+        : DateTime(
+            json.year,
+            json.month,
+            json.day,
+            json.hour,
+            json.minute,
+            json.second,
+            json.millisecond,
+          ).toUtc();
 
     return date.toIso8601String();
   }

@@ -11,7 +11,7 @@ class Step {
   final String id;
   final bool isMandatory;
   final AnswerFormat? answerFormat;
-  @JsonKey(defaultValue: 'Next', includeIfNull: false)
+  @JsonKey(includeIfNull: false)
   final String? buttonText;
   final List<Content> content;
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,4 +29,29 @@ class Step {
   factory Step.fromJson(Map<String, dynamic> json) => _$StepFromJson(json);
 
   Map<String, dynamic> toJson() => _$StepToJson(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! Step) return false;
+    if (runtimeType != other.runtimeType) return false;
+    
+    return id == other.id &&
+        isMandatory == other.isMandatory &&
+        answerFormat == other.answerFormat &&
+        buttonText == other.buttonText &&
+        _listEquals(content, other.content);
+  }
+
+  bool _listEquals<T>(List<T>? a, List<T>? b) {
+    if (a == null) return b == null;
+    if (b == null || a.length != b.length) return false;
+    for (int index = 0; index < a.length; index += 1) {
+      if (a[index] != b[index]) return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode => Object.hash(id, isMandatory, answerFormat, buttonText, content.length);
 }

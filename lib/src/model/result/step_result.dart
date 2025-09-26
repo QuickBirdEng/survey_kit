@@ -6,7 +6,7 @@ import 'package:survey_kit/src/util/datetime_convert.dart';
 part 'step_result.g.dart';
 
 @immutable
-@JsonSerializable(genericArgumentFactories: true)
+@JsonSerializable(genericArgumentFactories: true, explicitToJson: true)
 @CustomDateTimeConverter()
 class StepResult<T> {
   final String id;
@@ -42,7 +42,7 @@ class StepResult<T> {
   Map<String, dynamic> toJson() => _$StepResultToJson(this, (result) => result);
 
   @override
-  int get hashCode => id.hashCode ^ startTime.hashCode ^ endTime.hashCode;
+  int get hashCode => Object.hash(id, step, result, startTime, endTime, valueIdentifier);
 
   @override
   bool operator ==(Object other) {
@@ -50,7 +50,10 @@ class StepResult<T> {
         other is StepResult &&
             runtimeType == other.runtimeType &&
             id == other.id &&
+            step == other.step &&
+            result == other.result &&
             startTime == other.startTime &&
-            endTime == other.endTime;
+            endTime == other.endTime &&
+            valueIdentifier == other.valueIdentifier;
   }
 }
