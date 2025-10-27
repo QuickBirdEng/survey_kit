@@ -1,0 +1,109 @@
+{
+  "package": "survey_kit",
+  "version": "0.3.x",
+  "purpose": "Package for creating surveys with Flutter",
+  "provider": "QuickBird GmbH",
+  "license": "QuickBird",
+  "urls": {
+    "provider": "https://github.com/QuickBirdEng/survey_kit",
+    "documentation": "https://github.com/QuickBirdEng/survey_kit",
+    "known_issues": "https://github.com/QuickBirdEng/survey_kit/issues"
+  },
+  "requirements": {
+    "grq-1": {
+      "description": "Has a suitable license",
+      "fulfilled": true,
+      "fulfilled_visual": "✅",
+      "reason_if_requirement_not_fulfilled": "",
+      "metadata": {
+        "license": "QuickBird",
+        "license_key": "qb",
+        "license_spdx_id": "MIT",
+        "license_url": "https://github.com/QuickBirdEng/survey_kit/blob/main/LICENSE",
+        "compliance_status": "ALLOWED: License 'qb' is in allowed list"
+      }
+    },
+    "grq-2": {
+      "description": "Comprehensive documentation is available",
+      "fulfilled": true,
+      "fulfilled_visual": "✅",
+      "reason_if_requirement_not_fulfilled": "",
+      "metadata": "https://github.com/QuickBirdEng/survey_kit"
+    },
+    "grq-3": {
+      "description": "Is maintained and support is available",
+      "fulfilled": true,
+      "fulfilled_visual": "✅",
+      "reason_if_requirement_not_fulfilled": "",
+      "metadata": {
+        "analysis_period": "12 months",
+        "releases_found": 2,
+        "min_expected": 2,
+        "recent_versions": {
+          "0.3.2": "October 17, 2025",
+          "0.3.1": "August 11, 2025"
+        }
+      }
+    },
+    "grq-4": {
+      "description": "Does not contain major or critical security issues.",
+      "fulfilled": true,
+      "fulfilled_visual": "✅",
+      "reason_if_requirement_not_fulfilled": "",
+      "metadata": {
+        "package": "survey_kit",
+        "commit_checked": {
+          "version": "0.3.2",
+          "commit": "7422f4ad79ce7bbb2d69161eebb46cc24b1ee588"
+        },
+        "vulnerabilities_count": 0,
+        "vulnerabilities": {}
+      }
+    },
+    "grq-5": {
+      "description": "Provider is reliable, trustworthy and communicative",
+      "fulfilled": true,
+      "fulfilled_visual": "✅",
+      "reason_if_requirement_not_fulfilled": "",
+      "metadata": {
+        "stars": 131,
+        "forks": 104,
+        "subscribers": 7,
+        "one_of_following_conditions": {
+          "stars_or_forks_or_subscribers_any_greater_than_or_equal_to_1500": "❌",
+          "sum_of_stars_forks_subscribers_greater_than_or_equal_to_3000": "❌",
+          "self_owned": "✅"
+        }
+      }
+    },
+    "grq-6": {
+      "description": "Conforms to Semantic Versioning",
+      "fulfilled": true,
+      "fulfilled_visual": "✅",
+      "reason_if_requirement_not_fulfilled": "",
+      "metadata": {
+        "total_versions_checked": "2"
+      }
+    },
+    "version-check": {
+      "description": "Is within the latest stable semantic family (Major.X.X or 0.Minor.X)",
+      "fulfilled": true,
+      "fulfilled_visual": "✅",
+      "reason_if_requirement_not_fulfilled": "",
+      "metadata": {
+        "latest_stable": "0.3.2",
+        "latest_stable_tag_url": "https://github.com/QuickBirdEng/survey_kit/releases/tag/v0.3.2"
+      }
+    }
+  },
+  "metadata": {
+    "created": "2025-10-27T10:29:41Z",
+    "updated": "2025-10-27T10:29:41Z",
+    "input_version": "0.3.2",
+    "approval": {
+      "date": "",
+      "by": "",
+      "condition": ""
+    }
+  }
+}
