@@ -1,3 +1,9 @@
+# 0.3.2
+
+- INFO: Updated dependencies (Flutter 3.33.0)
+- INFO: Steps are now return a Future, so you can do async operations before returning the step
+- INFO: onResult is now called after onNextStep has finished
+
 # 0.3.1
 
 - INFO: Updated dependencies (Flutter 3.32.1)
