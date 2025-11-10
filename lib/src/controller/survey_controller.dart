@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
@@ -15,7 +17,7 @@ class SurveyController {
   ///
   /// Returns:
   /// - `true` if the default behavior should still be executed after this function, `false` otherwise.
-  final bool Function(
+  final FutureOr<bool> Function(
     BuildContext context,
     QuestionResult Function() resultFunction,
   )? onNextStep;
@@ -56,12 +58,12 @@ class SurveyController {
     this.onCloseSurvey,
   });
 
-  void nextStep(
+  Future<void> nextStep(
     BuildContext context,
     QuestionResult Function() resultFunction,
-  ) {
+  ) async {
     if (onNextStep != null) {
-      if (!onNextStep!(context, resultFunction)) return;
+      if (!await onNextStep!(context, resultFunction)) return;
     }
     BlocProvider.of<SurveyPresenter>(context).add(
       NextStep(
