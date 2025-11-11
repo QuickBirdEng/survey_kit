@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
                     themeData: Theme.of(context).copyWith(
                       primaryColor: Colors.cyan,
                       appBarTheme: const AppBarTheme(
-                        color: Colors.white,
+                        backgroundColor: Colors.white,
                         iconTheme: IconThemeData(
                           color: Colors.cyan,
                         ),

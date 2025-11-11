@@ -270,8 +270,9 @@ class _HourMinuteControl extends StatelessWidget {
     final Color backgroundColor = timePickerTheme.hourMinuteColor ??
         WidgetStateColor.resolveWith((Set<WidgetState> states) {
           return states.contains(WidgetState.selected)
-              ? themeData.colorScheme.primary.withOpacity(isDark ? 0.24 : 0.12)
-              : themeData.colorScheme.onSurface.withOpacity(0.12);
+              ? themeData.colorScheme.primary
+                  .withValues(alpha: isDark ? 0.24 : 0.12)
+              : themeData.colorScheme.onSurface.withValues(alpha: 0.12);
         });
     final TextStyle style = timePickerTheme.hourMinuteTextStyle ??
         themeData.textTheme.displayMedium!;
@@ -542,7 +543,7 @@ class _DayPeriodControl extends StatelessWidget {
         WidgetStateColor.resolveWith((Set<WidgetState> states) {
           return states.contains(WidgetState.selected)
               ? colorScheme.primary
-              : colorScheme.onSurface.withOpacity(0.60);
+              : colorScheme.onSurface.withValues(alpha: 0.60);
         });
     final Color backgroundColor = timePickerTheme.dayPeriodColor ??
         WidgetStateColor.resolveWith((Set<WidgetState> states) {
@@ -551,7 +552,7 @@ class _DayPeriodControl extends StatelessWidget {
           // and allows the optional elevation overlay for dark mode to be
           // visible.
           return states.contains(WidgetState.selected)
-              ? colorScheme.primary.withOpacity(isDark ? 0.24 : 0.12)
+              ? colorScheme.primary.withValues(alpha: isDark ? 0.24 : 0.12)
               : Colors.transparent;
         });
     final bool amSelected = selectedTime.period == DayPeriod.am;
@@ -572,8 +573,8 @@ class _DayPeriodControl extends StatelessWidget {
         const RoundedRectangleBorder(borderRadius: _kDefaultBorderRadius);
     final BorderSide borderSide = timePickerTheme.dayPeriodBorderSide ??
         BorderSide(
-          color: Color.alphaBlend(
-              colorScheme.onSurface.withOpacity(0.38), colorScheme.surface),
+          color: Color.alphaBlend(colorScheme.onSurface.withValues(alpha: 0.38),
+              colorScheme.surface),
         );
     // Apply the custom borderSide.
     shape = shape.copyWith(
@@ -1270,7 +1271,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
     final ThemeData theme = Theme.of(context);
     final TimePickerThemeData pickerTheme = TimePickerTheme.of(context);
     final Color backgroundColor = pickerTheme.dialBackgroundColor ??
-        themeData.colorScheme.onSurface.withOpacity(0.12);
+        themeData.colorScheme.onSurface.withValues(alpha: 0.12);
     final Color accentColor =
         pickerTheme.dialHandColor ?? themeData.colorScheme.primary;
     final Color primaryLabelColor = WidgetStateProperty.resolveAs(
@@ -1715,8 +1716,7 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField> {
     final TimePickerThemeData timePickerTheme = TimePickerTheme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
 
-    final InputDecorationThemeData? inputDecorationTheme =
-        timePickerTheme.inputDecorationTheme;
+    final inputDecorationTheme = timePickerTheme.inputDecorationTheme;
     InputDecoration inputDecoration;
     if (inputDecorationTheme != null) {
       inputDecoration =
@@ -1738,14 +1738,14 @@ class _HourMinuteTextFieldState extends State<_HourMinuteTextField> {
           borderSide: BorderSide(color: colorScheme.error, width: 2.0),
         ),
         hintStyle: widget.style
-            .copyWith(color: colorScheme.onSurface.withOpacity(0.36)),
+            .copyWith(color: colorScheme.onSurface.withValues(alpha: 0.36)),
         errorStyle: const TextStyle(
             fontSize: 0.0,
             height: 0.0), // Prevent the error text from appearing.
       );
     }
     final Color unfocusedFillColor = timePickerTheme.hourMinuteColor ??
-        colorScheme.onSurface.withOpacity(0.12);
+        colorScheme.onSurface.withValues(alpha: 0.12);
     // If screen reader is in use, make the hint text say hours/minutes.
     // Otherwise, remove the hint text when focused because the centered cursor
     // appears odd above the hint text.
@@ -2031,8 +2031,9 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
         const SizedBox(width: 10.0),
         IconButton(
           color: TimePickerTheme.of(context).entryModeIconColor ??
-              theme.colorScheme.onSurface.withOpacity(
-                theme.colorScheme.brightness == Brightness.dark ? 1.0 : 0.6,
+              theme.colorScheme.onSurface.withValues(
+                alpha:
+                    theme.colorScheme.brightness == Brightness.dark ? 1.0 : 0.6,
               ),
           onPressed: _handleEntryModeToggle,
           icon: Icon(_entryMode == TimePickerEntryMode.dial

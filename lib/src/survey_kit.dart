@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +26,7 @@ class SurveyKit extends StatefulWidget {
   final ThemeData? themeData;
 
   /// Function which is called after the results are collected
-  final Function(SurveyResult) onResult;
+  final FutureOr<void> Function(SurveyResult) onResult;
 
   /// [SurveyController] to override the navigation methods
   /// onNextStep, onBackStep, onCloseSurvey
@@ -116,7 +118,7 @@ class _SurveyKitState extends State<SurveyKit> {
 class SurveyPage extends StatefulWidget {
   final int length;
   final Widget Function(AppBarConfiguration appBarConfiguration)? appBar;
-  final Function(SurveyResult) onResult;
+  final FutureOr<void> Function(SurveyResult) onResult;
 
   const SurveyPage({
     required this.length,
@@ -149,9 +151,6 @@ class _SurveyPageState extends State<SurveyPage>
     return BlocConsumer<SurveyPresenter, SurveyState>(
       listenWhen: (previous, current) => previous != current,
       listener: (context, state) async {
-        if (state is SurveyResultState) {
-          widget.onResult.call(state.result);
-        }
         if (state is PresentingSurveyState) {
           tabController.animateTo(state.currentStepIndex);
         }

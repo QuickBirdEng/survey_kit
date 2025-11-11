@@ -158,6 +158,8 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
       source: ImageSource.camera,
     );
 
+    if (!mounted) return;
+
     Navigator.pop(context);
 
     picture?.readAsBytes().then((value) {
@@ -171,6 +173,8 @@ class _ImageAnswerViewState extends State<ImageAnswerView> {
     var picture = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
+
+    if (!mounted) return;
 
     Navigator.pop(context);
 

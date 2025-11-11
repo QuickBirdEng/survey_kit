@@ -1,3 +1,16 @@
+# 0.3.3
+
+- INFO: Updated dependencies (Flutter 3.35.6)
+- INFO: Steps are now return a Future, so you can do async operations before returning the step
+- INFO: onResult is now called after onNextStep has finished
+- FIX: Replaced deprecated `groupValue` parameter in Radio widget with RadioGroup wrapper (Flutter 3.32.0+)
+- FIX: Fixed `InputDecorationThemeData` type error in time_picker_widget.dart for compatibility with newer Flutter versions
+- FIX: Replaced deprecated `withOpacity` method with `withValues` for Color in input_decoration.dart
+
+# 0.3.2
+
+- INFO: Updated dependencies (Flutter 3.33.0)
+
 # 0.3.1
 
 - INFO: Updated dependencies (Flutter 3.32.1)

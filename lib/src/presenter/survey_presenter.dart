@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:survey_kit/src/configuration/app_bar_configuration.dart';
@@ -13,7 +15,7 @@ import 'package:survey_kit/src/steps/identifier/step_identifier.dart';
 //TO DO: Extract gathering of the results into another class
 class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
   final TaskNavigator taskNavigator;
-  final Function(SurveyResult) onResult;
+  final FutureOr<void> Function(SurveyResult) onResult;
 
   Set<QuestionResult> results = {};
   late final DateTime startDate;
@@ -22,39 +24,43 @@ class SurveyPresenter extends Bloc<SurveyEvent, SurveyState> {
     required this.taskNavigator,
     required this.onResult,
   }) : super(LoadingSurveyState()) {
-
-    on<StartSurvey>((event, emit){
-      emit(
-        _handleInitialStep()
-      );
+    on<StartSurvey>((event, emit) {
+      emit(_handleInitialStep());
     });
 
-    on<NextStep>((event, emit){
-      if (state is PresentingSurveyState){
-        emit(_handleNextStep(event, state as PresentingSurveyState));
+    on<NextStep>((event, emit) async {
+      if (state is PresentingSurveyState) {
+        final newState = _handleNextStep(event, state as PresentingSurveyState);
+        emit(newState);
+
+        // Call onResult after emitting the final state
+        if (newState is SurveyResultState) {
+          await onResult(newState.result);
+        }
       }
     });
 
-    on<StepBack>((event, emit){
-      if (state is PresentingSurveyState){
-        emit(
-          _handleStepBack(event, state as PresentingSurveyState)
-        );
+    on<StepBack>((event, emit) {
+      if (state is PresentingSurveyState) {
+        emit(_handleStepBack(event, state as PresentingSurveyState));
       }
     });
 
-    on<CloseSurvey>((event, emit){
-      if (state is PresentingSurveyState){
-        emit(
-          _handleClose(event, state as PresentingSurveyState)
-        );
+    on<CloseSurvey>((event, emit) async {
+      if (state is PresentingSurveyState) {
+        final newState = _handleClose(event, state as PresentingSurveyState);
+        emit(newState);
+
+        // Call onResult after emitting the final state
+        if (newState is SurveyResultState) {
+          await onResult(newState.result);
+        }
       }
     });
 
     this.startDate = DateTime.now();
     add(StartSurvey());
   }
-
 
   SurveyState _handleInitialStep() {
     Step? step = taskNavigator.firstStep();
