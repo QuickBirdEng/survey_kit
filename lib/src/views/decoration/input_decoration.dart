@@ -12,7 +12,7 @@ InputDecoration textFieldInputDecoration({String hint = ''}) => InputDecoration(
           Radius.zero,
         ),
         borderSide: BorderSide(
-          color: Colors.black.withOpacity(0.2),
+          color: Colors.black.withValues(alpha: 0.2),
         ),
       ),
       enabledBorder: OutlineInputBorder(
@@ -20,7 +20,7 @@ InputDecoration textFieldInputDecoration({String hint = ''}) => InputDecoration(
           Radius.zero,
         ),
         borderSide: BorderSide(
-          color: Colors.black.withOpacity(0.2),
+          color: Colors.black.withValues(alpha: 0.2),
         ),
       ),
       hintText: hint,

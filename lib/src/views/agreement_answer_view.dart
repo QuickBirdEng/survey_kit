@@ -86,42 +86,43 @@ class _AgreementAnswerViewState extends State<AgreementAnswerView> {
                           href != null ? launchUrl(Uri.parse(href)) : null,
                     ),
                   ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Radio<BooleanResult>(
-                        groupValue: _result,
-                        value: BooleanResult.POSITIVE,
-                        onChanged: (v) {
-                          setState(() {
-                            _result = v;
-                          });
-                        }),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                        child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (_result == BooleanResult.POSITIVE) {
-                            _result = BooleanResult.NEGATIVE;
-                          } else {
-                            _result = BooleanResult.POSITIVE;
-                          }
-                        });
-                      },
-                      child: MarkdownBody(
-                        styleSheet: markDownStyleSheet.copyWith(
-                          p: theme.textTheme.bodySmall,
-                        ),
-                        data:
-                            _agreementAnswerFormat.markdownAgreementText ?? '',
-                        onTapLink: (text, href, title) =>
-                            href != null ? launchUrl(Uri.parse(href)) : null,
+                RadioGroup<BooleanResult>(
+                  groupValue: _result,
+                  onChanged: (v) {
+                    setState(() {
+                      _result = v;
+                    });
+                  },
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Radio<BooleanResult>(value: BooleanResult.POSITIVE),
+                      SizedBox(
+                        width: 16,
                       ),
-                    )),
-                  ],
+                      Expanded(
+                          child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (_result == BooleanResult.POSITIVE) {
+                              _result = BooleanResult.NEGATIVE;
+                            } else {
+                              _result = BooleanResult.POSITIVE;
+                            }
+                          });
+                        },
+                        child: MarkdownBody(
+                          styleSheet: markDownStyleSheet.copyWith(
+                            p: theme.textTheme.bodySmall,
+                          ),
+                          data: _agreementAnswerFormat.markdownAgreementText ??
+                              '',
+                          onTapLink: (text, href, title) =>
+                              href != null ? launchUrl(Uri.parse(href)) : null,
+                        ),
+                      )),
+                    ],
+                  ),
                 )
               ],
             ),
