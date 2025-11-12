@@ -72,12 +72,27 @@ class SurveyKit extends StatefulWidget {
 class _SurveyKitState extends State<SurveyKit> {
   late TaskNavigator _taskNavigator;
   late final GlobalKey<NavigatorState> _navigatorKey;
+  late final SurveyStateProvider _surveyStateProvider;
 
   @override
   void initState() {
     super.initState();
     _taskNavigator = _createTaskNavigator();
     _navigatorKey = GlobalKey<NavigatorState>();
+    _surveyStateProvider = SurveyStateProvider(
+      taskNavigator: _taskNavigator,
+      onResult: widget.onResult,
+      stepShell: widget.stepShell,
+      navigatorKey: _navigatorKey,
+      child: SurveyPage(
+        backgroundColor: widget.backgroundColor,
+        length: widget.task.steps.length,
+        onResult: widget.onResult,
+        appBar: widget.appBar,
+        navigatorKey: _navigatorKey,
+        decoration: widget.decoration,
+      ),
+    );
   }
 
   TaskNavigator _createTaskNavigator() {
@@ -106,20 +121,7 @@ class _SurveyKitState extends State<SurveyKit> {
       surveyController: widget.surveyController ?? SurveyController(),
       localizations: widget.localizations,
       padding: const EdgeInsets.all(14),
-      child: SurveyStateProvider(
-        taskNavigator: _taskNavigator,
-        onResult: widget.onResult,
-        stepShell: widget.stepShell,
-        navigatorKey: _navigatorKey,
-        child: SurveyPage(
-          backgroundColor: widget.backgroundColor,
-          length: widget.task.steps.length,
-          onResult: widget.onResult,
-          appBar: widget.appBar,
-          navigatorKey: _navigatorKey,
-          decoration: widget.decoration,
-        ),
-      ),
+      child: _surveyStateProvider,
     );
   }
 }
