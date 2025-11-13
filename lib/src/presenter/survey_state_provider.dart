@@ -4,98 +4,107 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/survey_kit.dart';
 
-// ignore: must_be_immutable
-class SurveyStateProvider extends InheritedWidget {
-  SurveyStateProvider({
+/// StatefulWidget that manages the survey state
+class SurveyStateProviderWidget extends StatefulWidget {
+  const SurveyStateProviderWidget({
     super.key,
     required this.taskNavigator,
     required this.onResult,
-    required super.child,
+    required this.child,
     required this.navigatorKey,
     this.stepShell,
-  })  : _state = LoadingSurveyState(),
-        startDate = DateTime.now();
+  });
 
   final TaskNavigator taskNavigator;
   final Function(SurveyResult) onResult;
   final StepShell? stepShell;
   final GlobalKey<NavigatorState> navigatorKey;
+  final Widget child;
 
+  @override
+  State<SurveyStateProviderWidget> createState() =>
+      _SurveyStateProviderWidgetState();
+}
+
+class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
   late SurveyState _state;
-  SurveyState get state => _state;
-  void updateState(SurveyState newState) {
-    _state = newState;
-    surveyStateStream.add(_state);
-  }
+  late StreamController<SurveyState> _surveyStateStream;
+  late Set<StepResult> _results;
+  late DateTime _startDate;
 
-  late StreamController<SurveyState> surveyStateStream =
-      StreamController<SurveyState>.broadcast();
-
-  static SurveyStateProvider of(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<SurveyStateProvider>();
-    assert(result != null, 'No SurveyPresenterInherited found in context');
-    return result!;
+  @override
+  void initState() {
+    super.initState();
+    _state = LoadingSurveyState();
+    _surveyStateStream = StreamController<SurveyState>.broadcast();
+    _results = {};
+    _startDate = DateTime.now();
   }
 
   @override
-  bool updateShouldNotify(SurveyStateProvider oldWidget) =>
-      taskNavigator != oldWidget.taskNavigator ||
-      onResult != oldWidget.onResult ||
-      _state != oldWidget._state;
+  void dispose() {
+    _surveyStateStream.close();
+    super.dispose();
+  }
 
-  Set<StepResult> results = {};
-  late final DateTime startDate;
+  void _updateState(SurveyState newState) {
+    setState(() {
+      _state = newState;
+    });
+    _surveyStateStream.add(_state);
+  }
 
   void onEvent(SurveyEvent event) {
     if (event is StartSurvey) {
       final newState = _handleInitialStep();
-      updateState(newState);
-      navigatorKey.currentState?.pushNamed(
+      _updateState(newState);
+      widget.navigatorKey.currentState?.pushNamed(
         '/',
         arguments: newState,
       );
     } else if (event is NextStep) {
-      if (state is PresentingSurveyState) {
-        final newState = _handleNextStep(event, state as PresentingSurveyState);
-        updateState(newState);
-        navigatorKey.currentState?.pushNamed(
+      if (_state is PresentingSurveyState) {
+        final newState =
+            _handleNextStep(event, _state as PresentingSurveyState);
+        _updateState(newState);
+        widget.navigatorKey.currentState?.pushNamed(
           '/',
           arguments: newState,
         );
       }
     } else if (event is StepBack) {
-      if (state is PresentingSurveyState) {
-        final newState = _handleStepBack(event, state as PresentingSurveyState);
-        updateState(newState);
-        navigatorKey.currentState?.pop();
+      if (_state is PresentingSurveyState) {
+        final newState =
+            _handleStepBack(event, _state as PresentingSurveyState);
+        _updateState(newState);
+        widget.navigatorKey.currentState?.pop();
       }
     } else if (event is CloseSurvey) {
-      if (state is PresentingSurveyState) {
-        final newState = _handleClose(event, state as PresentingSurveyState);
-        updateState(newState);
-        navigatorKey.currentState?.pop();
+      if (_state is PresentingSurveyState) {
+        final newState = _handleClose(event, _state as PresentingSurveyState);
+        _updateState(newState);
+        widget.navigatorKey.currentState?.pop();
       }
     }
   }
 
   SurveyState _handleInitialStep() {
-    final step = taskNavigator.firstStep();
+    final step = widget.taskNavigator.firstStep();
     if (step != null) {
       return PresentingSurveyState(
         currentStep: step,
-        questionResults: results,
-        steps: taskNavigator.task.steps,
+        questionResults: _results,
+        steps: widget.taskNavigator.task.steps,
         result: null,
-        currentStepIndex: currentStepIndex(step),
-        stepCount: countSteps,
+        currentStepIndex: _currentStepIndex(step),
+        stepCount: _countSteps,
       );
     }
 
     //If not steps are provided we finish the survey
     final taskResult = SurveyResult(
-      id: taskNavigator.task.id,
-      startTime: startDate,
+      id: widget.taskNavigator.task.id,
+      startTime: _startDate,
       endTime: DateTime.now(),
       finishReason: FinishReason.completed,
       results: const [],
@@ -112,9 +121,9 @@ class SurveyStateProvider extends InheritedWidget {
     PresentingSurveyState currentState,
   ) {
     _addResult(event.questionResult);
-    final nextStep = taskNavigator.nextStep(
+    final nextStep = widget.taskNavigator.nextStep(
       step: currentState.currentStep,
-      previousResults: results.toList(),
+      previousResults: _results.toList(),
       questionResult: event.questionResult,
     );
 
@@ -127,10 +136,10 @@ class SurveyStateProvider extends InheritedWidget {
     return PresentingSurveyState(
       currentStep: nextStep,
       result: questionResult,
-      steps: taskNavigator.task.steps,
-      questionResults: results,
-      currentStepIndex: currentStepIndex(nextStep),
-      stepCount: countSteps,
+      steps: widget.taskNavigator.task.steps,
+      questionResults: _results,
+      currentStepIndex: _currentStepIndex(nextStep),
+      stepCount: _countSteps,
     );
   }
 
@@ -139,7 +148,8 @@ class SurveyStateProvider extends InheritedWidget {
     PresentingSurveyState currentState,
   ) {
     _addResult(event.questionResult);
-    final previousStep = taskNavigator.previousInList(currentState.currentStep);
+    final previousStep =
+        widget.taskNavigator.previousInList(currentState.currentStep);
 
     //If theres no previous step we can't go back further
 
@@ -149,19 +159,19 @@ class SurveyStateProvider extends InheritedWidget {
       return PresentingSurveyState(
         currentStep: previousStep,
         result: questionResult,
-        steps: taskNavigator.task.steps,
-        questionResults: results,
-        currentStepIndex: currentStepIndex(previousStep),
+        steps: widget.taskNavigator.task.steps,
+        questionResults: _results,
+        currentStepIndex: _currentStepIndex(previousStep),
         isPreviousStep: true,
-        stepCount: countSteps,
+        stepCount: _countSteps,
       );
     }
 
-    return state;
+    return _state;
   }
 
   StepResult? _getResultByStepIdentifier(String? identifier) {
-    return results.firstWhereOrNull(
+    return _results.firstWhereOrNull(
       (element) => element.id == identifier,
     );
   }
@@ -172,16 +182,16 @@ class SurveyStateProvider extends InheritedWidget {
   ) {
     _addResult(event.questionResult);
 
-    final stepResults = results.map((e) => e).toList();
+    final stepResults = _results.map((e) => e).toList();
 
     final taskResult = SurveyResult(
-      id: taskNavigator.task.id,
-      startTime: startDate,
+      id: widget.taskNavigator.task.id,
+      startTime: _startDate,
       endTime: DateTime.now(),
       finishReason: FinishReason.discarded,
       results: stepResults,
     );
-    onResult(taskResult);
+    widget.onResult(taskResult);
     return SurveyResultState(
       result: taskResult,
       stepResult: currentState.result,
@@ -191,16 +201,16 @@ class SurveyStateProvider extends InheritedWidget {
 
   //Currently we are only handling one question per step
   SurveyState _handleSurveyFinished(PresentingSurveyState currentState) {
-    final stepResults = results.map((e) => e).toList();
+    final stepResults = _results.map((e) => e).toList();
     final taskResult = SurveyResult(
-      id: taskNavigator.task.id,
-      startTime: startDate,
+      id: widget.taskNavigator.task.id,
+      startTime: _startDate,
       endTime: DateTime.now(),
       finishReason: FinishReason.completed,
       results: stepResults,
     );
 
-    onResult(taskResult);
+    widget.onResult(taskResult);
     return SurveyResultState(
       result: taskResult,
       currentStep: currentState.currentStep,
@@ -212,19 +222,83 @@ class SurveyStateProvider extends InheritedWidget {
     if (questionResult == null) {
       return;
     }
-    results
+    _results
       ..removeWhere((StepResult result) => result.id == questionResult.id)
       ..add(
         questionResult,
       );
   }
 
-  int get countSteps => taskNavigator.countSteps;
-  int currentStepIndex(Step step) {
-    return taskNavigator.currentStepIndex(step);
+  int get _countSteps => widget.taskNavigator.countSteps;
+
+  int _currentStepIndex(Step step) {
+    return widget.taskNavigator.currentStepIndex(step);
   }
 
   StepResult? getStepResultById(String id) {
-    return results.firstWhereOrNull((element) => element.id == id);
+    return _results.firstWhereOrNull((element) => element.id == id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SurveyStateProvider(
+      state: _state,
+      results: _results,
+      startDate: _startDate,
+      surveyStateStream: _surveyStateStream,
+      taskNavigator: widget.taskNavigator,
+      onResult: widget.onResult,
+      stepShell: widget.stepShell,
+      navigatorKey: widget.navigatorKey,
+      onEvent: onEvent,
+      getStepResultById: getStepResultById,
+      child: widget.child,
+    );
+  }
+}
+
+/// InheritedWidget that provides survey state to descendants (immutable)
+class SurveyStateProvider extends InheritedWidget {
+  const SurveyStateProvider({
+    super.key,
+    required this.state,
+    required this.results,
+    required this.startDate,
+    required this.surveyStateStream,
+    required this.taskNavigator,
+    required this.onResult,
+    required this.navigatorKey,
+    required this.onEvent,
+    required this.getStepResultById,
+    required super.child,
+    this.stepShell,
+  });
+
+  final SurveyState state;
+  final Set<StepResult> results;
+  final DateTime startDate;
+  final StreamController<SurveyState> surveyStateStream;
+  final TaskNavigator taskNavigator;
+  final Function(SurveyResult) onResult;
+  final StepShell? stepShell;
+  final GlobalKey<NavigatorState> navigatorKey;
+  final void Function(SurveyEvent) onEvent;
+  final StepResult? Function(String) getStepResultById;
+
+  static SurveyStateProvider of(BuildContext context) {
+    final result =
+        context.dependOnInheritedWidgetOfExactType<SurveyStateProvider>();
+    assert(result != null, 'No SurveyStateProvider found in context');
+    return result!;
+  }
+
+  @override
+  bool updateShouldNotify(SurveyStateProvider oldWidget) =>
+      state != oldWidget.state || results != oldWidget.results;
+
+  int get countSteps => taskNavigator.countSteps;
+
+  int currentStepIndex(Step step) {
+    return taskNavigator.currentStepIndex(step);
   }
 }
