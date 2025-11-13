@@ -1,6 +1,8 @@
-# 1.0.3 (To be released)
+# 1.0.3
 
 - CHORE: Removed depracted lint `package_api_docs`
+- FIX: Refactored SurveyStateProvider to follow proper InheritedWidget pattern - separated mutable state into StatefulWidget wrapper to prevent reinstantiation on rebuilds
+- FIX: Fixed SurveyStateProvider state persistence by using SurveyStateProviderWidget (StatefulWidget) with immutable SurveyStateProvider (InheritedWidget)
 
 # 1.0.2
 

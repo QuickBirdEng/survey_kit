@@ -106,7 +106,7 @@ class _SurveyKitState extends State<SurveyKit> {
       surveyController: widget.surveyController ?? SurveyController(),
       localizations: widget.localizations,
       padding: const EdgeInsets.all(14),
-      child: SurveyStateProvider(
+      child: SurveyStateProviderWidget(
         taskNavigator: _taskNavigator,
         onResult: widget.onResult,
         stepShell: widget.stepShell,
