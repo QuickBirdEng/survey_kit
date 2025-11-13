@@ -4,8 +4,18 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/survey_kit.dart';
 
-/// StatefulWidget that manages the survey state
+/// A [StatefulWidget] that manages the mutable state for the survey.
+///
+/// This widget holds the survey's state, results, and handles all state transitions
+/// through the [onEvent] method. It creates an immutable [SurveyStateProvider]
+/// on each rebuild to expose the state to descendant widgets.
+///
+/// This follows the recommended Flutter pattern of separating mutable state
+/// (StatefulWidget) from the immutable state exposure (InheritedWidget).
 class SurveyStateProviderWidget extends StatefulWidget {
+  /// Creates a [SurveyStateProviderWidget].
+  ///
+  /// All parameters are required except [stepShell].
   const SurveyStateProviderWidget({
     super.key,
     required this.taskNavigator,
@@ -15,10 +25,19 @@ class SurveyStateProviderWidget extends StatefulWidget {
     this.stepShell,
   });
 
+  /// The navigator that manages the task flow and step transitions.
   final TaskNavigator taskNavigator;
-  final Function(SurveyResult) onResult;
+
+  /// Callback invoked when the survey is completed or closed.
+  final void Function(SurveyResult) onResult;
+
+  /// Optional custom shell widget builder for wrapping steps.
   final StepShell? stepShell;
+
+  /// Global key for managing the Navigator state.
   final GlobalKey<NavigatorState> navigatorKey;
+
+  /// The widget below this widget in the tree.
   final Widget child;
 
   @override
@@ -54,6 +73,13 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     _surveyStateStream.add(_state);
   }
 
+  /// Handles survey events and triggers appropriate state transitions.
+  ///
+  /// Supported events:
+  /// - [StartSurvey]: Initializes the survey with the first step
+  /// - [NextStep]: Advances to the next step
+  /// - [StepBack]: Returns to the previous step
+  /// - [CloseSurvey]: Closes the survey and reports results
   void onEvent(SurveyEvent event) {
     if (event is StartSurvey) {
       final newState = _handleInitialStep();
@@ -101,7 +127,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
       );
     }
 
-    //If not steps are provided we finish the survey
+    // If no steps are provided we finish the survey
     final taskResult = SurveyResult(
       id: widget.taskNavigator.task.id,
       startTime: _startDate,
@@ -151,8 +177,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     final previousStep =
         widget.taskNavigator.previousInList(currentState.currentStep);
 
-    //If theres no previous step we can't go back further
-
+    // If there's no previous step we can't go back further
     if (previousStep != null) {
       final questionResult = _getResultByStepIdentifier(previousStep.id);
 
@@ -182,7 +207,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
   ) {
     _addResult(event.questionResult);
 
-    final stepResults = _results.map((e) => e).toList();
+    final stepResults = _results.toList();
 
     final taskResult = SurveyResult(
       id: widget.taskNavigator.task.id,
@@ -199,9 +224,9 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     );
   }
 
-  //Currently we are only handling one question per step
+  // Currently we are only handling one question per step
   SurveyState _handleSurveyFinished(PresentingSurveyState currentState) {
-    final stepResults = _results.map((e) => e).toList();
+    final stepResults = _results.toList();
     final taskResult = SurveyResult(
       id: widget.taskNavigator.task.id,
       startTime: _startDate,
@@ -235,6 +260,9 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     return widget.taskNavigator.currentStepIndex(step);
   }
 
+  /// Retrieves a step result by its identifier.
+  ///
+  /// Returns `null` if no result is found with the given [id].
   StepResult? getStepResultById(String id) {
     return _results.firstWhereOrNull((element) => element.id == id);
   }
@@ -257,8 +285,18 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
   }
 }
 
-/// InheritedWidget that provides survey state to descendants (immutable)
+/// An [InheritedWidget] that provides immutable access to survey state.
+///
+/// This widget exposes the current survey state, results, and event handling
+/// to descendant widgets. It should not be instantiated directly; instead,
+/// use [SurveyStateProviderWidget] which manages the mutable state and
+/// creates this widget on each rebuild.
+///
+/// Access this provider using [SurveyStateProvider.of(context)].
 class SurveyStateProvider extends InheritedWidget {
+  /// Creates a [SurveyStateProvider].
+  ///
+  /// This constructor should only be called by [SurveyStateProviderWidget].
   const SurveyStateProvider({
     super.key,
     required this.state,
@@ -274,17 +312,48 @@ class SurveyStateProvider extends InheritedWidget {
     this.stepShell,
   });
 
+  /// The current state of the survey.
   final SurveyState state;
+
+  /// The results collected so far in the survey.
+  ///
+  /// Note: This exposes the internal set. For better encapsulation,
+  /// consider using this as a read-only reference.
   final Set<StepResult> results;
+
+  /// The date and time when the survey was started.
   final DateTime startDate;
+
+  /// Stream controller for broadcasting survey state changes.
+  ///
+  /// Use `.stream` to listen to state changes:
+  /// ```dart
+  /// SurveyStateProvider.of(context).surveyStateStream.stream
+  /// ```
   final StreamController<SurveyState> surveyStateStream;
+
+  /// The navigator that manages the task flow.
   final TaskNavigator taskNavigator;
-  final Function(SurveyResult) onResult;
+
+  /// Callback invoked when the survey is completed or closed.
+  final void Function(SurveyResult) onResult;
+
+  /// Optional custom shell widget builder for wrapping steps.
   final StepShell? stepShell;
+
+  /// Global key for managing the Navigator state.
   final GlobalKey<NavigatorState> navigatorKey;
+
+  /// Callback for handling survey events.
   final void Function(SurveyEvent) onEvent;
+
+  /// Function to retrieve a step result by its identifier.
   final StepResult? Function(String) getStepResultById;
 
+  /// Retrieves the [SurveyStateProvider] from the widget tree.
+  ///
+  /// The [context] must have a [SurveyStateProvider] ancestor.
+  /// Throws an assertion error if no provider is found.
   static SurveyStateProvider of(BuildContext context) {
     final result =
         context.dependOnInheritedWidgetOfExactType<SurveyStateProvider>();
@@ -294,10 +363,12 @@ class SurveyStateProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(SurveyStateProvider oldWidget) =>
-      state != oldWidget.state || results != oldWidget.results;
+      state != oldWidget.state;
 
+  /// Returns the total number of steps in the survey.
   int get countSteps => taskNavigator.countSteps;
 
+  /// Returns the index of the given [step] in the survey.
   int currentStepIndex(Step step) {
     return taskNavigator.currentStepIndex(step);
   }
