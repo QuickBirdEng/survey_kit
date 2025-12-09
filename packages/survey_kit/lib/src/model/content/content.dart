@@ -6,7 +6,6 @@ import 'package:survey_kit/src/model/content/text_content.dart';
 
 @JsonSerializable()
 abstract class Content {
-  @JsonKey(includeIfNull: false)
   final String? id;
   @JsonKey(name: 'type')
   final String contentType;
@@ -42,4 +41,6 @@ abstract class Content {
   }
 
   Widget createWidget();
+
+  Map<String, dynamic> toJson();
 }

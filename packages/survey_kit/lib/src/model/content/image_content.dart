@@ -25,6 +25,7 @@ class ImageContent extends Content {
   factory ImageContent.fromJson(Map<String, dynamic> json) =>
       _$ImageContentFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$ImageContentToJson(this);
 
   @override

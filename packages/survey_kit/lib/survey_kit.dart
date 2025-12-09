@@ -1,5 +1,6 @@
 library survery_kit;
 
+export 'gen/survey_kit_localizations.dart';
 export 'src/configuration/survey_configuration.dart';
 export 'src/controller/survey_controller.dart';
 export 'src/model/answer/answer_format.dart';
@@ -45,6 +46,7 @@ export 'src/task/ordered_task.dart';
 export 'src/task/task.dart';
 export 'src/task/task_not_defined_exception.dart';
 export 'src/util/measure_date_state_mixin.dart';
+export 'src/util/ui_utils.dart';
 export 'src/view/widget/answer/answer_mixin.dart';
 export 'src/view/widget/answer/date_answer_view.dart';
 export 'src/view/widget/answer/double_answer_view.dart';
@@ -57,7 +59,8 @@ export 'src/view/widget/answer/time_answer_view.dart';
 export 'src/view/widget/content/content_widget.dart';
 export 'src/view/widget/decoration/input_decoration.dart';
 export 'src/view/widget/question_answer.dart';
+export 'src/widget/link.dart';
+export 'src/widget/platform_view_registry/platform_view_registry.dart';
 export 'src/widget/survey_app_bar.dart';
-export 'gen/survey_kit_localizations.dart';
 export 'src/widget/survey_progress.dart';
 export 'src/widget/survey_progress_configuration.dart';

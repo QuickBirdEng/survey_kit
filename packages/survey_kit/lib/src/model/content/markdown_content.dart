@@ -19,6 +19,7 @@ class MarkdownContent extends Content {
   factory MarkdownContent.fromJson(Map<String, dynamic> json) =>
       _$MarkdownContentFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$MarkdownContentToJson(this);
 
   @override

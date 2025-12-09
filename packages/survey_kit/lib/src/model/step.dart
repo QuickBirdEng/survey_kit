@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:survey_kit/src/model/answer/answer_format.dart';
 import 'package:survey_kit/src/model/content/content.dart';
 import 'package:survey_kit/src/survey_kit.dart';
@@ -6,12 +7,13 @@ import 'package:uuid/uuid.dart';
 
 part 'step.g.dart';
 
-@JsonSerializable()
+@immutable
+@JsonSerializable(explicitToJson: true)
 class Step {
   final String id;
   final bool isMandatory;
   final AnswerFormat? answerFormat;
-  @JsonKey(includeIfNull: false)
+
   final String? buttonText;
   final List<Content> content;
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -35,7 +37,7 @@ class Step {
     if (identical(this, other)) return true;
     if (other is! Step) return false;
     if (runtimeType != other.runtimeType) return false;
-    
+
     return id == other.id &&
         isMandatory == other.isMandatory &&
         answerFormat == other.answerFormat &&
@@ -46,12 +48,13 @@ class Step {
   bool _listEquals<T>(List<T>? a, List<T>? b) {
     if (a == null) return b == null;
     if (b == null || a.length != b.length) return false;
-    for (int index = 0; index < a.length; index += 1) {
+    for (var index = 0; index < a.length; index += 1) {
       if (a[index] != b[index]) return false;
     }
     return true;
   }
 
   @override
-  int get hashCode => Object.hash(id, isMandatory, answerFormat, buttonText, content.length);
+  int get hashCode =>
+      Object.hash(id, isMandatory, answerFormat, buttonText, content.length);
 }

@@ -25,6 +25,7 @@ class IntegerAnswerFormat extends AnswerFormat {
 
   factory IntegerAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$IntegerAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$IntegerAnswerFormatToJson(this);
 
   @override

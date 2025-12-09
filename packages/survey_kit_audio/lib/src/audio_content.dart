@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/model/content/content.dart';
+import 'package:survey_kit/survey_kit.dart';
 import 'package:survey_kit_audio/src/audio_widget.dart';
 
 part 'audio_content.g.dart';
@@ -27,6 +27,7 @@ class AudioContent extends Content {
   factory AudioContent.fromJson(Map<String, dynamic> json) =>
       _$AudioContentFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$AudioContentToJson(this);
 
   @override

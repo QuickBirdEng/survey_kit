@@ -23,6 +23,7 @@ class TextContent extends Content {
   factory TextContent.fromJson(Map<String, dynamic> json) =>
       _$TextContentFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$TextContentToJson(this);
 
   @override

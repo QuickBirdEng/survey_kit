@@ -12,10 +12,10 @@ sdkPath: .fvm/flutter_sdk
 
 scripts:
   analyze:
-    run: dart analyze .
+    run: flutter analyze .
     exec:
       concurrency: 1
-    description: Run `dart analyze` in all packages.
+    description: Run `flutter analyze` in all packages.
 
   format:
     run: dart format .

@@ -1,13 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'text_choice.g.dart';
 
+@immutable
 @JsonSerializable()
 class TextChoice {
   final String id;
   final String text;
-  @JsonKey(includeIfNull: false)
+
   final String? value;
 
   TextChoice({

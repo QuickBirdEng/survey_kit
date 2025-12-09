@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'time_result.g.dart';
 
+@immutable
 @JsonSerializable()
 class TimeResult {
   @_TimeOfDayConverter()

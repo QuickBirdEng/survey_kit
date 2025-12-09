@@ -16,7 +16,7 @@ TextContent _$TextContentFromJson(Map<String, dynamic> json) => TextContent(
 
 Map<String, dynamic> _$TextContentToJson(TextContent instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
+      'id': instance.id,
       'text': instance.text,
       'fontSize': instance.fontSize,
       'textAlign': _$TextAlignEnumMap[instance.textAlign]!,

@@ -14,7 +14,7 @@ class StepResult<T> {
   final T? result;
   final DateTime startTime;
   final DateTime endTime;
-  @JsonKey(includeIfNull: false)
+
   final String? valueIdentifier;
 
   const StepResult({
@@ -42,7 +42,8 @@ class StepResult<T> {
   Map<String, dynamic> toJson() => _$StepResultToJson(this, (result) => result);
 
   @override
-  int get hashCode => Object.hash(id, step, result, startTime, endTime, valueIdentifier);
+  int get hashCode =>
+      Object.hash(id, step, result, startTime, endTime, valueIdentifier);
 
   @override
   bool operator ==(Object other) {

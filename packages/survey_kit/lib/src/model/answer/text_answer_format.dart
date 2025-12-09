@@ -30,6 +30,7 @@ class TextAnswerFormat extends AnswerFormat {
 
   factory TextAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$TextAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$TextAnswerFormatToJson(this);
 
   @override

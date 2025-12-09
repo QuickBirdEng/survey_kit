@@ -26,6 +26,7 @@ class StyledTextContent extends Content {
   factory StyledTextContent.fromJson(Map<String, dynamic> json) =>
       _$StyledTextContentFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$StyledTextContentToJson(this);
 
   @override

@@ -33,6 +33,7 @@ class MultipleChoiceAutoCompleteAnswerFormat extends AnswerFormat {
     Map<String, dynamic> json,
   ) =>
       _$MultipleChoiceAutoCompleteAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() =>
       _$MultipleChoiceAutoCompleteAnswerFormatToJson(this);
 

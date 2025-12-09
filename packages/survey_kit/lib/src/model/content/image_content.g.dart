@@ -16,7 +16,7 @@ ImageContent _$ImageContentFromJson(Map<String, dynamic> json) => ImageContent(
 
 Map<String, dynamic> _$ImageContentToJson(ImageContent instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
+      'id': instance.id,
       'url': instance.url,
       'fit': _$BoxFitEnumMap[instance.fit],
       'width': instance.width,

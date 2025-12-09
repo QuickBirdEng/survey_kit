@@ -14,11 +14,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  survey_kit:
-    path: ../survey_kit
   json_annotation: ^4.9.0
   just_audio: ^0.10.4
   rxdart: ^0.28.0
+  survey_kit:
+    path: ../survey_kit
 
 dev_dependencies:
   build_runner: ^2.3.3

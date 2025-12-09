@@ -16,5 +16,5 @@ Map<String, dynamic> _$TextChoiceToJson(TextChoice instance) =>
     <String, dynamic>{
       'id': instance.id,
       'text': instance.text,
-      if (instance.value case final value?) 'value': value,
+      'value': instance.value,
     };

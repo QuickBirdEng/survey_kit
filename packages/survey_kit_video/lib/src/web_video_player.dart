@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:survey_kit/src/widget/platform_view_registry/platform_view_registry.dart';
+import 'package:survey_kit/survey_kit.dart';
 import 'package:universal_html/html.dart' as html;
 
 // TODO(rinzin): Temporary fix for web until

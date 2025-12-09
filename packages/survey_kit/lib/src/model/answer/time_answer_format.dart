@@ -19,6 +19,7 @@ class TimeAnswerFormat extends AnswerFormat {
 
   factory TimeAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$TimeAnswerFormatFromJson(json);
+  @override
   Map<String, dynamic> toJson() => _$TimeAnswerFormatToJson(this);
 
   @override
@@ -45,6 +46,7 @@ class _TimeOfDayJsonConverter
     );
   }
 
+  @override
   @override
   Map<String, dynamic> toJson(TimeOfDay? timeOfDay) => <String, dynamic>{
         'hour': timeOfDay?.hour,

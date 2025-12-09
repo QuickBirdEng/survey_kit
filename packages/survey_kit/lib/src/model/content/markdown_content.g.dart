@@ -14,6 +14,6 @@ MarkdownContent _$MarkdownContentFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$MarkdownContentToJson(MarkdownContent instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
+      'id': instance.id,
       'text': instance.text,
     };

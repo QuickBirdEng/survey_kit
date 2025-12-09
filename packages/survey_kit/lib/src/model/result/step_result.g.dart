@@ -31,7 +31,7 @@ Map<String, dynamic> _$StepResultToJson<T>(
       'result': _$nullableGenericToJson(instance.result, toJsonT),
       'startTime': const CustomDateTimeConverter().toJson(instance.startTime),
       'endTime': const CustomDateTimeConverter().toJson(instance.endTime),
-      if (instance.valueIdentifier case final value?) 'valueIdentifier': value,
+      'valueIdentifier': instance.valueIdentifier,
     };
 
 T? _$nullableGenericFromJson<T>(

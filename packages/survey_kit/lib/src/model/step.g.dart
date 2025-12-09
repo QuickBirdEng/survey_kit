@@ -21,7 +21,7 @@ Step _$StepFromJson(Map<String, dynamic> json) => Step(
 Map<String, dynamic> _$StepToJson(Step instance) => <String, dynamic>{
       'id': instance.id,
       'isMandatory': instance.isMandatory,
-      'answerFormat': instance.answerFormat,
-      if (instance.buttonText case final value?) 'buttonText': value,
-      'content': instance.content,
+      'answerFormat': instance.answerFormat?.toJson(),
+      'buttonText': instance.buttonText,
+      'content': instance.content.map((e) => e.toJson()).toList(),
     };

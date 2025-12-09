@@ -53,10 +53,10 @@ class _AudioWidgetState extends State<AudioWidget> {
       });
 
       if (widget.audioContent.autoPlay) {
-        _player.play();
+        await _player.play();
       }
     } catch (e) {
-      debugPrint("Error loading audio: $e");
+      debugPrint('Error loading audio: $e');
     }
   }
 
@@ -67,10 +67,10 @@ class _AudioWidgetState extends State<AudioWidget> {
   }
 
   String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "$twoDigitMinutes:$twoDigitSeconds";
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    final twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return '$twoDigitMinutes:$twoDigitSeconds';
   }
 
   @override
@@ -91,11 +91,11 @@ class _AudioWidgetState extends State<AudioWidget> {
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 8,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),
@@ -106,9 +106,11 @@ class _AudioWidgetState extends State<AudioWidget> {
                 children: [
                   IconButton(
                     iconSize: 48,
-                    icon: Icon(_isPlaying
-                        ? Icons.pause_circle_filled
-                        : Icons.play_circle_filled),
+                    icon: Icon(
+                      _isPlaying
+                          ? Icons.pause_circle_filled
+                          : Icons.play_circle_filled,
+                    ),
                     onPressed: () {
                       if (_isPlaying) {
                         _player.pause();

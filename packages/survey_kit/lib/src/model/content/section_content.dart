@@ -22,6 +22,7 @@ class SectionContent extends Content {
   factory SectionContent.fromJson(Map<String, dynamic> json) =>
       _$SectionContentFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$SectionContentToJson(this);
 
   @override

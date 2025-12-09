@@ -24,6 +24,7 @@ class MultipleChoiceAnswerFormat extends AnswerFormat {
   factory MultipleChoiceAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$MultipleChoiceAnswerFormatFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$MultipleChoiceAnswerFormatToJson(this);
 
   @override

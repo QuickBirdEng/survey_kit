@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/model/content/content.dart';
+import 'package:survey_kit/survey_kit.dart';
 import 'package:survey_kit_video/src/video_widget.dart';
 part 'video_content.g.dart';
 
@@ -32,6 +32,7 @@ class VideoContent extends Content {
   factory VideoContent.fromJson(Map<String, dynamic> json) =>
       _$VideoContentFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$VideoContentToJson(this);
 
   @override

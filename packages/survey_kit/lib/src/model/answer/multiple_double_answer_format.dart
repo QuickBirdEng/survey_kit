@@ -26,6 +26,7 @@ class MultipleDoubleAnswerFormat extends AnswerFormat {
   factory MultipleDoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$MultipleDoubleAnswerFormatFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$MultipleDoubleAnswerFormatToJson(this);
 
   @override
