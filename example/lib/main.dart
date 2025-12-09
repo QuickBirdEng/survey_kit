@@ -7,10 +7,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
+import 'package:survey_kit_audio/survey_kit_audio.dart' as ska;
 import 'package:survey_kit_video/survey_kit_video.dart';
 import 'package:surveykit_example/app_bar_example.dart';
 
 void main() {
+  Content.registerFromJson('audio', ska.AudioContent.fromJson);
+  Content.registerFromJson('video', VideoContent.fromJson);
   runApp(const MyApp());
 }
 
@@ -109,7 +112,7 @@ class _MyAppState extends State<MyApp> {
                   'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
               width: 900,
             ),
-            AudioContent(
+            ska.AudioContent(
               title: 'This is an audio',
               subtitle: 'The audio is gong',
               externalLink:
@@ -188,7 +191,7 @@ class _MyAppState extends State<MyApp> {
               text: 'Listen carefully!',
               fontSize: 28,
             ),
-            AudioContent(
+            ska.AudioContent(
               title: 'This is an audio',
               subtitle: 'This is a good subtitle for the video',
               url:

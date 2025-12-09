@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:survey_kit/src/model/content/video_content.dart';
 import 'package:survey_kit/src/util/ui_utils.dart';
 import 'package:survey_kit/src/widget/link.dart';
-import 'package:survey_kit/src/widget/survey_kit_video_player.dart';
-import 'package:survey_kit/src/widget/web_video_player.dart';
+import 'package:survey_kit_video/src/survey_kit_video_player.dart';
+import 'package:survey_kit_video/src/video_content.dart';
+import 'package:survey_kit_video/src/web_video_player.dart';
 
 class VideoWidget extends StatelessWidget {
   const VideoWidget({

@@ -6,6 +6,7 @@ workspace:
   - example
   - packages/survey_kit
   - packages/survey_kit_video
+  - packages/survey_kit_audio
 
 dependencies:
   collection: ^1.16.0

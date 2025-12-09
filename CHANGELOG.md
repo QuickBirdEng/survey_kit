@@ -1,5 +1,9 @@
 # 2.0.0
 
+- **BREAKING**: Moved video player to a separate package (`survey_kit_video`)
+- **BREAKING**: Moved audio player to a separate package (`survey_kit_audio`)
+- See [MIGRATION.md](MIGRATION.md) for details on how to upgrade.
+
 - FIX: Fixed DateTime timezone handling in CustomDateTimeConverter to preserve UTC timestamps during serialization
 - FIX: Added missing JSON serialization methods for TimeResult class
 - FIX: Updated test infrastructure with deterministic Step IDs to ensure reliable test execution

@@ -1,14 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/content/content.dart';
-import 'package:survey_kit/src/view/widget/content/audio_widget.dart';
+import 'package:survey_kit_audio/src/audio_widget.dart';
 
 part 'audio_content.g.dart';
 
 @JsonSerializable()
 class AudioContent extends Content {
   static const type = 'audio';
+
   final String url;
+  final bool autoPlay;
   final String? title;
   final String? subtitle;
   final String? externalLink;
@@ -16,6 +18,7 @@ class AudioContent extends Content {
   const AudioContent({
     required this.url,
     super.id,
+    this.autoPlay = false,
     this.title,
     this.subtitle,
     this.externalLink,

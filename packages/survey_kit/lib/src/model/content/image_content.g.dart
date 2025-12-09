@@ -7,16 +7,16 @@ part of 'image_content.dart';
 // **************************************************************************
 
 ImageContent _$ImageContentFromJson(Map<String, dynamic> json) => ImageContent(
-  id: json['id'] as String?,
-  url: json['url'] as String,
-  fit: $enumDecodeNullable(_$BoxFitEnumMap, json['fit']),
-  width: (json['width'] as num?)?.toDouble(),
-  height: (json['height'] as num?)?.toDouble(),
-);
+      id: json['id'] as String?,
+      url: json['url'] as String,
+      fit: $enumDecodeNullable(_$BoxFitEnumMap, json['fit']),
+      width: (json['width'] as num?)?.toDouble(),
+      height: (json['height'] as num?)?.toDouble(),
+    );
 
 Map<String, dynamic> _$ImageContentToJson(ImageContent instance) =>
     <String, dynamic>{
-      'id': ?instance.id,
+      if (instance.id case final value?) 'id': value,
       'url': instance.url,
       'fit': _$BoxFitEnumMap[instance.fit],
       'width': instance.width,

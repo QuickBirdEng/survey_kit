@@ -7,8 +7,9 @@ part of 'time_result.dart';
 // **************************************************************************
 
 TimeResult _$TimeResultFromJson(Map<String, dynamic> json) => TimeResult(
-  timeOfDay: const _TimeOfDayConverter().fromJson(json['timeOfDay'] as String?),
-);
+      timeOfDay:
+          const _TimeOfDayConverter().fromJson(json['timeOfDay'] as String?),
+    );
 
 Map<String, dynamic> _$TimeResultToJson(TimeResult instance) =>
     <String, dynamic>{
