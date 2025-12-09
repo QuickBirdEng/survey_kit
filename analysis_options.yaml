@@ -9,6 +9,7 @@ analyzer:
     missing_return: error
     # Ignored because of freezed and JsonKey (https://github.com/rrousselGit/freezed/issues/488)
     invalid_annotation_target: ignore
+    invalid_dependency: ignore
     body_might_complete_normally_nullable: ignore
 
   exclude:
