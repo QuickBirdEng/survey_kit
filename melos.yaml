@@ -12,23 +12,19 @@ sdkPath: .fvm/flutter_sdk
 
 scripts:
   analyze:
-    run: flutter analyze .
-    exec:
-      concurrency: 1
+    exec: flutter analyze .
     description: Run `flutter analyze` in all packages.
 
   format:
-    run: dart format .
+    exec: dart format .
     description: Run `dart format` in all packages.
 
   test:
-    run: flutter test
-    exec:
-      concurrency: 1
+    exec: flutter test
     packageFilters:
       dirExists: test
     description: Run tests in all packages that have a `test` directory.
 
   clean:
-    run: flutter clean
+    exec: flutter clean
     description: Run `flutter clean` in all packages.
