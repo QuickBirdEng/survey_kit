@@ -18,7 +18,6 @@ export 'src/model/answer/time_answer_format.dart';
 //Content
 export 'src/model/content/content.dart';
 export 'src/model/content/image_content.dart';
-export 'src/model/content/lottie_content.dart';
 export 'src/model/content/markdown_content.dart';
 export 'src/model/content/section_content.dart';
 export 'src/model/content/styled_text_content.dart';
@@ -59,5 +58,6 @@ export 'src/view/widget/content/content_widget.dart';
 export 'src/view/widget/decoration/input_decoration.dart';
 export 'src/view/widget/question_answer.dart';
 export 'src/widget/survey_app_bar.dart';
+export 'gen/survey_kit_localizations.dart';
 export 'src/widget/survey_progress.dart';
 export 'src/widget/survey_progress_configuration.dart';

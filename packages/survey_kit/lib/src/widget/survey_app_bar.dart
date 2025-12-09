@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:survey_kit/gen/survey_kit_localizations.dart';
 import 'package:survey_kit/src/configuration/survey_configuration.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
@@ -22,7 +23,7 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     final cancelButton = TextButton(
       child: Text(
-        SurveyConfiguration.of(context).localizations?['cancel'] ?? 'Cancel',
+        SurveyKitLocalizations.of(context)?.cancel ?? 'Cancel',
         style: TextStyle(
           color: Theme.of(context).primaryColor,
         ),

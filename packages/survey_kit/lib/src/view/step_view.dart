@@ -71,9 +71,9 @@ class _StepViewState extends State<StepView> {
                                   : null,
                               child: Text(
                                 widget.step.buttonText ??
-                                    surveyConfiguration.localizations?['next']
-                                        ?.toUpperCase() ??
-                                    'Next',
+                                    (SurveyKitLocalizations.of(context)?.next ??
+                                            'Next')
+                                        .toUpperCase(),
                               ),
                             );
                           },

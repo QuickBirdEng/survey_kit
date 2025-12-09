@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button text to cancel the survey"
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Button text to go to the next step"
+  }
+}

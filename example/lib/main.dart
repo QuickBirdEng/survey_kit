@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:survey_kit/survey_kit.dart';
 import 'package:survey_kit_audio/survey_kit_audio.dart' as ska;
 import 'package:survey_kit_lottie/survey_kit_lottie.dart';
@@ -30,6 +31,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        SurveyKitLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: SurveyKitLocalizations.supportedLocales,
       theme: theme,
       home: Scaffold(
         body: Container(
@@ -348,10 +356,6 @@ class SurveyKitView extends StatelessWidget {
         Navigator.pushNamed(context, '/');
       },
       task: task,
-      localizations: const {
-        'cancel': 'Cancel',
-        'next': 'Next',
-      },
       surveyProgressbarConfiguration: SurveyProgressConfiguration(
         backgroundColor: Colors.white,
       ),

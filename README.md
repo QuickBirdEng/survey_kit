@@ -29,13 +29,14 @@ This is an early version and work in progress. Do not hesitate to give feedback,
 - [Examples](#examples)
           - [Flow](#flow)
           - [Screenshots](#screenshots)
-  - [📚 Overview: Creating Research Surveys](#-overview-creating-research-surveys)
-  - [What SurveyKit does for you](#what-surveykit-does-for-you)
-  - [What SurveyKit does not (yet) do for you](#what-surveykit-does-not-yet-do-for-you)
+- [📚 Overview: Creating Research Surveys](#-overview-creating-research-surveys)
+- [What SurveyKit does for you](#what-surveykit-does-for-you)
+- [What SurveyKit does not (yet) do for you](#what-surveykit-does-not-yet-do-for-you)
 - [🏃 Setup](#-setup)
-  - [1. Add the dependecy](#1-add-the-dependecy)
-  - [2. Install it](#2-install-it)
-  - [3. Import it](#3-import-it)
+- [1. Add the dependecy](#1-add-the-dependecy)
+- [2. Install it](#2-install-it)
+- [3. Import it](#3-import-it)
+- [4. Setup Localization](#4-setup-localization)
 - [💻 Usage](#-usage)
   - [Example](#example)
     - [Create survey steps](#create-survey-steps)
@@ -90,6 +91,21 @@ flutter pub get
 ## 3. Import it
 ```dart
 import 'package:survey_kit/survey_kit.dart';
+```
+```
+
+## 4. Setup Localization
+```dart
+return MaterialApp(
+  localizationsDelegates: const [
+    SurveyKitLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: SurveyKitLocalizations.supportedLocales,
+  ...
+);
 ```
 
 # 💻 Usage
@@ -257,13 +273,17 @@ The styling can be adjusted by the build in Flutter theme.
 | subtitle1   | Textstyle used in TextFields|
 
 ### Localization
-If you want to override the fixed texts or adapt them to different languages like close, next, .... You need to provide SurveyKit a Map of translations
-
+If you want to override the fixed texts or adapt them to different languages like close, next, .... You need to add the `SurveyKitLocalizations` to your `MaterialApp`:
 ```dart
-SurveyKit(
-    localizations: {
-        'cancel': 'Cancel',
-    }
+return MaterialApp(
+  localizationsDelegates: const [
+    SurveyKitLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: SurveyKitLocalizations.supportedLocales,
+  ...
 );
 ```
 Here is a complete list of keys that can be overriden:

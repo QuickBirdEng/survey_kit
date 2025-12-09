@@ -1,4 +1,3 @@
-import 'package:survey_kit/src/model/content/lottie_content.dart';
 import 'package:survey_kit/src/model/content/text_content.dart';
 import 'package:survey_kit/src/model/step.dart';
 
@@ -20,9 +19,6 @@ Step CompletionStep({
         ),
         TextContent(
           text: text,
-        ),
-        const LottieContent(
-          asset: 'assets/fancy_checkmark.json',
         ),
       ],
       buttonText: buttonText,
