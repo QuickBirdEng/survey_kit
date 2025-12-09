@@ -23,6 +23,11 @@ jobs:
       - name: Resolve Root Dependencies
         run: dart pub get
 
+      - name: Debug Environment
+        run: |
+          ls -la
+          melos --version
+
       - name: Bootstrap Workspace
         run: melos bootstrap
 

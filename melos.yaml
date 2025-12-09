@@ -8,8 +8,6 @@ command:
   bootstrap:
     usePubspecOverrides: true
 
-
-
 scripts:
   analyze:
     exec: flutter analyze .
