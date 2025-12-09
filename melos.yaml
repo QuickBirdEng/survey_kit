@@ -8,7 +8,7 @@ command:
   bootstrap:
     usePubspecOverrides: true
 
-sdkPath: .fvm/flutter_sdk
+
 
 scripts:
   analyze:
