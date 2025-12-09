@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/model/content/lottie_content.dart';
+
 import 'package:survey_kit/src/model/content/markdown_content.dart';
 import 'package:survey_kit/src/model/content/text_content.dart';
 
@@ -20,7 +20,6 @@ abstract class Content {
       {
     'text': TextContent.fromJson,
     'markdown': MarkdownContent.fromJson,
-    'lottie': LottieContent.fromJson,
   };
 
   static void registerFromJson(

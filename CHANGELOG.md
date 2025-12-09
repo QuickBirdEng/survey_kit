@@ -2,6 +2,7 @@
 
 - **BREAKING**: Moved video player to a separate package (`survey_kit_video`)
 - **BREAKING**: Moved audio player to a separate package (`survey_kit_audio`)
+- **BREAKING**: Moved lottie support to a separate package (`survey_kit_lottie`)
 - See [MIGRATION.md](MIGRATION.md) for details on how to upgrade.
 
 - FIX: Fixed DateTime timezone handling in CustomDateTimeConverter to preserve UTC timestamps during serialization

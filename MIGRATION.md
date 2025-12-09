@@ -6,7 +6,7 @@ With the release of version 2.0.0, we have modularized `survey_kit` to allow for
 
 ### Modularization of Audio and Video Steps
 
-The audio and video steps have been moved to their own packages: `survey_kit_audio` and `survey_kit_video`. This reduces the size of the core package and allows you to include only the dependencies you need.
+The audio and video steps have been moved to their own packages: `survey_kit_audio` and `survey_kit_video`. This reduces the size of the core package and allows you to include only the dependencies you need. Same goes for `survey_kit_lottie`.
 
 #### Action Required:
 
@@ -18,6 +18,7 @@ dependencies:
   # Add these if you use audio or video steps
   survey_kit_audio: ^2.0.0
   survey_kit_video: ^2.0.0
+  survey_kit_lottie: ^2.0.0
 ```
 
 ### Imports
@@ -36,6 +37,8 @@ import 'package:survey_kit/survey_kit.dart';
 import 'package:survey_kit_audio/survey_kit_audio.dart';
 // Add if using video features
 import 'package:survey_kit_video/survey_kit_video.dart';
+// Add if using lottie features
+import 'package:survey_kit_lottie/survey_kit_lottie.dart';
 ```
 
 ## Other Changes
@@ -47,6 +50,7 @@ import 'package:survey_kit_video/survey_kit_video.dart';
 
 1.  Update `survey_kit` to `^2.0.0`.
 2.  Add `survey_kit_audio` or `survey_kit_video` if you use those features.
+3.  Add `survey_kit_lottie` if you use those features.
 3.  Update imports in your Dart files.
 
 If you encounter any issues during migration, please open an issue on our [GitHub repository](https://github.com/quickbirdstudios/survey_kit/issues).

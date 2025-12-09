@@ -1,0 +1,34 @@
+name: survey_kit_workspace
+
+packages:
+  - example
+  - packages/*
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+sdkPath: .fvm/flutter_sdk
+
+scripts:
+  analyze:
+    run: dart analyze .
+    exec:
+      concurrency: 1
+    description: Run `dart analyze` in all packages.
+
+  format:
+    run: dart format .
+    description: Run `dart format` in all packages.
+
+  test:
+    run: flutter test
+    exec:
+      concurrency: 1
+    packageFilters:
+      dirExists: test
+    description: Run tests in all packages that have a `test` directory.
+
+  clean:
+    run: flutter clean
+    description: Run `flutter clean` in all packages.
