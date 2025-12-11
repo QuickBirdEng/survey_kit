@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/src/configuration/survey_kit_registry.dart';
 import 'package:survey_kit/src/view/step_view.dart';
 import 'package:survey_kit/survey_kit.dart';
 
@@ -22,8 +23,22 @@ class _AnswerViewState extends State<AnswerView> {
   @override
   Widget build(BuildContext context) {
     Widget? answerView;
+    final registry = SurveyKitRegistry.of(context);
     if (widget.answer != null) {
-      answerView = widget.answer!.createView(widget.step, widget.stepResult);
+      answerView = registry?.createAnswerView(
+        widget.answer!,
+        widget.step,
+        widget.stepResult,
+      );
+      if (answerView == null) {
+        answerView = Container(
+          child: Center(
+            child: Text(
+              'No view for ${widget.answer.runtimeType}',
+            ),
+          ),
+        );
+      }
     }
     final stepShell =
         widget.step.stepShell ?? SurveyStateProvider.of(context).stepShell;

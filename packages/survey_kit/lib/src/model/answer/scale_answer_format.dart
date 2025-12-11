@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/survey_kit.dart';
+import 'package:survey_kit/src/model/answer/answer_format.dart';
 
 part 'scale_answer_format.g.dart';
 
@@ -30,12 +29,4 @@ class ScaleAnswerFormat extends AnswerFormat {
       _$ScaleAnswerFormatFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$ScaleAnswerFormatToJson(this);
-
-  @override
-  Widget createView(Step step, StepResult? stepResult) {
-    return ScaleAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
-  }
 }

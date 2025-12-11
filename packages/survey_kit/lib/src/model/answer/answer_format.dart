@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/answer/boolean_answer_format.dart';
 import 'package:survey_kit/src/model/answer/date_answer_format.dart';
@@ -11,8 +10,6 @@ import 'package:survey_kit/src/model/answer/scale_answer_format.dart';
 import 'package:survey_kit/src/model/answer/single_choice_answer_format.dart';
 import 'package:survey_kit/src/model/answer/text_answer_format.dart';
 import 'package:survey_kit/src/model/answer/time_answer_format.dart';
-import 'package:survey_kit/src/model/result/step_result.dart';
-import 'package:survey_kit/src/model/step.dart';
 
 @JsonSerializable()
 abstract class AnswerFormat {
@@ -22,38 +19,39 @@ abstract class AnswerFormat {
   @JsonKey(name: 'type')
   final String? answerType;
 
-  Widget createView(Step step, StepResult? stepResult);
+  static final Map<String, AnswerFormat Function(Map<String, dynamic>)>
+      _converters = {
+    BooleanAnswerFormat.type: BooleanAnswerFormat.fromJson,
+    DateAnswerFormat.type: DateAnswerFormat.fromJson,
+    DoubleAnswerFormat.type: DoubleAnswerFormat.fromJson,
+    IntegerAnswerFormat.type: IntegerAnswerFormat.fromJson,
+    MultipleChoiceAnswerFormat.type: MultipleChoiceAnswerFormat.fromJson,
+    MultipleChoiceAutoCompleteAnswerFormat.type:
+        MultipleChoiceAutoCompleteAnswerFormat.fromJson,
+    MultipleDoubleAnswerFormat.type: MultipleDoubleAnswerFormat.fromJson,
+    ScaleAnswerFormat.type: ScaleAnswerFormat.fromJson,
+    SingleChoiceAnswerFormat.type: SingleChoiceAnswerFormat.fromJson,
+    TextAnswerFormat.type: TextAnswerFormat.fromJson,
+    TimeAnswerFormat.type: TimeAnswerFormat.fromJson,
+  };
+
+  static void registerFromJson(
+    String type,
+    AnswerFormat Function(Map<String, dynamic>) factory,
+  ) {
+    _converters[type] = factory;
+  }
 
   factory AnswerFormat.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String?;
     assert(type != null, 'type is required');
 
-    switch (type) {
-      case MultipleChoiceAnswerFormat.type:
-        return MultipleChoiceAnswerFormat.fromJson(json);
-      case SingleChoiceAnswerFormat.type:
-        return SingleChoiceAnswerFormat.fromJson(json);
-      case BooleanAnswerFormat.type:
-        return BooleanAnswerFormat.fromJson(json);
-      case DateAnswerFormat.type:
-        return DateAnswerFormat.fromJson(json);
-      case DoubleAnswerFormat.type:
-        return DoubleAnswerFormat.fromJson(json);
-      case IntegerAnswerFormat.type:
-        return IntegerAnswerFormat.fromJson(json);
-      case TextAnswerFormat.type:
-        return TextAnswerFormat.fromJson(json);
-      case TimeAnswerFormat.type:
-        return TimeAnswerFormat.fromJson(json);
-      case ScaleAnswerFormat.type:
-        return ScaleAnswerFormat.fromJson(json);
-      case MultipleChoiceAutoCompleteAnswerFormat.type:
-        return MultipleChoiceAutoCompleteAnswerFormat.fromJson(json);
-      case MultipleDoubleAnswerFormat.type:
-        return MultipleDoubleAnswerFormat.fromJson(json);
-      default:
-        throw Exception('Unknown type: $type');
+    final converter = _converters[type];
+    if (converter != null) {
+      return converter(json);
     }
+
+    throw Exception('Unknown type: $type');
   }
   Map<String, dynamic> toJson();
 }

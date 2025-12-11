@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/util/extension.dart';
+import 'package:survey_kit/src/configuration/survey_kit_registry.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class ContentWidget extends StatefulWidget {
@@ -26,7 +27,14 @@ class _ContentWidgetState extends State<ContentWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: widget.content
             .map(
-              (e) => e.createWidget(),
+              (e) {
+                final widget =
+                    SurveyKitRegistry.of(context)?.createContentWidget(e);
+                if (widget == null) {
+                  return Container();
+                }
+                return widget;
+              },
             )
             .withSeparator(
               const _Separator(

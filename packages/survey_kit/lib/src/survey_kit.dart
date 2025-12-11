@@ -1,6 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/configuration/survey_configuration.dart';
+import 'package:survey_kit/src/configuration/survey_kit_default_registry.dart';
+import 'package:survey_kit/src/configuration/survey_kit_plugin.dart';
+import 'package:survey_kit/src/configuration/survey_kit_registry.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/model/result/survey_result.dart';
 import 'package:survey_kit/src/model/step.dart';
@@ -52,6 +55,10 @@ class SurveyKit extends StatefulWidget {
 
   final Color? backgroundColor;
 
+  final Map<Type, AnswerViewBuilder>? answerViewBuilders;
+  final Map<Type, ContentWidgetBuilder>? contentWidgetBuilders;
+  final List<SurveyKitPlugin>? registries;
+
   const SurveyKit({
     super.key,
     required this.task,
@@ -63,6 +70,9 @@ class SurveyKit extends StatefulWidget {
     this.stepShell,
     this.decoration,
     this.backgroundColor,
+    this.answerViewBuilders,
+    this.contentWidgetBuilders,
+    this.registries,
   });
 
   @override
@@ -111,6 +121,38 @@ class _SurveyKitState extends State<SurveyKit> {
         onResult: widget.onResult,
         stepShell: widget.stepShell,
         navigatorKey: _navigatorKey,
+        child: _buildSurveyPage(context),
+      ),
+    );
+  }
+
+  Widget _buildSurveyPage(BuildContext context) {
+    if (widget.answerViewBuilders != null ||
+        widget.contentWidgetBuilders != null ||
+        widget.registries != null) {
+      final answerViewBuilders =
+          Map<Type, AnswerViewBuilder>.from(getDefaultAnswerViewBuilders());
+      final contentWidgetBuilders = Map<Type, ContentWidgetBuilder>.from(
+        getDefaultContentWidgetBuilders(),
+      );
+
+      if (widget.registries != null) {
+        for (final registry in widget.registries!) {
+          answerViewBuilders.addAll(registry.answerViewBuilders);
+          contentWidgetBuilders.addAll(registry.contentWidgetBuilders);
+        }
+      }
+
+      if (widget.answerViewBuilders != null) {
+        answerViewBuilders.addAll(widget.answerViewBuilders!);
+      }
+      if (widget.contentWidgetBuilders != null) {
+        contentWidgetBuilders.addAll(widget.contentWidgetBuilders!);
+      }
+
+      return SurveyKitRegistry(
+        initialAnswerViewBuilders: answerViewBuilders,
+        initialContentWidgetBuilders: contentWidgetBuilders,
         child: SurveyPage(
           backgroundColor: widget.backgroundColor,
           length: widget.task.steps.length,
@@ -119,7 +161,31 @@ class _SurveyKitState extends State<SurveyKit> {
           navigatorKey: _navigatorKey,
           decoration: widget.decoration,
         ),
-      ),
+      );
+    }
+
+    if (SurveyKitRegistry.of(context) == null) {
+      return SurveyKitRegistry(
+        initialAnswerViewBuilders: getDefaultAnswerViewBuilders(),
+        initialContentWidgetBuilders: getDefaultContentWidgetBuilders(),
+        child: SurveyPage(
+          backgroundColor: widget.backgroundColor,
+          length: widget.task.steps.length,
+          onResult: widget.onResult,
+          appBar: widget.appBar,
+          navigatorKey: _navigatorKey,
+          decoration: widget.decoration,
+        ),
+      );
+    }
+
+    return SurveyPage(
+      backgroundColor: widget.backgroundColor,
+      length: widget.task.steps.length,
+      onResult: widget.onResult,
+      appBar: widget.appBar,
+      navigatorKey: _navigatorKey,
+      decoration: widget.decoration,
     );
   }
 }

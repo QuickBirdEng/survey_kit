@@ -1,7 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/survey_kit.dart';
-import 'package:survey_kit_audio/src/audio_widget.dart';
 
 part 'audio_content.g.dart';
 
@@ -29,9 +27,4 @@ class AudioContent extends Content {
 
   @override
   Map<String, dynamic> toJson() => _$AudioContentToJson(this);
-
-  @override
-  Widget createWidget() {
-    return AudioWidget(audioContent: this);
-  }
 }

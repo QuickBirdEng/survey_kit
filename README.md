@@ -312,11 +312,53 @@ Scaffold(
 # 📇 Custom content widgets
 ##TODO
 # 📇 Custom answer formats
-At some point, you might wanna define your own custom question steps. 
-That could, for example, be a question which prompts the user to pick color values or even sound samples. 
-These are not implemented yet but you can easily create them yourself: 
+At some point, you might wanna define your own custom question steps.
+That could, for example, be a question which prompts the user to pick color values or even sound samples.
 
-##TODO
+As of version 2.0.0, we use a Registry Pattern.
+
+### 1. Define your Custom Answer Format
+```dart
+class MyCustomAnswerFormat extends AnswerFormat {
+   const MyCustomAnswerFormat() : super();
+   
+   // ... Add your properties
+}
+```
+
+### 2. Register your View Builder
+Pass your custom builders to the `SurveyKit` widget.
+
+```dart
+SurveyKit(
+  task: ...,
+  onResult: ...,
+  answerViewBuilders: {
+    ...getDefaultAnswerViewBuilders(), // Optional: use this if you want to keep defaults
+    MyCustomAnswerFormat: (format, step, result) => MyCustomView(step, result),
+  },
+)
+```
+
+**Note:** You can still use `SurveyKitRegistry` if you want to wrap your whole app, but passing it to `SurveyKit` is simpler for most cases.
+
+### 3. Use it in a Step
+```dart
+Step(
+  answerFormat: MyCustomAnswerFormat(),
+  ...
+)
+```
+
+### 4. Enable JSON Deserialization (Optional)
+If you are loading surveys from JSON and want to support your custom type:
+
+```dart
+AnswerFormat.registerFromJson(
+  'my_custom_type',
+  MyCustomAnswerFormat.fromJson,
+);
+```
 
 
 If you want to create a complete custom view or just override the navigation behavior you should use the SurveyController with has these three methods:

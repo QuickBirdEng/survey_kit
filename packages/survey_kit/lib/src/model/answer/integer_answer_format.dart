@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
+import 'package:survey_kit/src/model/answer/answer_format.dart';
 import 'package:survey_kit/src/util/int_extension.dart';
-import 'package:survey_kit/survey_kit.dart';
 
 part 'integer_answer_format.g.dart';
 
@@ -27,12 +26,4 @@ class IntegerAnswerFormat extends AnswerFormat {
       _$IntegerAnswerFormatFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$IntegerAnswerFormatToJson(this);
-
-  @override
-  Widget createView(Step step, StepResult? stepResult) {
-    return IntegerAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
-  }
 }

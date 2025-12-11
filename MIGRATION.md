@@ -41,6 +41,82 @@ import 'package:survey_kit_video/survey_kit_video.dart';
 import 'package:survey_kit_lottie/survey_kit_lottie.dart';
 ```
 
+### External Plugins (Audio, Video, Lottie)
+These features are now plugins. You must register them in `SurveyKit`:
+
+```dart
+SurveyKit(
+  // ...
+  registries: [
+    SurveyKitAudio(),
+    SurveyKitVideo(),
+    SurveyKitLottie(),
+  ],
+)
+```
+
+### Registry Pattern (Custom Questions)
+
+In version 2.0.0, we have decoupled the `AnswerFormat` (Model) from the View generation to allow for better separation of concerns and pure Dart models.
+
+**Refactoring required:**
+1.  Remove `createView` from your custom `AnswerFormat` classes.
+2.  Register your custom view builder in the `SurveyKitRegistry`.
+
+**Before:**
+```dart
+class MyCustomAnswerFormat extends AnswerFormat {
+  ...
+  @override
+  Widget createView(Step step, StepResult? stepResult) {
+    return MyCustomView(step, stepResult);
+  }
+}
+```
+
+**After:**
+```dart
+// 1. Clean Model
+class MyCustomAnswerFormat extends AnswerFormat {
+  ...
+  // No createView method here!
+}
+
+// 2. Register in Registry (Only if you have custom steps)
+// Functionally, you can pass custom builders directly to SurveyKit:
+
+SurveyKit(
+  ...
+  answerViewBuilders: {
+    ...getDefaultAnswerViewBuilders(),
+     MyCustomAnswerFormat: (format, step, result) => MyCustomView(step, result),
+  },
+);
+```
+
+*Alternatively, you can still wrap your app with `SurveyKitRegistry` if you prefer global configuration:*
+
+```dart
+SurveyKitRegistry(
+  initialAnswerViewBuilders: {
+    ...getDefaultAnswerViewBuilders(),
+    MyCustomAnswerFormat: (format, step, result) => MyCustomView(step, result),
+  },
+  child: MaterialApp(...)
+)
+```
+
+```
+
+### JSON Deserialization
+
+We have replaced the hardcoded `switch` statement in `AnswerFormat.fromJson` with a registry. This allows you to deserialize your own custom answer formats from JSON.
+
+```dart
+// Register your custom type before loading JSON
+AnswerFormat.registerFromJson('my_custom_type', MyCustomAnswerFormat.fromJson);
+```
+
 ## Other Changes
 
 - **Dependencies Updated:** We have updated internal dependencies to be compatible with the latest Flutter versions (3.19.0+).

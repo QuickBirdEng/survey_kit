@@ -1,6 +1,10 @@
 # 2.0.0
 
 - Infra: Added `melos` for monorepo management.
+- **BREAKING**: Removed `createView` from `AnswerFormat`. Use `SurveyKitRegistry` to register custom views.
+- **FEATURE**: Introduced `SurveyKitRegistry` to decouple Step/Answer models from UI. Automatic default injection. Added `answerViewBuilders` parameter to `SurveyKit` for easier registration.
+- **FEATURE**: Introduced `registries` parameter to `SurveyKit` to support plugins (like Audio/Video/Lottie).
+- **FEATURE**: Added `AnswerFormat.registerFromJson` to allow registering custom JSON deserializers.
 - **BREAKING**: Moved video player to a separate package (`survey_kit_video`)
 - **BREAKING**: Moved audio player to a separate package (`survey_kit_audio`)
 - **BREAKING**: Moved lottie support to a separate package (`survey_kit_lottie`)

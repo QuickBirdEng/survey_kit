@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:survey_kit/src/model/content/markdown_content.dart';
@@ -39,8 +38,6 @@ abstract class Content {
 
     throw Exception('Unknown type: $type');
   }
-
-  Widget createWidget();
 
   Map<String, dynamic> toJson();
 }

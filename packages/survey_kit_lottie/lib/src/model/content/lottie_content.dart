@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/survey_kit.dart';
-import 'package:survey_kit_lottie/src/view/widget/content/lottie_widget.dart';
 
 part 'lottie_content.g.dart';
 
@@ -22,16 +20,12 @@ class LottieContent extends Content {
     this.width = 100,
     this.height = 100,
     super.id,
-  })  : assert(url != null || asset != null, 'Either url or asset must be set'),
-        super(contentType: type);
+  }) : assert(url != null || asset != null, 'Either url or asset must be set'),
+       super(contentType: type);
 
   factory LottieContent.fromJson(Map<String, dynamic> json) =>
       _$LottieContentFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LottieContentToJson(this);
-
   @override
-  Widget createWidget() {
-    return LottieWidget(lottieContent: this);
-  }
+  Map<String, dynamic> toJson() => _$LottieContentToJson(this);
 }

@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/src/view/widget/content/styled_text_widget.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 part 'styled_text_content.g.dart';
@@ -28,11 +26,4 @@ class StyledTextContent extends Content {
 
   @override
   Map<String, dynamic> toJson() => _$StyledTextContentToJson(this);
-
-  @override
-  Widget createWidget() {
-    return StyledTextWidget(
-      content: this,
-    );
-  }
 }

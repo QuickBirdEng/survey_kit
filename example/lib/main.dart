@@ -356,6 +356,11 @@ class SurveyKitView extends StatelessWidget {
         Navigator.pushNamed(context, '/');
       },
       task: task,
+      registries: [
+        ska.SurveyKitAudio(),
+        SurveyKitVideo(),
+        SurveyKitLottie(),
+      ],
       surveyProgressbarConfiguration: SurveyProgressConfiguration(
         backgroundColor: Colors.white,
       ),

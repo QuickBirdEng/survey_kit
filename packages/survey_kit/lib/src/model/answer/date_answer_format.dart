@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart' hide Step;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_kit/survey_kit.dart';
+import 'package:survey_kit/src/model/answer/answer_format.dart';
 
 part 'date_answer_format.g.dart';
 
@@ -47,12 +46,4 @@ class DateAnswerFormat extends AnswerFormat {
       _$DateAnswerFormatFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$DateAnswerFormatToJson(this);
-
-  @override
-  Widget createView(Step step, StepResult? stepResult) {
-    return DateAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
-  }
 }

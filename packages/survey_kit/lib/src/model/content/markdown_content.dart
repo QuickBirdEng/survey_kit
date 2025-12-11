@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_kit/src/model/content/content.dart';
-import 'package:survey_kit/src/view/widget/content/markdown_widget.dart';
 
 part 'markdown_content.g.dart';
 
@@ -21,9 +19,4 @@ class MarkdownContent extends Content {
 
   @override
   Map<String, dynamic> toJson() => _$MarkdownContentToJson(this);
-
-  @override
-  Widget createWidget() {
-    return MarkdownWidget(markdownContent: this);
-  }
 }
