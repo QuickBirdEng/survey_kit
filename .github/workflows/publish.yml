@@ -1,6 +1,7 @@
 name: Publish to pub.dev
 
 on:
+  workflow_dispatch:
   release:
     types: [published]
 
@@ -12,18 +13,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Setup Flutter and Dart
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
 
-      # Used to establish OIDC trust with pub.dev
       - uses: dart-lang/setup-dart@v1
 
-      - name: Install Melos
-        run: dart pub global activate melos
-
-      - name: Bootstrap Workspace
-        run: melos bootstrap
-
+      # Use melos-action to handle bootstrap and publishing
       - name: Publish Packages
-        run: melos publish -y --no-dry-run
+        uses: bluefireteam/melos-action@v3
+        with:
+          publish: true
