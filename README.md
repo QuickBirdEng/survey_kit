@@ -80,7 +80,16 @@ To use this plugin, add survey_kit as a dependency in your pubspec.yaml file.
 `pubspec.yaml`
 ```yaml
 dependencies:
-  survey_kit: ^0.1.1
+  survey_kit: ^2.0.0
+```
+
+If you want to use the specific steps (Audio, Video, Lottie), you need to add the respective packages to your `pubspec.yaml`.
+```yaml
+dependencies:
+  survey_kit: ^2.0.0
+  survey_kit_audio: ^2.0.0
+  survey_kit_video: ^2.0.0
+  survey_kit_lottie: ^2.0.0
 ```
 
 ## 2. Install it
@@ -91,6 +100,12 @@ flutter pub get
 ## 3. Import it
 ```dart
 import 'package:survey_kit/survey_kit.dart';
+// Add if using audio features
+import 'package:survey_kit_audio/survey_kit_audio.dart';
+// Add if using video features
+import 'package:survey_kit_video/survey_kit_video.dart';
+// Add if using lottie features
+import 'package:survey_kit_lottie/survey_kit_lottie.dart';
 ```
 ```
 

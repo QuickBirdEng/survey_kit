@@ -8,7 +8,7 @@ issue_tracker: https://github.com/quickbirdstudios/survey_kit/issues
 resolution: workspace
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
+  sdk: ">=3.2.0 <4.0.0"
   flutter: ">=2.0.0"
 
 dependencies:

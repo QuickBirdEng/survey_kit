@@ -1,4 +1,4 @@
-# 2.0.0
+# 2.0.0 (2024-10-24)
 
 - Infra: Added `melos` for monorepo management.
 - **BREAKING**: Moved video player to a separate package (`survey_kit_video`)
