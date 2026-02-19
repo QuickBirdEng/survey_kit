@@ -1,391 +1,334 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:survey_kit/survey_kit.dart';
 import 'package:survey_kit_audio/survey_kit_audio.dart' as ska;
 import 'package:survey_kit_lottie/survey_kit_lottie.dart';
 import 'package:survey_kit_video/survey_kit_video.dart';
-import 'package:surveykit_example/app_bar_example.dart';
 
 void main() {
-  Content.registerFromJson('audio', ska.AudioContent.fromJson);
-  Content.registerFromJson('video', VideoContent.fromJson);
-  Content.registerFromJson('lottie', LottieContent.fromJson);
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: const [
+    return const MaterialApp(
+      localizationsDelegates: [
         SurveyKitLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: SurveyKitLocalizations.supportedLocales,
-      theme: theme,
-      home: Scaffold(
-        body: Container(
-          color: Colors.white,
-          child: Align(
-            alignment: Alignment.center,
-            child: FutureBuilder<Task>(
-              future: getSampleTask(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData &&
-                    snapshot.data != null) {
-                  final task = snapshot.data!;
-                  return SurveyKitView(
-                    task: task,
-                  );
-                }
-                return const CircularProgressIndicator.adaptive();
-              },
-            ),
-          ),
-        ),
-      ),
+      home: CombinedSurveyPage(),
+    );
+  }
+}
+
+class CombinedSurveyPage extends StatefulWidget {
+  const CombinedSurveyPage({super.key});
+
+  @override
+  State<CombinedSurveyPage> createState() => _CombinedSurveyPageState();
+}
+
+class _CombinedSurveyPageState extends State<CombinedSurveyPage> {
+  late final SurveyFlow _task;
+  late final SurveyController _controller;
+  int _surveySession = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _task = _buildTask();
+    _controller = SurveyController(
+      onNextStep: _onNextStep,
     );
   }
 
-  Future<Task> getSampleTask() {
-    final task = NavigableTask(
-      navigationRules: {
-        'SingleChoice': ConditionalNavigationRule(
-          resultToStepIdentifierMapper:
-              (List<StepResult> results, StepResult? input) {
-            final selectedChoice = input?.result as TextChoice?;
-            switch (selectedChoice?.text) {
-              case 'Yes':
-                return 'OnlyConent';
-              case 'No':
-                return 'Completion';
-              default:
-                return null;
+  void _onNextStep(BuildContext context, StepResult? stepResult) {
+    final provider = SurveyStateProvider.of(context);
+    final state = provider.state;
+
+    if (state is PresentingSurveyState && state.currentStep.id == '3') {
+      final selected = stepResult?.result as BooleanResult?;
+      if (selected == BooleanResult.positive) {
+        Navigator.of(context, rootNavigator: true)
+            .push<void>(
+          MaterialPageRoute<void>(
+            builder: (_) => const IntermissionPage(),
+          ),
+        )
+            .then((_) {
+          provider.onEvent(NextStep(stepResult));
+        });
+        return;
+      }
+    }
+
+    provider.onEvent(NextStep(stepResult));
+  }
+
+  SurveyFlow _buildTask() {
+    return SurveyFlow(
+      id: 'combined-demo',
+      navigationRules: <String, NavigationRule>{
+        '1': DirectNavigationRule('3'),
+        '3': ConditionalNavigationRule(
+          resultToStepIdentifierMapper: (_, input) {
+            final selected = input?.result as BooleanResult?;
+            if (selected == BooleanResult.positive) {
+              return '2';
             }
+            if (selected == BooleanResult.negative) {
+              return '6';
+            }
+            return null;
           },
         ),
+        '2': DirectNavigationRule('4'),
       },
       steps: [
-        // Migrate and just use Step
-        InstructionStep(
-          id: 'Intro',
-          title: 'Welcome to the\nQuickBird\nHealth Survey',
-          text: 'Get ready for a bunch of super random questions!',
-        ),
         Step(
-          id: 'SingleChoice',
+          id: '1',
           content: const [
             TextContent(
-              text: 'Introduction to SurveyKit',
+              text: 'Welcome to the\nQuickBird Studios\nHealth Survey',
               fontSize: 24,
             ),
-            SectionContent(
-              title: StyledTextContent(
-                text: 'ColorScheme class',
-                bold: true,
-                fontSize: 24,
-              ),
-              subtitle: StyledTextContent(
-                text:
-                    'A set of 30 colors based on the Material spec that can be used to configure the color properties of most components.',
-                fontSize: 12,
-                italic: true,
-                underlined: true,
-              ),
-              text: StyledTextContent(
-                text:
-                    'The main accent color groups in the scheme are primary, secondary, and tertiary.Primary colors are used, for key components across the UI, such as the FAB, prominent buttons, and active states. Secondary colors are used for less prominent components in the UI, such as filter chips, while expanding the opportunity for color expression. Tertiary colors are used for contrasting accents that can be used to balance primary and secondary colors or bring heightened attention to an element, such as an input field. The tertiary colors are left for makers to use at their discretion and are intended to support broader color expression in products. The remaining colors of the scheme are comprised of neutral colors used for backgrounds and surfaces, as well as specific colors for errors, dividers and shadows.',
-              ),
-            ),
-            VideoContent(
-              title: 'This is an video about a bear',
-              url:
-                  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-              externalLink:
-                  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-              width: 900,
-            ),
-            ska.AudioContent(
-              title: 'This is an audio',
-              subtitle: 'The audio is gong',
-              externalLink:
-                  'https://github.com/QuickBirdEng/survey_kit/raw/main/assets/gong.mp3',
-              url:
-                  'https://github.com/QuickBirdEng/survey_kit/raw/main/assets/gong.mp3',
-            ),
-            LottieContent(
-              repeat: true,
-              url:
-                  'https://assets4.lottiefiles.com/packages/lf20_mNvu7WUM7W.json',
-            ),
-            MarkdownContent(text: 'This is markdown'),
-          ],
-          answerFormat: SingleChoiceAnswerFormat(
-            textChoices: [
-              TextChoice(id: '1', value: 'Yes', text: 'Yes'),
-              TextChoice(id: '2', value: 'No', text: 'No'),
-            ],
-            question: 'Did you like the video?',
-          ),
-        ),
-        Step(
-          id: 'IntegerAnswer',
-          content: const [
             TextContent(
-              text: 'How old are you?',
-              fontSize: 18,
+              text: 'Get ready for a bunch of super random questions!',
             ),
           ],
-          answerFormat: const IntegerAnswerFormat(
-            hint: 'Age',
-          ),
+          buttonText: "Let's go!",
         ),
         Step(
-          id: 'ScaleAnswer',
+          id: '3',
           content: const [
             TextContent(
-              text: 'Select your body type',
-              fontSize: 18,
-            ),
-          ],
-          answerFormat: const ScaleAnswerFormat(
-            maximumValue: 5,
-            minimumValue: 1,
-            defaultValue: 3,
-            step: 1,
-          ),
-        ),
-        Step(
-          id: 'MultipleChoice',
-          content: const [
-            TextContent(
-              text: 'Known allergies',
+              text: 'Medication?',
               fontSize: 22,
             ),
             TextContent(
-              text: 'Do you have allergies that we need to be aware of?',
-              fontSize: 18,
+              text: 'Are you using any medication',
             ),
+          ],
+          answerFormat: const BooleanAnswerFormat(
+            positiveAnswer: 'Yes',
+            negativeAnswer: 'No',
+          ),
+          buttonText: 'Continue',
+        ),
+        Step(
+          id: '2',
+          content: const [
+            TextContent(text: 'How old are you?'),
+          ],
+          answerFormat: const IntegerAnswerFormat(
+            defaultValue: 25,
+            hint: 'Please enter your age',
+          ),
+          buttonText: 'Continue',
+        ),
+        Step(
+          id: '4',
+          content: const [
+            TextContent(
+              text: 'Tell us about you',
+              fontSize: 22,
+            ),
+            TextContent(
+              text: 'Tell us about yourself and why you want to improve your health.',
+            ),
+          ],
+          answerFormat: const TextAnswerFormat(
+            maxLines: 5,
+            hint: 'Your answer',
+          ),
+          buttonText: 'Continue',
+        ),
+        Step(
+          id: '11',
+          content: const [
+            TextContent(text: 'Select your body type'),
+          ],
+          answerFormat: const ScaleAnswerFormat(
+            maximumValue: 5.0,
+            minimumValue: 1.0,
+            defaultValue: 3.0,
+            step: 1.0,
+            minimumValueDescription: '1',
+            maximumValueDescription: '5',
+          ),
+          buttonText: 'Continue',
+        ),
+        Step(
+          id: '12',
+          content: const [
+            TextContent(text: 'Known allergies'),
           ],
           answerFormat: MultipleChoiceAnswerFormat(
             textChoices: [
-              TextChoice(id: '1', value: 'Penicillin', text: 'Penicillin'),
-              TextChoice(id: '2', value: 'Latex', text: 'Latex'),
-              TextChoice(id: '3', value: 'Pet', text: 'Pet'),
-              TextChoice(id: '4', value: 'Pollen', text: 'Pollen'),
+              TextChoice(id: 'penicillin', value: 'Penicillin', text: 'Penicillin'),
+              TextChoice(id: 'latex', value: 'Latex', text: 'Latex'),
+              TextChoice(id: 'pet', value: 'Pet', text: 'Pet'),
+              TextChoice(id: 'pollen', value: 'Pollen', text: 'Pollen'),
             ],
+            otherField: true,
           ),
+          buttonText: 'Continue',
         ),
-
         Step(
-          id: 'OnlyConent',
+          id: '13',
           content: const [
-            TextContent(
-              text: 'Listen carefully!',
-              fontSize: 28,
+            TextContent(text: 'When did you wake up?'),
+          ],
+          answerFormat: const TimeAnswerFormat(
+            defaultValue: TimeOfDay(hour: 12, minute: 0),
+          ),
+          buttonText: 'Continue',
+        ),
+        Step(
+          id: '14',
+          content: const [
+            TextContent(text: 'When was your last holiday?'),
+          ],
+          answerFormat: DateAnswerFormat(
+            minDate: DateTime(2015, 6, 25),
+            maxDate: DateTime(2028, 12, 31),
+            defaultDate: DateTime(2021, 6, 25),
+          ),
+          buttonText: 'Continue',
+        ),
+        Step(
+          id: '5',
+          content: const [
+            TextContent(text: 'Thanks, one more section with media examples.'),
+          ],
+          buttonText: 'Continue',
+        ),
+        Step(
+          id: '6',
+          content: const [
+            TextContent(text: 'Video'),
+            VideoContent(
+              title: 'Big Buck Bunny',
+              url:
+                  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             ),
+          ],
+          buttonText: 'Next',
+        ),
+        Step(
+          id: '7',
+          content: const [
+            TextContent(text: 'Audio'),
             ska.AudioContent(
-              title: 'This is an audio',
-              subtitle: 'This is a good subtitle for the video',
+              title: 'Gong',
+              subtitle: 'Sample audio',
               url:
                   'https://github.com/QuickBirdEng/survey_kit/raw/main/assets/gong.mp3',
             ),
           ],
+          buttonText: 'Next',
         ),
-        // Migrate and just use Step
-        QuestionStep(
-          id: 'TextAnswer',
-          title: 'Feedback',
-          text: 'What did you like about the survey?',
-          answerFormat: const TextAnswerFormat(
-            hint: 'Feedback',
+        Step(
+          id: '8',
+          content: const [
+            TextContent(text: 'Lottie'),
+            LottieContent(
+              asset: 'assets/fancy_checkmark.json',
+              repeat: true,
+              width: 180,
+              height: 180,
+            ),
+          ],
+          buttonText: 'Next',
+        ),
+        Step(
+          id: '9',
+          content: const [
+            TextContent(text: 'Did you enjoy this survey?'),
+          ],
+          answerFormat: SingleChoiceAnswerFormat(
+            textChoices: [
+              TextChoice(id: 'yes', value: 'yes', text: 'Yes'),
+              TextChoice(id: 'no', value: 'no', text: 'No'),
+            ],
           ),
-          isOptional: true,
+          buttonText: 'Finish',
         ),
-        // Migrate and just use Step
-        CompletionStep(
-          id: 'Completion',
-          title: 'Done!',
-          text: 'Thanks for taking the survey, we will contact you soon!',
+        Step(
+          id: '10',
+          content: const [
+            TextContent(
+              text: 'Done!',
+              fontSize: 24,
+            ),
+            TextContent(
+              text: 'Thanks for taking the survey, we will contact you soon!',
+            ),
+          ],
+          buttonText: 'Submit survey',
         ),
       ],
     );
-
-    return Future.value(task);
   }
 
-  Future<Task> getJsonTask() async {
-    final taskJson = await rootBundle.loadString('assets/example_json.json');
-    final taskMap = json.decode(taskJson) as Map<String, dynamic>;
-
-    return Task.fromJson(taskMap);
+  List<Color> _adaptiveBackgroundForStep(String stepId) {
+    switch (stepId) {
+      case '1':
+      case '2':
+      case '4':
+        return [Colors.cyan.shade300, Colors.cyan.shade50];
+      case '3':
+      case '11':
+      case '12':
+        return [Colors.indigo.shade300, Colors.blue.shade100];
+      case '13':
+      case '14':
+      case '5':
+        return [Colors.lightBlue.shade300, Colors.blue.shade100];
+      case '6':
+        return [Colors.deepPurple.shade200, Colors.indigo.shade100];
+      case '7':
+        return [Colors.orange.shade300, Colors.yellow.shade100];
+      case '8':
+        return [Colors.teal.shade300, Colors.green.shade100];
+      case '9':
+      case '10':
+        return [Colors.red.shade200, Colors.orange.shade100];
+      default:
+        return [Colors.cyan.shade300, Colors.white];
+    }
   }
-
-  ThemeData get theme => Theme.of(context).copyWith(
-        useMaterial3: true,
-        primaryColor: Colors.cyan,
-        appBarTheme: const AppBarTheme(
-          color: Colors.white,
-          iconTheme: IconThemeData(
-            color: Colors.cyan,
-          ),
-          titleTextStyle: TextStyle(
-            color: Colors.cyan,
-          ),
-        ),
-        iconTheme: const IconThemeData(
-          color: Colors.cyan,
-        ),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.cyan,
-          selectionColor: Colors.cyan,
-          selectionHandleColor: Colors.cyan,
-        ),
-        cupertinoOverrideTheme: const CupertinoThemeData(
-          primaryColor: Colors.cyan,
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all(
-              const Size(150.0, 60.0),
-            ),
-            side: MaterialStateProperty.resolveWith(
-              (Set<MaterialState> state) {
-                if (state.contains(MaterialState.disabled)) {
-                  return const BorderSide(
-                    color: Colors.grey,
-                  );
-                }
-                return const BorderSide(
-                  color: Colors.cyan,
-                );
-              },
-            ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-            ),
-            textStyle: MaterialStateProperty.resolveWith(
-              (Set<MaterialState> state) {
-                if (state.contains(MaterialState.disabled)) {
-                  return Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Colors.grey,
-                      );
-                }
-                return Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: Colors.cyan,
-                    );
-              },
-            ),
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            textStyle: MaterialStateProperty.all(
-              Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Colors.cyan,
-                  ),
-            ),
-          ),
-        ),
-        textTheme: const TextTheme(
-          displayMedium: TextStyle(
-            fontSize: 28.0,
-            color: Colors.black,
-          ),
-          headlineSmall: TextStyle(
-            fontSize: 24.0,
-            color: Colors.black,
-          ),
-          bodyMedium: TextStyle(
-            fontSize: 18.0,
-            color: Colors.black,
-          ),
-          titleMedium: TextStyle(
-            fontSize: 18.0,
-            color: Colors.black,
-          ),
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.cyan,
-        )
-            .copyWith(
-              onPrimary: Colors.white,
-            )
-            .copyWith(background: Colors.white),
-      );
-}
-
-class SurveyKitView extends StatelessWidget {
-  const SurveyKitView({
-    super.key,
-    required this.task,
-  });
-
-  final Task task;
 
   @override
   Widget build(BuildContext context) {
     return SurveyKit(
-      onResult: (SurveyResult result) {
-        log(result.finishReason.toString());
-        log(json.encode(result));
-        Navigator.pushNamed(context, '/');
-      },
-      task: task,
+      key: ValueKey<int>(_surveySession),
+      task: _task,
+      surveyController: _controller,
       registries: [
         ska.SurveyKitAudio(),
         SurveyKitVideo(),
         SurveyKitLottie(),
       ],
+      onResult: (result) => _showResultDialog(context, result),
       surveyProgressbarConfiguration: SurveyProgressConfiguration(
         backgroundColor: Colors.white,
       ),
-      appBar: const AppBarExample(),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.cyan,
-            Colors.white,
-          ],
-        ),
-      ),
-      stepShell: (
-        Step step,
-        Widget? answerWidget,
-        BuildContext context,
-      ) {
+      stepShell: (step, answerWidget, context) {
         final questionAnswer = QuestionAnswer.of(context);
-        final surveyConfiguration = SurveyConfiguration.of(context);
-        final surveyController = surveyConfiguration.surveyController;
+        final surveyController =
+            SurveyConfiguration.of(context).surveyController;
         final mediaQuery = MediaQuery.of(context);
 
-        return LayoutBuilder(
+        final surveyBody = LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: ConstrainedBox(
@@ -395,7 +338,6 @@ class SurveyKitView extends StatelessWidget {
                 ),
                 child: IntrinsicHeight(
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         child: Padding(
@@ -428,12 +370,11 @@ class SurveyKitView extends StatelessWidget {
                             child: OutlinedButton(
                               onPressed: questionAnswer.isValid.value ||
                                       !step.isMandatory
-                                  ? () => surveyController.nextStep(
-                                        context,
-                                        questionAnswer.stepResult,
+                                  ? () => surveyController.next(
+                                        stepResult: questionAnswer.stepResult,
                                       )
                                   : null,
-                              child: const Text('Zur Frage'),
+                              child: Text(step.buttonText ?? 'Next'),
                             ),
                           ),
                         ),
@@ -445,7 +386,113 @@ class SurveyKitView extends StatelessWidget {
             );
           },
         );
+
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 280),
+          curve: Curves.easeOutCubic,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: _adaptiveBackgroundForStep(step.id),
+            ),
+          ),
+          child: surveyBody,
+        );
       },
+    );
+  }
+
+  Future<void> _showResultDialog(BuildContext context, SurveyResult result) {
+    final encoded = const JsonEncoder.withIndent(
+      '  ',
+    ).convert(_normalizeJsonValue(result.toJson()));
+    return showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text('Result (${result.finishReason.name})'),
+        content: SizedBox(
+          width: 520,
+          child: SingleChildScrollView(
+            child: Text(
+              encoded,
+              style: const TextStyle(fontFamily: 'monospace'),
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              if (!mounted) {
+                return;
+              }
+              setState(() {
+                _surveySession += 1;
+              });
+            },
+            child: const Text('Restart'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Object? _normalizeJsonValue(Object? value) {
+    if (value == null || value is String || value is num || value is bool) {
+      return value;
+    }
+    if (value is Enum) {
+      return value.name;
+    }
+    if (value is Map) {
+      return value.map(
+        (key, mapValue) =>
+            MapEntry(key.toString(), _normalizeJsonValue(mapValue)),
+      );
+    }
+    if (value is Iterable) {
+      return value.map(_normalizeJsonValue).toList();
+    }
+
+    final dynamic dynamicValue = value;
+    try {
+      // ignore: avoid_dynamic_calls
+      return _normalizeJsonValue(dynamicValue.toJson());
+    } catch (_) {
+      return value.toString();
+    }
+  }
+}
+
+class IntermissionPage extends StatelessWidget {
+  const IntermissionPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Intermission'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Medication answer was "Yes". Continue to age question.',
+            ),
+            const Spacer(),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FilledButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Continue Survey'),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -70,7 +70,9 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     setState(() {
       _state = newState;
     });
-    _surveyStateStream.add(_state);
+    if (!_surveyStateStream.isClosed) {
+      _surveyStateStream.add(_state);
+    }
   }
 
   /// Handles survey events and triggers appropriate state transitions.
@@ -84,32 +86,45 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     if (event is StartSurvey) {
       final newState = _handleInitialStep();
       _updateState(newState);
-      widget.navigatorKey.currentState?.pushNamed(
-        '/',
-        arguments: newState,
-      );
+      if (newState is SurveyResultState) {
+        widget.onResult(newState.result);
+      }
     } else if (event is NextStep) {
       if (_state is PresentingSurveyState) {
-        final newState =
-            _handleNextStep(event, _state as PresentingSurveyState);
+        final currentState = _state as PresentingSurveyState;
+        final newState = _handleNextStep(event, currentState);
+        if (newState is PresentingSurveyState) {
+          widget.navigatorKey.currentState?.pushNamed(
+            '/',
+            arguments: newState,
+          );
+        }
         _updateState(newState);
-        widget.navigatorKey.currentState?.pushNamed(
-          '/',
-          arguments: newState,
-        );
       }
     } else if (event is StepBack) {
       if (_state is PresentingSurveyState) {
-        final newState =
-            _handleStepBack(event, _state as PresentingSurveyState);
+        final currentState = _state as PresentingSurveyState;
+        final newState = _handleStepBack(event, currentState);
+
+        if (newState is PresentingSurveyState &&
+            newState.currentStep.id != currentState.currentStep.id) {
+          (widget.navigatorKey.currentState?.maybePop() ??
+                  Future<bool>.value(false))
+              .whenComplete(() {
+            if (!mounted) {
+              return;
+            }
+            _updateState(newState);
+          });
+          return;
+        }
         _updateState(newState);
-        widget.navigatorKey.currentState?.pop();
       }
     } else if (event is CloseSurvey) {
       if (_state is PresentingSurveyState) {
         final newState = _handleClose(event, _state as PresentingSurveyState);
         _updateState(newState);
-        widget.navigatorKey.currentState?.pop();
+        widget.navigatorKey.currentState?.maybePop();
       }
     }
   }
@@ -207,7 +222,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
   ) {
     _addResult(event.questionResult);
 
-    final stepResults = _results.toList();
+    final stepResults = _orderedStepResults();
 
     final taskResult = SurveyResult(
       id: widget.taskNavigator.task.id,
@@ -226,7 +241,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
 
   // Currently we are only handling one question per step
   SurveyState _handleSurveyFinished(PresentingSurveyState currentState) {
-    final stepResults = _results.toList();
+    final stepResults = _orderedStepResults();
     final taskResult = SurveyResult(
       id: widget.taskNavigator.task.id,
       startTime: _startDate,
@@ -252,6 +267,23 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
       ..add(
         questionResult,
       );
+  }
+
+  List<StepResult> _orderedStepResults() {
+    final steps = widget.taskNavigator.task.steps;
+    final stepIndexById = <String, int>{
+      for (var i = 0; i < steps.length; i += 1) steps[i].id: i,
+    };
+
+    final ordered = _results.toList()..sort((a, b) {
+      final aIndex = stepIndexById[a.id] ?? steps.length;
+      final bIndex = stepIndexById[b.id] ?? steps.length;
+      if (aIndex != bIndex) {
+        return aIndex.compareTo(bIndex);
+      }
+      return a.startTime.compareTo(b.startTime);
+    });
+    return ordered;
   }
 
   int get _countSteps => widget.taskNavigator.countSteps;

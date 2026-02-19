@@ -30,15 +30,11 @@ class _AnswerViewState extends State<AnswerView> {
         widget.step,
         widget.stepResult,
       );
-      if (answerView == null) {
-        answerView = Container(
-          child: Center(
-            child: Text(
-              'No view for ${widget.answer.runtimeType}',
-            ),
-          ),
-        );
-      }
+      answerView ??= Center(
+        child: Text(
+          'No view for ${widget.answer.runtimeType}',
+        ),
+      );
     }
     final stepShell =
         widget.step.stepShell ?? SurveyStateProvider.of(context).stepShell;

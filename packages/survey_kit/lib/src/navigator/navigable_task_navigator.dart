@@ -3,11 +3,11 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/rules/conditional_navigation_rule.dart';
 import 'package:survey_kit/src/navigator/rules/direct_navigation_rule.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
-import 'package:survey_kit/src/task/navigable_task.dart';
-import 'package:survey_kit/src/task/task.dart';
+import 'package:survey_kit/src/task/survey_definition.dart';
+import 'package:survey_kit/src/task/survey_flow.dart';
 
 class NavigableTaskNavigator extends TaskNavigator {
-  NavigableTaskNavigator(Task task) : super(task);
+  NavigableTaskNavigator(SurveyDefinition task) : super(task);
 
   @override
   Step? nextStep({
@@ -16,8 +16,8 @@ class NavigableTaskNavigator extends TaskNavigator {
     StepResult? questionResult,
   }) {
     record(step);
-    final navigableTask = task as NavigableTask;
-    final rule = navigableTask.getRuleByStepIdentifier(step.id);
+    final flowTask = task as SurveyFlow;
+    final rule = flowTask.getRuleByStepIdentifier(step.id);
     if (rule == null) {
       return nextInList(step);
     }
@@ -64,12 +64,19 @@ class NavigableTaskNavigator extends TaskNavigator {
   @override
   Step? firstStep() {
     final previousStep = peekHistory();
-    return previousStep == null
-        ? task.initalStep ?? task.steps.first
-        : nextStep(
-            step: previousStep,
-            previousResults: [],
-            questionResult: null,
-          );
+    if (previousStep == null) {
+      if (task.initialStep != null) {
+        return task.initialStep;
+      }
+      if (task.steps.isEmpty) {
+        return null;
+      }
+      return task.steps.first;
+    }
+    return nextStep(
+      step: previousStep,
+      previousResults: [],
+      questionResult: null,
+    );
   }
 }

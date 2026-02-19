@@ -13,7 +13,15 @@ class SurveyNotifier extends ChangeNotifier {
     required this.onResult,
   });
 
+  @Deprecated(
+    'SurveyNotifier is legacy and not used by SurveyKit runtime. '
+    'Use SurveyStateProviderWidget-based APIs for new integrations.',
+  )
   final GlobalKey _navigatorKey = GlobalKey();
+  @Deprecated(
+    'SurveyNotifier is legacy and not used by SurveyKit runtime. '
+    'Use SurveyStateProviderWidget-based APIs for new integrations.',
+  )
   GlobalKey get navigatorKey => _navigatorKey;
 
   final TaskNavigator taskNavigator;
@@ -100,7 +108,7 @@ class SurveyNotifier extends ChangeNotifier {
     }
 
     //If theres no previous step we can't go back further
-    return state;
+    return currentState;
   }
 
   StepResult? _getResultByStepIdentifier(String? identifier) {
@@ -115,9 +123,7 @@ class SurveyNotifier extends ChangeNotifier {
   ) {
     _addResult(event.questionResult);
 
-    final stepResults = results
-        .map((e) => StepResult<dynamic>.fromQuestion(questionResult: e))
-        .toList();
+    final stepResults = results.toList();
 
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
@@ -134,9 +140,7 @@ class SurveyNotifier extends ChangeNotifier {
   }
 
   SurveyState _finishSurvey(PresentingSurveyState currentState) {
-    final stepResults = results
-        .map((e) => StepResult<dynamic>.fromQuestion(questionResult: e))
-        .toList();
+    final stepResults = results.toList();
     final taskResult = SurveyResult(
       id: taskNavigator.task.id,
       startTime: startDate,

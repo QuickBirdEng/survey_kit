@@ -4,10 +4,16 @@ on:
   release:
     types: [published]
 
+concurrency:
+  group: publish-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
 jobs:
   publish:
+    if: ${{ !github.event.release.draft }}
     permissions:
-      id-token: write # Required for OIDC authentication
+      contents: read
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,14 +22,79 @@ jobs:
         with:
           channel: 'stable'
 
-      # Used to establish OIDC trust with pub.dev
       - uses: dart-lang/setup-dart@v1
 
       - name: Install Melos
         run: dart pub global activate melos
 
+      - name: Resolve Root Dependencies
+        run: dart pub get
+
       - name: Bootstrap Workspace
         run: melos bootstrap
 
-      - name: Publish Packages
-        run: melos publish -y --no-dry-run
+      - name: Analyze
+        run: melos run analyze
+
+      - name: Test
+        run: melos run test
+
+      - name: Verify release tag matches package versions
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          TAG_VERSION="${RELEASE_TAG#v}"
+          for package in \
+            packages/survey_kit \
+            packages/survey_kit_audio \
+            packages/survey_kit_lottie \
+            packages/survey_kit_video
+          do
+            PACKAGE_VERSION="$(sed -n 's/^version: //p' "$package/pubspec.yaml")"
+            if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
+              echo "Tag version ($TAG_VERSION) does not match $package version ($PACKAGE_VERSION)."
+              exit 1
+            fi
+          done
+
+      - name: Publish packages
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          TAG_VERSION="${RELEASE_TAG#v}"
+
+          is_already_published() {
+            package_name="$1"
+            curl -fsSL "https://pub.dev/api/packages/$package_name" | grep -Eq "\"version\"[[:space:]]*:[[:space:]]*\"$TAG_VERSION\""
+          }
+
+          publish_package() {
+            package_path="$1"
+            package_name="$2"
+
+            if is_already_published "$package_name"; then
+              echo "$package_name $TAG_VERSION is already on pub.dev, skipping."
+              return 0
+            fi
+
+            for attempt in 1 2 3; do
+              echo "Publishing $package_name (attempt $attempt)..."
+              if (cd "$package_path" && flutter pub publish --force); then
+                echo "$package_name published."
+                return 0
+              fi
+
+              if [ "$attempt" -lt 3 ]; then
+                echo "Retrying $package_name in 60s..."
+                sleep 60
+              fi
+            done
+
+            echo "Failed to publish $package_name after 3 attempts."
+            return 1
+          }
+
+          publish_package packages/survey_kit survey_kit
+          publish_package packages/survey_kit_audio survey_kit_audio
+          publish_package packages/survey_kit_lottie survey_kit_lottie
+          publish_package packages/survey_kit_video survey_kit_video

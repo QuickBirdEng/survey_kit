@@ -6,7 +6,10 @@ abstract class NavigationRule {
   const NavigationRule();
 
   factory NavigationRule.fromJson(Map<String, dynamic> json) {
-    final type = json['type'] as String;
+    final type = (json['type'] as String?) ??
+        (json.containsKey('destinationStepIdentifier')
+            ? DirectNavigationRule.type
+            : ConditionalNavigationRule.type);
     if (type == 'conditional') {
       return ConditionalNavigationRule.fromJson(json);
     } else if (type == 'direct') {

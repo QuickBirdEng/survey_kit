@@ -46,13 +46,13 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: StreamBuilder<SurveyState>(
         stream: surveyStream,
         builder: (context, snapshot) {
-          if (snapshot.data == null) {
+          if (snapshot.data == null || snapshot.data is! PresentingSurveyState) {
             return const SizedBox.shrink();
           }
 
-          final state = snapshot.data!;
+          final state = snapshot.data! as PresentingSurveyState;
 
-          return (state as PresentingSurveyState).isFirstStep
+          return state.isFirstStep
               ? const SizedBox.shrink()
               : backButton;
         },

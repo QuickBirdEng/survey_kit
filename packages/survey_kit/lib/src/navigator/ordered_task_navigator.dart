@@ -1,10 +1,10 @@
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
-import 'package:survey_kit/src/task/task.dart';
+import 'package:survey_kit/src/task/survey_definition.dart';
 
 class OrderedTaskNavigator extends TaskNavigator {
-  OrderedTaskNavigator(Task task) : super(task);
+  OrderedTaskNavigator(SurveyDefinition task) : super(task);
 
   @override
   Step? nextStep({
@@ -26,8 +26,15 @@ class OrderedTaskNavigator extends TaskNavigator {
   @override
   Step? firstStep() {
     final previousStep = peekHistory();
-    return previousStep == null
-        ? task.initalStep ?? task.steps.first
-        : nextInList(previousStep);
+    if (previousStep != null) {
+      return nextInList(previousStep);
+    }
+    if (task.initialStep != null) {
+      return task.initialStep;
+    }
+    if (task.steps.isEmpty) {
+      return null;
+    }
+    return task.steps.first;
   }
 }

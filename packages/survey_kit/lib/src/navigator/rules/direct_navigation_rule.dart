@@ -5,6 +5,8 @@ part 'direct_navigation_rule.g.dart';
 
 @JsonSerializable()
 class DirectNavigationRule implements NavigationRule {
+  static const type = 'direct';
+
   final String destinationStepIdentifier;
 
   DirectNavigationRule(this.destinationStepIdentifier);
@@ -12,5 +14,8 @@ class DirectNavigationRule implements NavigationRule {
   factory DirectNavigationRule.fromJson(Map<String, dynamic> json) =>
       _$DirectNavigationRuleFromJson(json);
   @override
-  Map<String, dynamic> toJson() => _$DirectNavigationRuleToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'type': type,
+        ..._$DirectNavigationRuleToJson(this),
+      };
 }

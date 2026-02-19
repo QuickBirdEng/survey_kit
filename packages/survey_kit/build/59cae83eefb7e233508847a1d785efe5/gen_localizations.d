@@ -1,1 +1,0 @@
- /Users/marvinmarz/Projects/survey_kit/packages/survey_kit/lib/gen/survey_kit_localizations_en.dart /Users/marvinmarz/Projects/survey_kit/packages/survey_kit/lib/gen/survey_kit_localizations.dart:  /Users/marvinmarz/Projects/survey_kit/packages/survey_kit/l10n.yaml /Users/marvinmarz/Projects/survey_kit/packages/survey_kit/l10n/intl_en.arb

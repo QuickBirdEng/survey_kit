@@ -8,14 +8,12 @@ import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/model/result/survey_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/navigable_task_navigator.dart';
-import 'package:survey_kit/src/navigator/ordered_task_navigator.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
 import 'package:survey_kit/src/presenter/survey_state_provider.dart';
-import 'package:survey_kit/src/task/navigable_task.dart';
-import 'package:survey_kit/src/task/ordered_task.dart';
-import 'package:survey_kit/src/task/task.dart';
+import 'package:survey_kit/src/task/survey_definition.dart';
+import 'package:survey_kit/src/task/survey_flow.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_view.dart';
 import 'package:survey_kit/src/widget/survey_app_bar.dart';
 import 'package:survey_kit/src/widget/survey_kit_page_route_builder.dart';
@@ -28,8 +26,8 @@ typedef StepShell = Widget Function(
 );
 
 class SurveyKit extends StatefulWidget {
-  /// [Task] for the configuraton of the survey
-  final Task task;
+  /// [SurveyDefinition] for the configuration of the survey.
+  final SurveyDefinition task;
 
   /// Function which is called after the results are collected
   final Function(SurveyResult) onResult;
@@ -81,29 +79,45 @@ class SurveyKit extends StatefulWidget {
 
 class _SurveyKitState extends State<SurveyKit> {
   late TaskNavigator _taskNavigator;
+  late SurveyController _surveyController;
   late final GlobalKey<NavigatorState> _navigatorKey;
 
   @override
   void initState() {
     super.initState();
-    _taskNavigator = _createTaskNavigator();
     _navigatorKey = GlobalKey<NavigatorState>();
+    _surveyController = widget.surveyController ?? SurveyController();
+    _surveyController.navigatorKey = _navigatorKey;
+    _taskNavigator = _createTaskNavigator();
+  }
+
+  @override
+  void didUpdateWidget(covariant SurveyKit oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.surveyController != oldWidget.surveyController) {
+      _surveyController.navigatorKey = null;
+      _surveyController = widget.surveyController ?? SurveyController();
+      _surveyController.navigatorKey = _navigatorKey;
+    }
+    if (widget.task != oldWidget.task) {
+      _taskNavigator = _createTaskNavigator();
+    }
   }
 
   TaskNavigator _createTaskNavigator() {
     final task = widget.task;
-    if (task is OrderedTask) {
-      return OrderedTaskNavigator(widget.task);
-    }
-    if (task is NavigableTask) {
+    if (task is SurveyFlow) {
       return NavigableTaskNavigator(widget.task);
     }
 
-    throw Exception('Task must be either OrderedTask or NavigableTask');
+    throw Exception(
+      'Task must be SurveyFlow (legacy OrderedTask/NavigableTask are supported).',
+    );
   }
 
   @override
   void dispose() {
+    _surveyController.navigatorKey = null;
     super.dispose();
   }
 
@@ -113,7 +127,7 @@ class _SurveyKitState extends State<SurveyKit> {
       surveyProgressConfiguration: widget.surveyProgressbarConfiguration ??
           SurveyProgressConfiguration(),
       taskNavigator: _taskNavigator,
-      surveyController: widget.surveyController ?? SurveyController(),
+      surveyController: _surveyController,
       localizations: widget.localizations,
       padding: const EdgeInsets.all(14),
       child: SurveyStateProviderWidget(
@@ -214,6 +228,8 @@ class SurveyPage extends StatefulWidget {
 
 class _SurveyPageState extends State<SurveyPage>
     with SingleTickerProviderStateMixin {
+  PresentingSurveyState? _initialRouteSnapshot;
+
   @override
   void initState() {
     super.initState();
@@ -237,28 +253,57 @@ class _SurveyPageState extends State<SurveyPage>
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>
                     SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(1.0, 0.0),
-                end: Offset.zero,
-              ).animate(animation),
-              child: child,
-            ),
+                      position: Tween<Offset>(
+                        begin: Offset.zero,
+                        end: const Offset(-0.08, 0.0),
+                      ).animate(
+                        CurvedAnimation(
+                          parent: secondaryAnimation,
+                          curve: Curves.easeOutCubic,
+                          reverseCurve: Curves.easeInCubic,
+                        ),
+                      ),
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(
+                          CurvedAnimation(
+                            parent: animation,
+                            curve: Curves.easeOutCubic,
+                            reverseCurve: Curves.easeInCubic,
+                          ),
+                        ),
+                        child: child,
+                      ),
+                    ),
             pageBuilder: (_, __, ___) {
-              if (settings.arguments is! PresentingSurveyState) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
+              final routeState = settings.arguments;
+              PresentingSurveyState? currentState;
+
+              if (routeState is PresentingSurveyState) {
+                currentState = routeState;
+              } else {
+                final providerState = SurveyStateProvider.of(context).state;
+                if (providerState is PresentingSurveyState) {
+                  currentState = _initialRouteSnapshot ??= providerState;
+                } else {
+                  currentState = _initialRouteSnapshot;
+                }
               }
 
-              final currentState = settings.arguments! as PresentingSurveyState;
+              if (currentState == null) {
+                return const SizedBox.shrink();
+              }
 
-              final step = currentState.currentStep;
+              final presentingState = currentState;
+              final step = presentingState.currentStep;
               return _SurveyView(
                 id: step.id,
                 createView: () => AnswerView(
                   answer: step.answerFormat,
                   step: step,
-                  stepResult: currentState.questionResults.firstWhereOrNull(
+                  stepResult: presentingState.questionResults.firstWhereOrNull(
                     (element) => element.id == step.id,
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show mapEquals;
 import 'package:flutter/material.dart';
 import 'package:survey_kit/src/controller/survey_controller.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
@@ -29,5 +30,9 @@ class SurveyConfiguration extends InheritedWidget {
 
   @override
   bool updateShouldNotify(SurveyConfiguration oldWidget) =>
-      surveyProgressConfiguration != oldWidget.surveyProgressConfiguration;
+      surveyProgressConfiguration != oldWidget.surveyProgressConfiguration ||
+      taskNavigator != oldWidget.taskNavigator ||
+      surveyController != oldWidget.surveyController ||
+      !mapEquals(localizations, oldWidget.localizations) ||
+      padding != oldWidget.padding;
 }

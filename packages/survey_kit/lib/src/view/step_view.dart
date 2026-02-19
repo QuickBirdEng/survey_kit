@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/survey_kit.dart';
 
-typedef StepShell = Widget Function({
-  required Step step,
-  required Widget child,
-  StepResult Function()? resultFunction,
-  bool isValid,
-  SurveyController? controller,
-});
-
 class StepView extends StatefulWidget {
   final Step step;
   final Widget? answerView;
@@ -26,8 +18,6 @@ class StepView extends StatefulWidget {
 }
 
 class _StepViewState extends State<StepView> {
-  final startTime = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
     final surveyConfiguration = SurveyConfiguration.of(context);
@@ -64,9 +54,9 @@ class _StepViewState extends State<StepView> {
                             return OutlinedButton(
                               onPressed: questionAnswer.isValid.value ||
                                       !widget.step.isMandatory
-                                  ? () => _surveyController.nextStep(
-                                        context,
-                                        questionAnswer.stepResult,
+                                  ? () => _surveyController.next(
+                                        context: context,
+                                        stepResult: questionAnswer.stepResult,
                                       )
                                   : null,
                               child: Text(

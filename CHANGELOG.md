@@ -1,22 +1,61 @@
-# 2.0.0
+# 2.0.0-beta1
 
-- Infra: Added `melos` for monorepo management.
-- **BREAKING**: Removed `createView` from `AnswerFormat`. Use `SurveyKitRegistry` to register custom views.
-- **FEATURE**: Introduced `SurveyKitRegistry` to decouple Step/Answer models from UI. Automatic default injection. Added `answerViewBuilders` parameter to `SurveyKit` for easier registration.
-- **FEATURE**: Introduced `registries` parameter to `SurveyKit` to support plugins (like Audio/Video/Lottie).
-- **FEATURE**: Added `AnswerFormat.registerFromJson` to allow registering custom JSON deserializers.
-- **BREAKING**: Moved video player to a separate package (`survey_kit_video`)
-- **BREAKING**: Moved audio player to a separate package (`survey_kit_audio`)
-- **BREAKING**: Moved lottie support to a separate package (`survey_kit_lottie`)
-- **BREAKING**: Removed `localizations` parameter in `SurveyKit`. Using generated localizations now.
-- **FEATURE**: Migrated to `.arb` files and `flutter_localizations`.
-- See [MIGRATION.md](MIGRATION.md) for details on how to upgrade.
+## Required Adjustments (1.x -> 2.0.0-beta1)
 
-- FIX: Fixed DateTime timezone handling in CustomDateTimeConverter to preserve UTC timestamps during serialization
-- FIX: Added missing JSON serialization methods for TimeResult class
-- FIX: Updated test infrastructure with deterministic Step IDs to ensure reliable test execution
-- CHORE: Updated Android Gradle Plugin to 8.1.4 and Gradle to 8.4 for SDK 35 compatibility
-- CHORE: Updated json_annotation dependency to 4.9.0 for better compatibility
+1. Update dependencies to `survey_kit: 2.0.0-beta1`, and add media plugins only
+   if needed: `survey_kit_audio`, `survey_kit_video`, `survey_kit_lottie`.
+2. **BREAKING**: Rename `Task.initalStep` to `Task.initialStep`.
+3. Update imports for any media plugin package you use.
+4. Register media plugins through `SurveyKit(registries: [...])`.
+5. Migrate custom `AnswerFormat`/`Content` rendering from model methods to
+   `answerViewBuilders` and `contentWidgetBuilders` (or custom `SurveyKitPlugin`).
+6. If you deserialize from JSON, register converters for custom and plugin
+   types with `AnswerFormat.registerFromJson` and `Content.registerFromJson`.
+7. Ensure localization delegates include `SurveyKitLocalizations.delegate` and
+   Flutter localization delegates.
+8. Prefer `SurveyDefinition.fromJson` over `Task.fromJson`
+   (`Task` remains as a deprecated alias).
+
+Full migration guide: [MIGRATION.md](MIGRATION.md)
+
+## Highlights
+
+- **BREAKING**: Removed model-level `createView`/`createWidget` coupling and
+  moved rendering to registry builders.
+- **BREAKING**: Renamed `Task.initalStep` to `Task.initialStep`.
+- **BREAKING**: Split media integrations into dedicated packages:
+  `survey_kit_audio`, `survey_kit_video`, `survey_kit_lottie`.
+- **FEATURE**: Added `SurveyFlow` as the unified task model for linear and
+  branching surveys.
+- **FEATURE**: Added `SurveyDefinition` as the canonical survey definition base
+  type.
+- **DEPRECATION**: `OrderedTask`, `NavigableTask`, and `FlowTask` are now
+  legacy wrappers around `SurveyFlow`.
+- **DEPRECATION**: `Task` is now a legacy alias for `SurveyDefinition`.
+- **FEATURE**: Added `SurveyKitRegistry`/`SurveyKitPlugin` and `registries`,
+  `answerViewBuilders`, `contentWidgetBuilders`.
+- **FEATURE**: Migrated localization generation to Flutter `gen_l10n` with
+  `.arb` resources.
+- **FIX**: Improved JSON serialization/deserialization consistency, including
+  `TimeResult` generation and UTC DateTime handling.
+- **TEST**: Improved test stability with deterministic setup.
+- **CHORE**: Migrated to Melos monorepo workflow and added CI/publish
+  automation.
+- **DOCS**: Updated API docs for the registry architecture.
+
+## Navigation/Controller Hardening
+
+1. **FIX**: Hardened survey navigation transitions to avoid loading-route traps
+   on empty/completed flows.
+2. **FIX**: Stabilized navigation rule serialization/deserialization for JSON
+   surveys (`type` handling + legacy compatibility).
+3. **FIX**: Survey result emission is now deterministic and ordered by task step
+   sequence.
+4. **FIX**: Tightened state update propagation and cleaned dead/duplicate view
+   artifacts in provider/view wiring.
+5. **BREAKING**: Renamed `Task.initalStep` to `Task.initialStep`.
+6. **FEATURE**: `SurveyController` now supports context-free imperative
+   navigation when attached to `SurveyKit` (`next`, `stepBack`, `closeSurvey`).
 
 
 # 1.0.3

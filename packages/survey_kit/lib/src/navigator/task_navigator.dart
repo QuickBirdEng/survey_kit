@@ -2,10 +2,10 @@ import 'dart:collection';
 
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
-import 'package:survey_kit/src/task/task.dart';
+import 'package:survey_kit/src/task/survey_definition.dart';
 
 abstract class TaskNavigator {
-  final Task task;
+  final SurveyDefinition task;
   final ListQueue<Step> history = ListQueue();
 
   TaskNavigator(this.task);

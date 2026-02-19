@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:survey_kit/src/model/step.dart';
-import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/answer/answer_format.dart';
 import 'package:survey_kit/src/model/content/content.dart';
+import 'package:survey_kit/src/model/result/step_result.dart';
+import 'package:survey_kit/src/model/step.dart';
 
 typedef AnswerViewBuilder = Widget Function(
   AnswerFormat answerFormat,

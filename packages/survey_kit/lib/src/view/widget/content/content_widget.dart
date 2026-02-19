@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/util/extension.dart';
 import 'package:survey_kit/src/configuration/survey_kit_registry.dart';
+import 'package:survey_kit/src/util/extension.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class ContentWidget extends StatefulWidget {

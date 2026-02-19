@@ -1,132 +1,199 @@
-# Migration Guide 1.0 -> 2.0
+# Migration Guide 1.x -> 2.0.0
 
-With the release of version 2.0.0, we have modularized `survey_kit` to allow for a more lightweight core package. This guide outlines the changes and how to migrate your existing project.
+Version `2.0.0` introduces a plugin/registry architecture and splits
+media features into dedicated packages. Use the checklist below to migrate
+safely.
 
-## Breaking Changes
+## Migration Checklist
 
-### Modularization of Audio and Video Steps
+1. Update dependencies.
+2. Rename `Task.initalStep` to `Task.initialStep`.
+3. Update imports for media plugins (if used).
+4. Register media plugins in `SurveyKit`.
+5. Migrate custom answer/content rendering to builders.
+6. Register JSON converters for custom/media types (if using JSON surveys).
+7. Verify localization delegates in your `MaterialApp`.
+8. Prefer `SurveyFlow` over legacy `OrderedTask`/`NavigableTask`/`FlowTask`.
+9. Prefer `SurveyDefinition.fromJson` over legacy `Task.fromJson`.
 
-The audio and video steps have been moved to their own packages: `survey_kit_audio` and `survey_kit_video`. This reduces the size of the core package and allows you to include only the dependencies you need. Same goes for `survey_kit_lottie`.
-
-#### Action Required:
-
-If you are using `AudioContent` or `VideoContent`, you need to add the respective packages to your `pubspec.yaml`.
+## 1) Dependencies
 
 ```yaml
 dependencies:
-  survey_kit: ^2.0.0
-  # Add these if you use audio or video steps
-  survey_kit_audio: ^2.0.0
-  survey_kit_video: ^2.0.0
-  survey_kit_lottie: ^2.0.0
+  survey_kit: 2.0.0-beta1
+  # add only what you use:
+  survey_kit_audio: 2.0.0-beta1
+  survey_kit_video: 2.0.0-beta1
+  survey_kit_lottie: 2.0.0-beta1
 ```
 
-### Imports
+## 2) Task API Rename (Breaking)
 
-You will need to update your imports to include the new packages where necessary.
+The `Task` property name has been corrected:
 
-**Before:**
+- Before: `initalStep`
+- After: `initialStep`
+
+Notes:
+- This is a source-breaking API rename and should be treated as required
+  migration work for `2.0.0`.
+- JSON deserialization keeps backward compatibility for legacy payloads that
+  still contain `initalStep`, while serialization writes `initialStep`.
+
+Example:
+
 ```dart
-import 'package:survey_kit/survey_kit.dart';
+final task = SurveyFlow(
+  id: 'example',
+  steps: steps,
+  initialStep: steps.first,
+);
 ```
 
-**After:**
+## 2b) Unified Task Model
+
+`SurveyFlow` now represents both sequential and branching flows:
+
+- Use `SurveyFlow(..., navigationRules: {})` for linear surveys.
+- Add rules for branching behavior.
+- Use `SurveyDefinition` as the canonical abstract type.
+- `Task` is kept as a deprecated alias for `SurveyDefinition`.
+- `OrderedTask`, `NavigableTask`, and `FlowTask` are kept as deprecated wrappers.
+
+Example:
+
+```dart
+final task = SurveyFlow(
+  id: 'example',
+  steps: steps,
+  initialStep: steps.first,
+  navigationRules: {
+    'q1': ConditionalNavigationRule(
+      resultToStepIdentifierMapper: (_, input) {
+        final answer = input?.result as BooleanResult?;
+        if (answer == BooleanResult.positive) return 'yes_step';
+        if (answer == BooleanResult.negative) return 'no_step';
+        return null;
+      },
+    ),
+  },
+);
+```
+
+JSON entrypoint:
+
+```dart
+final survey = SurveyDefinition.fromJson(payload);
+```
+
+## 3) Imports
+
 ```dart
 import 'package:survey_kit/survey_kit.dart';
-// Add if using audio features
 import 'package:survey_kit_audio/survey_kit_audio.dart';
-// Add if using video features
 import 'package:survey_kit_video/survey_kit_video.dart';
-// Add if using lottie features
 import 'package:survey_kit_lottie/survey_kit_lottie.dart';
 ```
 
-### External Plugins (Audio, Video, Lottie)
-These features are now plugins. You must register them in `SurveyKit`:
+Only import plugin packages you actually use.
+
+## 4) Register Media Plugins
+
+Media content (`AudioContent`, `VideoContent`, `LottieContent`) is no longer
+part of the core renderer. Register plugins through `registries`:
 
 ```dart
 SurveyKit(
-  // ...
+  task: task,
+  onResult: onResult,
   registries: [
     SurveyKitAudio(),
     SurveyKitVideo(),
     SurveyKitLottie(),
   ],
-)
+);
 ```
 
-### Registry Pattern (Custom Questions)
+## 5) Migrate Custom Answer/Content Rendering
 
-In version 2.0.0, we have decoupled the `AnswerFormat` (Model) from the View generation to allow for better separation of concerns and pure Dart models.
+`AnswerFormat` and `Content` should now be pure models. Rendering is registered
+via builders.
 
-**Refactoring required:**
-1.  Remove `createView` from your custom `AnswerFormat` classes.
-2.  Register your custom view builder in the `SurveyKitRegistry`.
+### Before (1.x style)
 
-**Before:**
 ```dart
-class MyCustomAnswerFormat extends AnswerFormat {
-  ...
+class MyAnswerFormat extends AnswerFormat {
   @override
-  Widget createView(Step step, StepResult? stepResult) {
-    return MyCustomView(step, stepResult);
-  }
+  Widget createView(Step step, StepResult? result) => MyAnswerView(...);
 }
 ```
 
-**After:**
+### After (2.0.0-beta1 style)
+
 ```dart
-// 1. Clean Model
-class MyCustomAnswerFormat extends AnswerFormat {
-  ...
-  // No createView method here!
+class MyAnswerFormat extends AnswerFormat {
+  // model only (no createView)
 }
 
-// 2. Register in Registry (Only if you have custom steps)
-// Functionally, you can pass custom builders directly to SurveyKit:
+class MyContent extends Content {
+  // model only (no createWidget)
+}
 
 SurveyKit(
-  ...
+  task: task,
+  onResult: onResult,
   answerViewBuilders: {
-    ...getDefaultAnswerViewBuilders(),
-     MyCustomAnswerFormat: (format, step, result) => MyCustomView(step, result),
+    MyAnswerFormat: (format, step, result) => MyAnswerView(...),
+  },
+  contentWidgetBuilders: {
+    MyContent: (content) => MyContentWidget(...),
   },
 );
 ```
 
-*Alternatively, you can still wrap your app with `SurveyKitRegistry` if you prefer global configuration:*
+You can also provide these through your own `SurveyKitPlugin`.
+
+## 6) JSON Deserialization Registration
+
+`AnswerFormat.fromJson` and `Content.fromJson` are now registry-based. If you
+use custom types (or plugin content in JSON), register converters before
+deserializing:
 
 ```dart
-SurveyKitRegistry(
-  initialAnswerViewBuilders: {
-    ...getDefaultAnswerViewBuilders(),
-    MyCustomAnswerFormat: (format, step, result) => MyCustomView(step, result),
-  },
-  child: MaterialApp(...)
+AnswerFormat.registerFromJson(
+  'my_custom_answer',
+  MyAnswerFormat.fromJson,
+);
+
+Content.registerFromJson(
+  'my_custom_content',
+  MyContent.fromJson,
+);
+
+// plugin content types (when used in JSON payloads)
+Content.registerFromJson(AudioContent.type, AudioContent.fromJson);
+Content.registerFromJson(VideoContent.type, VideoContent.fromJson);
+Content.registerFromJson(LottieContent.type, LottieContent.fromJson);
+```
+
+## 7) Localization Setup
+
+Ensure your app includes SurveyKit and Flutter localization delegates:
+
+```dart
+MaterialApp(
+  localizationsDelegates: const [
+    SurveyKitLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: SurveyKitLocalizations.supportedLocales,
 )
 ```
 
-```
+## Notes
 
-### JSON Deserialization
-
-We have replaced the hardcoded `switch` statement in `AnswerFormat.fromJson` with a registry. This allows you to deserialize your own custom answer formats from JSON.
-
-```dart
-// Register your custom type before loading JSON
-AnswerFormat.registerFromJson('my_custom_type', MyCustomAnswerFormat.fromJson);
-```
-
-## Other Changes
-
-- **Dependencies Updated:** We have updated internal dependencies to be compatible with the latest Flutter versions (3.19.0+).
-- **Fixes:** Various bug fixes and improvements in the core logic.
-
-## Summary
-
-1.  Update `survey_kit` to `^2.0.0`.
-2.  Add `survey_kit_audio` or `survey_kit_video` if you use those features.
-3.  Add `survey_kit_lottie` if you use those features.
-3.  Update imports in your Dart files.
-
-If you encounter any issues during migration, please open an issue on our [GitHub repository](https://github.com/quickbirdstudios/survey_kit/issues).
+- Core package remains focused on survey models + default UI.
+- Media and advanced extension points are now opt-in.
+- For issues, use [GitHub Issues](https://github.com/quickbirdstudios/survey_kit/issues).

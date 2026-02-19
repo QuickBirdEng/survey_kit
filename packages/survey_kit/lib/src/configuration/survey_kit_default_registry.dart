@@ -1,10 +1,5 @@
 import 'package:survey_kit/src/configuration/survey_kit_registry.dart';
 
-import 'package:survey_kit/src/model/content/image_content.dart';
-import 'package:survey_kit/src/model/content/markdown_content.dart';
-import 'package:survey_kit/src/model/content/section_content.dart';
-import 'package:survey_kit/src/model/content/styled_text_content.dart';
-import 'package:survey_kit/src/model/content/text_content.dart';
 import 'package:survey_kit/src/model/answer/boolean_answer_format.dart';
 import 'package:survey_kit/src/model/answer/date_answer_format.dart';
 import 'package:survey_kit/src/model/answer/double_answer_format.dart';
@@ -16,6 +11,11 @@ import 'package:survey_kit/src/model/answer/scale_answer_format.dart';
 import 'package:survey_kit/src/model/answer/single_choice_answer_format.dart';
 import 'package:survey_kit/src/model/answer/text_answer_format.dart';
 import 'package:survey_kit/src/model/answer/time_answer_format.dart';
+import 'package:survey_kit/src/model/content/image_content.dart';
+import 'package:survey_kit/src/model/content/markdown_content.dart';
+import 'package:survey_kit/src/model/content/section_content.dart';
+import 'package:survey_kit/src/model/content/styled_text_content.dart';
+import 'package:survey_kit/src/model/content/text_content.dart';
 import 'package:survey_kit/src/view/widget/answer/boolean_answer_view.dart';
 import 'package:survey_kit/src/view/widget/answer/date_answer_view.dart';
 import 'package:survey_kit/src/view/widget/answer/double_answer_view.dart';
