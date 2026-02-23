@@ -4,12 +4,12 @@ import 'package:survey_kit/src/model/answer/text_choice.dart';
 
 part 'multiple_choice_answer_format.g.dart';
 
-@JsonSerializable()
-class MultipleChoiceAnswerFormat extends AnswerFormat {
+@JsonSerializable(genericArgumentFactories: true)
+class MultipleChoiceAnswerFormat<T extends TextChoice> extends AnswerFormat {
   static const String type = 'multi';
 
-  final List<TextChoice> textChoices;
-  final TextChoice? defaultSelection;
+  final List<T> textChoices;
+  final T? defaultSelection;
   @JsonKey(defaultValue: false)
   final bool otherField;
 
@@ -21,9 +21,15 @@ class MultipleChoiceAnswerFormat extends AnswerFormat {
     super.answerType = MultipleChoiceAnswerFormat.type,
   }) : super();
 
-  factory MultipleChoiceAnswerFormat.fromJson(Map<String, dynamic> json) =>
-      _$MultipleChoiceAnswerFormatFromJson(json);
+  factory MultipleChoiceAnswerFormat.fromJson(
+    Map<String, dynamic> json,
+    T Function(Object? json) fromJsonT,
+  ) =>
+      _$MultipleChoiceAnswerFormatFromJson(json, fromJsonT);
 
   @override
-  Map<String, dynamic> toJson() => _$MultipleChoiceAnswerFormatToJson(this);
+  Map<String, dynamic> toJson() => _$MultipleChoiceAnswerFormatToJson(
+        this,
+        (value) => value.toJson(),
+      );
 }

@@ -17,7 +17,7 @@ AudioContent _$AudioContentFromJson(Map<String, dynamic> json) => AudioContent(
 
 Map<String, dynamic> _$AudioContentToJson(AudioContent instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
+      'id': instance.id,
       'url': instance.url,
       'autoPlay': instance.autoPlay,
       'title': instance.title,

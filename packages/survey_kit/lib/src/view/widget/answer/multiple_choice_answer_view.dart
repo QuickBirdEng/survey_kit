@@ -28,7 +28,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
     with
         MeasureDateStateMixin,
         AnswerMixin<MultipleChoiceAnswerView, List<TextChoice>> {
-  late final MultipleChoiceAnswerFormat _multipleChoiceAnswer;
+  late final MultipleChoiceAnswerFormat<TextChoice> _multipleChoiceAnswer;
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
     if (answer == null) {
       throw Exception('MultiSelectAnswer is null');
     }
-    _multipleChoiceAnswer = answer as MultipleChoiceAnswerFormat;
+    _multipleChoiceAnswer = answer as MultipleChoiceAnswerFormat<TextChoice>;
   }
 
   @override

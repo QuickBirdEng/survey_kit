@@ -10,6 +10,7 @@ import 'package:survey_kit/src/model/answer/multiple_double_answer_format.dart';
 import 'package:survey_kit/src/model/answer/scale_answer_format.dart';
 import 'package:survey_kit/src/model/answer/single_choice_answer_format.dart';
 import 'package:survey_kit/src/model/answer/text_answer_format.dart';
+import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/answer/time_answer_format.dart';
 import 'package:survey_kit/src/model/content/image_content.dart';
 import 'package:survey_kit/src/model/content/markdown_content.dart';
@@ -51,7 +52,7 @@ Map<Type, AnswerViewBuilder> getDefaultAnswerViewBuilders() {
           questionStep: step,
           result: result,
         ),
-    MultipleChoiceAnswerFormat: (answerFormat, step, result) =>
+    MultipleChoiceAnswerFormat<TextChoice>: (answerFormat, step, result) =>
         MultipleChoiceAnswerView(
           questionStep: step,
           result: result,
@@ -70,7 +71,7 @@ Map<Type, AnswerViewBuilder> getDefaultAnswerViewBuilders() {
           questionStep: step,
           result: result,
         ),
-    SingleChoiceAnswerFormat: (answerFormat, step, result) =>
+    SingleChoiceAnswerFormat<TextChoice>: (answerFormat, step, result) =>
         SingleChoiceAnswerView(
           questionStep: step,
           result: result,

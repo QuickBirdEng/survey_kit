@@ -9,6 +9,7 @@ import 'package:survey_kit/src/model/answer/multiple_double_answer_format.dart';
 import 'package:survey_kit/src/model/answer/scale_answer_format.dart';
 import 'package:survey_kit/src/model/answer/single_choice_answer_format.dart';
 import 'package:survey_kit/src/model/answer/text_answer_format.dart';
+import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/answer/time_answer_format.dart';
 
 @JsonSerializable()
@@ -25,12 +26,18 @@ abstract class AnswerFormat {
     DateAnswerFormat.type: DateAnswerFormat.fromJson,
     DoubleAnswerFormat.type: DoubleAnswerFormat.fromJson,
     IntegerAnswerFormat.type: IntegerAnswerFormat.fromJson,
-    MultipleChoiceAnswerFormat.type: MultipleChoiceAnswerFormat.fromJson,
+    MultipleChoiceAnswerFormat.type: (json) => MultipleChoiceAnswerFormat.fromJson(
+      json,
+      (e) => TextChoice.fromJson(e as Map<String, dynamic>),
+    ),
     MultipleChoiceAutoCompleteAnswerFormat.type:
         MultipleChoiceAutoCompleteAnswerFormat.fromJson,
     MultipleDoubleAnswerFormat.type: MultipleDoubleAnswerFormat.fromJson,
     ScaleAnswerFormat.type: ScaleAnswerFormat.fromJson,
-    SingleChoiceAnswerFormat.type: SingleChoiceAnswerFormat.fromJson,
+    SingleChoiceAnswerFormat.type: (json) => SingleChoiceAnswerFormat.fromJson(
+      json,
+      (e) => TextChoice.fromJson(e as Map<String, dynamic>),
+    ),
     TextAnswerFormat.type: TextAnswerFormat.fromJson,
     TimeAnswerFormat.type: TimeAnswerFormat.fromJson,
   };

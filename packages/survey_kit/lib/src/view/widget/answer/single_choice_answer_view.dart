@@ -26,7 +26,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
     with
         MeasureDateStateMixin,
         AnswerMixin<SingleChoiceAnswerView, TextChoice> {
-  late final SingleChoiceAnswerFormat _singleChoiceAnswerFormat;
+  late final SingleChoiceAnswerFormat<TextChoice> _singleChoiceAnswerFormat;
   TextChoice? _selectedChoice;
 
   @override
@@ -36,7 +36,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
     if (answer == null) {
       throw Exception('SingleSelectAnswer is null');
     }
-    _singleChoiceAnswerFormat = answer as SingleChoiceAnswerFormat;
+    _singleChoiceAnswerFormat = answer as SingleChoiceAnswerFormat<TextChoice>;
     _selectedChoice = widget.result?.result as TextChoice? ??
         _singleChoiceAnswerFormat.defaultSelection;
   }

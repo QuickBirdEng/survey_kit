@@ -18,7 +18,7 @@ LottieContent _$LottieContentFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$LottieContentToJson(LottieContent instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
+      'id': instance.id,
       'url': instance.url,
       'asset': instance.asset,
       'repeat': instance.repeat,

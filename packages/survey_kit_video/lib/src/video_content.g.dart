@@ -20,7 +20,7 @@ VideoContent _$VideoContentFromJson(Map<String, dynamic> json) => VideoContent(
 
 Map<String, dynamic> _$VideoContentToJson(VideoContent instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
+      'id': instance.id,
       'url': instance.url,
       'autoPlay': instance.autoPlay,
       'loop': instance.loop,
