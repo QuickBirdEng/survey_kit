@@ -20,6 +20,10 @@ Full migration guide: [MIGRATION.md](MIGRATION.md)
 
 ## Highlights
 
+- **BREAKING**: `ConditionalNavigationRule.resultToStepIdentifierMapper` now
+  returns `NavigationTarget` instead of `String?`. Replace `'step_id'` with
+  `NavigateToStep('step_id')`, `null` with `NavigateToNextInList()`, and use
+  the new `FinishSurvey()` to end the survey early from a rule.
 - **BREAKING**: Removed model-level `createView`/`createWidget` coupling and
   moved rendering to registry builders.
 - **BREAKING**: Renamed `Task.initalStep` to `Task.initialStep`.
@@ -29,8 +33,10 @@ Full migration guide: [MIGRATION.md](MIGRATION.md)
   branching surveys.
 - **FEATURE**: Added `SurveyDefinition` as the canonical survey definition base
   type.
-- **DEPRECATION**: `OrderedTask`, `NavigableTask`, and `FlowTask` are now
-  legacy wrappers around `SurveyFlow`.
+- **DEPRECATION**: `OrderedTask` and `NavigableTask` are now legacy wrappers
+  around `SurveyFlow`.
+- **REMOVED**: `FlowTask` — introduced and immediately deprecated in this
+  version, removed before release. Use `SurveyFlow` directly.
 - **DEPRECATION**: `Task` is now a legacy alias for `SurveyDefinition`.
 - **FEATURE**: Added `SurveyKitRegistry`/`SurveyKitPlugin` and `registries`,
   `answerViewBuilders`, `contentWidgetBuilders`.
@@ -56,6 +62,19 @@ Full migration guide: [MIGRATION.md](MIGRATION.md)
 5. **BREAKING**: Renamed `Task.initalStep` to `Task.initialStep`.
 6. **FEATURE**: `SurveyController` now supports context-free imperative
    navigation when attached to `SurveyKit` (`next`, `stepBack`, `closeSurvey`).
+7. **BREAKING**: `SurveyController.closeSurvey` no longer accepts a
+   `BuildContext` parameter. The context is resolved internally via the
+   navigator key. If you supply an `onCloseSurvey` callback, remove the
+   `BuildContext` argument from its signature:
+   `Function(StepResult?) onCloseSurvey`.
+8. **FIX**: `QuestionAnswer.isValid` now initialises to `false` for mandatory
+   steps instead of always `true`. Previously, the Next button on a mandatory
+   step was enabled before the user had selected any answer.
+9. **FIX**: `AnswerMixin.initValidation` added — call it in `initState` to sync
+   a pre-filled or default answer into the validation state on first render.
+   `SingleChoiceAnswerView` already calls this.
+10. **FIX**: `ContentWidget` now correctly respects `center: false` —
+    `mainAxisAlignment` was hardcoded to `center` regardless of the parameter.
 
 
 # 1.0.3

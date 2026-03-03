@@ -25,7 +25,8 @@ https://github.com/quickbirdstudios/survey_kit/blob/main/MIGRATION.md
 - **BREAKING**: Moved media integrations to dedicated packages (`survey_kit_audio`, `survey_kit_video`, `survey_kit_lottie`).
 - **FEATURE**: Added `SurveyFlow` as the unified task model for linear and branching surveys.
 - **FEATURE**: Added `SurveyDefinition` as the canonical survey definition base type.
-- **DEPRECATION**: `OrderedTask`, `NavigableTask`, and `FlowTask` are now legacy wrappers around `SurveyFlow`.
+- **DEPRECATION**: `OrderedTask` and `NavigableTask` are now legacy wrappers around `SurveyFlow`.
+- **REMOVED**: `FlowTask` — introduced and immediately deprecated in this version, removed before release. Use `SurveyFlow` directly.
 - **DEPRECATION**: `Task` is now a legacy alias for `SurveyDefinition`.
 - **FEATURE**: Added `SurveyKitRegistry` / `SurveyKitPlugin` extension points.
 - **FEATURE**: Migrated localization to Flutter `gen_l10n` and `.arb` files.

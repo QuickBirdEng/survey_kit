@@ -22,14 +22,12 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
         SurveyStateProvider.of(context).surveyStateStream.stream;
 
     final cancelButton = TextButton(
+      onPressed: surveyController.closeSurvey,
       child: Text(
         SurveyKitLocalizations.of(context)?.cancel ?? 'Cancel',
         style: TextStyle(
           color: Theme.of(context).primaryColor,
         ),
-      ),
-      onPressed: () => surveyController.closeSurvey(
-        context: context,
       ),
     );
 
@@ -46,15 +44,14 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: StreamBuilder<SurveyState>(
         stream: surveyStream,
         builder: (context, snapshot) {
-          if (snapshot.data == null || snapshot.data is! PresentingSurveyState) {
+          if (snapshot.data == null ||
+              snapshot.data is! PresentingSurveyState) {
             return const SizedBox.shrink();
           }
 
           final state = snapshot.data! as PresentingSurveyState;
 
-          return state.isFirstStep
-              ? const SizedBox.shrink()
-              : backButton;
+          return state.isFirstStep ? const SizedBox.shrink() : backButton;
         },
       ),
       title: const SurveyProgress(),

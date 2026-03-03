@@ -82,12 +82,12 @@ class _CombinedSurveyPageState extends State<CombinedSurveyPage> {
           resultToStepIdentifierMapper: (_, input) {
             final selected = input?.result as BooleanResult?;
             if (selected == BooleanResult.positive) {
-              return '2';
+              return const NavigateToStep('2');
             }
             if (selected == BooleanResult.negative) {
-              return '6';
+              return const NavigateToStep('6');
             }
-            return null;
+            return const NavigateToNextInList();
           },
         ),
         '2': DirectNavigationRule('4'),

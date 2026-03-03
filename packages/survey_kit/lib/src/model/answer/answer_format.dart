@@ -26,18 +26,19 @@ abstract class AnswerFormat {
     DateAnswerFormat.type: DateAnswerFormat.fromJson,
     DoubleAnswerFormat.type: DoubleAnswerFormat.fromJson,
     IntegerAnswerFormat.type: IntegerAnswerFormat.fromJson,
-    MultipleChoiceAnswerFormat.type: (json) => MultipleChoiceAnswerFormat.fromJson(
-      json,
-      (e) => TextChoice.fromJson(e as Map<String, dynamic>),
-    ),
+    MultipleChoiceAnswerFormat.type: (json) =>
+        MultipleChoiceAnswerFormat.fromJson(
+          json,
+          (dynamic e) => TextChoice.fromJson(e as Map<String, dynamic>),
+        ),
     MultipleChoiceAutoCompleteAnswerFormat.type:
         MultipleChoiceAutoCompleteAnswerFormat.fromJson,
     MultipleDoubleAnswerFormat.type: MultipleDoubleAnswerFormat.fromJson,
     ScaleAnswerFormat.type: ScaleAnswerFormat.fromJson,
     SingleChoiceAnswerFormat.type: (json) => SingleChoiceAnswerFormat.fromJson(
-      json,
-      (e) => TextChoice.fromJson(e as Map<String, dynamic>),
-    ),
+          json,
+          (dynamic e) => TextChoice.fromJson(e as Map<String, dynamic>),
+        ),
     TextAnswerFormat.type: TextAnswerFormat.fromJson,
     TimeAnswerFormat.type: TimeAnswerFormat.fromJson,
   };

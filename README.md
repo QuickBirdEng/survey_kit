@@ -139,9 +139,9 @@ final branchingTask = SurveyFlow(
     'route': ConditionalNavigationRule(
       resultToStepIdentifierMapper: (_, input) {
         final choice = input?.result as TextChoice?;
-        if (choice?.id == 'yes') return 'yes-step';
-        if (choice?.id == 'no') return 'no-step';
-        return null;
+        if (choice?.id == 'yes') return const NavigateToStep('yes-step');
+        if (choice?.id == 'no') return const NavigateToStep('no-step');
+        return const NavigateToNextInList();
       },
     ),
   },
@@ -249,7 +249,6 @@ Legacy APIs remain available as deprecated compatibility layers:
 - `Task` (alias for `SurveyDefinition`)
 - `OrderedTask`
 - `NavigableTask`
-- `FlowTask`
 - `InstructionStep`, `QuestionStep`, `CompletionStep`
 
 Prefer `SurveyFlow` + `Step` for new code.

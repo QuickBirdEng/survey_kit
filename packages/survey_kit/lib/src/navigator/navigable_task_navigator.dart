@@ -2,6 +2,7 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/rules/conditional_navigation_rule.dart';
 import 'package:survey_kit/src/navigator/rules/direct_navigation_rule.dart';
+import 'package:survey_kit/src/navigator/rules/navigation_target.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/task/survey_definition.dart';
 import 'package:survey_kit/src/task/survey_flow.dart';
@@ -53,12 +54,14 @@ class NavigableTaskNavigator extends TaskNavigator {
     List<StepResult> previousResults,
     StepResult? questionResult,
   ) {
-    final nextStepIdentifier =
+    final target =
         rule.resultToStepIdentifierMapper(previousResults, questionResult);
-    if (nextStepIdentifier == null) {
-      return nextInList(step);
-    }
-    return task.steps.firstWhere((element) => element.id == nextStepIdentifier);
+    return switch (target) {
+      NavigateToStep(:final stepId) =>
+        task.steps.firstWhere((e) => e.id == stepId),
+      NavigateToNextInList() => nextInList(step),
+      FinishSurvey() => null,
+    };
   }
 
   @override

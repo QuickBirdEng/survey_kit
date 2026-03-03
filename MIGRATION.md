@@ -13,8 +13,10 @@ safely.
 5. Migrate custom answer/content rendering to builders.
 6. Register JSON converters for custom/media types (if using JSON surveys).
 7. Verify localization delegates in your `MaterialApp`.
-8. Prefer `SurveyFlow` over legacy `OrderedTask`/`NavigableTask`/`FlowTask`.
+8. Prefer `SurveyFlow` over legacy `OrderedTask`/`NavigableTask`.
 9. Prefer `SurveyDefinition.fromJson` over legacy `Task.fromJson`.
+10. Update `onCloseSurvey` callback signature (remove `BuildContext` parameter).
+11. Migrate `ConditionalNavigationRule.resultToStepIdentifierMapper` return type from `String?` to `NavigationTarget`.
 
 ## 1) Dependencies
 
@@ -58,7 +60,7 @@ final task = SurveyFlow(
 - Add rules for branching behavior.
 - Use `SurveyDefinition` as the canonical abstract type.
 - `Task` is kept as a deprecated alias for `SurveyDefinition`.
-- `OrderedTask`, `NavigableTask`, and `FlowTask` are kept as deprecated wrappers.
+- `OrderedTask` and `NavigableTask` are kept as deprecated wrappers.
 
 Example:
 
@@ -71,9 +73,9 @@ final task = SurveyFlow(
     'q1': ConditionalNavigationRule(
       resultToStepIdentifierMapper: (_, input) {
         final answer = input?.result as BooleanResult?;
-        if (answer == BooleanResult.positive) return 'yes_step';
-        if (answer == BooleanResult.negative) return 'no_step';
-        return null;
+        if (answer == BooleanResult.positive) return const NavigateToStep('yes_step');
+        if (answer == BooleanResult.negative) return const NavigateToStep('no_step');
+        return const NavigateToNextInList();
       },
     ),
   },
@@ -190,6 +192,90 @@ MaterialApp(
   ],
   supportedLocales: SurveyKitLocalizations.supportedLocales,
 )
+```
+
+## 10) `SurveyController.closeSurvey` — No BuildContext (Breaking)
+
+`closeSurvey` no longer accepts a `BuildContext`. The context is resolved
+internally via the navigator key that `SurveyKit` attaches automatically.
+
+### `closeSurvey` call sites
+
+```dart
+// Before
+surveyController.closeSurvey(context: context);
+
+// After
+surveyController.closeSurvey();
+```
+
+### `onCloseSurvey` callback
+
+```dart
+// Before
+SurveyController(
+  onCloseSurvey: (BuildContext context, StepResult? result) {
+    // ...
+  },
+);
+
+// After
+SurveyController(
+  onCloseSurvey: (StepResult? result) {
+    // ...
+  },
+);
+```
+
+## 11) `ConditionalNavigationRule` — `NavigationTarget` Return Type (Breaking)
+
+`resultToStepIdentifierMapper` now returns `NavigationTarget` instead of
+`String?`. This enables explicitly finishing the survey from within a rule.
+
+| Old return value | New return value |
+|---|---|
+| `'step_id'` | `NavigateToStep('step_id')` |
+| `null` (next in list) | `NavigateToNextInList()` |
+| *(not possible)* | `FinishSurvey()` |
+
+### Before
+
+```dart
+ConditionalNavigationRule(
+  resultToStepIdentifierMapper: (_, input) {
+    final answer = input?.result as BooleanResult?;
+    if (answer == BooleanResult.positive) return 'yes_step';
+    return null;
+  },
+)
+```
+
+### After
+
+```dart
+ConditionalNavigationRule(
+  resultToStepIdentifierMapper: (_, input) {
+    final answer = input?.result as BooleanResult?;
+    if (answer == BooleanResult.positive) return const NavigateToStep('yes_step');
+    if (answer == BooleanResult.negative) return const FinishSurvey();
+    return const NavigateToNextInList();
+  },
+)
+```
+
+### JSON surveys
+
+To finish the survey from a JSON `values` map, use the sentinel value
+`'__finish__'` (also available as `FinishSurvey.jsonValue`):
+
+```json
+{
+  "type": "conditional",
+  "values": {
+    "skip": "__finish__",
+    "continue": "next_step_id"
+  }
+}
 ```
 
 ## Notes

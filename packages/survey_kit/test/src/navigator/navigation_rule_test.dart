@@ -30,9 +30,18 @@ void main() {
       result: 'Maybe',
     );
 
-    expect(rule.resultToStepIdentifierMapper(const [], yesResult), 'step-yes');
-    expect(rule.resultToStepIdentifierMapper(const [], unknownResult), isNull);
-    expect(rule.resultToStepIdentifierMapper(const [], null), isNull);
+    expect(
+      rule.resultToStepIdentifierMapper(const [], yesResult),
+      isA<NavigateToStep>().having((t) => t.stepId, 'stepId', 'step-yes'),
+    );
+    expect(
+      rule.resultToStepIdentifierMapper(const [], unknownResult),
+      isA<NavigateToNextInList>(),
+    );
+    expect(
+      rule.resultToStepIdentifierMapper(const [], null),
+      isA<NavigateToNextInList>(),
+    );
     expect(
       rule.toJson(),
       <String, dynamic>{

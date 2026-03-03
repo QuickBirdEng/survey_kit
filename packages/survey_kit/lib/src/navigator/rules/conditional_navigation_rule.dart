@@ -1,10 +1,11 @@
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
+import 'package:survey_kit/src/navigator/rules/navigation_target.dart';
 
 class ConditionalNavigationRule implements NavigationRule {
   static const type = 'conditional';
 
-  final String? Function(List<StepResult>, StepResult?)
+  final NavigationTarget Function(List<StepResult>, StepResult?)
       resultToStepIdentifierMapper;
   final Map<String, String> _values;
 
@@ -18,8 +19,13 @@ class ConditionalNavigationRule implements NavigationRule {
         .map((key, value) => MapEntry(key, value.toString()));
     return ConditionalNavigationRule(
       values: inputValues,
-      resultToStepIdentifierMapper: (results, input) =>
-          input == null ? null : inputValues[input.result?.toString()],
+      resultToStepIdentifierMapper: (results, input) {
+        if (input == null) return const NavigateToNextInList();
+        final mapped = inputValues[input.result?.toString()];
+        if (mapped == null) return const NavigateToNextInList();
+        if (mapped == FinishSurvey.jsonValue) return const FinishSurvey();
+        return NavigateToStep(mapped);
+      },
     );
   }
 

@@ -25,7 +25,6 @@ class SurveyController {
   /// Default behavior is:
 
   final Function(
-    BuildContext context,
     StepResult? stepResult,
   )? onCloseSurvey;
 
@@ -105,14 +104,13 @@ class SurveyController {
   }
 
   void closeSurvey({
-    BuildContext? context,
     StepResult? stepResult,
   }) {
-    final resolvedContext = _resolveContext(context);
     if (onCloseSurvey != null) {
-      onCloseSurvey!(resolvedContext, stepResult);
+      onCloseSurvey!(stepResult);
       return;
     }
+    final resolvedContext = _resolveContext(null);
     SurveyStateProvider.of(resolvedContext).onEvent(
       CloseSurvey(
         stepResult,

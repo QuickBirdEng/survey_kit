@@ -21,8 +21,8 @@ SurveyKit(
 ```
 
 Use `SurveyFlow` as the survey model and `SurveyDefinition.fromJson(...)` for
-JSON loading. Legacy `Task`, `FlowTask`, `OrderedTask`, and `NavigableTask`
-remain available as deprecated compatibility APIs.
+JSON loading. Legacy `Task`, `OrderedTask`, and `NavigableTask` remain
+available as deprecated compatibility APIs.
 
 `SurveyController` now supports context-free imperative navigation once it is
 passed into `SurveyKit`:

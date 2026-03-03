@@ -39,6 +39,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
     _singleChoiceAnswerFormat = answer as SingleChoiceAnswerFormat<TextChoice>;
     _selectedChoice = widget.result?.result as TextChoice? ??
         _singleChoiceAnswerFormat.defaultSelection;
+    initValidation(_selectedChoice);
   }
 
   @override

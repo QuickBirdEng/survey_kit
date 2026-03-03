@@ -65,7 +65,8 @@ void main() {
         steps: const <Step>[],
         navigationRules: <String, NavigationRule>{
           'start': ConditionalNavigationRule(
-            resultToStepIdentifierMapper: (results, input) => null,
+            resultToStepIdentifierMapper: (results, input) =>
+                const NavigateToNextInList(),
             values: const <String, String>{
               'yes': 'yes',
               'no': 'no',
