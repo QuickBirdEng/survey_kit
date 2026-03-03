@@ -24,7 +24,9 @@ class _ContentWidgetState extends State<ContentWidget> {
     final contentView = Container(
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: widget.center
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
         children: widget.content
             .map(
               (e) {
