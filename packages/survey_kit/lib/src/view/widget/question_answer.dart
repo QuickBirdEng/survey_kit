@@ -13,7 +13,8 @@ class QuestionAnswer<R> extends InheritedWidget {
 
   final Step step;
 
-  late final ValueNotifier<bool> isValid = ValueNotifier<bool>(!step.isMandatory);
+  late final ValueNotifier<bool> isValid =
+      ValueNotifier<bool>(!step.isMandatory || step.answerFormat == null);
   // ignore: avoid_positional_boolean_parameters, use_setters_to_change_properties
   void setIsValid(bool isValid) {
     this.isValid.value = isValid;

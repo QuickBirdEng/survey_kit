@@ -142,7 +142,8 @@ class _CombinedSurveyPageState extends State<CombinedSurveyPage> {
               fontSize: 22,
             ),
             TextContent(
-              text: 'Tell us about yourself and why you want to improve your health.',
+              text:
+                  'Tell us about yourself and why you want to improve your health.',
             ),
           ],
           answerFormat: const TextAnswerFormat(
@@ -173,7 +174,11 @@ class _CombinedSurveyPageState extends State<CombinedSurveyPage> {
           ],
           answerFormat: MultipleChoiceAnswerFormat(
             textChoices: [
-              TextChoice(id: 'penicillin', value: 'Penicillin', text: 'Penicillin'),
+              TextChoice(
+                id: 'penicillin',
+                value: 'Penicillin',
+                text: 'Penicillin',
+              ),
               TextChoice(id: 'latex', value: 'Latex', text: 'Latex'),
               TextChoice(id: 'pet', value: 'Pet', text: 'Pet'),
               TextChoice(id: 'pollen', value: 'Pollen', text: 'Pollen'),
@@ -367,14 +372,19 @@ class _CombinedSurveyPageState extends State<CombinedSurveyPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(16),
                           child: SafeArea(
-                            child: OutlinedButton(
-                              onPressed: questionAnswer.isValid.value ||
-                                      !step.isMandatory
-                                  ? () => surveyController.next(
-                                        stepResult: questionAnswer.stepResult,
-                                      )
-                                  : null,
-                              child: Text(step.buttonText ?? 'Next'),
+                            child: ValueListenableBuilder<bool>(
+                              valueListenable: questionAnswer.isValid,
+                              builder: (context, isValid, child) {
+                                return OutlinedButton(
+                                  onPressed: isValid || !step.isMandatory
+                                      ? () => surveyController.next(
+                                            stepResult:
+                                                questionAnswer.stepResult,
+                                          )
+                                      : null,
+                                  child: Text(step.buttonText ?? 'Next'),
+                                );
+                              },
                             ),
                           ),
                         ),
