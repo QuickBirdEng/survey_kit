@@ -14,9 +14,10 @@ class TextWidget extends StatelessWidget {
     return Text(
       textContent.text,
       textAlign: textContent.textAlign,
-      style: TextStyle(
-        fontSize: textContent.fontSize,
-      ),
+      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            fontSize: textContent.fontSize,
+            fontWeight: FontWeight.w600,
+          ),
     );
   }
 }

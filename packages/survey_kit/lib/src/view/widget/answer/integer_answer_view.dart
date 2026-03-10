@@ -56,7 +56,7 @@ class _IntegerAnswerViewState extends State<IntegerAnswerView>
     final questionText = widget.questionStep.answerFormat?.question;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32.0),
+      padding: const EdgeInsets.symmetric(vertical: 14.0),
       child: Column(
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),

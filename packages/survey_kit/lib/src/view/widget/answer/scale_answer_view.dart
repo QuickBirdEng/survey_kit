@@ -41,17 +41,20 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
         _scaleAnswerFormat.defaultValue;
     final questionText = widget.questionStep.answerFormat?.question;
     return Padding(
-      padding: const EdgeInsets.all(14.0),
+      padding: const EdgeInsets.symmetric(vertical: 14.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),
           Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: const EdgeInsets.only(top: 24.0, bottom: 8.0),
             child: Text(
               result.toInt().toString(),
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).primaryColor,
+                  ),
             ),
           ),
           Column(
@@ -65,12 +68,14 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
                       _scaleAnswerFormat.minimumValueDescription,
                       style: const TextStyle(
                         fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
                       _scaleAnswerFormat.maximumValueDescription,
                       style: const TextStyle(
                         fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],

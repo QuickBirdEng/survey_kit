@@ -29,6 +29,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
         MeasureDateStateMixin,
         AnswerMixin<MultipleChoiceAnswerView, List<TextChoice>> {
   late final MultipleChoiceAnswerFormat<TextChoice> _multipleChoiceAnswer;
+  List<TextChoice> _selectedChoices = [];
 
   @override
   void initState() {
@@ -38,6 +39,9 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
       throw Exception('MultiSelectAnswer is null');
     }
     _multipleChoiceAnswer = answer as MultipleChoiceAnswerFormat<TextChoice>;
+    final defaultSelection = _multipleChoiceAnswer.defaultSelection;
+    _selectedChoices = widget.result?.result as List<TextChoice>? ??
+        (defaultSelection != null ? [defaultSelection] : []);
   }
 
   @override
@@ -52,18 +56,12 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
   Widget build(BuildContext context) {
     final questionText = widget.questionStep.answerFormat?.question;
 
-    final _selectedChoices =
-        QuestionAnswer.of(context).stepResult?.result as List<TextChoice>? ??
-            widget.result?.result as List<TextChoice>? ??
-            [];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+      padding: EdgeInsets.zero,
       child: Column(
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),
-          const Divider(
-            color: Colors.grey,
-          ),
+          const SizedBox(height: 12),
           ..._multipleChoiceAnswer.choices
               .map(
                 (TextChoice tc) => SelectionListTile(
@@ -72,11 +70,15 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                     setState(
                       () {
                         if (_selectedChoices.contains(tc)) {
-                          _selectedChoices.remove(tc);
-                        } else {}
+                          _selectedChoices = _selectedChoices
+                              .where((element) => element != tc)
+                              .toList();
+                        } else {
+                          _selectedChoices = [..._selectedChoices, tc];
+                        }
                       },
                     );
-                    onChange([..._selectedChoices, tc]);
+                    onChange(_selectedChoices);
                   },
                   isSelected: _selectedChoices.contains(tc),
                 ),
@@ -84,48 +86,64 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
               .toList(),
           if (_multipleChoiceAnswer.otherField) ...[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14.0),
-              child: ListTile(
-                title: TextField(
-                  onChanged: (v) {
-                    int? currentIndex;
-                    final otherTextChoice = _selectedChoices
-                        .firstWhereIndexedOrNull((index, element) {
-                      final isOtherField = element.value == 'Other';
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: TextField(
+                onChanged: (v) {
+                  int? currentIndex;
+                  final otherTextChoice = _selectedChoices
+                      .firstWhereIndexedOrNull((index, element) {
+                    final isOtherField = element.value == 'Other';
 
-                      if (isOtherField) {
-                        currentIndex = index;
+                    if (isOtherField) {
+                      currentIndex = index;
+                    }
+
+                    return isOtherField;
+                  });
+
+                  setState(() {
+                    if (v.isEmpty && otherTextChoice != null) {
+                      _selectedChoices = _selectedChoices
+                          .where((element) => element != otherTextChoice)
+                          .toList();
+                    } else if (v.isNotEmpty) {
+                      final updatedTextChoice =
+                          TextChoice(id: 'Other', value: v, text: v);
+                      if (otherTextChoice == null) {
+                        _selectedChoices = [
+                          ..._selectedChoices,
+                          updatedTextChoice
+                        ];
+                      } else if (currentIndex != null) {
+                        _selectedChoices = List.from(_selectedChoices);
+                        _selectedChoices[currentIndex!] = updatedTextChoice;
                       }
-
-                      return isOtherField;
-                    });
-
-                    setState(() {
-                      if (v.isEmpty && otherTextChoice != null) {
-                        _selectedChoices.remove(otherTextChoice);
-                      } else if (v.isNotEmpty) {
-                        final updatedTextChoice =
-                            TextChoice(id: 'Other', value: v, text: v);
-                        if (otherTextChoice == null) {
-                          _selectedChoices.add(updatedTextChoice);
-                        } else if (currentIndex != null) {
-                          _selectedChoices[currentIndex!] = updatedTextChoice;
-                        }
-                      }
-                      onChange(_selectedChoices);
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Other',
-                    labelStyle: Theme.of(context).textTheme.headlineSmall,
-                    hintText: 'Write other information here',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    }
+                    onChange(_selectedChoices);
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Other',
+                  labelStyle: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.w500),
+                  hintText: 'Write other information here',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 14.0, vertical: 16.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide:
+                        BorderSide(color: Colors.grey.shade300, width: 1.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor, width: 2.0),
                   ),
                 ),
               ),
-            ),
-            const Divider(
-              color: Colors.grey,
             ),
           ],
         ],

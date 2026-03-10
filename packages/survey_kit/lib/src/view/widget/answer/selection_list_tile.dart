@@ -14,38 +14,48 @@ class SelectionListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0),
-          child: ListTile(
-            title: Text(
-              text,
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: isSelected
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).textTheme.headlineSmall?.color,
-                  ),
-            ),
-            trailing: isSelected
-                ? Icon(
-                    Icons.check,
-                    size: 32,
-                    color: isSelected
-                        ? Theme.of(context).primaryColor
-                        : Colors.black,
-                  )
-                : Container(
-                    width: 32,
-                    height: 32,
-                  ),
-            onTap: onTap,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: isSelected
+              ? Theme.of(context).primaryColor.withValues(alpha: 0.05)
+              : Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            color: isSelected
+                ? Theme.of(context).primaryColor
+                : Colors.grey.shade300,
+            width: isSelected ? 2.0 : 1.0,
           ),
         ),
-        const Divider(
-          color: Colors.grey,
+        child: ListTile(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 14.0, vertical: 0.0),
+          title: Text(
+            text,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: isSelected
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).textTheme.titleLarge?.color,
+                ),
+          ),
+          trailing: isSelected
+              ? Icon(
+                  Icons.check_circle,
+                  size: 28,
+                  color: Theme.of(context).primaryColor,
+                )
+              : const SizedBox(
+                  width: 28,
+                  height: 28,
+                ),
+          onTap: onTap,
         ),
-      ],
+      ),
     );
   }
 }

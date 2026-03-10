@@ -64,6 +64,6 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size(
         double.infinity,
-        40,
+        60,
       );
 }

@@ -25,7 +25,9 @@ class MultipleChoiceAutoCompleteAnswerView extends StatefulWidget {
 
 class _MultipleChoiceAutoCompleteAnswerViewState
     extends State<MultipleChoiceAutoCompleteAnswerView>
-    with MeasureDateStateMixin {
+    with
+        MeasureDateStateMixin,
+        AnswerMixin<MultipleChoiceAutoCompleteAnswerView, List<TextChoice>> {
   late final MultipleChoiceAutoCompleteAnswerFormat _multipleChoiceAnswer;
 
   List<TextChoice> _selectedChoices = [];
@@ -42,13 +44,21 @@ class _MultipleChoiceAutoCompleteAnswerViewState
         _multipleChoiceAnswer.defaultSelection;
   }
 
+  @override
+  bool isValid(List<TextChoice>? result) {
+    if (widget.questionStep.isMandatory) {
+      return result?.isNotEmpty ?? false;
+    }
+    return true;
+  }
+
   // TODO(marvin): refactor the widgets and organize, DRY also
   @override
   Widget build(BuildContext context) {
     final questionText = widget.questionStep.answerFormat?.question;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+      padding: EdgeInsets.zero,
       child: Column(
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),
@@ -60,8 +70,8 @@ class _MultipleChoiceAutoCompleteAnswerViewState
           const SizedBox(
             height: 32,
           ),
-          const Divider(
-            color: Colors.grey,
+          const SizedBox(
+            height: 12,
           ),
           ..._multipleChoiceAnswer.choices
               .map(
@@ -74,8 +84,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
               .toList(),
           ..._selectedChoices
               .where(
-                (element) =>
-                    !_multipleChoiceAnswer.choices.contains(element),
+                (element) => !_multipleChoiceAnswer.choices.contains(element),
               )
               .map(
                 (TextChoice tc) => SelectionListTile(
@@ -87,47 +96,58 @@ class _MultipleChoiceAutoCompleteAnswerViewState
               .toList(),
           if (_multipleChoiceAnswer.otherField) ...[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14.0),
-              child: ListTile(
-                title: TextField(
-                  onChanged: (v) {
-                    int? currentIndex;
-                    final otherTextChoice = _selectedChoices
-                        .firstWhereIndexedOrNull((index, element) {
-                      final isOtherField = element.value == 'Other';
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              child: TextField(
+                onChanged: (v) {
+                  int? currentIndex;
+                  final otherTextChoice = _selectedChoices
+                      .firstWhereIndexedOrNull((index, element) {
+                    final isOtherField = element.value == 'Other';
 
-                      if (isOtherField) {
-                        currentIndex = index;
+                    if (isOtherField) {
+                      currentIndex = index;
+                    }
+
+                    return isOtherField;
+                  });
+
+                  setState(() {
+                    if (v.isEmpty && otherTextChoice != null) {
+                      _selectedChoices.remove(otherTextChoice);
+                    } else if (v.isNotEmpty) {
+                      final updatedTextChoice =
+                          TextChoice(id: 'Other', value: v, text: v);
+                      if (otherTextChoice == null) {
+                        _selectedChoices.add(updatedTextChoice);
+                      } else if (currentIndex != null) {
+                        _selectedChoices[currentIndex!] = updatedTextChoice;
                       }
-
-                      return isOtherField;
-                    });
-
-                    setState(() {
-                      if (v.isEmpty && otherTextChoice != null) {
-                        _selectedChoices.remove(otherTextChoice);
-                      } else if (v.isNotEmpty) {
-                        final updatedTextChoice =
-                            TextChoice(id: 'Other', value: v, text: v);
-                        if (otherTextChoice == null) {
-                          _selectedChoices.add(updatedTextChoice);
-                        } else if (currentIndex != null) {
-                          _selectedChoices[currentIndex!] = updatedTextChoice;
-                        }
-                      }
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Other',
-                    labelStyle: Theme.of(context).textTheme.headlineSmall,
-                    hintText: 'Write other information here',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    }
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Other',
+                  labelStyle: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.w500),
+                  hintText: 'Write other information here',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 14.0, vertical: 16.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide:
+                        BorderSide(color: Colors.grey.shade300, width: 1.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor, width: 2.0),
                   ),
                 ),
               ),
-            ),
-            const Divider(
-              color: Colors.grey,
             ),
           ],
         ],
@@ -141,10 +161,11 @@ class _MultipleChoiceAutoCompleteAnswerViewState
         if (_selectedChoices.contains(tc)) {
           _selectedChoices.remove(tc);
         } else {
-          _selectedChoices = [..._selectedChoices, tc];
+          _selectedChoices.add(tc);
         }
       },
     );
+    onChange(_selectedChoices);
   }
 }
 

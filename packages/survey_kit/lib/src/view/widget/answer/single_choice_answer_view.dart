@@ -66,13 +66,11 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
     final questionText = widget.questionStep.answerFormat?.question;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+      padding: EdgeInsets.zero,
       child: Column(
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),
-          const Divider(
-            color: Colors.grey,
-          ),
+          const SizedBox(height: 12),
           ..._singleChoiceAnswerFormat.choices.map(
             (TextChoice tc) {
               return SelectionListTile(

@@ -32,7 +32,7 @@ class _StepViewState extends State<StepView> {
         child: LayoutBuilder(
           builder: (context, constraint) {
             return Padding(
-              padding: const EdgeInsets.all(30),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
               child: SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints:
@@ -48,19 +48,25 @@ class _StepViewState extends State<StepView> {
                           ),
                         ),
                         if (widget.answerView != null) widget.answerView!,
-                        OutlinedButton(
-                          onPressed: questionAnswer.isValid ||
-                                  !widget.step.isMandatory
-                              ? () => surveyController.next(
-                                    context: context,
-                                    stepResult: questionAnswer.stepResult,
-                                  )
-                              : null,
-                          child: Text(
-                            widget.step.buttonText ??
-                                (SurveyKitLocalizations.of(context)?.next ??
-                                        'Next')
-                                    .toUpperCase(),
+                        const SizedBox(height: 32),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 56,
+                          child: ElevatedButton(
+                            onPressed: questionAnswer.isValid ||
+                                    !widget.step.isMandatory
+                                ? () => surveyController.next(
+                                      context: context,
+                                      stepResult: questionAnswer.stepResult,
+                                    )
+                                : null,
+                            child: Text(
+                              widget.step.buttonText ??
+                                  (SurveyKitLocalizations.of(context)?.next ??
+                                      'Continue'),
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ],

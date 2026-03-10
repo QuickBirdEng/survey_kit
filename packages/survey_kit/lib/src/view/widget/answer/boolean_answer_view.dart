@@ -36,7 +36,8 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
       throw Exception('BooleanAnswerFormat is null');
     }
     _answerFormat = answer as BooleanAnswerFormat;
-    _result = widget.result?.result as BooleanResult? ?? _answerFormat.defaultValue;
+    _result =
+        widget.result?.result as BooleanResult? ?? _answerFormat.defaultValue;
   }
 
   @override
@@ -64,9 +65,7 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
     return Column(
       children: [
         if (questionText != null) AnswerQuestionText(text: questionText),
-        const Divider(
-          color: Colors.grey,
-        ),
+        const SizedBox(height: 12),
         SelectionListTile(
           text: _answerFormat.positiveAnswer,
           onTap: () => onChange(BooleanResult.positive),

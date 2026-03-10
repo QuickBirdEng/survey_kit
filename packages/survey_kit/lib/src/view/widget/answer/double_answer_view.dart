@@ -59,7 +59,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView>
     final questionText = widget.questionStep.answerFormat?.question;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32),
+      padding: const EdgeInsets.symmetric(vertical: 14.0),
       child: Column(
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),

@@ -75,9 +75,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView>
       child: Column(
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),
-          const Divider(
-            color: Colors.grey,
-          ),
+          const SizedBox(height: 12),
           ..._multipleDoubleAnswer.hints
               .asMap()
               .entries

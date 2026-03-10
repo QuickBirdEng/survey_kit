@@ -191,20 +191,24 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFAF29EB), // A deep, premium purple-indigo
+          seedColor: const Color(0xFF00C4CC), // Vibrant cyan
           brightness: Brightness.light,
         ),
         useMaterial3: true,
-        scaffoldBackgroundColor:
-            Colors.transparent, // Let SurveyKit decoration show through
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
-          iconTheme: IconThemeData(color: Color(0xFF4F6AF5)),
+          iconTheme: IconThemeData(color: Color(0xFF00C4CC)),
+          titleTextStyle: TextStyle(
+            color: Color(0xFF00C4CC),
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          fillColor: Colors.white.withValues(alpha: 0.9),
+          fillColor: const Color(0xFFF7F7F9),
           filled: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
@@ -216,22 +220,21 @@ class MyApp extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: const BorderSide(color: Color(0xFFAF29EB), width: 2),
+            borderSide: const BorderSide(color: Color(0xFF00C4CC), width: 2),
           ),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 18),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(16),
             ),
             textStyle:
-                const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            backgroundColor: const Color(0xFFAF29EB),
+                const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            backgroundColor: const Color(0xFF00C4CC),
             foregroundColor: Colors.white,
-            elevation: 2,
+            elevation: 0,
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -240,18 +243,18 @@ class MyApp extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
             ),
-            side: const BorderSide(color: Color(0xFFAF29EB), width: 1.5),
+            side: const BorderSide(color: Color(0xFF00C4CC), width: 1.5),
             textStyle:
                 const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            foregroundColor: const Color(0xFFAF29EB),
+            foregroundColor: const Color(0xFF00C4CC),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             textStyle:
                 const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            foregroundColor: const Color(0xFFAF29EB),
+            foregroundColor: const Color(0xFF00C4CC),
           ),
         ),
         textTheme: const TextTheme(
@@ -313,18 +316,11 @@ class _SurveyPageState extends State<SurveyPage> {
       task: _survey,
       surveyController: _controller,
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFFE6E9FC), // Soft blue-ish white at top top
-            Color(0xFFFDFDFD), // Crisp white at the bottom
-          ],
-        ),
+        color: Colors.white,
       ),
       surveyProgressbarConfiguration: SurveyProgressConfiguration(
-        backgroundColor: Colors.white,
-        progressbarColor: const Color(0xFFAF29EB),
+        backgroundColor: const Color(0xFFF1F1F5),
+        progressbarColor: const Color(0xFF00C4CC),
         height: 8,
       ),
       registries: [
