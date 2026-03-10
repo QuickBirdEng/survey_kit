@@ -17,6 +17,10 @@ safely.
 9. Prefer `SurveyDefinition.fromJson` over legacy `Task.fromJson`.
 10. Update `onCloseSurvey` callback signature (remove `BuildContext` parameter).
 11. Migrate `ConditionalNavigationRule.resultToStepIdentifierMapper` return type from `String?` to `NavigationTarget`.
+12. Rename `textChoices` → `choices` on choice answer formats.
+13. Rename `BooleanAnswerFormat.result` → `BooleanAnswerFormat.defaultValue`.
+14. Update `SurveyController` override callbacks to accept a `proceed` parameter.
+15. Update `QuestionAnswer` usage in custom `stepShell` (if applicable).
 
 ## 1) Dependencies
 
@@ -130,7 +134,7 @@ class MyAnswerFormat extends AnswerFormat {
 }
 ```
 
-### After (2.0.0-beta1 style)
+### After (2.0.0 style)
 
 ```dart
 class MyAnswerFormat extends AnswerFormat {
@@ -276,6 +280,141 @@ To finish the survey from a JSON `values` map, use the sentinel value
     "continue": "next_step_id"
   }
 }
+```
+
+## 12 & 13) Answer Format Property Renames (Breaking)
+
+### `textChoices` → `choices`
+
+`MultipleChoiceAnswerFormat`, `SingleChoiceAnswerFormat`, and
+`MultipleChoiceAutoCompleteAnswerFormat` renamed the `textChoices` parameter
+to `choices`. The JSON key is unchanged (`textChoices`), so stored JSON
+surveys do not need updating.
+
+```dart
+// Before
+MultipleChoiceAnswerFormat(
+  textChoices: [TextChoice(id: 'a', value: 'a', text: 'Option A')],
+)
+SingleChoiceAnswerFormat(
+  textChoices: [TextChoice(id: 'a', value: 'a', text: 'Option A')],
+)
+
+// After
+MultipleChoiceAnswerFormat(
+  choices: [TextChoice(id: 'a', value: 'a', text: 'Option A')],
+)
+SingleChoiceAnswerFormat(
+  choices: [TextChoice(id: 'a', value: 'a', text: 'Option A')],
+)
+```
+
+### `BooleanAnswerFormat.result` → `defaultValue`
+
+The pre-selected value on `BooleanAnswerFormat` is renamed from `result` to
+`defaultValue` for consistency with other answer formats. The JSON key is
+unchanged (`result`).
+
+```dart
+// Before
+BooleanAnswerFormat(
+  positiveAnswer: 'Yes',
+  negativeAnswer: 'No',
+  result: BooleanResult.positive,
+)
+
+// After
+BooleanAnswerFormat(
+  positiveAnswer: 'Yes',
+  negativeAnswer: 'No',
+  defaultValue: BooleanResult.positive,
+)
+```
+
+## 14) `SurveyController` Callbacks — `proceed` Parameter (Breaking)
+
+`onNextStep`, `onStepBack`, and `onCloseSurvey` now receive a `proceed`
+callback as their last argument. Call `proceed()` to continue with the default
+navigation behaviour. This replaces the previous pattern of manually calling
+`SurveyStateProvider.of(context).onEvent(...)`.
+
+```dart
+// Before
+SurveyController(
+  onNextStep: (context, stepResult) {
+    // custom logic...
+    SurveyStateProvider.of(context).onEvent(NextStep(stepResult));
+  },
+  onStepBack: (context, stepResult) {
+    SurveyStateProvider.of(context).onEvent(StepBack(stepResult));
+  },
+  onCloseSurvey: (stepResult) {
+    SurveyStateProvider.of(context).onEvent(CloseSurvey(stepResult));
+  },
+);
+
+// After
+SurveyController(
+  onNextStep: (context, stepResult, proceed) {
+    // custom logic...
+    proceed();
+  },
+  onStepBack: (context, stepResult, proceed) {
+    proceed();
+  },
+  onCloseSurvey: (stepResult, proceed) {
+    proceed();
+  },
+);
+```
+
+You can delay calling `proceed()` for async flows (e.g. showing a page before
+continuing):
+
+```dart
+onNextStep: (context, stepResult, proceed) {
+  Navigator.of(context).push(...).then((_) => proceed());
+},
+```
+
+## 15) `QuestionAnswer` — Custom `stepShell` (Breaking)
+
+If you use a custom `stepShell` and access `QuestionAnswer.of(context)`,
+the following APIs have changed:
+
+| Before | After |
+|---|---|
+| `questionAnswer.isValid` (`ValueNotifier<bool>`) | `questionAnswer.isValid` (`bool`) |
+| `questionAnswer.setIsValid(value)` | `questionAnswer.onValidityChanged(value)` |
+| `questionAnswer.setStepResult(result)` | `questionAnswer.onResultChanged(result)` |
+
+Since `isValid` is now a plain `bool` on an `InheritedWidget`, you no longer
+need `ValueListenableBuilder` — the widget rebuilds automatically when validity
+changes:
+
+```dart
+// Before
+stepShell: (step, answerWidget, context) {
+  final qa = QuestionAnswer.of(context);
+  return ValueListenableBuilder<bool>(
+    valueListenable: qa.isValid,
+    builder: (context, isValid, _) {
+      return OutlinedButton(
+        onPressed: isValid ? () => controller.next(...) : null,
+        child: Text(step.buttonText ?? 'Next'),
+      );
+    },
+  );
+},
+
+// After
+stepShell: (step, answerWidget, context) {
+  final qa = QuestionAnswer.of(context);
+  return OutlinedButton(
+    onPressed: qa.isValid ? () => controller.next(...) : null,
+    child: Text(step.buttonText ?? 'Next'),
+  );
+},
 ```
 
 ## Notes

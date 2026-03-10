@@ -20,6 +20,34 @@ class AnswerView extends StatefulWidget {
 }
 
 class _AnswerViewState extends State<AnswerView> {
+  late bool _isValid;
+  StepResult? _stepResult;
+  late DateTime _startTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _isValid = !widget.step.isMandatory || widget.step.answerFormat == null;
+    _startTime = DateTime.now();
+    _stepResult = widget.stepResult;
+  }
+
+  void _onValidityChanged(bool isValid) {
+    setState(() => _isValid = isValid);
+  }
+
+  void _onResultChanged(dynamic result) {
+    setState(() {
+      _stepResult = StepResult(
+        id: widget.step.id,
+        step: widget.step,
+        result: result,
+        startTime: _startTime,
+        endTime: DateTime.now(),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget? answerView;
@@ -39,8 +67,12 @@ class _AnswerViewState extends State<AnswerView> {
     final stepShell =
         widget.step.stepShell ?? SurveyStateProvider.of(context).stepShell;
 
-    return QuestionAnswer<dynamic>(
+    return QuestionAnswer(
       step: widget.step,
+      isValid: _isValid,
+      stepResult: _stepResult,
+      onValidityChanged: _onValidityChanged,
+      onResultChanged: _onResultChanged,
       child: Builder(
         builder: (context) => stepShell != null
             ? stepShell.call(

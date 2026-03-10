@@ -21,12 +21,7 @@ jobs:
         run: dart pub global activate melos
 
       - name: Resolve Root Dependencies
-        run: dart pub get
-
-      - name: Debug Environment
-        run: |
-          ls -la
-          melos --version
+        run: flutter pub get
 
       - name: Bootstrap Workspace
         run: melos bootstrap

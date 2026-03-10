@@ -5,27 +5,32 @@ import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 
 class SurveyController {
-  /// Defines what should happen if the next step is called
-  /// Default behavior is:
+  /// Called when the next step is requested. Receives the current [stepResult]
+  /// and a [proceed] callback. Call [proceed] to continue with the default
+  /// navigation. Omitting the call will halt navigation until [proceed] is
+  /// invoked (e.g. after an async operation).
 
-  final Function(
+  final void Function(
     BuildContext context,
     StepResult? stepResult,
+    void Function() proceed,
   )? onNextStep;
 
-  /// Defines what should happen if the previous step is called
-  /// Default behavior is:
+  /// Called when the previous step is requested.
+  /// Call [proceed] to continue with default back-navigation.
 
-  final Function(
+  final void Function(
     BuildContext context,
     StepResult? stepResult,
+    void Function() proceed,
   )? onStepBack;
 
-  /// Defines what should happen if the survey should be closed
-  /// Default behavior is:
+  /// Called when the survey should be closed.
+  /// Call [proceed] to continue with default close behaviour.
 
-  final Function(
+  final void Function(
     StepResult? stepResult,
+    void Function() proceed,
   )? onCloseSurvey;
 
   SurveyController({
@@ -63,15 +68,14 @@ class SurveyController {
     StepResult? stepResult,
   }) {
     final resolvedContext = _resolveContext(context);
+    void proceed() => SurveyStateProvider.of(resolvedContext).onEvent(
+          NextStep(stepResult),
+        );
     if (onNextStep != null) {
-      onNextStep!(resolvedContext, stepResult);
+      onNextStep!(resolvedContext, stepResult, proceed);
       return;
     }
-    SurveyStateProvider.of(resolvedContext).onEvent(
-      NextStep(
-        stepResult,
-      ),
-    );
+    proceed();
   }
 
   @Deprecated(
@@ -92,29 +96,27 @@ class SurveyController {
     StepResult? stepResult,
   }) {
     final resolvedContext = _resolveContext(context);
+    void proceed() => SurveyStateProvider.of(resolvedContext).onEvent(
+          StepBack(stepResult),
+        );
     if (onStepBack != null) {
-      onStepBack!(resolvedContext, stepResult);
+      onStepBack!(resolvedContext, stepResult, proceed);
       return;
     }
-    SurveyStateProvider.of(resolvedContext).onEvent(
-      StepBack(
-        stepResult,
-      ),
-    );
+    proceed();
   }
 
   void closeSurvey({
     StepResult? stepResult,
   }) {
+    final resolvedContext = _resolveContext(null);
+    void proceed() => SurveyStateProvider.of(resolvedContext).onEvent(
+          CloseSurvey(stepResult),
+        );
     if (onCloseSurvey != null) {
-      onCloseSurvey!(stepResult);
+      onCloseSurvey!(stepResult, proceed);
       return;
     }
-    final resolvedContext = _resolveContext(null);
-    SurveyStateProvider.of(resolvedContext).onEvent(
-      CloseSurvey(
-        stepResult,
-      ),
-    );
+    proceed();
   }
 }

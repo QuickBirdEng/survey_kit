@@ -18,10 +18,10 @@ mixin AnswerMixin<T extends StatefulWidget, R> on State<T> {
   bool isValid(R? result);
 
   set onValidationChanged(bool isValid) {
-    QuestionAnswer.of(context).setIsValid(isValid);
+    QuestionAnswer.of(context).onValidityChanged(isValid);
   }
 
   set onStepResultChanged(R? stepResult) {
-    QuestionAnswer.of(context).setStepResult(stepResult);
+    QuestionAnswer.of(context).onResultChanged(stepResult);
   }
 }

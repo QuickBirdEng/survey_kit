@@ -36,7 +36,7 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
       throw Exception('BooleanAnswerFormat is null');
     }
     _answerFormat = answer as BooleanAnswerFormat;
-    _result = widget.result?.result as BooleanResult? ?? _answerFormat.result;
+    _result = widget.result?.result as BooleanResult? ?? _answerFormat.defaultValue;
   }
 
   @override

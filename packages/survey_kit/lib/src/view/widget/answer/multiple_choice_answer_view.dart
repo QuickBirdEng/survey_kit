@@ -64,7 +64,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
           const Divider(
             color: Colors.grey,
           ),
-          ..._multipleChoiceAnswer.textChoices
+          ..._multipleChoiceAnswer.choices
               .map(
                 (TextChoice tc) => SelectionListTile(
                   text: tc.text,

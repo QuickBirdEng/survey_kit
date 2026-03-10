@@ -1,36 +1,24 @@
-import 'package:flutter/material.dart' hide Step;
+import 'package:flutter/widgets.dart';
 import 'package:survey_kit/survey_kit.dart';
 
-// ignore: must_be_immutable
-class QuestionAnswer<R> extends InheritedWidget {
-  QuestionAnswer({
+@immutable
+class QuestionAnswer extends InheritedWidget {
+  const QuestionAnswer({
     super.key,
     required super.child,
     required this.step,
+    required this.isValid,
+    required this.stepResult,
+    required this.onValidityChanged,
+    required this.onResultChanged,
   });
 
-  DateTime startTime = DateTime.now();
-
   final Step step;
-
-  late final ValueNotifier<bool> isValid =
-      ValueNotifier<bool>(!step.isMandatory || step.answerFormat == null);
-  // ignore: avoid_positional_boolean_parameters, use_setters_to_change_properties
-  void setIsValid(bool isValid) {
-    this.isValid.value = isValid;
-  }
-
-  StepResult<R?>? _stepResult;
-  StepResult<R?>? get stepResult => _stepResult;
-  void setStepResult(R? result) {
-    _stepResult = StepResult<R>(
-      id: step.id,
-      step: step,
-      result: result,
-      startTime: startTime,
-      endTime: DateTime.now(),
-    );
-  }
+  final bool isValid;
+  final StepResult? stepResult;
+  // ignore: avoid_positional_boolean_parameters
+  final void Function(bool) onValidityChanged;
+  final void Function(dynamic) onResultChanged;
 
   static QuestionAnswer of(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<QuestionAnswer>();
@@ -40,8 +28,8 @@ class QuestionAnswer<R> extends InheritedWidget {
 
   @override
   bool updateShouldNotify(QuestionAnswer oldWidget) {
-    return oldWidget.step != step ||
-        oldWidget.isValid != isValid ||
-        oldWidget.stepResult != stepResult;
+    return oldWidget.isValid != isValid ||
+        oldWidget.stepResult != stepResult ||
+        oldWidget.step != step;
   }
 }

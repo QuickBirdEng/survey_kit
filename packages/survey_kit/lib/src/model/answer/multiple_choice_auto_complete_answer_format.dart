@@ -8,7 +8,8 @@ part 'multiple_choice_auto_complete_answer_format.g.dart';
 class MultipleChoiceAutoCompleteAnswerFormat extends AnswerFormat {
   static const String type = 'multiple_auto_complete';
 
-  final List<TextChoice> textChoices;
+  @JsonKey(name: 'textChoices')
+  final List<TextChoice> choices;
   @JsonKey(defaultValue: <TextChoice>[])
   final List<TextChoice> defaultSelection;
   @JsonKey(defaultValue: <TextChoice>[])
@@ -17,7 +18,7 @@ class MultipleChoiceAutoCompleteAnswerFormat extends AnswerFormat {
   final bool otherField;
 
   const MultipleChoiceAutoCompleteAnswerFormat({
-    required this.textChoices,
+    required this.choices,
     this.defaultSelection = const [],
     this.suggestions = const [],
     this.otherField = false,

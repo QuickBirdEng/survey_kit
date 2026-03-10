@@ -12,7 +12,7 @@ SingleChoiceAnswerFormat<T>
   T Function(Object? json) fromJsonT,
 ) =>
         SingleChoiceAnswerFormat<T>(
-          textChoices:
+          choices:
               (json['textChoices'] as List<dynamic>).map(fromJsonT).toList(),
           defaultSelection:
               _$nullableGenericFromJson(json['defaultSelection'], fromJsonT),
@@ -27,7 +27,7 @@ Map<String, dynamic> _$SingleChoiceAnswerFormatToJson<T extends TextChoice>(
     <String, dynamic>{
       'question': instance.question,
       'type': instance.answerType,
-      'textChoices': instance.textChoices.map(toJsonT).toList(),
+      'textChoices': instance.choices.map(toJsonT).toList(),
       'defaultSelection':
           _$nullableGenericToJson(instance.defaultSelection, toJsonT),
     };

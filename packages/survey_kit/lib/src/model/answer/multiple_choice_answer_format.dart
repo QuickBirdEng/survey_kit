@@ -8,13 +8,14 @@ part 'multiple_choice_answer_format.g.dart';
 class MultipleChoiceAnswerFormat<T extends TextChoice> extends AnswerFormat {
   static const String type = 'multi';
 
-  final List<T> textChoices;
+  @JsonKey(name: 'textChoices')
+  final List<T> choices;
   final T? defaultSelection;
   @JsonKey(defaultValue: false)
   final bool otherField;
 
   const MultipleChoiceAnswerFormat({
-    required this.textChoices,
+    required this.choices,
     this.otherField = false,
     this.defaultSelection,
     super.question,

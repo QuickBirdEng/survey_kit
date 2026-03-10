@@ -21,7 +21,7 @@ class _StepViewState extends State<StepView> {
   @override
   Widget build(BuildContext context) {
     final surveyConfiguration = SurveyConfiguration.of(context);
-    final _surveyController =
+    final surveyController =
         widget.controller ?? surveyConfiguration.surveyController;
 
     final questionAnswer = QuestionAnswer.of(context);
@@ -48,25 +48,20 @@ class _StepViewState extends State<StepView> {
                           ),
                         ),
                         if (widget.answerView != null) widget.answerView!,
-                        AnimatedBuilder(
-                          animation: questionAnswer.isValid,
-                          builder: (context, child) {
-                            return OutlinedButton(
-                              onPressed: questionAnswer.isValid.value ||
-                                      !widget.step.isMandatory
-                                  ? () => _surveyController.next(
-                                        context: context,
-                                        stepResult: questionAnswer.stepResult,
-                                      )
-                                  : null,
-                              child: Text(
-                                widget.step.buttonText ??
-                                    (SurveyKitLocalizations.of(context)?.next ??
-                                            'Next')
-                                        .toUpperCase(),
-                              ),
-                            );
-                          },
+                        OutlinedButton(
+                          onPressed: questionAnswer.isValid ||
+                                  !widget.step.isMandatory
+                              ? () => surveyController.next(
+                                    context: context,
+                                    stepResult: questionAnswer.stepResult,
+                                  )
+                              : null,
+                          child: Text(
+                            widget.step.buttonText ??
+                                (SurveyKitLocalizations.of(context)?.next ??
+                                        'Next')
+                                    .toUpperCase(),
+                          ),
                         ),
                       ],
                     ),

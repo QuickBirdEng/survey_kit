@@ -61,11 +61,9 @@ void main() {
       (WidgetTester tester) async {
     BuildContext? callbackContext;
     final controller = SurveyController(
-      onNextStep: (context, stepResult) {
+      onNextStep: (context, stepResult, proceed) {
         callbackContext = context;
-        SurveyStateProvider.of(context).onEvent(
-          NextStep(stepResult),
-        );
+        proceed();
       },
     );
 

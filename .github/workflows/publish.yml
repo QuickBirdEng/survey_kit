@@ -22,13 +22,11 @@ jobs:
         with:
           channel: 'stable'
 
-      - uses: dart-lang/setup-dart@v1
-
       - name: Install Melos
         run: dart pub global activate melos
 
       - name: Resolve Root Dependencies
-        run: dart pub get
+        run: flutter pub get
 
       - name: Bootstrap Workspace
         run: melos bootstrap

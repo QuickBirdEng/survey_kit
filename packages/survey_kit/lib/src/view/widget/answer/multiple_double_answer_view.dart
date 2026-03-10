@@ -92,7 +92,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView>
               onChanged: (String value) {
                 final normalizedValue = value.replaceAll(',', '.');
                 if (double.tryParse(normalizedValue) == null) {
-                  questionAnswer.setIsValid(false);
+                  questionAnswer.onValidityChanged(false);
                   return;
                 }
                 _insertedValues[md.key] = MultiDouble(

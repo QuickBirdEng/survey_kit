@@ -8,11 +8,12 @@ part 'single_choice_answer_format.g.dart';
 class SingleChoiceAnswerFormat<T extends TextChoice> extends AnswerFormat {
   static const String type = 'single';
 
-  final List<T> textChoices;
+  @JsonKey(name: 'textChoices')
+  final List<T> choices;
   final T? defaultSelection;
 
   const SingleChoiceAnswerFormat({
-    required this.textChoices,
+    required this.choices,
     this.defaultSelection,
     super.question,
     super.answerType = SingleChoiceAnswerFormat.type,

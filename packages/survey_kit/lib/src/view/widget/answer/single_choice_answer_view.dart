@@ -73,7 +73,7 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
           const Divider(
             color: Colors.grey,
           ),
-          ..._singleChoiceAnswerFormat.textChoices.map(
+          ..._singleChoiceAnswerFormat.choices.map(
             (TextChoice tc) {
               return SelectionListTile(
                 text: tc.text,

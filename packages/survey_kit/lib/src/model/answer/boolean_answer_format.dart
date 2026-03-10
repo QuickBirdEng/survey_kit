@@ -9,12 +9,13 @@ class BooleanAnswerFormat extends AnswerFormat {
 
   final String positiveAnswer;
   final String negativeAnswer;
-  final BooleanResult result;
+  @JsonKey(name: 'result')
+  final BooleanResult defaultValue;
 
   const BooleanAnswerFormat({
     required this.positiveAnswer,
     required this.negativeAnswer,
-    this.result = BooleanResult.none,
+    this.defaultValue = BooleanResult.none,
     super.question,
     super.answerType = BooleanAnswerFormat.type,
   }) : super();

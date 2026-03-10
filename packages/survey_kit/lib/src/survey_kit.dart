@@ -95,7 +95,9 @@ class _SurveyKitState extends State<SurveyKit> {
   void didUpdateWidget(covariant SurveyKit oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.surveyController != oldWidget.surveyController) {
-      _surveyController.navigatorKey = null;
+      if (oldWidget.surveyController?.navigatorKey == _navigatorKey) {
+        oldWidget.surveyController?.navigatorKey = null;
+      }
       _surveyController = widget.surveyController ?? SurveyController();
       _surveyController.navigatorKey = _navigatorKey;
     }
@@ -117,7 +119,9 @@ class _SurveyKitState extends State<SurveyKit> {
 
   @override
   void dispose() {
-    _surveyController.navigatorKey = null;
+    if (_surveyController.navigatorKey == _navigatorKey) {
+      _surveyController.navigatorKey = null;
+    }
     super.dispose();
   }
 
@@ -253,30 +257,30 @@ class _SurveyPageState extends State<SurveyPage>
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>
                     SlideTransition(
-                      position: Tween<Offset>(
-                        begin: Offset.zero,
-                        end: const Offset(-0.08, 0.0),
-                      ).animate(
-                        CurvedAnimation(
-                          parent: secondaryAnimation,
-                          curve: Curves.easeOutCubic,
-                          reverseCurve: Curves.easeInCubic,
-                        ),
-                      ),
-                      child: SlideTransition(
-                        position: Tween<Offset>(
-                          begin: const Offset(1.0, 0.0),
-                          end: Offset.zero,
-                        ).animate(
-                          CurvedAnimation(
-                            parent: animation,
-                            curve: Curves.easeOutCubic,
-                            reverseCurve: Curves.easeInCubic,
-                          ),
-                        ),
-                        child: child,
-                      ),
-                    ),
+              position: Tween<Offset>(
+                begin: Offset.zero,
+                end: const Offset(-0.08, 0.0),
+              ).animate(
+                CurvedAnimation(
+                  parent: secondaryAnimation,
+                  curve: Curves.easeOutCubic,
+                  reverseCurve: Curves.easeInCubic,
+                ),
+              ),
+              child: SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(1.0, 0.0),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutCubic,
+                    reverseCurve: Curves.easeInCubic,
+                  ),
+                ),
+                child: child,
+              ),
+            ),
             pageBuilder: (_, __, ___) {
               final routeState = settings.arguments;
               PresentingSurveyState? currentState;

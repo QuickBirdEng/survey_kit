@@ -12,7 +12,7 @@ MultipleChoiceAnswerFormat<T>
   T Function(Object? json) fromJsonT,
 ) =>
         MultipleChoiceAnswerFormat<T>(
-          textChoices:
+          choices:
               (json['textChoices'] as List<dynamic>).map(fromJsonT).toList(),
           otherField: json['otherField'] as bool? ?? false,
           defaultSelection:
@@ -29,7 +29,7 @@ Map<String, dynamic> _$MultipleChoiceAnswerFormatToJson<T extends TextChoice>(
     <String, dynamic>{
       'question': instance.question,
       'type': instance.answerType,
-      'textChoices': instance.textChoices.map(toJsonT).toList(),
+      'textChoices': instance.choices.map(toJsonT).toList(),
       'defaultSelection':
           _$nullableGenericToJson(instance.defaultSelection, toJsonT),
       'otherField': instance.otherField,

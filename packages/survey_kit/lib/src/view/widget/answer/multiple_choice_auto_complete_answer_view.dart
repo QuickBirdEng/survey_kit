@@ -63,7 +63,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
           const Divider(
             color: Colors.grey,
           ),
-          ..._multipleChoiceAnswer.textChoices
+          ..._multipleChoiceAnswer.choices
               .map(
                 (TextChoice tc) => SelectionListTile(
                   text: tc.text,
@@ -75,7 +75,7 @@ class _MultipleChoiceAutoCompleteAnswerViewState
           ..._selectedChoices
               .where(
                 (element) =>
-                    !_multipleChoiceAnswer.textChoices.contains(element),
+                    !_multipleChoiceAnswer.choices.contains(element),
               )
               .map(
                 (TextChoice tc) => SelectionListTile(
