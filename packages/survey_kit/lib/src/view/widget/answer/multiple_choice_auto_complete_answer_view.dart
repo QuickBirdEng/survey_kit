@@ -8,6 +8,7 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 
 class MultipleChoiceAutoCompleteAnswerView extends StatefulWidget {
   final Step questionStep;
