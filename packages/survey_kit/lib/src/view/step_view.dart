@@ -65,7 +65,9 @@ class _StepViewState extends State<StepView> {
                                   (SurveyKitLocalizations.of(context)?.next ??
                                       'Continue'),
                               style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

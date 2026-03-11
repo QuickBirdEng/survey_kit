@@ -56,8 +56,7 @@ void main() {
     expect((decoded as SurveyFlow).navigationRules, isEmpty);
   });
 
-  test(
-      'SurveyDefinition.fromJson keeps legacy navigable type compatibility',
+  test('SurveyDefinition.fromJson keeps legacy navigable type compatibility',
       () {
     final json = <String, dynamic>{
       ...SurveyFlow(

@@ -8,7 +8,6 @@ import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
-import 'package:survey_kit/src/view/widget/question_answer.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -112,7 +111,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                       if (otherTextChoice == null) {
                         _selectedChoices = [
                           ..._selectedChoices,
-                          updatedTextChoice
+                          updatedTextChoice,
                         ];
                       } else if (currentIndex != null) {
                         _selectedChoices = List.from(_selectedChoices);
@@ -131,7 +130,9 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                   hintText: 'Write other information here',
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 14.0, vertical: 16.0),
+                    horizontal: 14.0,
+                    vertical: 16.0,
+                  ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.0),
                     borderSide:
@@ -140,7 +141,9 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.0),
                     borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor, width: 2.0),
+                      color: Theme.of(context).primaryColor,
+                      width: 2.0,
+                    ),
                   ),
                 ),
               ),

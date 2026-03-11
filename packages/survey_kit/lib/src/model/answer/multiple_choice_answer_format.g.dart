@@ -6,21 +6,19 @@ part of 'multiple_choice_answer_format.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MultipleChoiceAnswerFormat<T>
-    _$MultipleChoiceAnswerFormatFromJson<T extends TextChoice>(
+MultipleChoiceAnswerFormat<T> _$MultipleChoiceAnswerFormatFromJson<
+        T extends TextChoice>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
-        MultipleChoiceAnswerFormat<T>(
-          choices:
-              (json['textChoices'] as List<dynamic>).map(fromJsonT).toList(),
-          otherField: json['otherField'] as bool? ?? false,
-          defaultSelection:
-              _$nullableGenericFromJson(json['defaultSelection'], fromJsonT),
-          question: json['question'] as String?,
-          answerType:
-              json['type'] as String? ?? MultipleChoiceAnswerFormat.type,
-        );
+    MultipleChoiceAnswerFormat<T>(
+      choices: (json['textChoices'] as List<dynamic>).map(fromJsonT).toList(),
+      otherField: json['otherField'] as bool? ?? false,
+      defaultSelection:
+          _$nullableGenericFromJson(json['defaultSelection'], fromJsonT),
+      question: json['question'] as String?,
+      answerType: json['type'] as String? ?? MultipleChoiceAnswerFormat.type,
+    );
 
 Map<String, dynamic> _$MultipleChoiceAnswerFormatToJson<T extends TextChoice>(
   MultipleChoiceAnswerFormat<T> instance,

@@ -275,14 +275,15 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
       for (var i = 0; i < steps.length; i += 1) steps[i].id: i,
     };
 
-    final ordered = _results.toList()..sort((a, b) {
-      final aIndex = stepIndexById[a.id] ?? steps.length;
-      final bIndex = stepIndexById[b.id] ?? steps.length;
-      if (aIndex != bIndex) {
-        return aIndex.compareTo(bIndex);
-      }
-      return a.startTime.compareTo(b.startTime);
-    });
+    final ordered = _results.toList()
+      ..sort((a, b) {
+        final aIndex = stepIndexById[a.id] ?? steps.length;
+        final bIndex = stepIndexById[b.id] ?? steps.length;
+        if (aIndex != bIndex) {
+          return aIndex.compareTo(bIndex);
+        }
+        return a.startTime.compareTo(b.startTime);
+      });
     return ordered;
   }
 

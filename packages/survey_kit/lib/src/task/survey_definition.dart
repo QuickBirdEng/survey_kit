@@ -39,8 +39,7 @@ abstract class SurveyDefinition {
   Map<String, dynamic> toJson();
 
   @override
-  bool operator ==(Object other) =>
-      other is SurveyDefinition && other.id == id;
+  bool operator ==(Object other) => other is SurveyDefinition && other.id == id;
   @override
   int get hashCode => id.hashCode ^ steps.hashCode;
 }

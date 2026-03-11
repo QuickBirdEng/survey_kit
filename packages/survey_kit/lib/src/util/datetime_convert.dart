@@ -11,7 +11,7 @@ class CustomDateTimeConverter implements JsonConverter<DateTime, String> {
   @override
   String toJson(DateTime json) {
     // Ignore microseconds and preserve timezone
-    final date = json.isUtc 
+    final date = json.isUtc
         ? DateTime.utc(
             json.year,
             json.month,
