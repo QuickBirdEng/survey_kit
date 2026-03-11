@@ -1,0 +1,28 @@
+name: survey_kit_workspace
+
+packages:
+  - example
+  - packages/*
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  analyze:
+    exec: flutter analyze .
+    description: Run `flutter analyze` in all packages.
+
+  format:
+    exec: dart format .
+    description: Run `dart format` in all packages.
+
+  test:
+    exec: flutter test
+    packageFilters:
+      dirExists: test
+    description: Run tests in all packages that have a `test` directory.
+
+  clean:
+    exec: flutter clean
+    description: Run `flutter clean` in all packages.

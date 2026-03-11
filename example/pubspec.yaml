@@ -1,36 +1,30 @@
 name: surveykit_example
 description: Demonstrates how to use the surveykit plugin.
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none"
+resolution: workspace
 
 environment:
-  sdk: '>=2.18.0-0 <3.0.0'
+  sdk: ">=3.6.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   survey_kit:
-    # When depending on this package from a real application you should use:
-    #   survey_kit: ^x.y.z
-    # See https://dart.dev/tools/pub/dependencies#version-constraints
-    # The example app is bundled with the plugin so we use a path dependency on
-    # the parent directory to use the current plugin's version.
-    path: ../
-
+    path: ../packages/survey_kit
+  survey_kit_audio:
+    path: ../packages/survey_kit_audio
+  survey_kit_lottie:
+    path: ../packages/survey_kit_lottie
+  survey_kit_video:
+    path: ../packages/survey_kit_video
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -38,8 +32,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - assets/example_json.json
-  - assets/fancy_checkmark.json
+    - assets/fancy_checkmark.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

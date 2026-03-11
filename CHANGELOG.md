@@ -1,3 +1,82 @@
+# 2.0.0-beta1
+
+## Required Adjustments (1.x -> 2.0.0-beta1)
+
+1. Update dependencies to `survey_kit: 2.0.0-beta1`, and add media plugins only
+   if needed: `survey_kit_audio`, `survey_kit_video`, `survey_kit_lottie`.
+2. **BREAKING**: Rename `Task.initalStep` to `Task.initialStep`.
+3. Update imports for any media plugin package you use.
+4. Register media plugins through `SurveyKit(registries: [...])`.
+5. Migrate custom `AnswerFormat`/`Content` rendering from model methods to
+   `answerViewBuilders` and `contentWidgetBuilders` (or custom `SurveyKitPlugin`).
+6. If you deserialize from JSON, register converters for custom and plugin
+   types with `AnswerFormat.registerFromJson` and `Content.registerFromJson`.
+7. Ensure localization delegates include `SurveyKitLocalizations.delegate` and
+   Flutter localization delegates.
+8. Prefer `SurveyDefinition.fromJson` over `Task.fromJson`
+   (`Task` remains as a deprecated alias).
+
+Full migration guide: [MIGRATION.md](MIGRATION.md)
+
+## Highlights
+
+- **BREAKING**: `ConditionalNavigationRule.resultToStepIdentifierMapper` now
+  returns `NavigationTarget` instead of `String?`. Replace `'step_id'` with
+  `NavigateToStep('step_id')`, `null` with `NavigateToNextInList()`, and use
+  the new `FinishSurvey()` to end the survey early from a rule.
+- **BREAKING**: Removed model-level `createView`/`createWidget` coupling and
+  moved rendering to registry builders.
+- **BREAKING**: Renamed `Task.initalStep` to `Task.initialStep`.
+- **BREAKING**: Split media integrations into dedicated packages:
+  `survey_kit_audio`, `survey_kit_video`, `survey_kit_lottie`.
+- **FEATURE**: Added `SurveyFlow` as the unified task model for linear and
+  branching surveys.
+- **FEATURE**: Added `SurveyDefinition` as the canonical survey definition base
+  type.
+- **DEPRECATION**: `OrderedTask` and `NavigableTask` are now legacy wrappers
+  around `SurveyFlow`.
+- **REMOVED**: `FlowTask` — introduced and immediately deprecated in this
+  version, removed before release. Use `SurveyFlow` directly.
+- **DEPRECATION**: `Task` is now a legacy alias for `SurveyDefinition`.
+- **FEATURE**: Added `SurveyKitRegistry`/`SurveyKitPlugin` and `registries`,
+  `answerViewBuilders`, `contentWidgetBuilders`.
+- **FEATURE**: Migrated localization generation to Flutter `gen_l10n` with
+  `.arb` resources.
+- **FIX**: Improved JSON serialization/deserialization consistency, including
+  `TimeResult` generation and UTC DateTime handling.
+- **TEST**: Improved test stability with deterministic setup.
+- **CHORE**: Migrated to Melos monorepo workflow and added CI/publish
+  automation.
+- **DOCS**: Updated API docs for the registry architecture.
+
+## Navigation/Controller Hardening
+
+1. **FIX**: Hardened survey navigation transitions to avoid loading-route traps
+   on empty/completed flows.
+2. **FIX**: Stabilized navigation rule serialization/deserialization for JSON
+   surveys (`type` handling + legacy compatibility).
+3. **FIX**: Survey result emission is now deterministic and ordered by task step
+   sequence.
+4. **FIX**: Tightened state update propagation and cleaned dead/duplicate view
+   artifacts in provider/view wiring.
+5. **BREAKING**: Renamed `Task.initalStep` to `Task.initialStep`.
+6. **FEATURE**: `SurveyController` now supports context-free imperative
+   navigation when attached to `SurveyKit` (`next`, `stepBack`, `closeSurvey`).
+7. **BREAKING**: `SurveyController.closeSurvey` no longer accepts a
+   `BuildContext` parameter. The context is resolved internally via the
+   navigator key. If you supply an `onCloseSurvey` callback, remove the
+   `BuildContext` argument from its signature:
+   `Function(StepResult?) onCloseSurvey`.
+8. **FIX**: `QuestionAnswer.isValid` now initialises to `false` for mandatory
+   steps instead of always `true`. Previously, the Next button on a mandatory
+   step was enabled before the user had selected any answer.
+9. **FIX**: `AnswerMixin.initValidation` added — call it in `initState` to sync
+   a pre-filled or default answer into the validation state on first render.
+   `SingleChoiceAnswerView` already calls this.
+10. **FIX**: `ContentWidget` now correctly respects `center: false` —
+    `mainAxisAlignment` was hardcoded to `center` regardless of the parameter.
+
+
 # 1.0.3
 
 - CHORE: Removed depracted lint `package_api_docs`

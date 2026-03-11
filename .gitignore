@@ -24,6 +24,10 @@
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
+**/ios/Flutter/ephemeral/
+**/macos/Flutter/ephemeral/
+**/linux/flutter/ephemeral/
+**/windows/flutter/ephemeral/
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -31,9 +35,13 @@
 .pub-cache/
 .pub/
 /build/
+**/build/
+**/.gradle/
+**/local.properties
 
 # Web related
 lib/generated_plugin_registrant.dart
+**/GeneratedPluginRegistrant.java
 
 # Symbolication related
 app.*.symbols
@@ -45,4 +53,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-/example/linux/flutter/emphemeral/.plugin_symlinks
+**/linux/flutter/ephemeral/.plugin_symlinks

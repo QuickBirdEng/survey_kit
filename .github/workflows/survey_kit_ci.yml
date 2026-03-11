@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install Melos
+        run: dart pub global activate melos
+
+      - name: Resolve Root Dependencies
+        run: flutter pub get
+
+      - name: Bootstrap Workspace
+        run: melos bootstrap
+
+      - name: Analyze
+        run: melos exec -- flutter analyze .
+
+      - name: Run Tests
+        run: melos exec --dir-exists="test" -- flutter test
