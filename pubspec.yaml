@@ -3,8 +3,8 @@ publish_to: none
 environment:
   sdk: ">=3.6.0 <4.0.0"
 workspace:
-  - example
   - packages/survey_kit
+  - packages/survey_kit/example
   - packages/survey_kit_video
   - packages/survey_kit_audio
   - packages/survey_kit_lottie

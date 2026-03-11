@@ -5,14 +5,26 @@ import 'package:survey_kit/src/util/datetime_convert.dart';
 
 part 'survey_result.g.dart';
 
+/// The aggregated result of a completed or closed survey. Contains all
+/// [StepResult]s collected during the session plus timing and finish metadata.
 @immutable
 @JsonSerializable(explicitToJson: true)
 @CustomDateTimeConverter()
 class SurveyResult {
+  /// Identifier matching the [SurveyDefinition.id] of the survey that produced
+  /// this result.
   final String id;
+
+  /// The time the survey was started.
   final DateTime startTime;
+
+  /// The time the survey ended.
   final DateTime endTime;
+
+  /// How the survey was finished.
   final FinishReason finishReason;
+
+  /// The ordered list of step results collected during the survey.
   final List<StepResult> results;
 
   const SurveyResult({
@@ -48,4 +60,7 @@ class SurveyResult {
       results.hashCode;
 }
 
+/// Describes how a survey session ended.
+/// [saved] — saved mid-flow, [discarded] — user closed without completing,
+/// [completed] — all steps finished, [failed] — an error occurred.
 enum FinishReason { saved, discarded, completed, failed }

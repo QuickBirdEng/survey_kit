@@ -7,16 +7,31 @@ import 'package:uuid/uuid.dart';
 
 part 'step.g.dart';
 
+/// A single unit of a survey. A step can display content (text, images,
+/// markdown) and optionally collect a user answer via [answerFormat]. Steps
+/// are identified by [id] which is auto-generated if not provided.
 @immutable
 @JsonSerializable(explicitToJson: true)
 class Step {
+  /// Unique identifier for this step. Auto-generated with UUID if not provided.
   final String id;
+
+  /// Whether the user must answer before proceeding. Defaults to true.
   final bool isMandatory;
+
+  /// The answer format that determines how the user inputs a response.
+  /// Null for display-only steps (e.g. instruction, completion).
   final AnswerFormat? answerFormat;
 
+  /// Custom label for the 'Next' button. Uses the localized default if null.
   final String? buttonText;
+
+  /// The list of [Content] items displayed on this step (text, images, markdown, etc.).
   final List<Content> content;
+
   @JsonKey(includeFromJson: false, includeToJson: false)
+  /// Optional custom widget builder that wraps this step's UI.
+  /// Overrides the survey-level [StepShell].
   final StepShell? stepShell;
 
   Step({

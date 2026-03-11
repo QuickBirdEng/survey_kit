@@ -7,6 +7,10 @@ import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/task/survey_definition.dart';
 import 'package:survey_kit/src/task/survey_flow.dart';
 
+/// A [TaskNavigator] that resolves the next step by evaluating
+/// [NavigationRule]s defined in a [SurveyFlow]. Supports both
+/// [DirectNavigationRule] and [ConditionalNavigationRule]. Falls back to
+/// sequential order when no rule is defined for the current step.
 class NavigableTaskNavigator extends TaskNavigator {
   NavigableTaskNavigator(SurveyDefinition task) : super(task);
 
@@ -48,6 +52,9 @@ class NavigableTaskNavigator extends TaskNavigator {
     return history.removeLast();
   }
 
+  /// Evaluates a [ConditionalNavigationRule] for [step] and returns the
+  /// resolved next step. Returns null when the rule produces a [FinishSurvey]
+  /// target.
   Step? evaluateNextStep(
     Step? step,
     ConditionalNavigationRule rule,

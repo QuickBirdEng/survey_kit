@@ -7,8 +7,11 @@ import 'package:survey_kit/src/task/survey_definition.dart';
 /// When [navigationRules] is empty, flow is sequential.
 /// When rules are present, transitions are evaluated dynamically.
 class SurveyFlow extends SurveyDefinition {
+  /// JSON type identifier for SurveyFlow.
   static const String type = 'flow';
 
+  /// Maps a step ID to the [NavigationRule] that determines the next step
+  /// after it.
   final Map<String, NavigationRule> navigationRules;
 
   SurveyFlow({
@@ -23,6 +26,9 @@ class SurveyFlow extends SurveyDefinition {
           initialStep: initialStep,
         );
 
+  /// Adds a [NavigationRule] for the step identified by
+  /// [forTriggerStepIdentifier]. Has no effect if a rule already exists for
+  /// that step.
   void addNavigationRule({
     required String forTriggerStepIdentifier,
     required NavigationRule navigationRule,
@@ -30,6 +36,8 @@ class SurveyFlow extends SurveyDefinition {
     navigationRules.putIfAbsent(forTriggerStepIdentifier, () => navigationRule);
   }
 
+  /// Returns the [NavigationRule] for the given step ID, or null if none is
+  /// configured.
   NavigationRule? getRuleByStepIdentifier(String? stepIdentifier) {
     return navigationRules[stepIdentifier];
   }

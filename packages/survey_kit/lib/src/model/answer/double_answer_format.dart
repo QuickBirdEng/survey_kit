@@ -5,11 +5,16 @@ import 'package:survey_kit/src/model/answer/answer_format.dart';
 
 part 'double_answer_format.g.dart';
 
+/// Answer format for a decimal number entry. Renders as a text field that
+/// accepts floating-point values. The JSON type identifier is `'double'`.
 @JsonSerializable()
 class DoubleAnswerFormat extends AnswerFormat {
   static const String type = 'double';
 
+  /// Pre-filled value when the question is first shown.
   final double? defaultValue;
+
+  /// Placeholder text shown in the input field.
   final String hint;
 
   const DoubleAnswerFormat({

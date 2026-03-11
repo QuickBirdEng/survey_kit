@@ -4,12 +4,21 @@ import 'package:uuid/uuid.dart';
 
 part 'text_choice.g.dart';
 
+/// A labeled option used in single- and multiple-choice answer formats.
+/// Each choice has a display [text] and an optional [value] used for
+/// logic/JSON, and a unique [id].
 @immutable
 @JsonSerializable()
 class TextChoice {
+  /// Unique identifier for this choice. Auto-generated with UUID if not
+  /// provided.
   final String id;
+
+  /// The human-readable label shown to the user.
   final String text;
 
+  /// Optional machine-readable value associated with this choice.
+  /// Used in [ConditionalNavigationRule] mappings.
   final String? value;
 
   TextChoice({

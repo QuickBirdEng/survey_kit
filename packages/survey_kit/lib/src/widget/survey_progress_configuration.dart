@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Configuration for the progress bar displayed in the survey app bar.
+/// Control visibility, color, size, and whether a textual label is shown.
 class SurveyProgressConfiguration {
   final bool showProgressbar;
 

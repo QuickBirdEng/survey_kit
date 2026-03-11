@@ -12,13 +12,13 @@ dependencies:
     sdk: flutter
 
   survey_kit:
-    path: ../packages/survey_kit
+    path: ../
   survey_kit_audio:
-    path: ../packages/survey_kit_audio
+    path: ../../survey_kit_audio
   survey_kit_lottie:
-    path: ../packages/survey_kit_lottie
+    path: ../../survey_kit_lottie
   survey_kit_video:
-    path: ../packages/survey_kit_video
+    path: ../../survey_kit_video
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,8 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/task_navigator.dart';
 import 'package:survey_kit/src/task/survey_definition.dart';
 
+/// A [TaskNavigator] that advances steps strictly in list order. Does not
+/// evaluate any navigation rules.
 class OrderedTaskNavigator extends TaskNavigator {
   OrderedTaskNavigator(SurveyDefinition task) : super(task);
 

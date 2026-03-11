@@ -2,9 +2,15 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
 import 'package:survey_kit/src/navigator/rules/navigation_target.dart';
 
+/// A [NavigationRule] that routes to different steps based on the current
+/// answer. Provide [resultToStepIdentifierMapper] to implement custom routing
+/// logic. For JSON-driven surveys, the 'values' map in JSON is used to look up
+/// the next step ID from the string representation of the answer.
 class ConditionalNavigationRule implements NavigationRule {
   static const type = 'conditional';
 
+  /// A function that receives all previous results and the current step result,
+  /// and returns a [NavigationTarget] indicating where to go next.
   final NavigationTarget Function(List<StepResult>, StepResult?)
       resultToStepIdentifierMapper;
   final Map<String, String> _values;

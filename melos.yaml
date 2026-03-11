@@ -1,8 +1,8 @@
 name: survey_kit_workspace
 
 packages:
-  - example
   - packages/*
+  - packages/survey_kit/example
 
 command:
   bootstrap:

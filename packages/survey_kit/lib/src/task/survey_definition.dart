@@ -12,9 +12,15 @@ import 'package:uuid/uuid.dart';
 ///  * If you want to use JSON, override [fromJson] and add your type
 @immutable
 abstract class SurveyDefinition {
+  /// Unique identifier for this survey definition.
+  /// Auto-generated with UUID if not provided.
   late final String id;
+
+  /// The ordered list of steps in the survey.
   @JsonKey(defaultValue: <Step>[])
   final List<Step> steps;
+
+  /// An optional step to show first, overriding the first item in [steps].
   final Step? initialStep;
 
   SurveyDefinition({

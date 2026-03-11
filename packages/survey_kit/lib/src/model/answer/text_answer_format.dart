@@ -3,10 +3,12 @@ import 'package:survey_kit/src/model/answer/answer_format.dart';
 
 part 'text_answer_format.g.dart';
 
+/// Answer format for free-text entry. The JSON type identifier is `'text'`.
 @JsonSerializable()
 class TextAnswerFormat extends AnswerFormat {
   static const String type = 'text';
 
+  /// Maximum number of lines in the text field. Null means unlimited.
   final int? maxLines;
   @JsonKey(defaultValue: '')
   final String hint;

@@ -4,13 +4,21 @@ import 'package:survey_kit/src/model/answer/text_choice.dart';
 
 part 'multiple_choice_answer_format.g.dart';
 
+/// Answer format that allows selecting multiple items from a list of
+/// [TextChoice]s. The JSON type identifier is `'multi'`.
 @JsonSerializable(genericArgumentFactories: true)
 class MultipleChoiceAnswerFormat<T extends TextChoice> extends AnswerFormat {
   static const String type = 'multi';
 
+  /// The list of selectable options.
   @JsonKey(name: 'textChoices')
   final List<T> choices;
+
+  /// The option pre-selected when the step is first shown.
   final T? defaultSelection;
+
+  /// When true, an additional free-text 'Other' field is shown below the
+  /// choices.
   @JsonKey(defaultValue: false)
   final bool otherField;
 

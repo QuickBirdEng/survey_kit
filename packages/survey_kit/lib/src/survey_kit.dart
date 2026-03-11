@@ -19,12 +19,20 @@ import 'package:survey_kit/src/widget/survey_app_bar.dart';
 import 'package:survey_kit/src/widget/survey_kit_page_route_builder.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
+/// A builder function for customizing the container around each survey step.
+/// Receives the current [Step], the built answer widget (may be null for
+/// content-only steps), and the [BuildContext].
 typedef StepShell = Widget Function(
   Step step,
   Widget? answerWidget,
   BuildContext context,
 );
 
+/// The root widget for a survey experience. Provide a [SurveyDefinition] via
+/// [task] and receive results via [onResult]. Customize navigation with
+/// [surveyController], appearance with [surveyProgressbarConfiguration] and
+/// [appBar], and extend with [answerViewBuilders], [contentWidgetBuilders], or
+/// [registries].
 class SurveyKit extends StatefulWidget {
   /// [SurveyDefinition] for the configuration of the survey.
   final SurveyDefinition task;
@@ -51,10 +59,16 @@ class SurveyKit extends StatefulWidget {
   /// Decoration which is applied to the survey container
   final BoxDecoration? decoration;
 
+  /// Optional background color for the survey scaffold.
   final Color? backgroundColor;
 
+  /// Custom answer-view builder overrides, keyed by [AnswerFormat] type.
   final Map<Type, AnswerViewBuilder>? answerViewBuilders;
+
+  /// Custom content-widget builder overrides, keyed by [Content] type.
   final Map<Type, ContentWidgetBuilder>? contentWidgetBuilders;
+
+  /// List of [SurveyKitPlugin]s whose builders are merged into the registry.
   final List<SurveyKitPlugin>? registries;
 
   const SurveyKit({
@@ -208,6 +222,8 @@ class _SurveyKitState extends State<SurveyKit> {
   }
 }
 
+/// Internal page host for the survey navigator. Manages the initial route and
+/// step transitions.
 class SurveyPage extends StatefulWidget {
   final int length;
   final Function(SurveyResult) onResult;

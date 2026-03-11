@@ -1,4 +1,5 @@
-/// Defines an exception if not valid task definition is found
+/// Thrown when a [SurveyDefinition.fromJson] call encounters an unrecognized
+/// task type.
 class TaskNotDefinedException implements Exception {
   const TaskNotDefinedException() : super();
 }

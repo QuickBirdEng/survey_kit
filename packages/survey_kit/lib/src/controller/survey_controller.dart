@@ -4,6 +4,9 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state_provider.dart';
 
+/// Controls survey navigation programmatically. Attach to
+/// [SurveyKit.surveyController] to intercept or trigger navigation events. All
+/// navigation methods dispatch events to [SurveyStateProvider].
 class SurveyController {
   /// Called when the next step is requested. Receives the current [stepResult]
   /// and a [proceed] callback. Call [proceed] to continue with the default
@@ -60,9 +63,9 @@ class SurveyController {
     return resolvedContext;
   }
 
-  /// Triggers "next step" navigation.
-  ///
-  /// [context] is optional when this controller is attached to [SurveyKit].
+  /// Triggers navigation to the next step, optionally providing [stepResult]
+  /// for the current step. Pass a [BuildContext] explicitly or rely on the
+  /// internally attached navigator key.
   void next({
     BuildContext? context,
     StepResult? stepResult,
@@ -91,6 +94,7 @@ class SurveyController {
     );
   }
 
+  /// Triggers navigation to the previous step.
   void stepBack({
     BuildContext? context,
     StepResult? stepResult,
@@ -106,6 +110,8 @@ class SurveyController {
     proceed();
   }
 
+  /// Closes the survey and emits a [SurveyResult] with
+  /// [FinishReason.discarded].
   void closeSurvey({
     StepResult? stepResult,
   }) {

@@ -3,6 +3,8 @@ import 'package:survey_kit/src/model/answer/answer_format.dart';
 
 part 'date_answer_format.g.dart';
 
+/// Answer format that presents a date picker.
+/// The JSON type identifier is `'date'`.
 @JsonSerializable()
 class DateAnswerFormat extends AnswerFormat {
   static const String type = 'date';

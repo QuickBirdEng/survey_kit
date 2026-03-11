@@ -12,11 +12,17 @@ import 'package:survey_kit/src/model/answer/text_answer_format.dart';
 import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/answer/time_answer_format.dart';
 
+/// Abstract base class for all answer format types. Defines how a survey
+/// question accepts user input. Use [AnswerFormat.fromJson] for
+/// deserialization. Register custom types with [registerFromJson].
 @JsonSerializable()
 abstract class AnswerFormat {
   const AnswerFormat({this.answerType, this.question});
 
+  /// Optional question text associated with this answer format.
   final String? question;
+
+  /// JSON type discriminator used during deserialization.
   @JsonKey(name: 'type')
   final String? answerType;
 
@@ -43,6 +49,8 @@ abstract class AnswerFormat {
     TimeAnswerFormat.type: TimeAnswerFormat.fromJson,
   };
 
+  /// Registers a custom [AnswerFormat] subtype for JSON deserialization.
+  /// Call this before loading any survey JSON that contains [type].
   static void registerFromJson(
     String type,
     AnswerFormat Function(Map<String, dynamic>) factory,
@@ -50,6 +58,8 @@ abstract class AnswerFormat {
     _converters[type] = factory;
   }
 
+  /// Deserializes an [AnswerFormat] from [json]. Dispatches to the registered
+  /// factory for the 'type' field. Throws if the type is unknown.
   factory AnswerFormat.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String?;
     assert(type != null, 'type is required');
@@ -61,5 +71,6 @@ abstract class AnswerFormat {
 
     throw Exception('Unknown type: $type');
   }
+  /// Serializes this answer format to a JSON map.
   Map<String, dynamic> toJson();
 }

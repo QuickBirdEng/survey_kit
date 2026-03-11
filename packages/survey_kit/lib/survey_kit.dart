@@ -1,4 +1,8 @@
-library survery_kit;
+/// The main entry point for the survey_kit package.
+///
+/// Import this library to access [SurveyKit], all [AnswerFormat] types,
+/// [SurveyFlow], [Step], [SurveyResult], and navigation rules.
+library survey_kit;
 
 export 'gen/survey_kit_localizations.dart';
 export 'src/configuration/survey_configuration.dart';

@@ -3,10 +3,15 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'multi_double.g.dart';
 
+/// A labeled decimal value used in [MultipleDoubleAnswerFormat].
+/// Pairs a display [text] label with a numeric [value].
 @JsonSerializable()
 @immutable
 class MultiDouble {
+  /// The label shown next to this input field.
   final String text;
+
+  /// The numeric value entered by the user.
   final double value;
 
   const MultiDouble({
