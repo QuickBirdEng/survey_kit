@@ -32,10 +32,10 @@ jobs:
         run: melos bootstrap
 
       - name: Analyze
-        run: melos run analyze
+        run: melos exec -- flutter analyze .
 
       - name: Test
-        run: melos run test
+        run: melos exec --dir-exists="test" -- flutter test
 
       - name: Verify release tag matches package versions
         env:
