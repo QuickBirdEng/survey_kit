@@ -1,3 +1,8 @@
+# 2.0.0-beta2
+
+- **CHORE**: Bump version to 2.0.0-beta2 across all packages.
+- **DOC**: Updated README.md with new installation instructions.
+
 # 2.0.0-beta1
 
 ## Required Adjustments (1.x -> 2.0.0-beta1)

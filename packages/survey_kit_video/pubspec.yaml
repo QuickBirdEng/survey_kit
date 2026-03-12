@@ -1,6 +1,6 @@
 name: survey_kit_video
 description: Video-Step for survey_kit
-version: 2.0.0-beta1
+version: 2.0.0-beta2
 homepage: https://quickbirdstudios.com
 repository: https://github.com/quickbirdstudios/survey_kit
 issue_tracker: https://github.com/quickbirdstudios/survey_kit/issues
@@ -16,7 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
   json_annotation: ^4.9.0
-  survey_kit: 2.0.0-beta1
+  survey_kit: 2.0.0-beta2
   universal_html: ^2.2.1
   video_player: ^2.6.0
   visibility_detector: ^0.4.0+2
