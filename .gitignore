@@ -1,3 +1,6 @@
+# Local settings
+settings.local.json
+
 # Miscellaneous
 *.class
 *.log
