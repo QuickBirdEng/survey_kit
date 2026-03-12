@@ -1,16 +1,16 @@
 name: Publish to pub.dev
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 concurrency:
-  group: publish-${{ github.event.release.tag_name }}
+  group: publish-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
   publish:
-    if: ${{ !github.event.release.draft }}
     permissions:
       contents: read
       id-token: write
@@ -39,7 +39,7 @@ jobs:
 
       - name: Verify release tag matches package versions
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
           TAG_VERSION="${RELEASE_TAG#v}"
           for package in \
@@ -57,7 +57,7 @@ jobs:
 
       - name: Publish packages
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
           TAG_VERSION="${RELEASE_TAG#v}"
 
