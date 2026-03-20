@@ -18,6 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: dart-lang/setup-dart@v1
+
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -55,21 +57,9 @@ jobs:
             fi
           done
 
-      - name: Print Dart version
-        run: dart --version
-
-      - name: Inspect OIDC token claims
-        run: |
-          TOKEN=$(curl -sSf \
-            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=https://pub.dev" \
-            | jq -r '.value')
-          echo "--- OIDC token claims ---"
-          echo "$TOKEN" | cut -d. -f2 | base64 -d 2>/dev/null | jq .
-
       - name: Publish packages
         run: |
           for package in packages/survey_kit packages/survey_kit_audio packages/survey_kit_lottie packages/survey_kit_video; do
             echo "Publishing $package..."
-            (cd "$package" && dart pub --verbosity=all publish --force 2>&1 || true)
+            dart pub -C "$package" publish --force
           done
