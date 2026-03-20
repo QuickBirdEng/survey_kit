@@ -56,4 +56,4 @@ jobs:
           done
 
       - name: Publish packages
-        run: melos publish --no-dry-run
+        run: melos publish --no-dry-run --yes
