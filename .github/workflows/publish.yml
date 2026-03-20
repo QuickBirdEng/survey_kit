@@ -55,11 +55,14 @@ jobs:
             fi
           done
 
-      - name: Check OIDC token availability
+      - name: Inspect OIDC token claims
         run: |
-          echo "GITHUB_ACTIONS=$GITHUB_ACTIONS"
-          echo "ACTIONS_ID_TOKEN_REQUEST_URL set: $([[ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]] && echo yes || echo NO)"
-          echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN set: $([[ -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ]] && echo yes || echo NO)"
+          TOKEN=$(curl -sSf \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=https://pub.dev" \
+            | jq -r '.value')
+          echo "--- OIDC token claims ---"
+          echo "$TOKEN" | cut -d. -f2 | base64 -d 2>/dev/null | jq .
 
       - name: Publish packages
         run: |
