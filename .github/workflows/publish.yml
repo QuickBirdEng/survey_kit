@@ -62,4 +62,8 @@ jobs:
           echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN set: $([[ -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ]] && echo yes || echo NO)"
 
       - name: Publish packages
-        run: melos publish --no-dry-run --yes
+        run: |
+          for package in packages/survey_kit packages/survey_kit_audio packages/survey_kit_lottie packages/survey_kit_video; do
+            echo "Publishing $package..."
+            (cd "$package" && dart pub publish --force)
+          done
