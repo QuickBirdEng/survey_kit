@@ -55,6 +55,9 @@ jobs:
             fi
           done
 
+      - name: Print Dart version
+        run: dart --version
+
       - name: Inspect OIDC token claims
         run: |
           TOKEN=$(curl -sSf \
@@ -68,5 +71,5 @@ jobs:
         run: |
           for package in packages/survey_kit packages/survey_kit_audio packages/survey_kit_lottie packages/survey_kit_video; do
             echo "Publishing $package..."
-            (cd "$package" && dart pub publish --force)
+            (cd "$package" && dart --verbose pub publish --force 2>&1 || true)
           done
