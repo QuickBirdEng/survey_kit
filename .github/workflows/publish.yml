@@ -55,5 +55,11 @@ jobs:
             fi
           done
 
+      - name: Check OIDC token availability
+        run: |
+          echo "GITHUB_ACTIONS=$GITHUB_ACTIONS"
+          echo "ACTIONS_ID_TOKEN_REQUEST_URL set: $([[ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]] && echo yes || echo NO)"
+          echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN set: $([[ -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ]] && echo yes || echo NO)"
+
       - name: Publish packages
         run: melos publish --no-dry-run --yes
