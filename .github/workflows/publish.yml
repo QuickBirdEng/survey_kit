@@ -71,5 +71,5 @@ jobs:
         run: |
           for package in packages/survey_kit packages/survey_kit_audio packages/survey_kit_lottie packages/survey_kit_video; do
             echo "Publishing $package..."
-            (cd "$package" && dart --verbose pub publish --force 2>&1 || true)
+            (cd "$package" && dart pub --verbosity=all publish --force 2>&1 || true)
           done
