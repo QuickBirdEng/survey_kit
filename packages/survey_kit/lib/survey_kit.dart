@@ -7,7 +7,7 @@ library survey_kit;
 export 'gen/survey_kit_localizations.dart';
 export 'src/configuration/survey_configuration.dart';
 export 'src/configuration/survey_kit_plugin.dart';
-export 'src/configuration/survey_kit_registry.dart' hide SurveyKitRegistry;
+export 'src/configuration/survey_kit_registry.dart';
 export 'src/controller/survey_controller.dart';
 export 'src/model/answer/answer_format.dart';
 export 'src/model/answer/boolean_answer_format.dart';

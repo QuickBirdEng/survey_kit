@@ -127,7 +127,7 @@ final _survey = SurveyFlow(
         VideoContent(
           title: 'Big Buck Bunny',
           url:
-              'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+              'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
         ),
       ],
       buttonText: 'Next',

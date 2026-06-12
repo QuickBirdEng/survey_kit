@@ -1,3 +1,23 @@
+# 2.0.0-beta3
+
+- **FIX** (`survey_kit`): `withSeparator` no longer emits a trailing
+  separator, which removed the extra spacing below the last item in
+  `ContentWidget`.
+- **FIX** (`survey_kit`): `ContentWidget.padding` is now actually applied and
+  defaults to `EdgeInsets.zero`; unregistered content types are skipped
+  instead of rendering empty placeholders.
+- **FEAT** (`survey_kit`): Export `SurveyKitRegistry` so custom
+  `ContentWidget`/`AnswerView` implementations can look up registered
+  builders. `ContentWidget` gained a `spacing` parameter.
+- **FIX** (`survey_kit`): `SelectionListTile` paints its background on a
+  `Material` instead of a decorated `Container`, so tap ink splashes are
+  visible again.
+- **FIX** (`survey_kit_video`): No longer crashes with a
+  `LateInitializationError` when the player is disposed before the video
+  finished initializing; also guards against `setState` after dispose. Shows
+  an error placeholder when the video fails to load instead of spinning
+  forever.
+
 # 2.0.0-beta2
 
 - **CHORE**: Bump version to 2.0.0-beta2 across all packages.

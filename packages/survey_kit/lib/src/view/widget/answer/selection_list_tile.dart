@@ -16,13 +16,15 @@ class SelectionListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(context).primaryColor.withValues(alpha: 0.05)
-              : Theme.of(context).colorScheme.surface,
+      // The background lives on a Material (not a decorated Container) so the
+      // ListTile's ink splashes stay visible.
+      child: Material(
+        color: isSelected
+            ? Theme.of(context).primaryColor.withValues(alpha: 0.05)
+            : Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
-          border: Border.all(
+          side: BorderSide(
             color: isSelected
                 ? Theme.of(context).primaryColor
                 : Colors.grey.shade300,

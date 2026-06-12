@@ -1,66 +1,45 @@
 import 'package:flutter/material.dart' hide Step;
-import 'package:survey_kit/src/configuration/survey_kit_registry.dart';
 import 'package:survey_kit/src/util/extension.dart';
 import 'package:survey_kit/survey_kit.dart';
 
-class ContentWidget extends StatefulWidget {
+/// Renders a list of [Content] items using the builders registered in
+/// [SurveyKitRegistry], separated by [spacing]. Content types without a
+/// registered builder are skipped.
+class ContentWidget extends StatelessWidget {
   const ContentWidget({
     super.key,
     required this.content,
     this.center = true,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = EdgeInsets.zero,
+    this.spacing = 14,
   });
+
   final List<Content> content;
   final bool center;
-  final EdgeInsets padding;
+  final EdgeInsetsGeometry padding;
 
-  @override
-  State<ContentWidget> createState() => _ContentWidgetState();
-}
+  /// Vertical space between two content items.
+  final double spacing;
 
-class _ContentWidgetState extends State<ContentWidget> {
   @override
   Widget build(BuildContext context) {
-    final contentView = Container(
-      width: double.infinity,
-      child: Column(
-        mainAxisAlignment:
-            widget.center ? MainAxisAlignment.center : MainAxisAlignment.start,
-        children: widget.content
-            .map(
-              (e) {
-                final widget =
-                    SurveyKitRegistry.of(context)?.createContentWidget(e);
-                if (widget == null) {
-                  return Container();
-                }
-                return widget;
-              },
-            )
-            .withSeparator(
-              const _Separator(
-                height: 14,
-              ),
-            )
-            .toList(),
+    final registry = SurveyKitRegistry.of(context);
+    final contentView = Padding(
+      padding: padding,
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment:
+              center ? MainAxisAlignment.center : MainAxisAlignment.start,
+          children: content
+              .map((e) => registry?.createContentWidget(e))
+              .whereType<Widget>()
+              .withSeparator(SizedBox(height: spacing))
+              .toList(),
+        ),
       ),
     );
 
-    return widget.center ? Center(child: contentView) : contentView;
-  }
-}
-
-class _Separator extends StatelessWidget {
-  const _Separator({
-    required this.height,
-  });
-
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-    );
+    return center ? Center(child: contentView) : contentView;
   }
 }

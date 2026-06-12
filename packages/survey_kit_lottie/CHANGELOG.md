@@ -1,3 +1,7 @@
+# 2.0.0-beta3
+
+- **CHORE**: Bump version to 2.0.0-beta3.
+
 # 2.0.0-beta2
 
 - **CHORE**: Bump version to 2.0.0-beta2.

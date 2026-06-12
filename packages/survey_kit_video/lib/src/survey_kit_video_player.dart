@@ -21,56 +21,80 @@ class SurveyKitVideoPlayer extends StatefulWidget {
 
 class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
   late final VideoPlayerController _controller;
-  late final ChewieController _chewieController;
+  ChewieController? _chewieController;
+  bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(widget.videoUrl),
-    )..initialize().then((_) {
-        _chewieController = ChewieController(
-          videoPlayerController: _controller,
-          autoPlay: widget.autoPlay,
-          looping: widget.loop,
-        );
-        setState(() {});
-      });
+    );
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    try {
+      await _controller.initialize();
+    } catch (_) {
+      if (mounted) {
+        setState(() => _hasError = true);
+      }
+      return;
+    }
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _chewieController = ChewieController(
+        videoPlayerController: _controller,
+        autoPlay: widget.autoPlay,
+        looping: widget.loop,
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final videoWidget = _controller.value.isInitialized
-        ? AspectRatio(
-            aspectRatio: _chewieController.aspectRatio ?? 16 / 9,
-            child: VisibilityDetector(
-              key: Key(widget.videoUrl),
-              onVisibilityChanged: (info) {
-                if (info.visibleFraction == 0 && mounted) {
-                  _controller.pause();
-                }
-              },
-              child: Chewie(
-                controller: _chewieController,
-              ),
-            ),
-          )
-        : Container(
-            height: 200,
-            child: const Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
-          );
+    if (_hasError) {
+      return const SizedBox(
+        height: 200,
+        child: Center(
+          child: Icon(Icons.videocam_off_outlined, size: 48),
+        ),
+      );
+    }
 
-    return videoWidget;
+    final chewieController = _chewieController;
+    if (chewieController == null) {
+      return const SizedBox(
+        height: 200,
+        child: Center(
+          child: CircularProgressIndicator.adaptive(),
+        ),
+      );
+    }
+
+    return AspectRatio(
+      aspectRatio: chewieController.aspectRatio ?? 16 / 9,
+      child: VisibilityDetector(
+        key: Key(widget.videoUrl),
+        onVisibilityChanged: (info) {
+          if (info.visibleFraction == 0 && mounted) {
+            _controller.pause();
+          }
+        },
+        child: Chewie(
+          controller: chewieController,
+        ),
+      ),
+    );
   }
 
   @override
   void dispose() {
+    _chewieController?.dispose();
+    _controller.dispose();
     super.dispose();
-    _controller.pause().then((value) {
-      _chewieController.dispose();
-      _controller.dispose();
-    });
   }
 }

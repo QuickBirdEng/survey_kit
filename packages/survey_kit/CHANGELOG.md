@@ -1,3 +1,22 @@
+# 2.0.0-beta3
+
+- **FIX**: `withSeparator` no longer emits a trailing separator, which removed
+  the extra spacing below the last item in `ContentWidget`.
+- **FIX**: `ContentWidget.padding` is now actually applied. It previously had
+  no effect; the default changed from `EdgeInsets.all(16)` to
+  `EdgeInsets.zero` to match the previous rendering.
+- **FIX**: `ContentWidget` now skips content types without a registered
+  builder instead of rendering empty placeholders (which produced stray
+  separators).
+- **FEAT**: Export `SurveyKitRegistry` so custom `ContentWidget`/`AnswerView`
+  implementations can look up registered builders via
+  `SurveyKitRegistry.of(context)`.
+- **FEAT**: `ContentWidget` gained a `spacing` parameter to control the gap
+  between content items (defaults to the previous value of 14).
+- **FIX**: `SelectionListTile` now paints its background on a `Material`
+  instead of a decorated `Container`, so tap ink splashes are visible again
+  (newer Flutter versions report this as a framework error).
+
 # 2.0.0-beta2
 
 - **CHORE**: Bump version to 2.0.0-beta2.
