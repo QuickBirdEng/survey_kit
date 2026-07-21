@@ -7,10 +7,7 @@ import 'package:rxdart/rxdart.dart';
 class SurveyKitAudioPlayer extends StatefulWidget {
   final String audioUrl;
 
-  const SurveyKitAudioPlayer({
-    super.key,
-    required this.audioUrl,
-  });
+  const SurveyKitAudioPlayer({super.key, required this.audioUrl});
 
   @override
   _SurveyKitAudioPlayerState createState() => _SurveyKitAudioPlayerState();
@@ -38,11 +35,8 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
         _audioPlayer.positionStream,
         _audioPlayer.bufferedPositionStream,
         _audioPlayer.durationStream,
-        (position, bufferedPosition, duration) => PositionData(
-          position,
-          bufferedPosition,
-          duration ?? Duration.zero,
-        ),
+        (position, bufferedPosition, duration) =>
+            PositionData(position, bufferedPosition, duration ?? Duration.zero),
       );
 
   @override
@@ -122,17 +116,14 @@ class _SurveyKitAudioPlayerState extends State<SurveyKitAudioPlayer>
             stream: _positionDataStream,
             builder: (context, snapshot) {
               final positionData = snapshot.data;
-              final remaining = (positionData?.duration ?? Duration.zero) -
+              final remaining =
+                  (positionData?.duration ?? Duration.zero) -
                   (positionData?.position ?? Duration.zero);
 
-              return Text(
-                remaining.text,
-              );
+              return Text(remaining.text);
             },
           ),
-          const SizedBox(
-            width: 24,
-          ),
+          const SizedBox(width: 24),
         ],
       ),
     );
@@ -198,9 +189,7 @@ class SeekBarState extends State<SeekBar> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _sliderThemeData = SliderTheme.of(context).copyWith(
-      trackHeight: 2.0,
-    );
+    _sliderThemeData = SliderTheme.of(context).copyWith(trackHeight: 2.0);
   }
 
   @override
@@ -212,7 +201,8 @@ class SeekBarState extends State<SeekBar> {
         SliderTheme(
           data: _sliderThemeData.copyWith(
             thumbShape: HiddenThumbComponentShape(),
-            activeTrackColor: _sliderThemeData.activeTrackColor ??
+            activeTrackColor:
+                _sliderThemeData.activeTrackColor ??
                 theme.primaryColor.withValues(alpha: 1),
             inactiveTrackColor:
                 _sliderThemeData.inactiveTrackColor ?? Colors.grey.shade300,

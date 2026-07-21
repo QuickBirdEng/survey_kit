@@ -23,7 +23,7 @@ class ScaleAnswerFormat extends AnswerFormat {
     this.maximumValueDescription = '',
     this.minimumValueDescription = '',
     super.question,
-    super.answerType = type,
+    super.answerType = ScaleAnswerFormat.type,
   }) : super();
 
   factory ScaleAnswerFormat.fromJson(Map<String, dynamic> json) =>
@@ -32,9 +32,6 @@ class ScaleAnswerFormat extends AnswerFormat {
 
   @override
   Widget createView(Step step, StepResult? stepResult) {
-    return ScaleAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
+    return ScaleAnswerView(questionStep: step, result: stepResult);
   }
 }

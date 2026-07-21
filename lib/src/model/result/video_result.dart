@@ -7,10 +7,7 @@ class VideoResult {
   final Duration leftVideoAt;
   final DateTime stayedInVideo;
 
-  const VideoResult({
-    required this.leftVideoAt,
-    required this.stayedInVideo,
-  });
+  const VideoResult({required this.leftVideoAt, required this.stayedInVideo});
 
   factory VideoResult.fromJson(Map<String, dynamic> json) =>
       _$VideoResultFromJson(json);

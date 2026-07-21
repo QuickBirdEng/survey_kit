@@ -37,9 +37,7 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView>
     _controller = TextEditingController();
     _controller.text = widget.result?.result?.toString() ?? '';
 
-    isValid(
-      double.tryParse(_controller.text),
-    );
+    isValid(double.tryParse(_controller.text));
   }
 
   @override

@@ -30,8 +30,6 @@ class StyledTextContent extends Content {
 
   @override
   Widget createWidget() {
-    return StyledTextWidget(
-      content: this,
-    );
+    return StyledTextWidget(content: this);
   }
 }

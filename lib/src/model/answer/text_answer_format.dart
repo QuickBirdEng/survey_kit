@@ -25,7 +25,7 @@ class TextAnswerFormat extends AnswerFormat {
     this.hint = '',
     this.validationRegEx = r'^(?!s*$).+',
     super.question,
-    super.answerType = type,
+    super.answerType = TextAnswerFormat.type,
   }) : super();
 
   factory TextAnswerFormat.fromJson(Map<String, dynamic> json) =>
@@ -34,9 +34,6 @@ class TextAnswerFormat extends AnswerFormat {
 
   @override
   Widget createView(Step step, StepResult? stepResult) {
-    return TextAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
+    return TextAnswerView(questionStep: step, result: stepResult);
   }
 }

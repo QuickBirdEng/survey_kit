@@ -15,7 +15,7 @@ ScaleAnswerFormat _$ScaleAnswerFormatFromJson(Map<String, dynamic> json) =>
       maximumValueDescription: json['maximumValueDescription'] as String? ?? '',
       minimumValueDescription: json['minimumValueDescription'] as String? ?? '',
       question: json['question'] as String?,
-      answerType: json['type'] as String?,
+      answerType: json['type'] as String? ?? ScaleAnswerFormat.type,
     );
 
 Map<String, dynamic> _$ScaleAnswerFormatToJson(ScaleAnswerFormat instance) =>

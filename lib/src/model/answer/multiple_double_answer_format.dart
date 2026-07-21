@@ -20,7 +20,7 @@ class MultipleDoubleAnswerFormat extends AnswerFormat {
     this.defaultValues,
     required this.hints,
     super.question,
-    super.answerType = type,
+    super.answerType = MultipleDoubleAnswerFormat.type,
   }) : super();
 
   factory MultipleDoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>
@@ -30,9 +30,6 @@ class MultipleDoubleAnswerFormat extends AnswerFormat {
 
   @override
   Widget createView(Step step, StepResult? stepResult) {
-    return MultipleDoubleAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
+    return MultipleDoubleAnswerView(questionStep: step, result: stepResult);
   }
 }

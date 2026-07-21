@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/survey_kit.dart';
 
-typedef StepShell = Widget Function({
-  required Step step,
-  required Widget child,
-  StepResult Function()? resultFunction,
-  bool isValid,
-  SurveyController? controller,
-});
+typedef StepShell =
+    Widget Function({
+      required Step step,
+      required Widget child,
+      StepResult Function()? resultFunction,
+      bool isValid,
+      SurveyController? controller,
+    });
 
 class StepView extends StatefulWidget {
   final Step step;
@@ -45,29 +46,29 @@ class _StepViewState extends State<StepView> {
               padding: const EdgeInsets.all(30),
               child: SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: constraint.maxHeight - 60),
+                  constraints: BoxConstraints(
+                    minHeight: constraint.maxHeight - 60,
+                  ),
                   child: IntrinsicHeight(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          child: ContentWidget(
-                            content: widget.step.content,
-                          ),
+                          child: ContentWidget(content: widget.step.content),
                         ),
                         if (widget.answerView != null) widget.answerView!,
                         AnimatedBuilder(
                           animation: questionAnswer.isValid,
                           builder: (context, child) {
                             return OutlinedButton(
-                              onPressed: questionAnswer.isValid.value ||
+                              onPressed:
+                                  questionAnswer.isValid.value ||
                                       !widget.step.isMandatory
                                   ? () => _surveyController.nextStep(
-                                        context,
-                                        questionAnswer.stepResult,
-                                      )
+                                      context,
+                                      questionAnswer.stepResult,
+                                    )
                                   : null,
                               child: Text(
                                 widget.step.buttonText ??

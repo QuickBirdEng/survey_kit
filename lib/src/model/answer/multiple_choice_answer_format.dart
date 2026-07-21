@@ -18,7 +18,7 @@ class MultipleChoiceAnswerFormat extends AnswerFormat {
     this.otherField = false,
     this.defaultSelection,
     super.question,
-    super.answerType = type,
+    super.answerType = MultipleChoiceAnswerFormat.type,
   }) : super();
 
   factory MultipleChoiceAnswerFormat.fromJson(Map<String, dynamic> json) =>
@@ -28,9 +28,6 @@ class MultipleChoiceAnswerFormat extends AnswerFormat {
 
   @override
   Widget createView(Step step, StepResult? stepResult) {
-    return MultipleChoiceAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
+    return MultipleChoiceAnswerView(questionStep: step, result: stepResult);
   }
 }

@@ -10,20 +10,12 @@ Step CompletionStep({
   required String title,
   required String text,
   String? buttonText,
-}) =>
-    Step(
-      id: id,
-      content: [
-        TextContent(
-          text: title,
-          fontSize: 22,
-        ),
-        TextContent(
-          text: text,
-        ),
-        const LottieContent(
-          asset: 'assets/fancy_checkmark.json',
-        ),
-      ],
-      buttonText: buttonText,
-    );
+}) => Step(
+  id: id,
+  content: [
+    TextContent(text: title, fontSize: 22),
+    TextContent(text: text),
+    const LottieContent(asset: 'assets/fancy_checkmark.json'),
+  ],
+  buttonText: buttonText,
+);

@@ -6,10 +6,7 @@ import 'package:survey_kit/src/widget/survey_kit_audio_player.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class AudioWidget extends StatelessWidget {
-  const AudioWidget({
-    super.key,
-    required this.audioContent,
-  });
+  const AudioWidget({super.key, required this.audioContent});
 
   final AudioContent audioContent;
 
@@ -27,14 +24,10 @@ class AudioWidget extends StatelessWidget {
           ),
           smallVerticalSpacer,
         ],
-        SurveyKitAudioPlayer(
-          audioUrl: audioContent.url,
-        ),
+        SurveyKitAudioPlayer(audioUrl: audioContent.url),
         if (audioContent.externalLink != null) ...[
           smallVerticalSpacer,
-          LinkText(
-            link: audioContent.externalLink!,
-          ),
+          LinkText(link: audioContent.externalLink!),
         ],
         if (audioContent.subtitle != null) ...[
           smallVerticalSpacer,

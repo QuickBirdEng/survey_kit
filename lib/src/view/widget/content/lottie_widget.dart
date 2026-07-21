@@ -3,10 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 class LottieWidget extends StatelessWidget {
-  const LottieWidget({
-    super.key,
-    required this.lottieContent,
-  });
+  const LottieWidget({super.key, required this.lottieContent});
 
   final LottieContent lottieContent;
 

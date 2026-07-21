@@ -18,11 +18,8 @@ import 'package:survey_kit/src/widget/survey_app_bar.dart';
 import 'package:survey_kit/src/widget/survey_kit_page_route_builder.dart';
 import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 
-typedef StepShell = Widget Function(
-  Step step,
-  Widget? answerWidget,
-  BuildContext context,
-);
+typedef StepShell =
+    Widget Function(Step step, Widget? answerWidget, BuildContext context);
 
 class SurveyKit extends StatefulWidget {
   /// [Task] for the configuraton of the survey
@@ -100,7 +97,8 @@ class _SurveyKitState extends State<SurveyKit> {
   @override
   Widget build(BuildContext context) {
     return SurveyConfiguration(
-      surveyProgressConfiguration: widget.surveyProgressbarConfiguration ??
+      surveyProgressConfiguration:
+          widget.surveyProgressbarConfiguration ??
           SurveyProgressConfiguration(),
       taskNavigator: _taskNavigator,
       surveyController: widget.surveyController ?? SurveyController(),
@@ -152,9 +150,7 @@ class _SurveyPageState extends State<SurveyPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => SurveyStateProvider.of(context).onEvent(
-        StartSurvey(),
-      ),
+      (_) => SurveyStateProvider.of(context).onEvent(StartSurvey()),
     );
   }
 
@@ -171,12 +167,12 @@ class _SurveyPageState extends State<SurveyPage>
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>
                     SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(1.0, 0.0),
-                end: Offset.zero,
-              ).animate(animation),
-              child: child,
-            ),
+                      position: Tween<Offset>(
+                        begin: const Offset(1.0, 0.0),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
+                    ),
             pageBuilder: (_, __, ___) {
               if (settings.arguments is! PresentingSurveyState) {
                 return const Center(
@@ -206,21 +202,13 @@ class _SurveyPageState extends State<SurveyPage>
 }
 
 class _SurveyView extends StatelessWidget {
-  const _SurveyView({
-    required this.id,
-    required this.createView,
-  });
+  const _SurveyView({required this.id, required this.createView});
 
   final String id;
   final Widget Function() createView;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: ValueKey<String>(
-        id,
-      ),
-      child: createView(),
-    );
+    return Container(key: ValueKey<String>(id), child: createView());
   }
 }

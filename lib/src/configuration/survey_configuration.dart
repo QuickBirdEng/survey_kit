@@ -21,8 +21,8 @@ class SurveyConfiguration extends InheritedWidget {
   final EdgeInsets padding;
 
   static SurveyConfiguration of(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<SurveyConfiguration>();
+    final result = context
+        .dependOnInheritedWidgetOfExactType<SurveyConfiguration>();
     assert(result != null, 'No SurveyConfiguration found in context');
     return result!;
   }

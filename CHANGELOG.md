@@ -1,3 +1,7 @@
+# 1.0.4
+
+- FIX: Removed leftover plugin declaration and unused native iOS/Android stubs - survey_kit is now a pure Dart package, fixing the "does not support Swift Package Manager" warning
+
 # 1.0.3
 
 - CHORE: Removed depracted lint `package_api_docs`

@@ -23,8 +23,9 @@ void main() {
       skip: 'Serialization issue with Step field',
       () async {
         final encodedResult = tResult.toJson();
-        final decodedResult =
-            StepResult<List<MultiDouble>>.fromJson(encodedResult);
+        final decodedResult = StepResult<List<MultiDouble>>.fromJson(
+          encodedResult,
+        );
         expect(tResult, decodedResult);
       },
     );

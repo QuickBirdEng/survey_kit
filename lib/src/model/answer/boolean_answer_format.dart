@@ -20,7 +20,7 @@ class BooleanAnswerFormat extends AnswerFormat {
     required this.negativeAnswer,
     this.result = BooleanResult.none,
     super.question,
-    super.answerType = type,
+    super.answerType = BooleanAnswerFormat.type,
   }) : super();
 
   factory BooleanAnswerFormat.fromJson(Map<String, dynamic> json) =>
@@ -29,10 +29,7 @@ class BooleanAnswerFormat extends AnswerFormat {
 
   @override
   Widget createView(Step step, StepResult? stepResult) {
-    return BooleanAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
+    return BooleanAnswerView(questionStep: step, result: stepResult);
   }
 }
 

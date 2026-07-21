@@ -84,24 +84,22 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     if (event is StartSurvey) {
       final newState = _handleInitialStep();
       _updateState(newState);
-      widget.navigatorKey.currentState?.pushNamed(
-        '/',
-        arguments: newState,
-      );
+      widget.navigatorKey.currentState?.pushNamed('/', arguments: newState);
     } else if (event is NextStep) {
       if (_state is PresentingSurveyState) {
-        final newState =
-            _handleNextStep(event, _state as PresentingSurveyState);
-        _updateState(newState);
-        widget.navigatorKey.currentState?.pushNamed(
-          '/',
-          arguments: newState,
+        final newState = _handleNextStep(
+          event,
+          _state as PresentingSurveyState,
         );
+        _updateState(newState);
+        widget.navigatorKey.currentState?.pushNamed('/', arguments: newState);
       }
     } else if (event is StepBack) {
       if (_state is PresentingSurveyState) {
-        final newState =
-            _handleStepBack(event, _state as PresentingSurveyState);
+        final newState = _handleStepBack(
+          event,
+          _state as PresentingSurveyState,
+        );
         _updateState(newState);
         widget.navigatorKey.currentState?.pop();
       }
@@ -136,10 +134,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
       results: const [],
     );
 
-    return SurveyResultState(
-      result: taskResult,
-      currentStep: null,
-    );
+    return SurveyResultState(result: taskResult, currentStep: null);
   }
 
   SurveyState _handleNextStep(
@@ -174,8 +169,9 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     PresentingSurveyState currentState,
   ) {
     _addResult(event.questionResult);
-    final previousStep =
-        widget.taskNavigator.previousInList(currentState.currentStep);
+    final previousStep = widget.taskNavigator.previousInList(
+      currentState.currentStep,
+    );
 
     // If there's no previous step we can't go back further
     if (previousStep != null) {
@@ -196,9 +192,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
   }
 
   StepResult? _getResultByStepIdentifier(String? identifier) {
-    return _results.firstWhereOrNull(
-      (element) => element.id == identifier,
-    );
+    return _results.firstWhereOrNull((element) => element.id == identifier);
   }
 
   SurveyState _handleClose(
@@ -249,9 +243,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     }
     _results
       ..removeWhere((StepResult result) => result.id == questionResult.id)
-      ..add(
-        questionResult,
-      );
+      ..add(questionResult);
   }
 
   int get _countSteps => widget.taskNavigator.countSteps;
@@ -355,8 +347,8 @@ class SurveyStateProvider extends InheritedWidget {
   /// The [context] must have a [SurveyStateProvider] ancestor.
   /// Throws an assertion error if no provider is found.
   static SurveyStateProvider of(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<SurveyStateProvider>();
+    final result = context
+        .dependOnInheritedWidgetOfExactType<SurveyStateProvider>();
     assert(result != null, 'No SurveyStateProvider found in context');
     return result!;
   }

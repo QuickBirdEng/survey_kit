@@ -11,20 +11,16 @@ class OrderedTask extends Task {
     required String id,
     required List<Step> steps,
     Step? initialStep,
-  }) : super(
-          id: id,
-          steps: steps,
-          initalStep: initialStep,
-        );
+  }) : super(id: id, steps: steps, initalStep: initialStep);
 
   factory OrderedTask.fromJson(Map<String, dynamic> json) => OrderedTask(
-        id: json['id'] as String,
-        steps: json['steps'] != null
-            ? (json['steps'] as List<Map<String, dynamic>>)
-                .map(Step.fromJson)
-                .toList()
-            : [],
-      );
+    id: json['id'] as String,
+    steps: json['steps'] != null
+        ? (json['steps'] as List<Map<String, dynamic>>)
+              .map(Step.fromJson)
+              .toList()
+        : [],
+  );
 
   @override
   Map<String, dynamic> toJson() => _$OrderedTaskToJson(this);

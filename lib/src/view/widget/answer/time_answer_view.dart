@@ -48,14 +48,8 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
     initialValue = widget.result?.result != null
         ? widget.result?.result as TimeResult
         : _timeAnswerFormat.defaultValue != null
-            ? TimeResult(
-                timeOfDay: _timeAnswerFormat.defaultValue!,
-              )
-            : TimeResult(
-                timeOfDay: TimeOfDay.fromDateTime(
-                  DateTime.now(),
-                ),
-              );
+        ? TimeResult(timeOfDay: _timeAnswerFormat.defaultValue!)
+        : TimeResult(timeOfDay: TimeOfDay.fromDateTime(DateTime.now()));
   }
 
   @override
@@ -70,8 +64,8 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
     final questionText = widget.questionStep.answerFormat?.question;
 
     return
-        // TODO(marvin): Create new time picker,
-        Column(
+    // TODO(marvin): Create new time picker,
+    Column(
       children: [
         if (questionText != null) AnswerQuestionText(text: questionText),
         _iosTimePicker(initialValue),
@@ -85,11 +79,8 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
       height: 450.0,
       child: CupertinoDatePicker(
         mode: CupertinoDatePickerMode.time,
-        onDateTimeChanged: (time) => onChange(
-          TimeResult(
-            timeOfDay: TimeOfDay.fromDateTime(time),
-          ),
-        ),
+        onDateTimeChanged: (time) =>
+            onChange(TimeResult(timeOfDay: TimeOfDay.fromDateTime(time))),
       ),
     );
   }

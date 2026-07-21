@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:survey_kit/src/model/content/text_content.dart';
 
 class TextWidget extends StatelessWidget {
-  const TextWidget({
-    super.key,
-    required this.textContent,
-  });
+  const TextWidget({super.key, required this.textContent});
 
   final TextContent textContent;
 
@@ -14,9 +11,7 @@ class TextWidget extends StatelessWidget {
     return Text(
       textContent.text,
       textAlign: textContent.textAlign,
-      style: TextStyle(
-        fontSize: textContent.fontSize,
-      ),
+      style: TextStyle(fontSize: textContent.fontSize),
     );
   }
 }

@@ -22,8 +22,9 @@ void main() {
       skip: 'Serialization issue with Step field',
       () async {
         final encodedResult = tResult.toJson();
-        final decodedResult =
-            StepResult<List<TextChoice>>.fromJson(encodedResult);
+        final decodedResult = StepResult<List<TextChoice>>.fromJson(
+          encodedResult,
+        );
         expect(tResult, decodedResult);
       },
     );

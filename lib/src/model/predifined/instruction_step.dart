@@ -9,17 +9,11 @@ Step InstructionStep({
   required String title,
   required String text,
   String? buttonText,
-}) =>
-    Step(
-      id: id,
-      content: [
-        TextContent(
-          text: title,
-          fontSize: 22,
-        ),
-        TextContent(
-          text: text,
-        ),
-      ],
-      buttonText: buttonText,
-    );
+}) => Step(
+  id: id,
+  content: [
+    TextContent(text: title, fontSize: 22),
+    TextContent(text: text),
+  ],
+  buttonText: buttonText,
+);

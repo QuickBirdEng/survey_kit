@@ -8,10 +8,7 @@ import 'package:survey_kit/src/presenter/survey_event.dart';
 import 'package:survey_kit/src/presenter/survey_state.dart';
 
 class SurveyNotifier extends ChangeNotifier {
-  SurveyNotifier({
-    required this.taskNavigator,
-    required this.onResult,
-  });
+  SurveyNotifier({required this.taskNavigator, required this.onResult});
 
   final GlobalKey _navigatorKey = GlobalKey();
   GlobalKey get navigatorKey => _navigatorKey;
@@ -45,16 +42,10 @@ class SurveyNotifier extends ChangeNotifier {
       finishReason: FinishReason.completed,
       results: const [],
     );
-    return SurveyResultState(
-      result: taskResult,
-      currentStep: null,
-    );
+    return SurveyResultState(result: taskResult, currentStep: null);
   }
 
-  SurveyState nextStep(
-    NextStep event,
-    PresentingSurveyState currentState,
-  ) {
+  SurveyState nextStep(NextStep event, PresentingSurveyState currentState) {
     _addResult(event.questionResult);
     final nextStep = taskNavigator.nextStep(
       step: currentState.currentStep,
@@ -78,10 +69,7 @@ class SurveyNotifier extends ChangeNotifier {
     );
   }
 
-  SurveyState stepBack(
-    StepBack event,
-    PresentingSurveyState currentState,
-  ) {
+  SurveyState stepBack(StepBack event, PresentingSurveyState currentState) {
     _addResult(event.questionResult);
     final previousStep = taskNavigator.previousInList(currentState.currentStep);
 
@@ -104,9 +92,7 @@ class SurveyNotifier extends ChangeNotifier {
   }
 
   StepResult? _getResultByStepIdentifier(String? identifier) {
-    return results.firstWhereOrNull(
-      (element) => element.id == identifier,
-    );
+    return results.firstWhereOrNull((element) => element.id == identifier);
   }
 
   SurveyState closeSurvey(
@@ -157,9 +143,7 @@ class SurveyNotifier extends ChangeNotifier {
     }
     results
       ..removeWhere((StepResult result) => result.id == questionResult.id)
-      ..add(
-        questionResult,
-      );
+      ..add(questionResult);
   }
 
   int get countSteps => taskNavigator.countSteps;

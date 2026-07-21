@@ -13,10 +13,7 @@ abstract class Content {
   @JsonKey(name: 'type')
   final String contentType;
 
-  const Content({
-    this.id,
-    required this.contentType,
-  });
+  const Content({this.id, required this.contentType});
 
   factory Content.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String?;

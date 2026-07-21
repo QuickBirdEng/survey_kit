@@ -64,9 +64,7 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
     return Column(
       children: [
         if (questionText != null) AnswerQuestionText(text: questionText),
-        const Divider(
-          color: Colors.grey,
-        ),
+        const Divider(color: Colors.grey),
         SelectionListTile(
           text: _answerFormat.positiveAnswer,
           onTap: () => onChange(BooleanResult.positive),

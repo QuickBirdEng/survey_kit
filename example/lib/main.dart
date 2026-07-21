@@ -37,9 +37,7 @@ class _MyAppState extends State<MyApp> {
                     snapshot.hasData &&
                     snapshot.data != null) {
                   final task = snapshot.data!;
-                  return SurveyKitView(
-                    task: task,
-                  );
+                  return SurveyKitView(task: task);
                 }
                 return const CircularProgressIndicator.adaptive();
               },
@@ -56,16 +54,16 @@ class _MyAppState extends State<MyApp> {
         'SingleChoice': ConditionalNavigationRule(
           resultToStepIdentifierMapper:
               (List<StepResult> results, StepResult? input) {
-            final selectedChoice = input?.result as TextChoice?;
-            switch (selectedChoice?.text) {
-              case 'Yes':
-                return 'OnlyConent';
-              case 'No':
-                return 'Completion';
-              default:
-                return null;
-            }
-          },
+                final selectedChoice = input?.result as TextChoice?;
+                switch (selectedChoice?.text) {
+                  case 'Yes':
+                    return 'OnlyConent';
+                  case 'No':
+                    return 'Completion';
+                  default:
+                    return null;
+                }
+              },
         ),
       },
       steps: [
@@ -78,10 +76,7 @@ class _MyAppState extends State<MyApp> {
         Step(
           id: 'SingleChoice',
           content: const [
-            TextContent(
-              text: 'Introduction to SurveyKit',
-              fontSize: 24,
-            ),
+            TextContent(text: 'Introduction to SurveyKit', fontSize: 24),
             SectionContent(
               title: StyledTextContent(
                 text: 'ColorScheme class',
@@ -133,23 +128,13 @@ class _MyAppState extends State<MyApp> {
         ),
         Step(
           id: 'IntegerAnswer',
-          content: const [
-            TextContent(
-              text: 'How old are you?',
-              fontSize: 18,
-            ),
-          ],
-          answerFormat: const IntegerAnswerFormat(
-            hint: 'Age',
-          ),
+          content: const [TextContent(text: 'How old are you?', fontSize: 18)],
+          answerFormat: const IntegerAnswerFormat(hint: 'Age'),
         ),
         Step(
           id: 'ScaleAnswer',
           content: const [
-            TextContent(
-              text: 'Select your body type',
-              fontSize: 18,
-            ),
+            TextContent(text: 'Select your body type', fontSize: 18),
           ],
           answerFormat: const ScaleAnswerFormat(
             maximumValue: 5,
@@ -161,10 +146,7 @@ class _MyAppState extends State<MyApp> {
         Step(
           id: 'MultipleChoice',
           content: const [
-            TextContent(
-              text: 'Known allergies',
-              fontSize: 22,
-            ),
+            TextContent(text: 'Known allergies', fontSize: 22),
             TextContent(
               text: 'Do you have allergies that we need to be aware of?',
               fontSize: 18,
@@ -183,10 +165,7 @@ class _MyAppState extends State<MyApp> {
         Step(
           id: 'OnlyConent',
           content: const [
-            TextContent(
-              text: 'Listen carefully!',
-              fontSize: 28,
-            ),
+            TextContent(text: 'Listen carefully!', fontSize: 28),
             AudioContent(
               title: 'This is an audio',
               subtitle: 'This is a good subtitle for the video',
@@ -200,9 +179,7 @@ class _MyAppState extends State<MyApp> {
           id: 'TextAnswer',
           title: 'Feedback',
           text: 'What did you like about the survey?',
-          answerFormat: const TextAnswerFormat(
-            hint: 'Feedback',
-          ),
+          answerFormat: const TextAnswerFormat(hint: 'Feedback'),
           isOptional: true,
         ),
         // Migrate and just use Step
@@ -225,111 +202,70 @@ class _MyAppState extends State<MyApp> {
   }
 
   ThemeData get theme => Theme.of(context).copyWith(
-        useMaterial3: true,
-        primaryColor: Colors.cyan,
-        appBarTheme: const AppBarTheme(
-          color: Colors.white,
-          iconTheme: IconThemeData(
-            color: Colors.cyan,
-          ),
-          titleTextStyle: TextStyle(
-            color: Colors.cyan,
-          ),
+    useMaterial3: true,
+    primaryColor: Colors.cyan,
+    appBarTheme: const AppBarTheme(
+      color: Colors.white,
+      iconTheme: IconThemeData(color: Colors.cyan),
+      titleTextStyle: TextStyle(color: Colors.cyan),
+    ),
+    iconTheme: const IconThemeData(color: Colors.cyan),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Colors.cyan,
+      selectionColor: Colors.cyan,
+      selectionHandleColor: Colors.cyan,
+    ),
+    cupertinoOverrideTheme: const CupertinoThemeData(primaryColor: Colors.cyan),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        minimumSize: MaterialStateProperty.all(const Size(150.0, 60.0)),
+        side: MaterialStateProperty.resolveWith((Set<MaterialState> state) {
+          if (state.contains(MaterialState.disabled)) {
+            return const BorderSide(color: Colors.grey);
+          }
+          return const BorderSide(color: Colors.cyan);
+        }),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         ),
-        iconTheme: const IconThemeData(
-          color: Colors.cyan,
+        textStyle: MaterialStateProperty.resolveWith((
+          Set<MaterialState> state,
+        ) {
+          if (state.contains(MaterialState.disabled)) {
+            return Theme.of(
+              context,
+            ).textTheme.labelLarge?.copyWith(color: Colors.grey);
+          }
+          return Theme.of(
+            context,
+          ).textTheme.labelLarge?.copyWith(color: Colors.cyan);
+        }),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all(
+          Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.cyan),
         ),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.cyan,
-          selectionColor: Colors.cyan,
-          selectionHandleColor: Colors.cyan,
-        ),
-        cupertinoOverrideTheme: const CupertinoThemeData(
-          primaryColor: Colors.cyan,
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all(
-              const Size(150.0, 60.0),
-            ),
-            side: MaterialStateProperty.resolveWith(
-              (Set<MaterialState> state) {
-                if (state.contains(MaterialState.disabled)) {
-                  return const BorderSide(
-                    color: Colors.grey,
-                  );
-                }
-                return const BorderSide(
-                  color: Colors.cyan,
-                );
-              },
-            ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-            ),
-            textStyle: MaterialStateProperty.resolveWith(
-              (Set<MaterialState> state) {
-                if (state.contains(MaterialState.disabled)) {
-                  return Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Colors.grey,
-                      );
-                }
-                return Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: Colors.cyan,
-                    );
-              },
-            ),
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            textStyle: MaterialStateProperty.all(
-              Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Colors.cyan,
-                  ),
-            ),
-          ),
-        ),
-        textTheme: const TextTheme(
-          displayMedium: TextStyle(
-            fontSize: 28.0,
-            color: Colors.black,
-          ),
-          headlineSmall: TextStyle(
-            fontSize: 24.0,
-            color: Colors.black,
-          ),
-          bodyMedium: TextStyle(
-            fontSize: 18.0,
-            color: Colors.black,
-          ),
-          titleMedium: TextStyle(
-            fontSize: 18.0,
-            color: Colors.black,
-          ),
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.cyan,
-        )
-            .copyWith(
-              onPrimary: Colors.white,
-            )
-            .copyWith(background: Colors.white),
-      );
+      ),
+    ),
+    textTheme: const TextTheme(
+      displayMedium: TextStyle(fontSize: 28.0, color: Colors.black),
+      headlineSmall: TextStyle(fontSize: 24.0, color: Colors.black),
+      bodyMedium: TextStyle(fontSize: 18.0, color: Colors.black),
+      titleMedium: TextStyle(fontSize: 18.0, color: Colors.black),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      labelStyle: TextStyle(color: Colors.black),
+    ),
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: Colors.cyan,
+    ).copyWith(onPrimary: Colors.white).copyWith(background: Colors.white),
+  );
 }
 
 class SurveyKitView extends StatelessWidget {
-  const SurveyKitView({
-    super.key,
-    required this.task,
-  });
+  const SurveyKitView({super.key, required this.task});
 
   final Task task;
 
@@ -342,10 +278,7 @@ class SurveyKitView extends StatelessWidget {
         Navigator.pushNamed(context, '/');
       },
       task: task,
-      localizations: const {
-        'cancel': 'Cancel',
-        'next': 'Next',
-      },
+      localizations: const {'cancel': 'Cancel', 'next': 'Next'},
       surveyProgressbarConfiguration: SurveyProgressConfiguration(
         backgroundColor: Colors.white,
       ),
@@ -354,17 +287,10 @@ class SurveyKitView extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            Colors.cyan,
-            Colors.white,
-          ],
+          colors: [Colors.cyan, Colors.white],
         ),
       ),
-      stepShell: (
-        Step step,
-        Widget? answerWidget,
-        BuildContext context,
-      ) {
+      stepShell: (Step step, Widget? answerWidget, BuildContext context) {
         final questionAnswer = QuestionAnswer.of(context);
         final surveyConfiguration = SurveyConfiguration.of(context);
         final surveyController = surveyConfiguration.surveyController;
@@ -395,9 +321,7 @@ class SurveyKitView extends StatelessWidget {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(16),
-                              child: ContentWidget(
-                                content: step.content,
-                              ),
+                              child: ContentWidget(content: step.content),
                             ),
                           ),
                         ),
@@ -411,12 +335,13 @@ class SurveyKitView extends StatelessWidget {
                           padding: const EdgeInsets.all(16),
                           child: SafeArea(
                             child: OutlinedButton(
-                              onPressed: questionAnswer.isValid.value ||
+                              onPressed:
+                                  questionAnswer.isValid.value ||
                                       !step.isMandatory
                                   ? () => surveyController.nextStep(
-                                        context,
-                                        questionAnswer.stepResult,
-                                      )
+                                      context,
+                                      questionAnswer.stepResult,
+                                    )
                                   : null,
                               child: const Text('Zur Frage'),
                             ),

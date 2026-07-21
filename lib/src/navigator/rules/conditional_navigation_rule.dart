@@ -3,7 +3,7 @@ import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
 
 class ConditionalNavigationRule implements NavigationRule {
   final String? Function(List<StepResult>, StepResult?)
-      resultToStepIdentifierMapper;
+  resultToStepIdentifierMapper;
 
   ConditionalNavigationRule({required this.resultToStepIdentifierMapper});
 
@@ -23,6 +23,6 @@ class ConditionalNavigationRule implements NavigationRule {
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'values': <String, dynamic>{},
-      };
+    'values': <String, dynamic>{},
+  };
 }

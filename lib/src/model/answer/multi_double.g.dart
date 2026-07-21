@@ -7,12 +7,9 @@ part of 'multi_double.dart';
 // **************************************************************************
 
 MultiDouble _$MultiDoubleFromJson(Map<String, dynamic> json) => MultiDouble(
-      text: json['text'] as String,
-      value: (json['value'] as num).toDouble(),
-    );
+  text: json['text'] as String,
+  value: (json['value'] as num).toDouble(),
+);
 
 Map<String, dynamic> _$MultiDoubleToJson(MultiDouble instance) =>
-    <String, dynamic>{
-      'text': instance.text,
-      'value': instance.value,
-    };
+    <String, dynamic>{'text': instance.text, 'value': instance.value};

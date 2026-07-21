@@ -20,7 +20,7 @@ class DoubleAnswerFormat extends AnswerFormat {
     this.defaultValue,
     this.hint = '',
     super.question,
-    super.answerType = type,
+    super.answerType = DoubleAnswerFormat.type,
   }) : super();
 
   factory DoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>
@@ -29,9 +29,6 @@ class DoubleAnswerFormat extends AnswerFormat {
 
   @override
   Widget createView(Step step, StepResult? stepResult) {
-    return DoubleAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
+    return DoubleAnswerView(questionStep: step, result: stepResult);
   }
 }

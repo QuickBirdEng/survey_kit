@@ -54,28 +54,24 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
 
     final _selectedChoices =
         QuestionAnswer.of(context).stepResult?.result as List<TextChoice>? ??
-            widget.result?.result as List<TextChoice>? ??
-            [];
+        widget.result?.result as List<TextChoice>? ??
+        [];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14.0),
       child: Column(
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),
-          const Divider(
-            color: Colors.grey,
-          ),
+          const Divider(color: Colors.grey),
           ..._multipleChoiceAnswer.textChoices
               .map(
                 (TextChoice tc) => SelectionListTile(
                   text: tc.text,
                   onTap: () {
-                    setState(
-                      () {
-                        if (_selectedChoices.contains(tc)) {
-                          _selectedChoices.remove(tc);
-                        } else {}
-                      },
-                    );
+                    setState(() {
+                      if (_selectedChoices.contains(tc)) {
+                        _selectedChoices.remove(tc);
+                      } else {}
+                    });
                     onChange([..._selectedChoices, tc]);
                   },
                   isSelected: _selectedChoices.contains(tc),
@@ -91,21 +87,24 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                     int? currentIndex;
                     final otherTextChoice = _selectedChoices
                         .firstWhereIndexedOrNull((index, element) {
-                      final isOtherField = element.value == 'Other';
+                          final isOtherField = element.value == 'Other';
 
-                      if (isOtherField) {
-                        currentIndex = index;
-                      }
+                          if (isOtherField) {
+                            currentIndex = index;
+                          }
 
-                      return isOtherField;
-                    });
+                          return isOtherField;
+                        });
 
                     setState(() {
                       if (v.isEmpty && otherTextChoice != null) {
                         _selectedChoices.remove(otherTextChoice);
                       } else if (v.isNotEmpty) {
-                        final updatedTextChoice =
-                            TextChoice(id: 'Other', value: v, text: v);
+                        final updatedTextChoice = TextChoice(
+                          id: 'Other',
+                          value: v,
+                          text: v,
+                        );
                         if (otherTextChoice == null) {
                           _selectedChoices.add(updatedTextChoice);
                         } else if (currentIndex != null) {
@@ -124,9 +123,7 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                 ),
               ),
             ),
-            const Divider(
-              color: Colors.grey,
-            ),
+            const Divider(color: Colors.grey),
           ],
         ],
       ),

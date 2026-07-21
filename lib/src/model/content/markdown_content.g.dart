@@ -7,21 +7,7 @@ part of 'markdown_content.dart';
 // **************************************************************************
 
 MarkdownContent _$MarkdownContentFromJson(Map<String, dynamic> json) =>
-    MarkdownContent(
-      text: json['text'] as String,
-      id: json['id'] as String?,
-    );
+    MarkdownContent(text: json['text'] as String, id: json['id'] as String?);
 
-Map<String, dynamic> _$MarkdownContentToJson(MarkdownContent instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  val['text'] = instance.text;
-  return val;
-}
+Map<String, dynamic> _$MarkdownContentToJson(MarkdownContent instance) =>
+    <String, dynamic>{'id': ?instance.id, 'text': instance.text};

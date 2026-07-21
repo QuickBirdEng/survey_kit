@@ -1,0 +1,6 @@
+# Xcode-related
+**/dgph
+xcuserdata/
+
+# Flutter-related
+Flutter/ephemeral/

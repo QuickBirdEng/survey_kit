@@ -20,7 +20,7 @@ class IntegerAnswerFormat extends AnswerFormat {
     this.min = minInt,
     this.max = maxInt,
     super.question,
-    super.answerType = type,
+    super.answerType = IntegerAnswerFormat.type,
   }) : super();
 
   factory IntegerAnswerFormat.fromJson(Map<String, dynamic> json) =>
@@ -29,9 +29,6 @@ class IntegerAnswerFormat extends AnswerFormat {
 
   @override
   Widget createView(Step step, StepResult? stepResult) {
-    return IntegerAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
+    return IntegerAnswerView(questionStep: step, result: stepResult);
   }
 }

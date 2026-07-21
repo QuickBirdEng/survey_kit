@@ -14,7 +14,7 @@ class TimeAnswerFormat extends AnswerFormat {
   const TimeAnswerFormat({
     this.defaultValue,
     super.question,
-    super.answerType = type,
+    super.answerType = TimeAnswerFormat.type,
   }) : super();
 
   factory TimeAnswerFormat.fromJson(Map<String, dynamic> json) =>
@@ -23,10 +23,7 @@ class TimeAnswerFormat extends AnswerFormat {
 
   @override
   Widget createView(Step step, StepResult? stepResult) {
-    return TimeAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
+    return TimeAnswerView(questionStep: step, result: stepResult);
   }
 }
 
@@ -39,15 +36,12 @@ class _TimeOfDayJsonConverter
     if (json['hour'] == null || json['minute'] == null) {
       return null;
     }
-    return TimeOfDay(
-      hour: json['hour'] as int,
-      minute: json['minute'] as int,
-    );
+    return TimeOfDay(hour: json['hour'] as int, minute: json['minute'] as int);
   }
 
   @override
   Map<String, dynamic> toJson(TimeOfDay? timeOfDay) => <String, dynamic>{
-        'hour': timeOfDay?.hour,
-        'minute': timeOfDay?.minute,
-      };
+    'hour': timeOfDay?.hour,
+    'minute': timeOfDay?.minute,
+  };
 }

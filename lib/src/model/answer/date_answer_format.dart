@@ -22,26 +22,26 @@ class DateAnswerFormat extends AnswerFormat {
     this.minDate,
     this.maxDate,
     super.question,
-    super.answerType = type,
-  })  : assert(
-          minDate == null || maxDate == null || minDate.isBefore(maxDate),
-          'mindate must be before maxdate',
-        ),
-        assert(
-          defaultDate == null ||
-              minDate == null ||
-              defaultDate.isAtSameMomentAs(minDate) ||
-              defaultDate.isAfter(minDate),
-          'defaultDate must be after minDate',
-        ),
-        assert(
-          defaultDate == null ||
-              maxDate == null ||
-              defaultDate.isAtSameMomentAs(maxDate) ||
-              defaultDate.isBefore(maxDate),
-          'defaultDate must be before maxDate',
-        ),
-        super();
+    super.answerType = DateAnswerFormat.type,
+  }) : assert(
+         minDate == null || maxDate == null || minDate.isBefore(maxDate),
+         'mindate must be before maxdate',
+       ),
+       assert(
+         defaultDate == null ||
+             minDate == null ||
+             defaultDate.isAtSameMomentAs(minDate) ||
+             defaultDate.isAfter(minDate),
+         'defaultDate must be after minDate',
+       ),
+       assert(
+         defaultDate == null ||
+             maxDate == null ||
+             defaultDate.isAtSameMomentAs(maxDate) ||
+             defaultDate.isBefore(maxDate),
+         'defaultDate must be before maxDate',
+       ),
+       super();
 
   factory DateAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$DateAnswerFormatFromJson(json);
@@ -49,9 +49,6 @@ class DateAnswerFormat extends AnswerFormat {
 
   @override
   Widget createView(Step step, StepResult? stepResult) {
-    return DateAnswerView(
-      questionStep: step,
-      result: stepResult,
-    );
+    return DateAnswerView(questionStep: step, result: stepResult);
   }
 }

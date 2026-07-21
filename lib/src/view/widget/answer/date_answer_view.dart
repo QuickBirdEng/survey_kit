@@ -35,7 +35,8 @@ class _DateAnswerViewState extends State<DateAnswerView>
   void initState() {
     super.initState();
     _dateAnswerFormat = widget.questionStep.answerFormat! as DateAnswerFormat;
-    _result = widget.result?.result as DateTime? ??
+    _result =
+        widget.result?.result as DateTime? ??
         _dateAnswerFormat.defaultDate ??
         DateTime.now();
   }
@@ -86,10 +87,7 @@ class _DateAnswerViewState extends State<DateAnswerView>
                 bottom: 8.0,
                 child: Text(
                   _dateFormat.format(_result!),
-                  style: const TextStyle(
-                    fontSize: 28.0,
-                    color: Colors.white,
-                  ),
+                  style: const TextStyle(fontSize: 28.0, color: Colors.white),
                 ),
               ),
             ],
@@ -100,12 +98,9 @@ class _DateAnswerViewState extends State<DateAnswerView>
           height: 300.0,
           child: CalendarDatePicker(
             firstDate: _dateAnswerFormat.minDate ?? DateTime.utc(1900),
-            lastDate: _dateAnswerFormat.maxDate?.add(
-                  const Duration(hours: 1),
-                ) ??
-                DateTime.now().add(
-                  const Duration(hours: 1),
-                ),
+            lastDate:
+                _dateAnswerFormat.maxDate?.add(const Duration(hours: 1)) ??
+                DateTime.now().add(const Duration(hours: 1)),
             initialDate: _result ?? DateTime.now(),
             currentDate: _result,
             onDateChanged: onChange,
@@ -123,12 +118,9 @@ class _DateAnswerViewState extends State<DateAnswerView>
         mode: CupertinoDatePickerMode.date,
         minimumDate: _dateAnswerFormat.minDate,
         //We have to add an hour to to met the assert maxDate > initDate
-        maximumDate: _dateAnswerFormat.maxDate?.add(
-              const Duration(hours: 1),
-            ) ??
-            DateTime.now().add(
-              const Duration(hours: 1),
-            ),
+        maximumDate:
+            _dateAnswerFormat.maxDate?.add(const Duration(hours: 1)) ??
+            DateTime.now().add(const Duration(hours: 1)),
         initialDateTime: _dateAnswerFormat.defaultDate,
         onDateTimeChanged: onChange,
       ),

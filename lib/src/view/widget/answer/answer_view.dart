@@ -32,15 +32,8 @@ class _AnswerViewState extends State<AnswerView> {
       step: widget.step,
       child: Builder(
         builder: (context) => stepShell != null
-            ? stepShell.call(
-                widget.step,
-                answerView,
-                context,
-              )
-            : StepView(
-                step: widget.step,
-                answerView: answerView,
-              ),
+            ? stepShell.call(widget.step, answerView, context)
+            : StepView(step: widget.step, answerView: answerView),
       ),
     );
   }

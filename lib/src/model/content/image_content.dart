@@ -29,8 +29,6 @@ class ImageContent extends Content {
 
   @override
   Widget createWidget() {
-    return ImageWidget(
-      imageContent: this,
-    );
+    return ImageWidget(imageContent: this);
   }
 }

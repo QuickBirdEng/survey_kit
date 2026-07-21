@@ -18,11 +18,8 @@ abstract class Task {
   final List<Step> steps;
   final Step? initalStep;
 
-  Task({
-    String? id,
-    this.steps = const [],
-    this.initalStep,
-  }) : id = id ?? const Uuid().v4();
+  Task({String? id, this.steps = const [], this.initalStep})
+    : id = id ?? const Uuid().v4();
 
   /// Creates a task from a Map. The task needs to have a type definition of
   /// either 'ordered' - [OrderedTask] or 'navigable' - [NavigableTask].

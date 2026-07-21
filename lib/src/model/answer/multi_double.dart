@@ -9,10 +9,7 @@ class MultiDouble {
   final String text;
   final double value;
 
-  const MultiDouble({
-    required this.text,
-    required this.value,
-  }) : super();
+  const MultiDouble({required this.text, required this.value}) : super();
 
   factory MultiDouble.fromJson(Map<String, dynamic> json) =>
       _$MultiDoubleFromJson(json);

@@ -8,9 +8,7 @@ class TimeResult {
   @_TimeOfDayConverter()
   final TimeOfDay timeOfDay;
 
-  const TimeResult({
-    required this.timeOfDay,
-  });
+  const TimeResult({required this.timeOfDay});
 }
 
 class _TimeOfDayConverter extends JsonConverter<TimeOfDay, String?> {

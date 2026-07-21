@@ -3,11 +3,7 @@ import 'package:survey_kit/survey_kit.dart';
 
 // ignore: must_be_immutable
 class QuestionAnswer<R> extends InheritedWidget {
-  QuestionAnswer({
-    super.key,
-    required super.child,
-    required this.step,
-  });
+  QuestionAnswer({super.key, required super.child, required this.step});
 
   DateTime startTime = DateTime.now();
 

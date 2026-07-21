@@ -22,10 +22,10 @@ class SelectionListTile extends StatelessWidget {
             title: Text(
               text,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: isSelected
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).textTheme.headlineSmall?.color,
-                  ),
+                color: isSelected
+                    ? Theme.of(context).primaryColor
+                    : Theme.of(context).textTheme.headlineSmall?.color,
+              ),
             ),
             trailing: isSelected
                 ? Icon(
@@ -35,16 +35,11 @@ class SelectionListTile extends StatelessWidget {
                         ? Theme.of(context).primaryColor
                         : Colors.black,
                   )
-                : Container(
-                    width: 32,
-                    height: 32,
-                  ),
+                : Container(width: 32, height: 32),
             onTap: onTap,
           ),
         ),
-        const Divider(
-          color: Colors.grey,
-        ),
+        const Divider(color: Colors.grey),
       ],
     );
   }
