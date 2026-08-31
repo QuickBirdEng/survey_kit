@@ -7,12 +7,13 @@ part of 'text_content.dart';
 // **************************************************************************
 
 TextContent _$TextContentFromJson(Map<String, dynamic> json) => TextContent(
-      text: json['text'] as String,
-      fontSize: (json['fontSize'] as num?)?.toDouble() ?? 16,
-      textAlign: $enumDecodeNullable(_$TextAlignEnumMap, json['textAlign']) ??
-          TextAlign.center,
-      id: json['id'] as String?,
-    );
+  text: json['text'] as String,
+  fontSize: (json['fontSize'] as num?)?.toDouble() ?? 16,
+  textAlign:
+      $enumDecodeNullable(_$TextAlignEnumMap, json['textAlign']) ??
+      TextAlign.center,
+  id: json['id'] as String?,
+);
 
 Map<String, dynamic> _$TextContentToJson(TextContent instance) =>
     <String, dynamic>{

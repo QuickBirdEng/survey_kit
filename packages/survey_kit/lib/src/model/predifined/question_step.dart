@@ -10,19 +10,13 @@ Step QuestionStep({
   required AnswerFormat answerFormat,
   bool isOptional = true,
   String? buttonText,
-}) =>
-    Step(
-      id: id,
-      content: [
-        TextContent(
-          text: title,
-          fontSize: 22,
-        ),
-        TextContent(
-          text: text,
-        ),
-      ],
-      answerFormat: answerFormat,
-      isMandatory: !isOptional,
-      buttonText: buttonText,
-    );
+}) => Step(
+  id: id,
+  content: [
+    TextContent(text: title, fontSize: 22),
+    TextContent(text: text),
+  ],
+  answerFormat: answerFormat,
+  isMandatory: !isOptional,
+  buttonText: buttonText,
+);

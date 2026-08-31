@@ -19,11 +19,11 @@ class NavigableTask extends SurveyFlow {
     Step? initialStep,
     Map<String, NavigationRule>? navigationRules,
   }) : super(
-          id: id,
-          steps: steps,
-          initialStep: initialStep,
-          navigationRules: navigationRules,
-        );
+         id: id,
+         steps: steps,
+         initialStep: initialStep,
+         navigationRules: navigationRules,
+       );
 
   @Deprecated('Use SurveyFlow.fromJson instead.')
   factory NavigableTask.fromJson(Map<String, dynamic> json) {

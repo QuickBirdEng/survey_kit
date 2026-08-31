@@ -23,11 +23,8 @@ abstract class SurveyDefinition {
   /// An optional step to show first, overriding the first item in [steps].
   final Step? initialStep;
 
-  SurveyDefinition({
-    String? id,
-    this.steps = const [],
-    this.initialStep,
-  }) : id = id ?? const Uuid().v4();
+  SurveyDefinition({String? id, this.steps = const [], this.initialStep})
+    : id = id ?? const Uuid().v4();
 
   /// Creates a survey definition from a Map. The survey needs one of:
   ///  * 'flow' - [SurveyFlow]

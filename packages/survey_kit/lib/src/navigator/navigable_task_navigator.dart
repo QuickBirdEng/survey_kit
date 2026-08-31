@@ -61,11 +61,14 @@ class NavigableTaskNavigator extends TaskNavigator {
     List<StepResult> previousResults,
     StepResult? questionResult,
   ) {
-    final target =
-        rule.resultToStepIdentifierMapper(previousResults, questionResult);
+    final target = rule.resultToStepIdentifierMapper(
+      previousResults,
+      questionResult,
+    );
     return switch (target) {
-      NavigateToStep(:final stepId) =>
-        task.steps.firstWhere((e) => e.id == stepId),
+      NavigateToStep(:final stepId) => task.steps.firstWhere(
+        (e) => e.id == stepId,
+      ),
       NavigateToNextInList() => nextInList(step),
       FinishSurvey() => null,
     };

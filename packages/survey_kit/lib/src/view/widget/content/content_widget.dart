@@ -29,8 +29,9 @@ class ContentWidget extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: Column(
-          mainAxisAlignment:
-              center ? MainAxisAlignment.center : MainAxisAlignment.start,
+          mainAxisAlignment: center
+              ? MainAxisAlignment.center
+              : MainAxisAlignment.start,
           children: content
               .map((e) => registry?.createContentWidget(e))
               .whereType<Widget>()

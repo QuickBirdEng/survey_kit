@@ -35,8 +35,8 @@ class SurveyConfiguration extends InheritedWidget {
   /// Returns the nearest [SurveyConfiguration] ancestor. Asserts if none is
   /// found.
   static SurveyConfiguration of(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<SurveyConfiguration>();
+    final result = context
+        .dependOnInheritedWidgetOfExactType<SurveyConfiguration>();
     assert(result != null, 'No SurveyConfiguration found in context');
     return result!;
   }

@@ -9,9 +9,7 @@ class TimeResult {
   @_TimeOfDayConverter()
   final TimeOfDay timeOfDay;
 
-  const TimeResult({
-    required this.timeOfDay,
-  });
+  const TimeResult({required this.timeOfDay});
 
   factory TimeResult.fromJson(Map<String, dynamic> json) =>
       _$TimeResultFromJson(json);

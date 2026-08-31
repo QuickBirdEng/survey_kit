@@ -19,12 +19,8 @@ class SurveyFlow extends SurveyDefinition {
     List<Step> steps = const [],
     Step? initialStep,
     Map<String, NavigationRule>? navigationRules,
-  })  : navigationRules = navigationRules ?? <String, NavigationRule>{},
-        super(
-          id: id,
-          steps: steps,
-          initialStep: initialStep,
-        );
+  }) : navigationRules = navigationRules ?? <String, NavigationRule>{},
+       super(id: id, steps: steps, initialStep: initialStep);
 
   /// Adds a [NavigationRule] for the step identified by
   /// [forTriggerStepIdentifier]. Has no effect if a rule already exists for
@@ -62,8 +58,8 @@ class SurveyFlow extends SurveyDefinition {
         );
       }
     } else if (json['navigationRules'] is Map) {
-      final legacyRules =
-          (json['navigationRules'] as Map).cast<String, dynamic>();
+      final legacyRules = (json['navigationRules'] as Map)
+          .cast<String, dynamic>();
       for (final entry in legacyRules.entries) {
         if (entry.value is! Map<String, dynamic>) {
           continue;
@@ -79,35 +75,33 @@ class SurveyFlow extends SurveyDefinition {
       id: json['id'] as String,
       steps: json['steps'] != null
           ? (json['steps'] as List)
-              .map(
-                (dynamic step) => Step.fromJson(step as Map<String, dynamic>),
-              )
-              .toList()
+                .map(
+                  (dynamic step) => Step.fromJson(step as Map<String, dynamic>),
+                )
+                .toList()
           : [],
       initialStep: json['initialStep'] != null
           ? Step.fromJson(json['initialStep'] as Map<String, dynamic>)
           : json['initalStep'] != null
-              ? Step.fromJson(json['initalStep'] as Map<String, dynamic>)
-              : null,
+          ? Step.fromJson(json['initalStep'] as Map<String, dynamic>)
+          : null,
       navigationRules: navigationRules,
     );
   }
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'id': id,
-        'type': type,
-        'steps': steps.map((step) => step.toJson()).toList(),
-        'initialStep': initialStep?.toJson(),
-        'rules': navigationRules.entries
-            .map(
-              (entry) => <String, dynamic>{
-                ...entry.value.toJson(),
-                'triggerStepIdentifier': <String, dynamic>{
-                  'id': entry.key,
-                },
-              },
-            )
-            .toList(),
-      };
+    'id': id,
+    'type': type,
+    'steps': steps.map((step) => step.toJson()).toList(),
+    'initialStep': initialStep?.toJson(),
+    'rules': navigationRules.entries
+        .map(
+          (entry) => <String, dynamic>{
+            ...entry.value.toJson(),
+            'triggerStepIdentifier': <String, dynamic>{'id': entry.key},
+          },
+        )
+        .toList(),
+  };
 }

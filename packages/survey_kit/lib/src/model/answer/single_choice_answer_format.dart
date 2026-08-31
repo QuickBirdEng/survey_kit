@@ -27,12 +27,9 @@ class SingleChoiceAnswerFormat<T extends TextChoice> extends AnswerFormat {
   factory SingleChoiceAnswerFormat.fromJson(
     Map<String, dynamic> json,
     T Function(Object? json) fromJsonT,
-  ) =>
-      _$SingleChoiceAnswerFormatFromJson(json, fromJsonT);
+  ) => _$SingleChoiceAnswerFormatFromJson(json, fromJsonT);
 
   @override
-  Map<String, dynamic> toJson() => _$SingleChoiceAnswerFormatToJson(
-        this,
-        (value) => value.toJson(),
-      );
+  Map<String, dynamic> toJson() =>
+      _$SingleChoiceAnswerFormatToJson(this, (value) => value.toJson());
 }

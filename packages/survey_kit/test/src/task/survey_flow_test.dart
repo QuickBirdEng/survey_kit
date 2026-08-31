@@ -44,10 +44,7 @@ void main() {
 
   test('SurveyDefinition.fromJson keeps legacy ordered type compatibility', () {
     final json = <String, dynamic>{
-      ...SurveyFlow(
-        id: 'legacy-ordered',
-        steps: const <Step>[],
-      ).toJson(),
+      ...SurveyFlow(id: 'legacy-ordered', steps: const <Step>[]).toJson(),
       'type': 'ordered',
     };
 
@@ -56,31 +53,30 @@ void main() {
     expect((decoded as SurveyFlow).navigationRules, isEmpty);
   });
 
-  test('SurveyDefinition.fromJson keeps legacy navigable type compatibility',
-      () {
-    final json = <String, dynamic>{
-      ...SurveyFlow(
-        id: 'legacy-navigable',
-        steps: const <Step>[],
-        navigationRules: <String, NavigationRule>{
-          'start': ConditionalNavigationRule(
-            resultToStepIdentifierMapper: (results, input) =>
-                const NavigateToNextInList(),
-            values: const <String, String>{
-              'yes': 'yes',
-              'no': 'no',
-            },
-          ),
-        },
-      ).toJson(),
-      'type': 'navigable',
-    };
+  test(
+    'SurveyDefinition.fromJson keeps legacy navigable type compatibility',
+    () {
+      final json = <String, dynamic>{
+        ...SurveyFlow(
+          id: 'legacy-navigable',
+          steps: const <Step>[],
+          navigationRules: <String, NavigationRule>{
+            'start': ConditionalNavigationRule(
+              resultToStepIdentifierMapper: (results, input) =>
+                  const NavigateToNextInList(),
+              values: const <String, String>{'yes': 'yes', 'no': 'no'},
+            ),
+          },
+        ).toJson(),
+        'type': 'navigable',
+      };
 
-    final decoded = SurveyDefinition.fromJson(json);
-    expect(decoded, isA<SurveyFlow>());
-    expect(
-      (decoded as SurveyFlow).getRuleByStepIdentifier('start'),
-      isNotNull,
-    );
-  });
+      final decoded = SurveyDefinition.fromJson(json);
+      expect(decoded, isA<SurveyFlow>());
+      expect(
+        (decoded as SurveyFlow).getRuleByStepIdentifier('start'),
+        isNotNull,
+      );
+    },
+  );
 }

@@ -3,10 +3,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:survey_kit_audio/src/audio_content.dart';
 
 class AudioWidget extends StatefulWidget {
-  const AudioWidget({
-    super.key,
-    required this.audioContent,
-  });
+  const AudioWidget({super.key, required this.audioContent});
 
   final AudioContent audioContent;
 

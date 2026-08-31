@@ -7,13 +7,13 @@ part of 'audio_content.dart';
 // **************************************************************************
 
 AudioContent _$AudioContentFromJson(Map<String, dynamic> json) => AudioContent(
-      url: json['url'] as String,
-      id: json['id'] as String?,
-      autoPlay: json['autoPlay'] as bool? ?? false,
-      title: json['title'] as String?,
-      subtitle: json['subtitle'] as String?,
-      externalLink: json['externalLink'] as String?,
-    );
+  url: json['url'] as String,
+  id: json['id'] as String?,
+  autoPlay: json['autoPlay'] as bool? ?? false,
+  title: json['title'] as String?,
+  subtitle: json['subtitle'] as String?,
+  externalLink: json['externalLink'] as String?,
+);
 
 Map<String, dynamic> _$AudioContentToJson(AudioContent instance) =>
     <String, dynamic>{

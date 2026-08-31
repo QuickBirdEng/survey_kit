@@ -45,13 +45,10 @@ void main() {
   );
 
   group('serialisation', () {
-    test(
-      'should work with valid example',
-      () async {
-        final encodedResult = tSurveyResult.toJson();
-        final decodedResult = SurveyResult.fromJson(encodedResult);
-        expect(tSurveyResult, decodedResult);
-      },
-    );
+    test('should work with valid example', () async {
+      final encodedResult = tSurveyResult.toJson();
+      final decodedResult = SurveyResult.fromJson(encodedResult);
+      expect(tSurveyResult, decodedResult);
+    });
   });
 }

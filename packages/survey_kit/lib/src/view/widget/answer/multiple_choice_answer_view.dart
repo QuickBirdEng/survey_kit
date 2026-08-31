@@ -39,7 +39,8 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
     }
     _multipleChoiceAnswer = answer as MultipleChoiceAnswerFormat<TextChoice>;
     final defaultSelection = _multipleChoiceAnswer.defaultSelection;
-    _selectedChoices = widget.result?.result as List<TextChoice>? ??
+    _selectedChoices =
+        widget.result?.result as List<TextChoice>? ??
         (defaultSelection != null ? [defaultSelection] : []);
   }
 
@@ -66,17 +67,15 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                 (TextChoice tc) => SelectionListTile(
                   text: tc.text,
                   onTap: () {
-                    setState(
-                      () {
-                        if (_selectedChoices.contains(tc)) {
-                          _selectedChoices = _selectedChoices
-                              .where((element) => element != tc)
-                              .toList();
-                        } else {
-                          _selectedChoices = [..._selectedChoices, tc];
-                        }
-                      },
-                    );
+                    setState(() {
+                      if (_selectedChoices.contains(tc)) {
+                        _selectedChoices = _selectedChoices
+                            .where((element) => element != tc)
+                            .toList();
+                      } else {
+                        _selectedChoices = [..._selectedChoices, tc];
+                      }
+                    });
                     onChange(_selectedChoices);
                   },
                   isSelected: _selectedChoices.contains(tc),
@@ -91,14 +90,14 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                   int? currentIndex;
                   final otherTextChoice = _selectedChoices
                       .firstWhereIndexedOrNull((index, element) {
-                    final isOtherField = element.value == 'Other';
+                        final isOtherField = element.value == 'Other';
 
-                    if (isOtherField) {
-                      currentIndex = index;
-                    }
+                        if (isOtherField) {
+                          currentIndex = index;
+                        }
 
-                    return isOtherField;
-                  });
+                        return isOtherField;
+                      });
 
                   setState(() {
                     if (v.isEmpty && otherTextChoice != null) {
@@ -106,8 +105,11 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                           .where((element) => element != otherTextChoice)
                           .toList();
                     } else if (v.isNotEmpty) {
-                      final updatedTextChoice =
-                          TextChoice(id: 'Other', value: v, text: v);
+                      final updatedTextChoice = TextChoice(
+                        id: 'Other',
+                        value: v,
+                        text: v,
+                      );
                       if (otherTextChoice == null) {
                         _selectedChoices = [
                           ..._selectedChoices,
@@ -123,10 +125,9 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                 },
                 decoration: InputDecoration(
                   labelText: 'Other',
-                  labelStyle: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(fontWeight: FontWeight.w500),
+                  labelStyle: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
                   hintText: 'Write other information here',
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   contentPadding: const EdgeInsets.symmetric(
@@ -135,8 +136,10 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.0),
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade300, width: 1.0),
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade300,
+                      width: 1.0,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.0),

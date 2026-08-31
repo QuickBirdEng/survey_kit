@@ -12,19 +12,14 @@ void main() {
     endTime: DateTime.utc(2022, 8, 12, 16, 14),
     valueIdentifier: 'timeInput1',
     step: sampleStep,
-    result: const TimeResult(
-      timeOfDay: TimeOfDay(hour: 14, minute: 59),
-    ),
+    result: const TimeResult(timeOfDay: TimeOfDay(hour: 14, minute: 59)),
   );
 
   group('serialisation', () {
-    test(
-      'should work with valid example',
-      () async {
-        final encodedResult = tResult.toJson();
-        final decodedResult = StepResult<TimeResult>.fromJson(encodedResult);
-        expect(tResult, decodedResult);
-      },
-    );
+    test('should work with valid example', () async {
+      final encodedResult = tResult.toJson();
+      final decodedResult = StepResult<TimeResult>.fromJson(encodedResult);
+      expect(tResult, decodedResult);
+    });
   });
 }

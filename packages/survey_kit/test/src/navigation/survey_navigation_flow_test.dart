@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  testWidgets('empty task completes without pushing loading route',
-      (WidgetTester tester) async {
+  testWidgets('empty task completes without pushing loading route', (
+    WidgetTester tester,
+  ) async {
     SurveyResult? callbackResult;
 
     await tester.pumpWidget(
@@ -28,8 +29,9 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('final next step finishes without rendering loading route',
-      (WidgetTester tester) async {
+  testWidgets('final next step finishes without rendering loading route', (
+    WidgetTester tester,
+  ) async {
     SurveyResult? callbackResult;
 
     await tester.pumpWidget(
@@ -40,9 +42,7 @@ void main() {
               id: 'single-step',
               steps: [
                 Step(
-                  content: const [
-                    TextContent(text: 'Single step survey'),
-                  ],
+                  content: const [TextContent(text: 'Single step survey')],
                   buttonText: 'Finish',
                 ),
               ],
@@ -65,8 +65,9 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('step back on first step keeps current route',
-      (WidgetTester tester) async {
+  testWidgets('step back on first step keeps current route', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -76,9 +77,7 @@ void main() {
               steps: [
                 Step(
                   id: 'first-step',
-                  content: const [
-                    TextContent(text: 'No previous step exists'),
-                  ],
+                  content: const [TextContent(text: 'No previous step exists')],
                   buttonText: 'Next',
                 ),
               ],
@@ -90,9 +89,7 @@ void main() {
                   Text('step-${step.id}'),
                   TextButton(
                     onPressed: () {
-                      SurveyStateProvider.of(context).onEvent(
-                        StepBack(null),
-                      );
+                      SurveyStateProvider.of(context).onEvent(StepBack(null));
                     },
                     child: const Text('Trigger Back'),
                   ),
@@ -113,8 +110,9 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('initial step does not create an extra navigator route',
-      (WidgetTester tester) async {
+  testWidgets('initial step does not create an extra navigator route', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -124,9 +122,7 @@ void main() {
               steps: [
                 Step(
                   id: 'initial-step',
-                  content: const [
-                    TextContent(text: 'Initial step content'),
-                  ],
+                  content: const [TextContent(text: 'Initial step content')],
                   buttonText: 'Continue',
                 ),
               ],
@@ -144,16 +140,15 @@ void main() {
         .byType(Navigator)
         .evaluate()
         .map((element) => element.widget as Navigator)
-        .firstWhere(
-          (navigator) => navigator.key is GlobalKey<NavigatorState>,
-        );
+        .firstWhere((navigator) => navigator.key is GlobalKey<NavigatorState>);
 
     final navigatorKey = nestedNavigator.key! as GlobalKey<NavigatorState>;
     expect(navigatorKey.currentState?.canPop(), isFalse);
   });
 
-  testWidgets('next-step transition does not render destination twice',
-      (WidgetTester tester) async {
+  testWidgets('next-step transition does not render destination twice', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -163,16 +158,12 @@ void main() {
               steps: [
                 Step(
                   id: 'first',
-                  content: const [
-                    TextContent(text: 'First step'),
-                  ],
+                  content: const [TextContent(text: 'First step')],
                   buttonText: 'Next',
                 ),
                 Step(
                   id: 'second',
-                  content: const [
-                    TextContent(text: 'Second step'),
-                  ],
+                  content: const [TextContent(text: 'Second step')],
                   buttonText: 'Done',
                 ),
               ],

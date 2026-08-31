@@ -27,9 +27,7 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(
-      Uri.parse(widget.videoUrl),
-    );
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
     _initialize();
   }
 
@@ -59,9 +57,7 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
     if (_hasError) {
       return const SizedBox(
         height: 200,
-        child: Center(
-          child: Icon(Icons.videocam_off_outlined, size: 48),
-        ),
+        child: Center(child: Icon(Icons.videocam_off_outlined, size: 48)),
       );
     }
 
@@ -69,9 +65,7 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
     if (chewieController == null) {
       return const SizedBox(
         height: 200,
-        child: Center(
-          child: CircularProgressIndicator.adaptive(),
-        ),
+        child: Center(child: CircularProgressIndicator.adaptive()),
       );
     }
 
@@ -84,9 +78,7 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
             _controller.pause();
           }
         },
-        child: Chewie(
-          controller: chewieController,
-        ),
+        child: Chewie(controller: chewieController),
       ),
     );
   }

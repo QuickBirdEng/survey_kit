@@ -14,10 +14,7 @@ class MultiDouble {
   /// The numeric value entered by the user.
   final double value;
 
-  const MultiDouble({
-    required this.text,
-    required this.value,
-  }) : super();
+  const MultiDouble({required this.text, required this.value}) : super();
 
   factory MultiDouble.fromJson(Map<String, dynamic> json) =>
       _$MultiDoubleFromJson(json);

@@ -29,10 +29,7 @@ final _survey = SurveyFlow(
   steps: [
     Step(
       content: const [
-        TextContent(
-          text: 'Welcome to the\nHealth Survey',
-          fontSize: 32,
-        ),
+        TextContent(text: 'Welcome to the\nHealth Survey', fontSize: 32),
         TextContent(
           text:
               'Take a few minutes to complete our survey and help us understand your health profile.',
@@ -222,16 +219,20 @@ class MyApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             borderSide: const BorderSide(color: Color(0xFF00C4CC), width: 2),
           ),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 16,
+          ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            textStyle:
-                const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            textStyle: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
             backgroundColor: const Color(0xFF00C4CC),
             foregroundColor: Colors.white,
             elevation: 0,
@@ -244,22 +245,28 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(24),
             ),
             side: const BorderSide(color: Color(0xFF00C4CC), width: 1.5),
-            textStyle:
-                const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
             foregroundColor: const Color(0xFF00C4CC),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            textStyle:
-                const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
             foregroundColor: const Color(0xFF00C4CC),
           ),
         ),
         textTheme: const TextTheme(
-          headlineMedium:
-              TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1E1E2C)),
+          headlineMedium: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF1E1E2C),
+          ),
           bodyLarge: TextStyle(fontSize: 18, color: Color(0xFF4A4A5A)),
         ),
       ),
@@ -299,9 +306,7 @@ class _SurveyPageState extends State<SurveyPage> {
         stepResult?.result == BooleanResult.positive) {
       Navigator.of(context, rootNavigator: true)
           .push<void>(
-            MaterialPageRoute<void>(
-              builder: (_) => const IntermissionPage(),
-            ),
+            MaterialPageRoute<void>(builder: (_) => const IntermissionPage()),
           )
           .then((_) => proceed());
       return;
@@ -315,19 +320,13 @@ class _SurveyPageState extends State<SurveyPage> {
       key: ValueKey<int>(_session),
       task: _survey,
       surveyController: _controller,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
+      decoration: const BoxDecoration(color: Colors.white),
       surveyProgressbarConfiguration: SurveyProgressConfiguration(
         backgroundColor: const Color(0xFFF1F1F5),
         progressbarColor: const Color(0xFF00C4CC),
         height: 8,
       ),
-      registries: [
-        ska.SurveyKitAudio(),
-        SurveyKitVideo(),
-        SurveyKitLottie(),
-      ],
+      registries: [ska.SurveyKitAudio(), SurveyKitVideo(), SurveyKitLottie()],
       onResult: (result) => _showResult(context, result),
     );
   }
@@ -344,9 +343,10 @@ class _SurveyPageState extends State<SurveyPage> {
       }
     }
 
-    final json = JsonEncoder.withIndent('  ', toEncodable).convert(
-      result.toJson(),
-    );
+    final json = JsonEncoder.withIndent(
+      '  ',
+      toEncodable,
+    ).convert(result.toJson());
     return showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(

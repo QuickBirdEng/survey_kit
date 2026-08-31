@@ -12,10 +12,8 @@ class MarkdownContent extends Content {
   /// The markdown-formatted string to render.
   final String text;
 
-  const MarkdownContent({
-    required this.text,
-    super.id,
-  }) : super(contentType: type);
+  const MarkdownContent({required this.text, super.id})
+    : super(contentType: type);
 
   factory MarkdownContent.fromJson(Map<String, dynamic> json) =>
       _$MarkdownContentFromJson(json);

@@ -7,39 +7,38 @@ part of 'single_choice_answer_format.dart';
 // **************************************************************************
 
 SingleChoiceAnswerFormat<T>
-    _$SingleChoiceAnswerFormatFromJson<T extends TextChoice>(
+_$SingleChoiceAnswerFormatFromJson<T extends TextChoice>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
-) =>
-        SingleChoiceAnswerFormat<T>(
-          choices:
-              (json['textChoices'] as List<dynamic>).map(fromJsonT).toList(),
-          defaultSelection:
-              _$nullableGenericFromJson(json['defaultSelection'], fromJsonT),
-          question: json['question'] as String?,
-          answerType: json['type'] as String? ?? SingleChoiceAnswerFormat.type,
-        );
+) => SingleChoiceAnswerFormat<T>(
+  choices: (json['textChoices'] as List<dynamic>).map(fromJsonT).toList(),
+  defaultSelection: _$nullableGenericFromJson(
+    json['defaultSelection'],
+    fromJsonT,
+  ),
+  question: json['question'] as String?,
+  answerType: json['type'] as String? ?? SingleChoiceAnswerFormat.type,
+);
 
 Map<String, dynamic> _$SingleChoiceAnswerFormatToJson<T extends TextChoice>(
   SingleChoiceAnswerFormat<T> instance,
   Object? Function(T value) toJsonT,
-) =>
-    <String, dynamic>{
-      'question': instance.question,
-      'type': instance.answerType,
-      'textChoices': instance.choices.map(toJsonT).toList(),
-      'defaultSelection':
-          _$nullableGenericToJson(instance.defaultSelection, toJsonT),
-    };
+) => <String, dynamic>{
+  'question': instance.question,
+  'type': instance.answerType,
+  'textChoices': instance.choices.map(toJsonT).toList(),
+  'defaultSelection': _$nullableGenericToJson(
+    instance.defaultSelection,
+    toJsonT,
+  ),
+};
 
 T? _$nullableGenericFromJson<T>(
   Object? input,
   T Function(Object? json) fromJson,
-) =>
-    input == null ? null : fromJson(input);
+) => input == null ? null : fromJson(input);
 
 Object? _$nullableGenericToJson<T>(
   T? input,
   Object? Function(T value) toJson,
-) =>
-    input == null ? null : toJson(input);
+) => input == null ? null : toJson(input);

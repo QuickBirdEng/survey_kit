@@ -37,7 +37,8 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
       throw Exception('SingleSelectAnswer is null');
     }
     _singleChoiceAnswerFormat = answer as SingleChoiceAnswerFormat<TextChoice>;
-    _selectedChoice = widget.result?.result as TextChoice? ??
+    _selectedChoice =
+        widget.result?.result as TextChoice? ??
         _singleChoiceAnswerFormat.defaultSelection;
     initValidation(_selectedChoice);
   }
@@ -71,17 +72,15 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),
           const SizedBox(height: 12),
-          ..._singleChoiceAnswerFormat.choices.map(
-            (TextChoice tc) {
-              return SelectionListTile(
-                text: tc.text,
-                onTap: () {
-                  onChange(tc);
-                },
-                isSelected: _selectedChoice == tc,
-              );
-            },
-          ).toList(),
+          ..._singleChoiceAnswerFormat.choices.map((TextChoice tc) {
+            return SelectionListTile(
+              text: tc.text,
+              onTap: () {
+                onChange(tc);
+              },
+              isSelected: _selectedChoice == tc,
+            );
+          }).toList(),
         ],
       ),
     );

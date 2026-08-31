@@ -7,9 +7,9 @@ part of 'video_result.dart';
 // **************************************************************************
 
 VideoResult _$VideoResultFromJson(Map<String, dynamic> json) => VideoResult(
-      leftVideoAt: Duration(microseconds: (json['leftVideoAt'] as num).toInt()),
-      stayedInVideo: DateTime.parse(json['stayedInVideo'] as String),
-    );
+  leftVideoAt: Duration(microseconds: (json['leftVideoAt'] as num).toInt()),
+  stayedInVideo: DateTime.parse(json['stayedInVideo'] as String),
+);
 
 Map<String, dynamic> _$VideoResultToJson(VideoResult instance) =>
     <String, dynamic>{

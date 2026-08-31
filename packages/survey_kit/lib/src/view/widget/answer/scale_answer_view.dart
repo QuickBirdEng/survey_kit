@@ -37,7 +37,8 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
 
   @override
   Widget build(BuildContext context) {
-    final result = QuestionAnswer.of(context).stepResult?.result as double? ??
+    final result =
+        QuestionAnswer.of(context).stepResult?.result as double? ??
         _scaleAnswerFormat.defaultValue;
     final questionText = widget.questionStep.answerFormat?.question;
     return Padding(
@@ -52,9 +53,9 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
             child: Text(
               result.toInt().toString(),
               style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
           ),
           Column(
@@ -91,7 +92,8 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
                 min: _scaleAnswerFormat.minimumValue,
                 max: _scaleAnswerFormat.maximumValue,
                 activeColor: Theme.of(context).primaryColor,
-                divisions: (_scaleAnswerFormat.maximumValue -
+                divisions:
+                    (_scaleAnswerFormat.maximumValue -
                         _scaleAnswerFormat.minimumValue) ~/
                     _scaleAnswerFormat.step,
                 label: result.toString(),

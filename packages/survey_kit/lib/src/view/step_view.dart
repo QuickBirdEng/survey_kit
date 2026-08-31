@@ -35,17 +35,16 @@ class _StepViewState extends State<StepView> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
               child: SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints(minHeight: constraint.maxHeight - 60),
+                  constraints: BoxConstraints(
+                    minHeight: constraint.maxHeight - 60,
+                  ),
                   child: IntrinsicHeight(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          child: ContentWidget(
-                            content: widget.step.content,
-                          ),
+                          child: ContentWidget(content: widget.step.content),
                         ),
                         if (widget.answerView != null) widget.answerView!,
                         const SizedBox(height: 32),
@@ -53,12 +52,13 @@ class _StepViewState extends State<StepView> {
                           width: double.infinity,
                           height: 56,
                           child: ElevatedButton(
-                            onPressed: questionAnswer.isValid ||
+                            onPressed:
+                                questionAnswer.isValid ||
                                     !widget.step.isMandatory
                                 ? () => surveyController.next(
-                                      context: context,
-                                      stepResult: questionAnswer.stepResult,
-                                    )
+                                    context: context,
+                                    stepResult: questionAnswer.stepResult,
+                                  )
                                 : null,
                             child: Text(
                               widget.step.buttonText ??

@@ -18,14 +18,12 @@ void main() {
   );
 
   group('serialisation', () {
-    test(
-      'should work with valid example',
-      () async {
-        final encodedResult = tResult.toJson();
-        final decodedResult =
-            StepResult<List<MultiDouble>>.fromJson(encodedResult);
-        expect(tResult, decodedResult);
-      },
-    );
+    test('should work with valid example', () async {
+      final encodedResult = tResult.toJson();
+      final decodedResult = StepResult<List<MultiDouble>>.fromJson(
+        encodedResult,
+      );
+      expect(tResult, decodedResult);
+    });
   });
 }

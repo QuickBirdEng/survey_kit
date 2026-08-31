@@ -6,10 +6,7 @@ import 'package:survey_kit_video/src/video_content.dart';
 import 'package:survey_kit_video/src/web_video_player.dart';
 
 class VideoWidget extends StatelessWidget {
-  const VideoWidget({
-    super.key,
-    required this.videoContent,
-  });
+  const VideoWidget({super.key, required this.videoContent});
 
   final VideoContent videoContent;
 

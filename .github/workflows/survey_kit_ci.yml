@@ -15,19 +15,14 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          flutter-version-file: .fvmrc
+          cache: true
 
-      - name: Install Melos
-        run: dart pub global activate melos
-
-      - name: Resolve Root Dependencies
+      - name: Resolve Workspace Dependencies
         run: flutter pub get
 
-      - name: Bootstrap Workspace
-        run: melos bootstrap
-
       - name: Analyze
-        run: melos exec -- flutter analyze .
+        run: dart run melos exec -- flutter analyze .
 
       - name: Run Tests
-        run: melos exec --dir-exists="test" -- flutter test
+        run: dart run melos exec --dir-exists="test" -- flutter test

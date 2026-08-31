@@ -4,10 +4,7 @@ import 'package:survey_kit/survey_kit.dart';
 void main() {
   test('ordered task navigator handles empty steps', () {
     final navigator = OrderedTaskNavigator(
-      SurveyFlow(
-        id: 'ordered-empty',
-        steps: const [],
-      ),
+      SurveyFlow(id: 'ordered-empty', steps: const []),
     );
 
     expect(navigator.firstStep(), isNull);
@@ -15,10 +12,7 @@ void main() {
 
   test('navigable task navigator handles empty steps', () {
     final navigator = NavigableTaskNavigator(
-      SurveyFlow(
-        id: 'navigable-empty',
-        steps: const [],
-      ),
+      SurveyFlow(id: 'navigable-empty', steps: const []),
     );
 
     expect(navigator.firstStep(), isNull);
@@ -27,16 +21,12 @@ void main() {
   test('navigable task serializes rules with type and trigger step', () {
     final first = Step(
       id: 'step-1',
-      content: const [
-        TextContent(text: 'start'),
-      ],
+      content: const [TextContent(text: 'start')],
       buttonText: 'next',
     );
     final second = Step(
       id: 'step-2',
-      content: const [
-        TextContent(text: 'end'),
-      ],
+      content: const [TextContent(text: 'end')],
       buttonText: 'done',
     );
 

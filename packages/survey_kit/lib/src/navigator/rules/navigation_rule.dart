@@ -13,7 +13,8 @@ abstract class NavigationRule {
   /// [DirectNavigationRule] or [ConditionalNavigationRule] based on the 'type'
   /// field.
   factory NavigationRule.fromJson(Map<String, dynamic> json) {
-    final type = (json['type'] as String?) ??
+    final type =
+        (json['type'] as String?) ??
         (json.containsKey('destinationStepIdentifier')
             ? DirectNavigationRule.type
             : ConditionalNavigationRule.type);
@@ -24,6 +25,7 @@ abstract class NavigationRule {
     }
     throw const RuleNotDefinedException();
   }
+
   /// Serializes this rule to a JSON map.
   Map<String, dynamic> toJson();
 }

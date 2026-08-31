@@ -32,18 +32,21 @@ class SelectionListTile extends StatelessWidget {
           ),
         ),
         child: ListTile(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 14.0, vertical: 0.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 14.0,
+            vertical: 0.0,
+          ),
           title: Text(
             text,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: isSelected
-                      ? Theme.of(context).primaryColor
-                      : Theme.of(context).textTheme.titleLarge?.color,
-                ),
+              fontWeight: FontWeight.w500,
+              color: isSelected
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).textTheme.titleLarge?.color,
+            ),
           ),
           trailing: isSelected
               ? Icon(
@@ -51,10 +54,7 @@ class SelectionListTile extends StatelessWidget {
                   size: 28,
                   color: Theme.of(context).primaryColor,
                 )
-              : const SizedBox(
-                  width: 28,
-                  height: 28,
-                ),
+              : const SizedBox(width: 28, height: 28),
           onTap: onTap,
         ),
       ),

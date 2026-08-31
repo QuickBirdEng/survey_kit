@@ -18,7 +18,7 @@ class DirectNavigationRule implements NavigationRule {
       _$DirectNavigationRuleFromJson(json);
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'type': type,
-        ..._$DirectNavigationRuleToJson(this),
-      };
+    'type': type,
+    ..._$DirectNavigationRuleToJson(this),
+  };
 }

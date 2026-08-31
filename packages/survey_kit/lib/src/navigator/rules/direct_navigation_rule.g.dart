@@ -7,13 +7,11 @@ part of 'direct_navigation_rule.dart';
 // **************************************************************************
 
 DirectNavigationRule _$DirectNavigationRuleFromJson(
-        Map<String, dynamic> json) =>
-    DirectNavigationRule(
-      json['destinationStepIdentifier'] as String,
-    );
+  Map<String, dynamic> json,
+) => DirectNavigationRule(json['destinationStepIdentifier'] as String);
 
 Map<String, dynamic> _$DirectNavigationRuleToJson(
-        DirectNavigationRule instance) =>
-    <String, dynamic>{
-      'destinationStepIdentifier': instance.destinationStepIdentifier,
-    };
+  DirectNavigationRule instance,
+) => <String, dynamic>{
+  'destinationStepIdentifier': instance.destinationStepIdentifier,
+};

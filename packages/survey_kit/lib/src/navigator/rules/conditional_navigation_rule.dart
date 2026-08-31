@@ -12,7 +12,7 @@ class ConditionalNavigationRule implements NavigationRule {
   /// A function that receives all previous results and the current step result,
   /// and returns a [NavigationTarget] indicating where to go next.
   final NavigationTarget Function(List<StepResult>, StepResult?)
-      resultToStepIdentifierMapper;
+  resultToStepIdentifierMapper;
   final Map<String, String> _values;
 
   ConditionalNavigationRule({
@@ -21,8 +21,9 @@ class ConditionalNavigationRule implements NavigationRule {
   }) : _values = values;
 
   factory ConditionalNavigationRule.fromJson(Map<String, dynamic> json) {
-    final inputValues = (json['values'] as Map<String, dynamic>? ?? {})
-        .map((key, value) => MapEntry(key, value.toString()));
+    final inputValues = (json['values'] as Map<String, dynamic>? ?? {}).map(
+      (key, value) => MapEntry(key, value.toString()),
+    );
     return ConditionalNavigationRule(
       values: inputValues,
       resultToStepIdentifierMapper: (results, input) {
@@ -37,7 +38,7 @@ class ConditionalNavigationRule implements NavigationRule {
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'type': type,
-        'values': _values,
-      };
+    'type': type,
+    'values': _values,
+  };
 }

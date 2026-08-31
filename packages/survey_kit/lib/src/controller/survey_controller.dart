@@ -17,7 +17,8 @@ class SurveyController {
     BuildContext context,
     StepResult? stepResult,
     void Function() proceed,
-  )? onNextStep;
+  )?
+  onNextStep;
 
   /// Called when the previous step is requested.
   /// Call [proceed] to continue with default back-navigation.
@@ -26,21 +27,16 @@ class SurveyController {
     BuildContext context,
     StepResult? stepResult,
     void Function() proceed,
-  )? onStepBack;
+  )?
+  onStepBack;
 
   /// Called when the survey should be closed.
   /// Call [proceed] to continue with default close behaviour.
 
-  final void Function(
-    StepResult? stepResult,
-    void Function() proceed,
-  )? onCloseSurvey;
+  final void Function(StepResult? stepResult, void Function() proceed)?
+  onCloseSurvey;
 
-  SurveyController({
-    this.onNextStep,
-    this.onStepBack,
-    this.onCloseSurvey,
-  });
+  SurveyController({this.onNextStep, this.onStepBack, this.onCloseSurvey});
 
   GlobalKey<NavigatorState>? _navigatorKey;
 
@@ -66,14 +62,10 @@ class SurveyController {
   /// Triggers navigation to the next step, optionally providing [stepResult]
   /// for the current step. Pass a [BuildContext] explicitly or rely on the
   /// internally attached navigator key.
-  void next({
-    BuildContext? context,
-    StepResult? stepResult,
-  }) {
+  void next({BuildContext? context, StepResult? stepResult}) {
     final resolvedContext = _resolveContext(context);
-    void proceed() => SurveyStateProvider.of(resolvedContext).onEvent(
-          NextStep(stepResult),
-        );
+    void proceed() =>
+        SurveyStateProvider.of(resolvedContext).onEvent(NextStep(stepResult));
     if (onNextStep != null) {
       onNextStep!(resolvedContext, stepResult, proceed);
       return;
@@ -81,28 +73,16 @@ class SurveyController {
     proceed();
   }
 
-  @Deprecated(
-    'Use next(context: ..., stepResult: ...) instead.',
-  )
-  void nextStep(
-    BuildContext context,
-    StepResult? stepResult,
-  ) {
-    next(
-      context: context,
-      stepResult: stepResult,
-    );
+  @Deprecated('Use next(context: ..., stepResult: ...) instead.')
+  void nextStep(BuildContext context, StepResult? stepResult) {
+    next(context: context, stepResult: stepResult);
   }
 
   /// Triggers navigation to the previous step.
-  void stepBack({
-    BuildContext? context,
-    StepResult? stepResult,
-  }) {
+  void stepBack({BuildContext? context, StepResult? stepResult}) {
     final resolvedContext = _resolveContext(context);
-    void proceed() => SurveyStateProvider.of(resolvedContext).onEvent(
-          StepBack(stepResult),
-        );
+    void proceed() =>
+        SurveyStateProvider.of(resolvedContext).onEvent(StepBack(stepResult));
     if (onStepBack != null) {
       onStepBack!(resolvedContext, stepResult, proceed);
       return;
@@ -112,13 +92,11 @@ class SurveyController {
 
   /// Closes the survey and emits a [SurveyResult] with
   /// [FinishReason.discarded].
-  void closeSurvey({
-    StepResult? stepResult,
-  }) {
+  void closeSurvey({StepResult? stepResult}) {
     final resolvedContext = _resolveContext(null);
-    void proceed() => SurveyStateProvider.of(resolvedContext).onEvent(
-          CloseSurvey(stepResult),
-        );
+    void proceed() => SurveyStateProvider.of(
+      resolvedContext,
+    ).onEvent(CloseSurvey(stepResult));
     if (onCloseSurvey != null) {
       onCloseSurvey!(stepResult, proceed);
       return;

@@ -6,16 +6,15 @@ import 'package:survey_kit/src/model/step.dart';
 
 /// A factory function that builds the answer widget for a given [AnswerFormat]
 /// and [Step].
-typedef AnswerViewBuilder = Widget Function(
-  AnswerFormat answerFormat,
-  Step step,
-  StepResult? stepResult,
-);
+typedef AnswerViewBuilder =
+    Widget Function(
+      AnswerFormat answerFormat,
+      Step step,
+      StepResult? stepResult,
+    );
 
 /// A factory function that builds the display widget for a given [Content].
-typedef ContentWidgetBuilder = Widget Function(
-  Content content,
-);
+typedef ContentWidgetBuilder = Widget Function(Content content);
 
 /// An [InheritedWidget] that holds the registered answer-view and
 /// content-widget builders. Pass [initialAnswerViewBuilders] and

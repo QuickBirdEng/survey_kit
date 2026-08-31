@@ -22,11 +22,8 @@ import 'package:survey_kit/src/widget/survey_progress_configuration.dart';
 /// A builder function for customizing the container around each survey step.
 /// Receives the current [Step], the built answer widget (may be null for
 /// content-only steps), and the [BuildContext].
-typedef StepShell = Widget Function(
-  Step step,
-  Widget? answerWidget,
-  BuildContext context,
-);
+typedef StepShell =
+    Widget Function(Step step, Widget? answerWidget, BuildContext context);
 
 /// The root widget for a survey experience. Provide a [SurveyDefinition] via
 /// [task] and receive results via [onResult]. Customize navigation with
@@ -142,7 +139,8 @@ class _SurveyKitState extends State<SurveyKit> {
   @override
   Widget build(BuildContext context) {
     return SurveyConfiguration(
-      surveyProgressConfiguration: widget.surveyProgressbarConfiguration ??
+      surveyProgressConfiguration:
+          widget.surveyProgressbarConfiguration ??
           SurveyProgressConfiguration(),
       taskNavigator: _taskNavigator,
       surveyController: _surveyController,
@@ -162,8 +160,9 @@ class _SurveyKitState extends State<SurveyKit> {
     if (widget.answerViewBuilders != null ||
         widget.contentWidgetBuilders != null ||
         widget.registries != null) {
-      final answerViewBuilders =
-          Map<Type, AnswerViewBuilder>.from(getDefaultAnswerViewBuilders());
+      final answerViewBuilders = Map<Type, AnswerViewBuilder>.from(
+        getDefaultAnswerViewBuilders(),
+      );
       final contentWidgetBuilders = Map<Type, ContentWidgetBuilder>.from(
         getDefaultContentWidgetBuilders(),
       );
@@ -254,9 +253,7 @@ class _SurveyPageState extends State<SurveyPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => SurveyStateProvider.of(context).onEvent(
-        StartSurvey(),
-      ),
+      (_) => SurveyStateProvider.of(context).onEvent(StartSurvey()),
     );
   }
 
@@ -273,30 +270,32 @@ class _SurveyPageState extends State<SurveyPage>
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>
                     SlideTransition(
-              position: Tween<Offset>(
-                begin: Offset.zero,
-                end: const Offset(-0.08, 0.0),
-              ).animate(
-                CurvedAnimation(
-                  parent: secondaryAnimation,
-                  curve: Curves.easeOutCubic,
-                  reverseCurve: Curves.easeInCubic,
-                ),
-              ),
-              child: SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(1.0, 0.0),
-                  end: Offset.zero,
-                ).animate(
-                  CurvedAnimation(
-                    parent: animation,
-                    curve: Curves.easeOutCubic,
-                    reverseCurve: Curves.easeInCubic,
-                  ),
-                ),
-                child: child,
-              ),
-            ),
+                      position:
+                          Tween<Offset>(
+                            begin: Offset.zero,
+                            end: const Offset(-0.08, 0.0),
+                          ).animate(
+                            CurvedAnimation(
+                              parent: secondaryAnimation,
+                              curve: Curves.easeOutCubic,
+                              reverseCurve: Curves.easeInCubic,
+                            ),
+                          ),
+                      child: SlideTransition(
+                        position:
+                            Tween<Offset>(
+                              begin: const Offset(1.0, 0.0),
+                              end: Offset.zero,
+                            ).animate(
+                              CurvedAnimation(
+                                parent: animation,
+                                curve: Curves.easeOutCubic,
+                                reverseCurve: Curves.easeInCubic,
+                              ),
+                            ),
+                        child: child,
+                      ),
+                    ),
             pageBuilder: (_, __, ___) {
               final routeState = settings.arguments;
               PresentingSurveyState? currentState;
@@ -337,21 +336,13 @@ class _SurveyPageState extends State<SurveyPage>
 }
 
 class _SurveyView extends StatelessWidget {
-  const _SurveyView({
-    required this.id,
-    required this.createView,
-  });
+  const _SurveyView({required this.id, required this.createView});
 
   final String id;
   final Widget Function() createView;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: ValueKey<String>(
-        id,
-      ),
-      child: createView(),
-    );
+    return Container(key: ValueKey<String>(id), child: createView());
   }
 }

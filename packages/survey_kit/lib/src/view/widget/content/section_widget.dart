@@ -4,10 +4,7 @@ import 'package:survey_kit/src/util/ui_utils.dart';
 import 'package:survey_kit/src/view/widget/content/styled_text_widget.dart';
 
 class SectionWidget extends StatelessWidget {
-  const SectionWidget({
-    super.key,
-    required this.sectionContent,
-  });
+  const SectionWidget({super.key, required this.sectionContent});
 
   final SectionContent sectionContent;
 
@@ -16,9 +13,7 @@ class SectionWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: sectionContent.toList
-          .map(
-            (e) => StyledTextWidget(content: e),
-          )
+          .map((e) => StyledTextWidget(content: e))
           .separate(verySmallVerticalSpacer)
           .toList(),
     );

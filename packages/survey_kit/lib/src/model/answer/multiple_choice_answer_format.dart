@@ -33,12 +33,9 @@ class MultipleChoiceAnswerFormat<T extends TextChoice> extends AnswerFormat {
   factory MultipleChoiceAnswerFormat.fromJson(
     Map<String, dynamic> json,
     T Function(Object? json) fromJsonT,
-  ) =>
-      _$MultipleChoiceAnswerFormatFromJson(json, fromJsonT);
+  ) => _$MultipleChoiceAnswerFormatFromJson(json, fromJsonT);
 
   @override
-  Map<String, dynamic> toJson() => _$MultipleChoiceAnswerFormatToJson(
-        this,
-        (value) => value.toJson(),
-      );
+  Map<String, dynamic> toJson() =>
+      _$MultipleChoiceAnswerFormatToJson(this, (value) => value.toJson());
 }

@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  testWidgets('SurveyController navigates without explicit BuildContext',
-      (WidgetTester tester) async {
+  testWidgets('SurveyController navigates without explicit BuildContext', (
+    WidgetTester tester,
+  ) async {
     final controller = SurveyController();
     SurveyResult? result;
 
@@ -17,16 +18,12 @@ void main() {
               steps: [
                 Step(
                   id: 'step-1',
-                  content: const <Content>[
-                    TextContent(text: 'Step 1'),
-                  ],
+                  content: const <Content>[TextContent(text: 'Step 1')],
                   buttonText: 'Next',
                 ),
                 Step(
                   id: 'step-2',
-                  content: const <Content>[
-                    TextContent(text: 'Step 2'),
-                  ],
+                  content: const <Content>[TextContent(text: 'Step 2')],
                   buttonText: 'Next',
                 ),
               ],
@@ -57,8 +54,9 @@ void main() {
     expect(result!.finishReason, FinishReason.discarded);
   });
 
-  testWidgets('SurveyController.next provides context to override callback',
-      (WidgetTester tester) async {
+  testWidgets('SurveyController.next provides context to override callback', (
+    WidgetTester tester,
+  ) async {
     BuildContext? callbackContext;
     final controller = SurveyController(
       onNextStep: (context, stepResult, proceed) {
@@ -76,16 +74,12 @@ void main() {
               steps: [
                 Step(
                   id: 'step-1',
-                  content: const <Content>[
-                    TextContent(text: 'Step 1'),
-                  ],
+                  content: const <Content>[TextContent(text: 'Step 1')],
                   buttonText: 'Next',
                 ),
                 Step(
                   id: 'step-2',
-                  content: const <Content>[
-                    TextContent(text: 'Step 2'),
-                  ],
+                  content: const <Content>[TextContent(text: 'Step 2')],
                   buttonText: 'Next',
                 ),
               ],

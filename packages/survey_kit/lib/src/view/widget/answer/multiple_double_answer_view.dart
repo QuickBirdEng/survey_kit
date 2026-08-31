@@ -46,10 +46,7 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView>
 
     _insertedValues = List.generate(
       _multipleDoubleAnswer.hints.length,
-      (index) => const MultiDouble(
-        text: '',
-        value: 0.0,
-      ),
+      (index) => const MultiDouble(text: '', value: 0.0),
     );
   }
 
@@ -76,16 +73,13 @@ class _MultipleDoubleAnswerViewState extends State<MultipleDoubleAnswerView>
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),
           const SizedBox(height: 12),
-          ..._multipleDoubleAnswer.hints
-              .asMap()
-              .entries
-              .map((MapEntry<int, String> md) {
+          ..._multipleDoubleAnswer.hints.asMap().entries.map((
+            MapEntry<int, String> md,
+          ) {
             return TextField(
               textInputAction: TextInputAction.next,
               autofocus: true,
-              decoration: InputDecoration(
-                labelText: md.value,
-              ),
+              decoration: InputDecoration(labelText: md.value),
               controller: _controller[md.key],
               onChanged: (String value) {
                 final normalizedValue = value.replaceAll(',', '.');
