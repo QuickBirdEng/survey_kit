@@ -1,3 +1,42 @@
+# 2.0.0-beta4
+
+- **CHORE**: Upgraded the toolchain to Flutter 3.47.2 / Dart 3.13.2 (`.fvmrc`
+  pin bumped from 3.41.4). CI now derives its Flutter version from `.fvmrc`
+  instead of tracking `stable`, and runs `melos` from the workspace lockfile
+  rather than a globally activated copy.
+- **CHORE**: Upgraded all direct dependencies to their latest versions,
+  including `lottie` 3.5.1, `video_player` 2.14.0, `chewie` 1.15.0,
+  `flutter_markdown_plus` 1.0.12, `just_audio` 0.10.6, `json_annotation`
+  4.12.0, `uuid` 4.6.0, `url_launcher` 6.3.2, `json_serializable` 6.14.1,
+  `build_runner` 2.16.0 and `melos` 8.5.0. Declared constraint floors were
+  kept at the lowest workable version rather than pinned to the newest, so
+  downstream apps with tighter pins can still resolve.
+- **CHORE**: SDK floors now reflect what dependencies actually require:
+  `survey_kit` and `survey_kit_audio` require Dart `^3.9.0` / Flutter
+  `>=3.35.0`; `survey_kit_lottie` and `survey_kit_video` require Dart
+  `^3.12.0` / Flutter `>=3.44.0` (forced by `lottie` and `video_player`). The
+  previous `flutter: ">=2.0.0"` floor was inaccurate.
+- **CHORE**: The example app now uses **Swift Package Manager** for iOS and
+  macOS. All plugins in the dependency graph ship Swift packages, so
+  CocoaPods has been removed entirely: `Podfile`, `Podfile.lock`, the `Pods`
+  integration in both Xcode projects, the `Pods.xcodeproj` workspace
+  references and the `Pods-Runner` xcconfig includes are all gone. Minimum
+  deployment targets moved to iOS 15.0 and macOS 12.0.
+- **CHORE**: Upgraded the example app's Android toolchain to Android Gradle
+  Plugin 9.1.0, Kotlin 2.4.0 and Gradle 9.3.1, with Java/Kotlin targets on
+  17. Removed the obsolete `android.enableJetifier` flag and the explicit
+  `kotlin-android` plugin (the Flutter Gradle Plugin applies it).
+- **CHORE**: Replaced the long-ignored `analyzer.strong-mode` options with
+  `language: strict-casts`, dropped the deprecated
+  `avoid_null_checks_in_equality_operators` lint and the removed
+  `missing_return` diagnostic, and the example now includes the root
+  `analysis_options.yaml` instead of duplicating it.
+- **FIX**: `build_runner` no longer walks the nested example app's plugin
+  symlinks (added `packages/survey_kit/build.yaml` to scope its sources),
+  which previously made codegen fail. Removed the no-op `@JsonSerializable()`
+  annotations from the abstract `AnswerFormat` and `Content` base classes and
+  the deprecated `synthetic-package` key from `l10n.yaml`.
+
 # 2.0.0-beta3
 
 - **FIX** (`survey_kit`): `withSeparator` no longer emits a trailing

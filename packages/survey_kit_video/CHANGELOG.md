@@ -1,3 +1,12 @@
+# 2.0.0-beta4
+
+- **CHORE**: Now developed and tested against Flutter 3.47.2 / Dart 3.13.2.
+- **BREAKING** **CHORE**: Requires Dart `^3.12.0` / Flutter `>=3.44.0`, which
+  is forced by `video_player` 2.14.0. Apps on older Flutter versions must stay
+  on 2.0.0-beta3 or raise their SDK.
+- **CHORE**: Dependency upgrades — `video_player` 2.14.0, `chewie` 1.15.0,
+  `universal_html` 2.3.0, `json_annotation` 4.12.0.
+
 # 2.0.0-beta3
 
 - **FIX**: `SurveyKitVideoPlayer` no longer crashes with a

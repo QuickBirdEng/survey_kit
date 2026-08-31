@@ -1,3 +1,23 @@
+# 2.0.0-beta4
+
+- **CHORE**: Now developed and tested against Flutter 3.47.2 / Dart 3.13.2.
+  The `environment` constraints are corrected to what dependencies actually
+  require: Dart `^3.9.0` / Flutter `>=3.35.0`. The previous
+  `flutter: ">=2.0.0"` floor was inaccurate.
+- **CHORE**: Dependency upgrades — `json_annotation` 4.12.0, `url_launcher`
+  6.3.2, `uuid` 4.6.0, `flutter_markdown_plus` 1.0.12. Declared constraint
+  floors are kept at the lowest workable version rather than pinned to the
+  newest, so apps with tighter pins can still resolve.
+- **FIX**: Code generation no longer fails. `build_runner` was walking the
+  nested example app's plugin symlinks; a `build.yaml` now scopes its sources
+  to `lib/` and `test/`.
+- **FIX**: Removed the no-op `@JsonSerializable()` annotations from the
+  abstract `AnswerFormat` and `Content` base classes. They had no `part`
+  directive, so they generated nothing and only produced build warnings. No
+  API change.
+- **FIX**: Dropped the deprecated `synthetic-package` key from `l10n.yaml`.
+  Generated localizations are unchanged.
+
 # 2.0.0-beta3
 
 - **FIX**: `withSeparator` no longer emits a trailing separator, which removed
