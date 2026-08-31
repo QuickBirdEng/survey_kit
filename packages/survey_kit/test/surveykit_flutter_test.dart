@@ -5,8 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:survey_kit/survey_kit.dart';
 
 void main() {
-  testWidgets('survey_kit click through three steps',
-      (WidgetTester tester) async {
+  testWidgets('survey_kit click through three steps', (
+    WidgetTester tester,
+  ) async {
     final surveyWidget = MaterialApp(
       home: Scaffold(
         body: SurveyKit(

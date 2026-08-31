@@ -10,9 +10,9 @@ export 'src/audio_widget.dart';
 class SurveyKitAudio implements SurveyKitPlugin {
   @override
   Map<Type, ContentWidgetBuilder> get contentWidgetBuilders => {
-        AudioContent: (content) =>
-            AudioWidget(audioContent: content as AudioContent),
-      };
+    AudioContent: (content) =>
+        AudioWidget(audioContent: content as AudioContent),
+  };
 
   @override
   Map<Type, AnswerViewBuilder> get answerViewBuilders => {};
