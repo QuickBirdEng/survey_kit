@@ -7,7 +7,6 @@ import 'package:survey_kit/src/model/content/text_content.dart';
 /// control what is rendered before the answer widget (text, images, markdown,
 /// etc.). Use [Content.fromJson] for deserialization. Register custom types
 /// with [registerFromJson].
-@JsonSerializable()
 abstract class Content {
   /// Optional identifier for this content item.
   final String? id;
@@ -16,16 +15,10 @@ abstract class Content {
   @JsonKey(name: 'type')
   final String contentType;
 
-  const Content({
-    this.id,
-    required this.contentType,
-  });
+  const Content({this.id, required this.contentType});
 
   static final Map<String, Content Function(Map<String, dynamic>)> _converters =
-      {
-    'text': TextContent.fromJson,
-    'markdown': MarkdownContent.fromJson,
-  };
+      {'text': TextContent.fromJson, 'markdown': MarkdownContent.fromJson};
 
   /// Registers a custom [Content] subtype factory for JSON deserialization.
   static void registerFromJson(

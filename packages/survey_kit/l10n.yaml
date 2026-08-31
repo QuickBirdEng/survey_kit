@@ -2,5 +2,4 @@ arb-dir: l10n
 template-arb-file: intl_en.arb
 output-localization-file: survey_kit_localizations.dart
 output-class: SurveyKitLocalizations
-synthetic-package: false
 output-dir: lib/gen

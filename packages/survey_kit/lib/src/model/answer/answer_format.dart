@@ -15,7 +15,6 @@ import 'package:survey_kit/src/model/answer/time_answer_format.dart';
 /// Abstract base class for all answer format types. Defines how a survey
 /// question accepts user input. Use [AnswerFormat.fromJson] for
 /// deserialization. Register custom types with [registerFromJson].
-@JsonSerializable()
 abstract class AnswerFormat {
   const AnswerFormat({this.answerType, this.question});
 
@@ -27,7 +26,7 @@ abstract class AnswerFormat {
   final String? answerType;
 
   static final Map<String, AnswerFormat Function(Map<String, dynamic>)>
-      _converters = {
+  _converters = {
     BooleanAnswerFormat.type: BooleanAnswerFormat.fromJson,
     DateAnswerFormat.type: DateAnswerFormat.fromJson,
     DoubleAnswerFormat.type: DoubleAnswerFormat.fromJson,
@@ -42,9 +41,9 @@ abstract class AnswerFormat {
     MultipleDoubleAnswerFormat.type: MultipleDoubleAnswerFormat.fromJson,
     ScaleAnswerFormat.type: ScaleAnswerFormat.fromJson,
     SingleChoiceAnswerFormat.type: (json) => SingleChoiceAnswerFormat.fromJson(
-          json,
-          (dynamic e) => TextChoice.fromJson(e as Map<String, dynamic>),
-        ),
+      json,
+      (dynamic e) => TextChoice.fromJson(e as Map<String, dynamic>),
+    ),
     TextAnswerFormat.type: TextAnswerFormat.fromJson,
     TimeAnswerFormat.type: TimeAnswerFormat.fromJson,
   };
@@ -71,6 +70,7 @@ abstract class AnswerFormat {
 
     throw Exception('Unknown type: $type');
   }
+
   /// Serializes this answer format to a JSON map.
   Map<String, dynamic> toJson();
 }
