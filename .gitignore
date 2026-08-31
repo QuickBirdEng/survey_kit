@@ -42,6 +42,18 @@ settings.local.json
 **/.gradle/
 **/local.properties
 
+# iOS/macOS native — generated, machine-specific, or dependency-manager output
+**/ios/Pods/
+**/macos/Pods/
+**/ios/.symlinks/
+**/macos/Flutter/ephemeral/.symlinks/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/macos/Flutter/ephemeral/Flutter-Generated.xcconfig
+**/macos/Flutter/ephemeral/flutter_export_environment.sh
+**/xcuserdata/
+**/*.xcworkspace/xcshareddata/swiftpm/configuration/
+
 # Web related
 lib/generated_plugin_registrant.dart
 **/GeneratedPluginRegistrant.java
