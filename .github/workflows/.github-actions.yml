@@ -18,7 +18,12 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       # Test the sub-package against this repo's survey_kit, not the old version from pub.dev.
-      - run: printf 'dependency_overrides:\n  survey_kit:\n    path: ../..\n' > pubspec_overrides.yaml
+      - run: |
+          cat > pubspec_overrides.yaml <<'EOF'
+          dependency_overrides:
+            survey_kit:
+              path: ../..
+          EOF
         working-directory: packages/survey_kit_image_answer
       # The root analyze also reads packages/, so their dependencies must be resolved first.
       - run: flutter pub get
