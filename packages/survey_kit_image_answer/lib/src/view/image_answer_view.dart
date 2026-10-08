@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:survey_kit/survey_kit.dart';
+import 'package:survey_kit_image_answer/src/answer_format/image_answer_format.dart';
+import 'package:survey_kit_image_answer/src/result/image_question_result.dart';
 
 class ImageAnswerView extends StatefulWidget {
   final QuestionStep questionStep;
