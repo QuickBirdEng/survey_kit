@@ -20,7 +20,8 @@ jobs:
       # The root analyze also reads packages/, so their dependencies must be resolved first.
       - run: flutter pub get
         working-directory: packages/survey_kit_image_answer
-      - run: flutter analyze
+      # Infos are not fatal: some deprecation replacements need a newer Flutter than the package supports.
+      - run: flutter analyze --no-fatal-infos
       - run: flutter test
       - run: flutter test
         working-directory: packages/survey_kit_image_answer
