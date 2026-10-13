@@ -51,8 +51,9 @@ class _DateAnswerViewState extends State<DateAnswerView>
     if (date.isBefore(_firstDate)) {
       return _firstDate;
     }
-    if (date.isAfter(_lastDate)) {
-      return _lastDate;
+    final upperBound = _dateAnswerFormat.maxDate ?? _lastDate;
+    if (date.isAfter(upperBound)) {
+      return upperBound;
     }
     return date;
   }

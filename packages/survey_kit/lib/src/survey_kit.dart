@@ -65,6 +65,12 @@ class SurveyKit extends StatefulWidget {
   /// Custom content-widget builder overrides, keyed by [Content] type.
   final Map<Type, ContentWidgetBuilder>? contentWidgetBuilders;
 
+  /// Custom answer-view builders that also match subtypes of their type.
+  final List<AnswerViewRegistration>? answerViewRegistrations;
+
+  /// Custom content-widget builders that also match subtypes of their type.
+  final List<ContentWidgetRegistration>? contentWidgetRegistrations;
+
   /// List of [SurveyKitPlugin]s whose builders are merged into the registry.
   final List<SurveyKitPlugin>? registries;
 
@@ -81,6 +87,8 @@ class SurveyKit extends StatefulWidget {
     this.backgroundColor,
     this.answerViewBuilders,
     this.contentWidgetBuilders,
+    this.answerViewRegistrations,
+    this.contentWidgetRegistrations,
     this.registries,
   });
 
@@ -163,66 +171,44 @@ class _SurveyKitState extends State<SurveyKit> {
   }
 
   Widget _buildSurveyPage(BuildContext context) {
-    if (widget.answerViewBuilders != null ||
-        widget.contentWidgetBuilders != null ||
-        widget.registries != null) {
-      final answerViewBuilders = Map<Type, AnswerViewBuilder>.from(
-        getDefaultAnswerViewBuilders(),
-      );
-      final contentWidgetBuilders = Map<Type, ContentWidgetBuilder>.from(
-        getDefaultContentWidgetBuilders(),
-      );
-
-      if (widget.registries != null) {
-        for (final registry in widget.registries!) {
-          answerViewBuilders.addAll(registry.answerViewBuilders);
-          contentWidgetBuilders.addAll(registry.contentWidgetBuilders);
-        }
-      }
-
-      if (widget.answerViewBuilders != null) {
-        answerViewBuilders.addAll(widget.answerViewBuilders!);
-      }
-      if (widget.contentWidgetBuilders != null) {
-        contentWidgetBuilders.addAll(widget.contentWidgetBuilders!);
-      }
-
-      return SurveyKitRegistry(
-        initialAnswerViewBuilders: answerViewBuilders,
-        initialContentWidgetBuilders: contentWidgetBuilders,
-        child: SurveyPage(
-          backgroundColor: widget.backgroundColor,
-          length: widget.task.steps.length,
-          onResult: widget.onResult,
-          appBar: widget.appBar,
-          navigatorKey: _navigatorKey,
-          decoration: widget.decoration,
-        ),
-      );
-    }
-
-    if (SurveyKitRegistry.of(context) == null) {
-      return SurveyKitRegistry(
-        initialAnswerViewBuilders: getDefaultAnswerViewBuilders(),
-        initialContentWidgetBuilders: getDefaultContentWidgetBuilders(),
-        child: SurveyPage(
-          backgroundColor: widget.backgroundColor,
-          length: widget.task.steps.length,
-          onResult: widget.onResult,
-          appBar: widget.appBar,
-          navigatorKey: _navigatorKey,
-          decoration: widget.decoration,
-        ),
-      );
-    }
-
-    return SurveyPage(
+    final surveyPage = SurveyPage(
       backgroundColor: widget.backgroundColor,
       length: widget.task.steps.length,
       onResult: widget.onResult,
       appBar: widget.appBar,
       navigatorKey: _navigatorKey,
       decoration: widget.decoration,
+    );
+    final hasCustomBuilders =
+        widget.answerViewBuilders != null ||
+        widget.contentWidgetBuilders != null ||
+        widget.answerViewRegistrations != null ||
+        widget.contentWidgetRegistrations != null ||
+        widget.registries != null;
+
+    if (!hasCustomBuilders && SurveyKitRegistry.of(context) != null) {
+      return surveyPage;
+    }
+
+    final plugins = widget.registries ?? const <SurveyKitPlugin>[];
+    return SurveyKitRegistry(
+      answerViewRegistrations: [
+        ...getDefaultAnswerViewRegistrations(),
+        ...?widget.answerViewRegistrations,
+      ],
+      contentWidgetRegistrations: [
+        ...getDefaultContentWidgetRegistrations(),
+        ...?widget.contentWidgetRegistrations,
+      ],
+      initialAnswerViewBuilders: {
+        for (final plugin in plugins) ...plugin.answerViewBuilders,
+        ...?widget.answerViewBuilders,
+      },
+      initialContentWidgetBuilders: {
+        for (final plugin in plugins) ...plugin.contentWidgetBuilders,
+        ...?widget.contentWidgetBuilders,
+      },
+      child: surveyPage,
     );
   }
 }

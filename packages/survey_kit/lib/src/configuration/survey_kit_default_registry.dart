@@ -34,46 +34,73 @@ import 'package:survey_kit/src/view/widget/content/section_widget.dart';
 import 'package:survey_kit/src/view/widget/content/styled_text_widget.dart';
 import 'package:survey_kit/src/view/widget/content/text_widget.dart';
 
-Map<Type, AnswerViewBuilder> getDefaultAnswerViewBuilders() {
-  return {
-    BooleanAnswerFormat: (answerFormat, step, result) =>
-        BooleanAnswerView(questionStep: step, result: result),
-    DateAnswerFormat: (answerFormat, step, result) =>
-        DateAnswerView(questionStep: step, result: result),
-    DoubleAnswerFormat: (answerFormat, step, result) =>
-        DoubleAnswerView(questionStep: step, result: result),
-    IntegerAnswerFormat: (answerFormat, step, result) =>
-        IntegerAnswerView(questionStep: step, result: result),
-    MultipleChoiceAnswerFormat<TextChoice>: (answerFormat, step, result) =>
-        MultipleChoiceAnswerView(questionStep: step, result: result),
-    MultipleChoiceAutoCompleteAnswerFormat: (answerFormat, step, result) =>
-        MultipleChoiceAutoCompleteAnswerView(
-          questionStep: step,
-          result: result,
-        ),
-    MultipleDoubleAnswerFormat: (answerFormat, step, result) =>
-        MultipleDoubleAnswerView(questionStep: step, result: result),
-    ScaleAnswerFormat: (answerFormat, step, result) =>
-        ScaleAnswerView(questionStep: step, result: result),
-    SingleChoiceAnswerFormat<TextChoice>: (answerFormat, step, result) =>
-        SingleChoiceAnswerView(questionStep: step, result: result),
-    TextAnswerFormat: (answerFormat, step, result) =>
-        TextAnswerView(questionStep: step, result: result),
-    TimeAnswerFormat: (answerFormat, step, result) =>
-        TimeAnswerView(questionStep: step, result: result),
-  };
+List<AnswerViewRegistration> getDefaultAnswerViewRegistrations() {
+  return [
+    AnswerViewRegistration<BooleanAnswerFormat>(
+      (answerFormat, step, result) =>
+          BooleanAnswerView(questionStep: step, result: result),
+    ),
+    AnswerViewRegistration<DateAnswerFormat>(
+      (answerFormat, step, result) =>
+          DateAnswerView(questionStep: step, result: result),
+    ),
+    AnswerViewRegistration<DoubleAnswerFormat>(
+      (answerFormat, step, result) =>
+          DoubleAnswerView(questionStep: step, result: result),
+    ),
+    AnswerViewRegistration<IntegerAnswerFormat>(
+      (answerFormat, step, result) =>
+          IntegerAnswerView(questionStep: step, result: result),
+    ),
+    AnswerViewRegistration<MultipleChoiceAnswerFormat<TextChoice>>(
+      (answerFormat, step, result) =>
+          MultipleChoiceAnswerView(questionStep: step, result: result),
+    ),
+    AnswerViewRegistration<MultipleChoiceAutoCompleteAnswerFormat>(
+      (answerFormat, step, result) => MultipleChoiceAutoCompleteAnswerView(
+        questionStep: step,
+        result: result,
+      ),
+    ),
+    AnswerViewRegistration<MultipleDoubleAnswerFormat>(
+      (answerFormat, step, result) =>
+          MultipleDoubleAnswerView(questionStep: step, result: result),
+    ),
+    AnswerViewRegistration<ScaleAnswerFormat>(
+      (answerFormat, step, result) =>
+          ScaleAnswerView(questionStep: step, result: result),
+    ),
+    AnswerViewRegistration<SingleChoiceAnswerFormat<TextChoice>>(
+      (answerFormat, step, result) =>
+          SingleChoiceAnswerView(questionStep: step, result: result),
+    ),
+    AnswerViewRegistration<TextAnswerFormat>(
+      (answerFormat, step, result) =>
+          TextAnswerView(questionStep: step, result: result),
+    ),
+    AnswerViewRegistration<TimeAnswerFormat>(
+      (answerFormat, step, result) =>
+          TimeAnswerView(questionStep: step, result: result),
+    ),
+  ];
 }
 
-Map<Type, ContentWidgetBuilder> getDefaultContentWidgetBuilders() {
-  return {
-    TextContent: (content) => TextWidget(textContent: content as TextContent),
-    MarkdownContent: (content) =>
-        MarkdownWidget(markdownContent: content as MarkdownContent),
-    ImageContent: (content) =>
-        ImageWidget(imageContent: content as ImageContent),
-    SectionContent: (content) =>
-        SectionWidget(sectionContent: content as SectionContent),
-    StyledTextContent: (content) =>
-        StyledTextWidget(content: content as StyledTextContent),
-  };
+List<ContentWidgetRegistration> getDefaultContentWidgetRegistrations() {
+  return [
+    ContentWidgetRegistration<TextContent>(
+      (content) => TextWidget(textContent: content as TextContent),
+    ),
+    ContentWidgetRegistration<MarkdownContent>(
+      (content) => MarkdownWidget(markdownContent: content as MarkdownContent),
+    ),
+    ContentWidgetRegistration<ImageContent>(
+      (content) => ImageWidget(imageContent: content as ImageContent),
+    ),
+    ContentWidgetRegistration<SectionContent>(
+      (content) => SectionWidget(sectionContent: content as SectionContent),
+    ),
+    ContentWidgetRegistration<StyledTextContent>(
+      (content) => StyledTextWidget(content: content as StyledTextContent),
+    ),
+  ];
 }

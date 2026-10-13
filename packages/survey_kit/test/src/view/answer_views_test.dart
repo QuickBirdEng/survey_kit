@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart' show CupertinoDatePicker;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:survey_kit/src/model/answer/multi_double.dart';
@@ -572,5 +574,170 @@ void main() {
       expect(find.text('70.0'), findsOneWidget);
       expect(harness.isValid, isTrue);
     });
+  });
+
+  group('iOS pickers', () {
+    final ios = TargetPlatformVariant.only(TargetPlatform.iOS);
+
+    CupertinoDatePicker datePicker(WidgetTester tester) =>
+        tester.widget<CupertinoDatePicker>(find.byType(CupertinoDatePicker));
+
+    void expectCupertinoDatePicker() {
+      expect(defaultTargetPlatform, TargetPlatform.iOS);
+      expect(find.byType(CupertinoDatePicker), findsOneWidget);
+      expect(find.byType(CalendarDatePicker), findsNothing);
+    }
+
+    testWidgets('date picker shows the question text', (tester) async {
+      final step = Step(
+        content: const [],
+        answerFormat: DateAnswerFormat(question: 'When were you born?'),
+      );
+      await _pumpAnswerView(
+        tester,
+        step: step,
+        builder: (step, result) =>
+            DateAnswerView(questionStep: step, result: result),
+      );
+
+      expectCupertinoDatePicker();
+      expect(find.text('When were you born?'), findsOneWidget);
+    }, variant: ios);
+
+    testWidgets('date picker restores the previous answer', (tester) async {
+      final restored = DateTime(2020, 5, 17);
+      final step = Step(content: const [], answerFormat: DateAnswerFormat());
+      final harness = await _pumpAnswerView(
+        tester,
+        step: step,
+        initialAnswer: restored,
+        builder: (step, result) =>
+            DateAnswerView(questionStep: step, result: result),
+      );
+
+      expectCupertinoDatePicker();
+      expect(datePicker(tester).initialDateTime, restored);
+      expect(harness.isValid, isTrue);
+      expect(harness.stepResult!.result, restored);
+    }, variant: ios);
+
+    testWidgets('date picker clamps a restored answer into the range', (
+      tester,
+    ) async {
+      final minDate = DateTime(2020);
+      final step = Step(
+        content: const [],
+        answerFormat: DateAnswerFormat(
+          minDate: minDate,
+          maxDate: DateTime(2025),
+        ),
+      );
+      final harness = await _pumpAnswerView(
+        tester,
+        step: step,
+        initialAnswer: DateTime(2000),
+        builder: (step, result) =>
+            DateAnswerView(questionStep: step, result: result),
+      );
+
+      expect(tester.takeException(), isNull);
+      expectCupertinoDatePicker();
+      expect(datePicker(tester).initialDateTime, minDate);
+      expect(harness.isValid, isTrue);
+      expect(harness.stepResult!.result, minDate);
+    }, variant: ios);
+
+    testWidgets('date picker clamps the fallback date into the range', (
+      tester,
+    ) async {
+      final now = DateTime.now();
+      final minDate = DateTime(now.year, now.month, now.day + 10);
+      final step = Step(
+        content: const [],
+        answerFormat: DateAnswerFormat(
+          minDate: minDate,
+          maxDate: minDate.add(const Duration(days: 30)),
+        ),
+      );
+      final harness = await _pumpAnswerView(
+        tester,
+        step: step,
+        builder: (step, result) =>
+            DateAnswerView(questionStep: step, result: result),
+      );
+
+      expect(tester.takeException(), isNull);
+      expectCupertinoDatePicker();
+      expect(datePicker(tester).initialDateTime, minDate);
+      expect(harness.stepResult!.result, minDate);
+    }, variant: ios);
+
+    testWidgets('date picker clamps the fallback date to maxDate', (
+      tester,
+    ) async {
+      final maxDate = DateTime(2010);
+      final step = Step(
+        content: const [],
+        answerFormat: DateAnswerFormat(
+          minDate: DateTime(2000),
+          maxDate: maxDate,
+        ),
+      );
+      final harness = await _pumpAnswerView(
+        tester,
+        step: step,
+        builder: (step, result) =>
+            DateAnswerView(questionStep: step, result: result),
+      );
+
+      expect(tester.takeException(), isNull);
+      expectCupertinoDatePicker();
+      expect(datePicker(tester).initialDateTime, maxDate);
+      expect(harness.stepResult!.result, maxDate);
+    }, variant: ios);
+
+    testWidgets('time picker restores the previous answer', (tester) async {
+      final step = Step(
+        content: const [],
+        answerFormat: const TimeAnswerFormat(
+          defaultValue: TimeOfDay(hour: 6, minute: 0),
+        ),
+      );
+      const time = TimeResult(timeOfDay: TimeOfDay(hour: 8, minute: 30));
+      final harness = await _pumpAnswerView(
+        tester,
+        step: step,
+        initialAnswer: time,
+        builder: (step, result) =>
+            TimeAnswerView(questionStep: step, result: result),
+      );
+
+      final initial = datePicker(tester).initialDateTime;
+      expect(initial.hour, 8);
+      expect(initial.minute, 30);
+      expect(harness.isValid, isTrue);
+      expect(harness.stepResult!.result, time);
+    }, variant: ios);
+
+    testWidgets('time picker starts at the default value', (tester) async {
+      final step = Step(
+        content: const [],
+        answerFormat: const TimeAnswerFormat(
+          defaultValue: TimeOfDay(hour: 6, minute: 45),
+          question: 'When do you wake up?',
+        ),
+      );
+      await _pumpAnswerView(
+        tester,
+        step: step,
+        builder: (step, result) =>
+            TimeAnswerView(questionStep: step, result: result),
+      );
+
+      final initial = datePicker(tester).initialDateTime;
+      expect(initial.hour, 6);
+      expect(initial.minute, 45);
+      expect(find.text('When do you wake up?'), findsOneWidget);
+    }, variant: ios);
   });
 }
