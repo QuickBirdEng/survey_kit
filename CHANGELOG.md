@@ -1,3 +1,11 @@
+# Unreleased
+
+- **CHORE**: Bumped the `.fvmrc` Flutter pin to 3.47.7 and refreshed the
+  workspace lockfile to the latest compatible versions. Published constraint
+  floors are unchanged.
+- **CHORE**: CI now checks formatting and that generated code is up to date,
+  and uses `actions/checkout@v6`.
+
 # 2.0.0-beta4
 
 - **CHORE**: Upgraded the toolchain to Flutter 3.47.2 / Dart 3.13.2 (`.fvmrc`
