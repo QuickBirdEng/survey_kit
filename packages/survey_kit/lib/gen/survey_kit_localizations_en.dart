@@ -13,4 +13,19 @@ class SurveyKitLocalizationsEn extends SurveyKitLocalizations {
 
   @override
   String get next => 'Next';
+
+  @override
+  String get otherLabel => 'Other';
+
+  @override
+  String get otherHint => 'Write other information here';
+
+  @override
+  String get searchLabel => 'Search';
+
+  @override
+  String get searchHint => 'Type here to search';
+
+  @override
+  String get clearSearch => 'Clear search';
 }

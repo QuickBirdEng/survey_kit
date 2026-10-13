@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class SurveyProgressConfiguration {
   final bool showProgressbar;
 
-  /// Color of the progressbar
-  final Color progressbarColor;
+  /// Color of the progressbar track. Defaults to
+  /// [ColorScheme.surfaceContainerHighest].
+  final Color? progressbarColor;
 
   /// Color of the value of the progressbar
   final Color? valueProgressbarColor;
@@ -35,7 +36,7 @@ class SurveyProgressConfiguration {
 
   SurveyProgressConfiguration({
     this.showProgressbar = true,
-    this.progressbarColor = Colors.white,
+    this.progressbarColor,
     this.height = 6.0,
     this.padding = const EdgeInsets.symmetric(horizontal: 24.0),
     this.showLabel = false,

@@ -7,5 +7,25 @@
   "next": "Next",
   "@next": {
     "description": "Button text to go to the next step"
+  },
+  "otherLabel": "Other",
+  "@otherLabel": {
+    "description": "Label of the free text field for an answer that is not in the list of choices"
+  },
+  "otherHint": "Write other information here",
+  "@otherHint": {
+    "description": "Hint of the free text field for an answer that is not in the list of choices"
+  },
+  "searchLabel": "Search",
+  "@searchLabel": {
+    "description": "Label of the search field in the autocomplete multiple choice question"
+  },
+  "searchHint": "Type here to search",
+  "@searchHint": {
+    "description": "Hint of the search field in the autocomplete multiple choice question"
+  },
+  "clearSearch": "Clear search",
+  "@clearSearch": {
+    "description": "Tooltip of the button that clears the search field"
   }
 }

@@ -15,15 +15,13 @@ class SurveyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final surveyController =
         controller ?? SurveyConfiguration.of(context).surveyController;
-    final surveyStream = SurveyStateProvider.of(
-      context,
-    ).surveyStateStream.stream;
+    final surveyStream = SurveyStateProvider.of(context).stateStream;
 
     final cancelButton = TextButton(
       onPressed: surveyController.closeSurvey,
       child: Text(
         SurveyKitLocalizations.of(context)?.cancel ?? 'Cancel',
-        style: TextStyle(color: Theme.of(context).primaryColor),
+        style: TextStyle(color: Theme.of(context).colorScheme.primary),
       ),
     );
 

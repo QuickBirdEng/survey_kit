@@ -43,15 +43,11 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
     initValidation(_selectedChoice);
   }
 
-  @override
-  void onChange(TextChoice? choice) {
-    if (_selectedChoice == choice) {
-      _selectedChoice = null;
-    } else {
-      _selectedChoice = choice;
-    }
-    setState(() {});
-    super.onChange(choice);
+  void _toggleChoice(TextChoice choice) {
+    setState(() {
+      _selectedChoice = _selectedChoice == choice ? null : choice;
+    });
+    onChange(_selectedChoice);
   }
 
   @override
@@ -66,23 +62,18 @@ class _SingleChoiceAnswerViewState extends State<SingleChoiceAnswerView>
   Widget build(BuildContext context) {
     final questionText = widget.questionStep.answerFormat?.question;
 
-    return Padding(
-      padding: EdgeInsets.zero,
-      child: Column(
-        children: [
-          if (questionText != null) AnswerQuestionText(text: questionText),
-          const SizedBox(height: 12),
-          ..._singleChoiceAnswerFormat.choices.map((TextChoice tc) {
-            return SelectionListTile(
-              text: tc.text,
-              onTap: () {
-                onChange(tc);
-              },
-              isSelected: _selectedChoice == tc,
-            );
-          }).toList(),
-        ],
-      ),
+    return Column(
+      children: [
+        if (questionText != null) AnswerQuestionText(text: questionText),
+        const SizedBox(height: 12),
+        for (final choice in _singleChoiceAnswerFormat.choices)
+          SelectionListTile(
+            text: choice.text,
+            onTap: () => _toggleChoice(choice),
+            isSelected: _selectedChoice == choice,
+            isExclusive: true,
+          ),
+      ],
     );
   }
 }

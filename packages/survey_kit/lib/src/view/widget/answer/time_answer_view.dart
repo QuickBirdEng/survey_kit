@@ -24,9 +24,8 @@ class TimeAnswerView extends StatefulWidget {
 
 class _TimeAnswerViewState extends State<TimeAnswerView>
     with MeasureDateStateMixin, AnswerMixin<TimeAnswerView, TimeResult> {
-  late TimeAnswerFormat _timeAnswerFormat;
-
-  late final TimeResult initialValue;
+  late final TimeAnswerFormat _timeAnswerFormat;
+  late final TimeResult _initialValue;
 
   @override
   bool isValid(TimeResult? result) {
@@ -45,43 +44,43 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
     }
     _timeAnswerFormat = answer as TimeAnswerFormat;
 
-    initialValue = widget.result?.result != null
-        ? widget.result?.result as TimeResult
-        : _timeAnswerFormat.defaultValue != null
-        ? TimeResult(timeOfDay: _timeAnswerFormat.defaultValue!)
-        : TimeResult(timeOfDay: TimeOfDay.fromDateTime(DateTime.now()));
+    final defaultTime = _timeAnswerFormat.defaultValue;
+    _initialValue =
+        widget.result?.result as TimeResult? ??
+        TimeResult(timeOfDay: defaultTime ?? TimeOfDay.now());
+    initValidation(_initialValue);
   }
 
-  @override
-  void onChange(TimeResult? result) {
-    setState(() {
-      super.onChange(result);
-    });
+  DateTime _initialDateTime() {
+    final now = DateTime.now();
+    final timeOfDay = _initialValue.timeOfDay;
+    return DateTime(
+      now.year,
+      now.month,
+      now.day,
+      timeOfDay.hour,
+      timeOfDay.minute,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final questionText = widget.questionStep.answerFormat?.question;
+    final questionText = _timeAnswerFormat.question;
 
-    return
-    // TODO(marvin): Create new time picker,
-    Column(
+    return Column(
       children: [
         if (questionText != null) AnswerQuestionText(text: questionText),
-        _iosTimePicker(initialValue),
+        SizedBox(
+          width: double.infinity,
+          height: 450.0,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.time,
+            initialDateTime: _initialDateTime(),
+            onDateTimeChanged: (time) =>
+                onChange(TimeResult(timeOfDay: TimeOfDay.fromDateTime(time))),
+          ),
+        ),
       ],
-    );
-  }
-
-  Widget _iosTimePicker(TimeResult timeResult) {
-    return Container(
-      width: double.infinity,
-      height: 450.0,
-      child: CupertinoDatePicker(
-        mode: CupertinoDatePickerMode.time,
-        onDateTimeChanged: (time) =>
-            onChange(TimeResult(timeOfDay: TimeOfDay.fromDateTime(time))),
-      ),
     );
   }
 }

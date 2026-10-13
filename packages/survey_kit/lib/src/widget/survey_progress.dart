@@ -16,8 +16,9 @@ class _SurveyProgressState extends State<SurveyProgress> {
     final progressbarConfiguration = SurveyConfiguration.of(
       context,
     ).surveyProgressConfiguration;
+    final colorScheme = Theme.of(context).colorScheme;
     return StreamBuilder<SurveyState>(
-      stream: SurveyStateProvider.of(context).surveyStateStream.stream,
+      stream: SurveyStateProvider.of(context).stateStream,
       builder: (context, snapshot) {
         if (snapshot.data == null || snapshot.data is! PresentingSurveyState) {
           return const SizedBox.shrink();
@@ -48,7 +49,9 @@ class _SurveyProgressState extends State<SurveyProgress> {
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: progressbarConfiguration.height,
-                      color: progressbarConfiguration.progressbarColor,
+                      color:
+                          progressbarConfiguration.progressbarColor ??
+                          colorScheme.surfaceContainerHighest,
                     ),
                     LayoutBuilder(
                       builder: (context, constraints) {
@@ -62,7 +65,7 @@ class _SurveyProgressState extends State<SurveyProgress> {
                           height: progressbarConfiguration.height,
                           color:
                               progressbarConfiguration.valueProgressbarColor ??
-                              Theme.of(context).primaryColor,
+                              colorScheme.primary,
                         );
                       },
                     ),

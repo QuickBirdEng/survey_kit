@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:survey_kit/src/model/answer/multiple_choice_answer_format.dart';
 import 'package:survey_kit/src/model/answer/text_choice.dart';
@@ -7,6 +6,7 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
+import 'package:survey_kit/src/view/widget/answer/other_choice_field.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
 
 class MultipleChoiceAnswerView extends StatefulWidget {
@@ -39,9 +39,10 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
     }
     _multipleChoiceAnswer = answer as MultipleChoiceAnswerFormat<TextChoice>;
     final defaultSelection = _multipleChoiceAnswer.defaultSelection;
-    _selectedChoices =
-        widget.result?.result as List<TextChoice>? ??
-        (defaultSelection != null ? [defaultSelection] : []);
+    _selectedChoices = List.of(
+      widget.result?.result as List<TextChoice>? ?? [?defaultSelection],
+    );
+    initValidation(_selectedChoices);
   }
 
   @override
@@ -52,108 +53,42 @@ class _MultipleChoiceAnswerView extends State<MultipleChoiceAnswerView>
     return true;
   }
 
+  void _toggleChoice(TextChoice choice) {
+    setState(() {
+      _selectedChoices = _selectedChoices.contains(choice)
+          ? _selectedChoices.where((element) => element != choice).toList()
+          : [..._selectedChoices, choice];
+    });
+    onChange(_selectedChoices);
+  }
+
+  void _onOtherTextChanged(String otherText) {
+    setState(() {
+      _selectedChoices = replaceOtherChoice(_selectedChoices, otherText);
+    });
+    onChange(_selectedChoices);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final questionText = widget.questionStep.answerFormat?.question;
+    final questionText = _multipleChoiceAnswer.question;
 
-    return Padding(
-      padding: EdgeInsets.zero,
-      child: Column(
-        children: [
-          if (questionText != null) AnswerQuestionText(text: questionText),
-          const SizedBox(height: 12),
-          ..._multipleChoiceAnswer.choices
-              .map(
-                (TextChoice tc) => SelectionListTile(
-                  text: tc.text,
-                  onTap: () {
-                    setState(() {
-                      if (_selectedChoices.contains(tc)) {
-                        _selectedChoices = _selectedChoices
-                            .where((element) => element != tc)
-                            .toList();
-                      } else {
-                        _selectedChoices = [..._selectedChoices, tc];
-                      }
-                    });
-                    onChange(_selectedChoices);
-                  },
-                  isSelected: _selectedChoices.contains(tc),
-                ),
-              )
-              .toList(),
-          if (_multipleChoiceAnswer.otherField) ...[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0),
-              child: TextField(
-                onChanged: (v) {
-                  int? currentIndex;
-                  final otherTextChoice = _selectedChoices
-                      .firstWhereIndexedOrNull((index, element) {
-                        final isOtherField = element.value == 'Other';
-
-                        if (isOtherField) {
-                          currentIndex = index;
-                        }
-
-                        return isOtherField;
-                      });
-
-                  setState(() {
-                    if (v.isEmpty && otherTextChoice != null) {
-                      _selectedChoices = _selectedChoices
-                          .where((element) => element != otherTextChoice)
-                          .toList();
-                    } else if (v.isNotEmpty) {
-                      final updatedTextChoice = TextChoice(
-                        id: 'Other',
-                        value: v,
-                        text: v,
-                      );
-                      if (otherTextChoice == null) {
-                        _selectedChoices = [
-                          ..._selectedChoices,
-                          updatedTextChoice,
-                        ];
-                      } else if (currentIndex != null) {
-                        _selectedChoices = List.from(_selectedChoices);
-                        _selectedChoices[currentIndex!] = updatedTextChoice;
-                      }
-                    }
-                    onChange(_selectedChoices);
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: 'Other',
-                  labelStyle: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
-                  hintText: 'Write other information here',
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 14.0,
-                    vertical: 16.0,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade300,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
+    return Column(
+      children: [
+        if (questionText != null) AnswerQuestionText(text: questionText),
+        const SizedBox(height: 12),
+        for (final choice in _multipleChoiceAnswer.choices)
+          SelectionListTile(
+            text: choice.text,
+            onTap: () => _toggleChoice(choice),
+            isSelected: _selectedChoices.contains(choice),
+          ),
+        if (_multipleChoiceAnswer.otherField)
+          OtherChoiceField(
+            initialValue: findOtherChoiceText(_selectedChoices),
+            onChanged: _onOtherTextChanged,
+          ),
+      ],
     );
   }
 }

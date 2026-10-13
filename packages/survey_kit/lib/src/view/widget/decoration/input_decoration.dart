@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
-InputDecoration textFieldInputDecoration({String hint = ''}) => InputDecoration(
-  contentPadding: const EdgeInsets.only(
-    left: 10,
-    bottom: 10,
-    top: 10,
-    right: 10,
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.zero,
-    borderSide: BorderSide(color: Colors.black.withValues(alpha: .2)),
-  ),
-  enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.zero,
-    borderSide: BorderSide(color: Colors.black.withValues(alpha: .2)),
-  ),
-  hintText: hint,
-);
+InputDecoration textFieldInputDecoration(
+  BuildContext context, {
+  String hint = '',
+}) {
+  final borderSide = BorderSide(
+    color: Theme.of(context).colorScheme.outlineVariant,
+  );
+  return InputDecoration(
+    contentPadding: const EdgeInsets.all(10),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.zero,
+      borderSide: borderSide,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.zero,
+      borderSide: borderSide,
+    ),
+    hintText: hint,
+  );
+}

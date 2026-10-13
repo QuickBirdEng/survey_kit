@@ -33,6 +33,15 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
       throw Exception('ScaleAnswerFormat is null');
     }
     _scaleAnswerFormat = answer as ScaleAnswerFormat;
+    initValidation(
+      (widget.result?.result as num?)?.toDouble() ??
+          _scaleAnswerFormat.defaultValue,
+    );
+  }
+
+  String _formatValue(double value) {
+    final hasFractionalStep = _scaleAnswerFormat.step % 1 != 0;
+    return hasFractionalStep ? value.toString() : value.round().toString();
   }
 
   @override
@@ -40,65 +49,41 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
     final result =
         QuestionAnswer.of(context).stepResult?.result as double? ??
         _scaleAnswerFormat.defaultValue;
-    final questionText = widget.questionStep.answerFormat?.question;
+    final questionText = _scaleAnswerFormat.question;
+    final colorScheme = Theme.of(context).colorScheme;
+    final formattedResult = _formatValue(result);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 14.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (questionText != null) AnswerQuestionText(text: questionText),
           Padding(
             padding: const EdgeInsets.only(top: 24.0, bottom: 8.0),
             child: Text(
-              result.toInt().toString(),
+              formattedResult,
               style: Theme.of(context).textTheme.displayLarge?.copyWith(
                 fontWeight: FontWeight.w600,
-                color: Theme.of(context).primaryColor,
+                color: colorScheme.primary,
               ),
             ),
           ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _scaleAnswerFormat.minimumValueDescription,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      _scaleAnswerFormat.maximumValueDescription,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Slider.adaptive(
-                value: result,
-                onChanged: (double value) {
-                  setState(() {
-                    onChange(value);
-                  });
-                },
-                min: _scaleAnswerFormat.minimumValue,
-                max: _scaleAnswerFormat.maximumValue,
-                activeColor: Theme.of(context).primaryColor,
-                divisions:
-                    (_scaleAnswerFormat.maximumValue -
-                        _scaleAnswerFormat.minimumValue) ~/
-                    _scaleAnswerFormat.step,
-                label: result.toString(),
-              ),
-            ],
+          _ScaleDescriptions(
+            minimumValueDescription: _scaleAnswerFormat.minimumValueDescription,
+            maximumValueDescription: _scaleAnswerFormat.maximumValueDescription,
+          ),
+          Slider.adaptive(
+            value: result,
+            onChanged: onChange,
+            min: _scaleAnswerFormat.minimumValue,
+            max: _scaleAnswerFormat.maximumValue,
+            activeColor: colorScheme.primary,
+            divisions:
+                (_scaleAnswerFormat.maximumValue -
+                    _scaleAnswerFormat.minimumValue) ~/
+                _scaleAnswerFormat.step,
+            label: formattedResult,
           ),
         ],
       ),
@@ -108,5 +93,33 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
   @override
   bool isValid(double? result) {
     return true;
+  }
+}
+
+class _ScaleDescriptions extends StatelessWidget {
+  const _ScaleDescriptions({
+    required this.minimumValueDescription,
+    required this.maximumValueDescription,
+  });
+
+  final String minimumValueDescription;
+  final String maximumValueDescription;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Theme.of(
+      context,
+    ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(minimumValueDescription, style: style),
+          Text(maximumValueDescription, style: style),
+        ],
+      ),
+    );
   }
 }

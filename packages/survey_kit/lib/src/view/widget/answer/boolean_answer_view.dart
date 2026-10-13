@@ -38,25 +38,22 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
     _answerFormat = answer as BooleanAnswerFormat;
     _result =
         widget.result?.result as BooleanResult? ?? _answerFormat.defaultValue;
+    initValidation(_result);
   }
 
   @override
-  bool isValid(dynamic result) {
+  bool isValid(BooleanResult? result) {
     if (widget.questionStep.isMandatory) {
-      return _result != null;
+      return result != null && result != BooleanResult.none;
     }
     return true;
   }
 
-  @override
-  void onChange(BooleanResult? booleanResult) {
-    if (booleanResult == _result) {
-      _result = null;
-    } else {
-      _result = booleanResult;
-    }
-    setState(() {});
-    super.onChange(_result);
+  void _toggleAnswer(BooleanResult booleanResult) {
+    setState(() {
+      _result = booleanResult == _result ? null : booleanResult;
+    });
+    onChange(_result);
   }
 
   @override
@@ -68,13 +65,15 @@ class _BooleanAnswerViewState extends State<BooleanAnswerView>
         const SizedBox(height: 12),
         SelectionListTile(
           text: _answerFormat.positiveAnswer,
-          onTap: () => onChange(BooleanResult.positive),
+          onTap: () => _toggleAnswer(BooleanResult.positive),
           isSelected: _result == BooleanResult.positive,
+          isExclusive: true,
         ),
         SelectionListTile(
           text: _answerFormat.negativeAnswer,
-          onTap: () => onChange(BooleanResult.negative),
+          onTap: () => _toggleAnswer(BooleanResult.negative),
           isSelected: _result == BooleanResult.negative,
+          isExclusive: true,
         ),
       ],
     );

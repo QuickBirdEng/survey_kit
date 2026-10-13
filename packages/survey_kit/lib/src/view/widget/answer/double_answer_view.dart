@@ -4,8 +4,8 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
-import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
-import 'package:survey_kit/src/view/widget/decoration/input_decoration.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_text_field.dart';
+import 'package:survey_kit/src/view/widget/answer/number_parsing.dart';
 
 class DoubleAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -34,10 +34,11 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView>
       throw Exception('DoubleAnswerFormat is null');
     }
     _doubleAnswerFormat = answer as DoubleAnswerFormat;
-    _controller = TextEditingController();
-    _controller.text = widget.result?.result?.toString() ?? '';
-
-    isValid(double.tryParse(_controller.text));
+    final initialValue =
+        (widget.result?.result as num?)?.toDouble() ??
+        _doubleAnswerFormat.defaultValue;
+    _controller = TextEditingController(text: initialValue?.toString() ?? '');
+    initValidation(initialValue);
   }
 
   @override
@@ -47,42 +48,22 @@ class _DoubleAnswerViewState extends State<DoubleAnswerView>
   }
 
   @override
-  bool isValid(dynamic result) {
-    return !widget.questionStep.isMandatory ||
-        (result != null && double.tryParse(result as String) != null);
+  bool isValid(double? result) {
+    return !widget.questionStep.isMandatory || result != null;
   }
 
   @override
   Widget build(BuildContext context) {
-    final questionText = widget.questionStep.answerFormat?.question;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 14.0),
-      child: Column(
-        children: [
-          if (questionText != null) AnswerQuestionText(text: questionText),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: TextField(
-              autofocus: true,
-              decoration: textFieldInputDecoration(
-                hint: _doubleAnswerFormat.hint,
-              ),
-              controller: _controller,
-              onChanged: (String text) {
-                final number = double.tryParse(text);
-                if (number == null) {
-                  onValidationChanged = false;
-                  return;
-                }
-                onChange(number);
-              },
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
+    return AnswerTextField(
+      questionText: _doubleAnswerFormat.question,
+      hint: _doubleAnswerFormat.hint,
+      controller: _controller,
+      keyboardType: const TextInputType.numberWithOptions(
+        signed: true,
+        decimal: true,
       ),
+      textInputAction: TextInputAction.done,
+      onChanged: (text) => onChange(parseDecimal(text)),
     );
   }
 }

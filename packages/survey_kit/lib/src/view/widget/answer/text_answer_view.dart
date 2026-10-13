@@ -4,8 +4,7 @@ import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
-import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
-import 'package:survey_kit/src/view/widget/decoration/input_decoration.dart';
+import 'package:survey_kit/src/view/widget/answer/answer_text_field.dart';
 
 class TextAnswerView extends StatefulWidget {
   final Step questionStep;
@@ -30,27 +29,24 @@ class _TextAnswerViewState extends State<TextAnswerView>
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
-    _controller.text = widget.result?.result as String? ?? '';
     final answer = widget.questionStep.answerFormat;
     if (answer == null) {
       throw Exception('TextAnswerFormat is null');
     }
     _textAnswerFormat = answer as TextAnswerFormat;
-    isValid(_controller.text);
+    _controller = TextEditingController(
+      text: widget.result?.result as String? ?? '',
+    );
+    initValidation(_controller.text);
   }
 
   @override
   bool isValid(String? text) {
-    if (text == null) {
-      return false;
+    if (text == null || text.trim().isEmpty) {
+      return !widget.questionStep.isMandatory;
     }
-    if (_textAnswerFormat.validationRegEx != null) {
-      final regExp = RegExp(_textAnswerFormat.validationRegEx!);
-      return regExp.hasMatch(text);
-    } else {
-      return true;
-    }
+    final validationRegEx = _textAnswerFormat.validationRegEx;
+    return validationRegEx == null || RegExp(validationRegEx).hasMatch(text);
   }
 
   @override
@@ -61,24 +57,13 @@ class _TextAnswerViewState extends State<TextAnswerView>
 
   @override
   Widget build(BuildContext context) {
-    final questionText = widget.questionStep.answerFormat?.question;
-
-    return Column(
-      children: [
-        if (questionText != null) AnswerQuestionText(text: questionText),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50.0,
-          child: TextField(
-            textInputAction: TextInputAction.next,
-            autofocus: true,
-            decoration: textFieldInputDecoration(hint: _textAnswerFormat.hint),
-            controller: _controller,
-            textAlign: TextAlign.center,
-            onChanged: onChange,
-          ),
-        ),
-      ],
+    return AnswerTextField(
+      questionText: _textAnswerFormat.question,
+      hint: _textAnswerFormat.hint,
+      controller: _controller,
+      maxLines: _textAnswerFormat.maxLines ?? 1,
+      padding: EdgeInsets.zero,
+      onChanged: onChange,
     );
   }
 }

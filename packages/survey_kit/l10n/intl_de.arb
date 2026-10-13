@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "cancel": "Abbrechen",
+  "next": "Weiter",
+  "otherLabel": "Sonstiges",
+  "otherHint": "Weitere Angaben hier eintragen",
+  "searchLabel": "Suche",
+  "searchHint": "Zum Suchen tippen",
+  "clearSearch": "Suche löschen"
+}

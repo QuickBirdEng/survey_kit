@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'survey_kit_localizations_de.dart';
 import 'survey_kit_localizations_en.dart';
 
 // ignore_for_file: type=lint
@@ -95,7 +96,10 @@ abstract class SurveyKitLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en'),
+  ];
 
   /// Button text to cancel the survey
   ///
@@ -108,6 +112,36 @@ abstract class SurveyKitLocalizations {
   /// In en, this message translates to:
   /// **'Next'**
   String get next;
+
+  /// Label of the free text field for an answer that is not in the list of choices
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get otherLabel;
+
+  /// Hint of the free text field for an answer that is not in the list of choices
+  ///
+  /// In en, this message translates to:
+  /// **'Write other information here'**
+  String get otherHint;
+
+  /// Label of the search field in the autocomplete multiple choice question
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get searchLabel;
+
+  /// Hint of the search field in the autocomplete multiple choice question
+  ///
+  /// In en, this message translates to:
+  /// **'Type here to search'**
+  String get searchHint;
+
+  /// Tooltip of the button that clears the search field
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get clearSearch;
 }
 
 class _SurveyKitLocalizationsDelegate
@@ -123,7 +157,7 @@ class _SurveyKitLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+      <String>['de', 'en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_SurveyKitLocalizationsDelegate old) => false;
@@ -132,6 +166,8 @@ class _SurveyKitLocalizationsDelegate
 SurveyKitLocalizations lookupSurveyKitLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'de':
+      return SurveyKitLocalizationsDe();
     case 'en':
       return SurveyKitLocalizationsEn();
   }

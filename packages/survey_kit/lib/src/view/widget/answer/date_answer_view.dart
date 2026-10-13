@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'package:intl/intl.dart';
 import 'package:survey_kit/src/model/answer/date_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
 import 'package:survey_kit/src/model/step.dart';
@@ -27,102 +26,117 @@ class DateAnswerView extends StatefulWidget {
 
 class _DateAnswerViewState extends State<DateAnswerView>
     with MeasureDateStateMixin, AnswerMixin<DateAnswerView, DateTime> {
-  final DateFormat _dateFormat = DateFormat('E, MMM d');
-  late DateAnswerFormat _dateAnswerFormat;
-  DateTime? _result;
+  late final DateAnswerFormat _dateAnswerFormat;
+  late final DateTime _firstDate;
+  late final DateTime _lastDate;
+  late DateTime _result;
 
   @override
   void initState() {
     super.initState();
     _dateAnswerFormat = widget.questionStep.answerFormat! as DateAnswerFormat;
-    _result =
-        widget.result?.result as DateTime? ??
-        _dateAnswerFormat.defaultDate ??
-        DateTime.now();
+    _firstDate = _dateAnswerFormat.minDate ?? DateTime.utc(1900);
+    _lastDate = (_dateAnswerFormat.maxDate ?? DateTime.now()).add(
+      const Duration(hours: 1),
+    );
+    _result = _clampToRange(
+      widget.result?.result as DateTime? ??
+          _dateAnswerFormat.defaultDate ??
+          DateTime.now(),
+    );
+    initValidation(_result);
+  }
+
+  DateTime _clampToRange(DateTime date) {
+    if (date.isBefore(_firstDate)) {
+      return _firstDate;
+    }
+    if (date.isAfter(_lastDate)) {
+      return _lastDate;
+    }
+    return date;
   }
 
   @override
-  bool isValid(dynamic result) {
+  bool isValid(DateTime? result) {
     return !widget.questionStep.isMandatory || result != null;
   }
 
   @override
   void onChange(DateTime? result) {
-    setState(() {
-      _result = result;
-    });
+    if (result != null) {
+      setState(() => _result = result);
+    }
     super.onChange(result);
   }
 
   @override
   Widget build(BuildContext context) {
+    final questionText = _dateAnswerFormat.question;
+    final isIos = Theme.of(context).platform == TargetPlatform.iOS;
+
     return Column(
       children: [
-        if (Theme.of(context).platform == TargetPlatform.iOS)
-          _iosDatePicker()
-        else
-          _androidDatePicker(),
+        if (questionText != null) AnswerQuestionText(text: questionText),
+        if (isIos) _iosDatePicker() else ..._materialDatePicker(context),
       ],
     );
   }
 
-  Widget _androidDatePicker() {
-    final questionText = widget.questionStep.answerFormat?.question;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (questionText != null) AnswerQuestionText(text: questionText),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0),
-          child: Stack(
-            children: [
-              Container(
-                color: Theme.of(context).primaryColor,
-                width: double.infinity,
-                height: 80.0,
-              ),
-              Positioned(
-                left: 8.0,
-                bottom: 8.0,
-                child: Text(
-                  _dateFormat.format(_result!),
-                  style: const TextStyle(fontSize: 28.0, color: Colors.white),
-                ),
-              ),
-            ],
-          ),
+  List<Widget> _materialDatePicker(BuildContext context) {
+    return [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14.0),
+        child: _SelectedDateHeader(date: _result),
+      ),
+      SizedBox(
+        width: double.infinity,
+        height: 300.0,
+        child: CalendarDatePicker(
+          firstDate: _firstDate,
+          lastDate: _lastDate,
+          initialDate: _result,
+          onDateChanged: onChange,
         ),
-        Container(
-          width: double.infinity,
-          height: 300.0,
-          child: CalendarDatePicker(
-            firstDate: _dateAnswerFormat.minDate ?? DateTime.utc(1900),
-            lastDate:
-                _dateAnswerFormat.maxDate?.add(const Duration(hours: 1)) ??
-                DateTime.now().add(const Duration(hours: 1)),
-            initialDate: _result ?? DateTime.now(),
-            currentDate: _result,
-            onDateChanged: onChange,
-          ),
-        ),
-      ],
-    );
+      ),
+    ];
   }
 
   Widget _iosDatePicker() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 300,
       child: CupertinoDatePicker(
         mode: CupertinoDatePickerMode.date,
         minimumDate: _dateAnswerFormat.minDate,
-        //We have to add an hour to to met the assert maxDate > initDate
-        maximumDate:
-            _dateAnswerFormat.maxDate?.add(const Duration(hours: 1)) ??
-            DateTime.now().add(const Duration(hours: 1)),
-        initialDateTime: _dateAnswerFormat.defaultDate,
+        maximumDate: _lastDate,
+        initialDateTime: _result,
         onDateTimeChanged: onChange,
+      ),
+    );
+  }
+}
+
+class _SelectedDateHeader extends StatelessWidget {
+  const _SelectedDateHeader({required this.date});
+
+  final DateTime date;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      color: colorScheme.primary,
+      width: double.infinity,
+      height: 80.0,
+      alignment: Alignment.bottomLeft,
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        MaterialLocalizations.of(context).formatMediumDate(date),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineMedium?.copyWith(color: colorScheme.onPrimary),
       ),
     );
   }

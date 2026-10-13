@@ -1,6 +1,6 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'package:flutter/scheduler.dart';
+import 'package:survey_kit/gen/survey_kit_localizations.dart';
 import 'package:survey_kit/src/model/answer/multiple_choice_auto_complete_answer_format.dart';
 import 'package:survey_kit/src/model/answer/text_choice.dart';
 import 'package:survey_kit/src/model/result/step_result.dart';
@@ -8,6 +8,7 @@ import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/measure_date_state_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_mixin.dart';
 import 'package:survey_kit/src/view/widget/answer/answer_question_text.dart';
+import 'package:survey_kit/src/view/widget/answer/other_choice_field.dart';
 import 'package:survey_kit/src/view/widget/answer/selection_list_tile.dart';
 
 class MultipleChoiceAutoCompleteAnswerView extends StatefulWidget {
@@ -41,9 +42,11 @@ class _MultipleChoiceAutoCompleteAnswerViewState
       throw Exception('MultipleChoiceAutoCompleteAnswerFormat is null');
     }
     _multipleChoiceAnswer = answer as MultipleChoiceAutoCompleteAnswerFormat;
-    _selectedChoices =
-        widget.result?.result as List<TextChoice>? ??
-        _multipleChoiceAnswer.defaultSelection;
+    _selectedChoices = List.of(
+      widget.result?.result as List<TextChoice>? ??
+          _multipleChoiceAnswer.defaultSelection,
+    );
+    initValidation(_selectedChoices);
   }
 
   @override
@@ -54,124 +57,60 @@ class _MultipleChoiceAutoCompleteAnswerViewState
     return true;
   }
 
-  // TODO(marvin): refactor the widgets and organize, DRY also
-  @override
-  Widget build(BuildContext context) {
-    final questionText = widget.questionStep.answerFormat?.question;
-
-    return Padding(
-      padding: EdgeInsets.zero,
-      child: Column(
-        children: [
-          if (questionText != null) AnswerQuestionText(text: questionText),
-          _AutoComplete(
-            suggestions: _multipleChoiceAnswer.suggestions,
-            onSelected: onChoiceSelected,
-            selectedChoices: _selectedChoices,
-          ),
-          const SizedBox(height: 32),
-          const SizedBox(height: 12),
-          ..._multipleChoiceAnswer.choices
-              .map(
-                (TextChoice tc) => SelectionListTile(
-                  text: tc.text,
-                  onTap: () => onChoiceSelected(tc),
-                  isSelected: _selectedChoices.contains(tc),
-                ),
-              )
-              .toList(),
-          ..._selectedChoices
-              .where(
-                (element) => !_multipleChoiceAnswer.choices.contains(element),
-              )
-              .map(
-                (TextChoice tc) => SelectionListTile(
-                  text: tc.text,
-                  onTap: () => onChoiceSelected(tc),
-                  isSelected: _selectedChoices.contains(tc),
-                ),
-              )
-              .toList(),
-          if (_multipleChoiceAnswer.otherField) ...[
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 4.0,
-              ),
-              child: TextField(
-                onChanged: (v) {
-                  int? currentIndex;
-                  final otherTextChoice = _selectedChoices
-                      .firstWhereIndexedOrNull((index, element) {
-                        final isOtherField = element.value == 'Other';
-
-                        if (isOtherField) {
-                          currentIndex = index;
-                        }
-
-                        return isOtherField;
-                      });
-
-                  setState(() {
-                    if (v.isEmpty && otherTextChoice != null) {
-                      _selectedChoices.remove(otherTextChoice);
-                    } else if (v.isNotEmpty) {
-                      final updatedTextChoice = TextChoice(
-                        id: 'Other',
-                        value: v,
-                        text: v,
-                      );
-                      if (otherTextChoice == null) {
-                        _selectedChoices.add(updatedTextChoice);
-                      } else if (currentIndex != null) {
-                        _selectedChoices[currentIndex!] = updatedTextChoice;
-                      }
-                    }
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: 'Other',
-                  labelStyle: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
-                  hintText: 'Write other information here',
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 14.0,
-                    vertical: 16.0,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade300,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  void onChoiceSelected(TextChoice tc) {
+  void _toggleChoice(TextChoice choice) {
     setState(() {
-      if (_selectedChoices.contains(tc)) {
-        _selectedChoices.remove(tc);
-      } else {
-        _selectedChoices.add(tc);
-      }
+      _selectedChoices = _selectedChoices.contains(choice)
+          ? _selectedChoices.where((element) => element != choice).toList()
+          : [..._selectedChoices, choice];
     });
     onChange(_selectedChoices);
+  }
+
+  void _onOtherTextChanged(String otherText) {
+    setState(() {
+      _selectedChoices = replaceOtherChoice(_selectedChoices, otherText);
+    });
+    onChange(_selectedChoices);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final questionText = _multipleChoiceAnswer.question;
+    final additionalChoices = _selectedChoices.where(
+      (choice) =>
+          choice.id != otherChoiceId &&
+          !_multipleChoiceAnswer.choices.contains(choice),
+    );
+
+    return Column(
+      children: [
+        if (questionText != null) AnswerQuestionText(text: questionText),
+        _AutoComplete(
+          suggestions: _multipleChoiceAnswer.suggestions,
+          onSelected: _toggleChoice,
+          selectedChoices: _selectedChoices,
+        ),
+        const SizedBox(height: 44),
+        for (final choice in [
+          ..._multipleChoiceAnswer.choices,
+          ...additionalChoices,
+        ])
+          SelectionListTile(
+            text: choice.text,
+            onTap: () => _toggleChoice(choice),
+            isSelected: _selectedChoices.contains(choice),
+          ),
+        if (_multipleChoiceAnswer.otherField)
+          OtherChoiceField(
+            initialValue: findOtherChoiceText(_selectedChoices),
+            onChanged: _onOtherTextChanged,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 4.0,
+            ),
+          ),
+      ],
+    );
   }
 }
 
@@ -189,6 +128,8 @@ class _AutoComplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = SurveyKitLocalizations.of(context);
+
     return Autocomplete<TextChoice>(
       fieldViewBuilder:
           (context, textEditingController, focusNode, onFieldSubmitted) =>
@@ -197,9 +138,10 @@ class _AutoComplete extends StatelessWidget {
                 focusNode: focusNode,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 32),
-                  labelText: 'Search',
-                  hintText: 'Type here to search',
+                  labelText: localizations?.searchLabel ?? 'Search',
+                  hintText: localizations?.searchHint ?? 'Type here to search',
                   suffixIcon: IconButton(
+                    tooltip: localizations?.clearSearch ?? 'Clear search',
                     padding: EdgeInsets.zero,
                     icon: const Icon(Icons.clear),
                     onPressed: () {
