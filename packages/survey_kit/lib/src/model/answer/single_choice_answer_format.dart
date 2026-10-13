@@ -21,7 +21,11 @@ class SingleChoiceAnswerFormat<T extends TextChoice> extends AnswerFormat {
     required this.choices,
     this.defaultSelection,
     super.question,
-  }) : super(answerType: SingleChoiceAnswerFormat.type);
+    @Deprecated(
+      'Built-in formats set their own type; pass it only to keep a custom type string.',
+    )
+    String? answerType,
+  }) : super(answerType: answerType ?? SingleChoiceAnswerFormat.type);
 
   factory SingleChoiceAnswerFormat.fromJson(
     Map<String, dynamic> json,

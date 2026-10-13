@@ -27,7 +27,11 @@ class MultipleChoiceAnswerFormat<T extends TextChoice> extends AnswerFormat {
     this.otherField = false,
     this.defaultSelection,
     super.question,
-  }) : super(answerType: MultipleChoiceAnswerFormat.type);
+    @Deprecated(
+      'Built-in formats set their own type; pass it only to keep a custom type string.',
+    )
+    String? answerType,
+  }) : super(answerType: answerType ?? MultipleChoiceAnswerFormat.type);
 
   factory MultipleChoiceAnswerFormat.fromJson(
     Map<String, dynamic> json,

@@ -21,7 +21,11 @@ class MultipleDoubleAnswerFormat extends AnswerFormat {
     this.defaultValues,
     required this.hints,
     super.question,
-  }) : super(answerType: MultipleDoubleAnswerFormat.type);
+    @Deprecated(
+      'Built-in formats set their own type; pass it only to keep a custom type string.',
+    )
+    String? answerType,
+  }) : super(answerType: answerType ?? MultipleDoubleAnswerFormat.type);
 
   factory MultipleDoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$MultipleDoubleAnswerFormatFromJson(json);

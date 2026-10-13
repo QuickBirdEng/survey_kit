@@ -26,7 +26,11 @@ class BooleanAnswerFormat extends AnswerFormat {
     required this.negativeAnswer,
     this.defaultValue = BooleanResult.none,
     super.question,
-  }) : super(answerType: BooleanAnswerFormat.type);
+    @Deprecated(
+      'Built-in formats set their own type; pass it only to keep a custom type string.',
+    )
+    String? answerType,
+  }) : super(answerType: answerType ?? BooleanAnswerFormat.type);
 
   factory BooleanAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$BooleanAnswerFormatFromJson(json);

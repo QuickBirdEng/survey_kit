@@ -32,7 +32,13 @@ class MultipleChoiceAutoCompleteAnswerFormat extends AnswerFormat {
     this.suggestions = const [],
     this.otherField = false,
     super.question,
-  }) : super(answerType: MultipleChoiceAutoCompleteAnswerFormat.type);
+    @Deprecated(
+      'Built-in formats set their own type; pass it only to keep a custom type string.',
+    )
+    String? answerType,
+  }) : super(
+         answerType: answerType ?? MultipleChoiceAutoCompleteAnswerFormat.type,
+       );
 
   factory MultipleChoiceAutoCompleteAnswerFormat.fromJson(
     Map<String, dynamic> json,

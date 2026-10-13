@@ -28,7 +28,11 @@ class IntegerAnswerFormat extends AnswerFormat {
     this.min = minInt,
     this.max = maxInt,
     super.question,
-  }) : super(answerType: IntegerAnswerFormat.type);
+    @Deprecated(
+      'Built-in formats set their own type; pass it only to keep a custom type string.',
+    )
+    String? answerType,
+  }) : super(answerType: answerType ?? IntegerAnswerFormat.type);
 
   factory IntegerAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$IntegerAnswerFormatFromJson(json);

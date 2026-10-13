@@ -30,7 +30,11 @@ class TextAnswerFormat extends AnswerFormat {
     this.hint = '',
     this.validationRegEx = defaultValidationRegEx,
     super.question,
-  }) : super(answerType: TextAnswerFormat.type);
+    @Deprecated(
+      'Built-in formats set their own type; pass it only to keep a custom type string.',
+    )
+    String? answerType,
+  }) : super(answerType: answerType ?? TextAnswerFormat.type);
 
   factory TextAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$TextAnswerFormatFromJson(json);

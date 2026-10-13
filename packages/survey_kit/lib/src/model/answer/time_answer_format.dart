@@ -14,8 +14,14 @@ class TimeAnswerFormat extends AnswerFormat {
   @_TimeOfDayJsonConverter()
   final TimeOfDay? defaultValue;
 
-  const TimeAnswerFormat({this.defaultValue, super.question})
-    : super(answerType: TimeAnswerFormat.type);
+  const TimeAnswerFormat({
+    this.defaultValue,
+    super.question,
+    @Deprecated(
+      'Built-in formats set their own type; pass it only to keep a custom type string.',
+    )
+    String? answerType,
+  }) : super(answerType: answerType ?? TimeAnswerFormat.type);
 
   factory TimeAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$TimeAnswerFormatFromJson(json);
