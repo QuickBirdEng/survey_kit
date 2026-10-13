@@ -36,6 +36,7 @@
 - `SurveyStateProvider.stateStream`.
 - `SurveyController.onClose` and a `context` parameter on `closeSurvey`.
 - `TextAnswerFormat.defaultValidationRegEx`.
+- `SurveyFlow.addNavigationRule` returns whether the rule was added.
 - German localization; new strings for the "Other" field and search.
 
 ### Deprecated
