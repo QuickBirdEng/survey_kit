@@ -17,5 +17,19 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: flutter analyze
+      # Test the sub-package against this repo's survey_kit, not the old version from pub.dev.
+      - run: |
+          cat > pubspec_overrides.yaml <<'EOF'
+          dependency_overrides:
+            survey_kit:
+              path: ../..
+          EOF
+        working-directory: packages/survey_kit_image_answer
+      # The root analyze also reads packages/, so their dependencies must be resolved first.
+      - run: flutter pub get
+        working-directory: packages/survey_kit_image_answer
+      # Infos are not fatal: some deprecation replacements need a newer Flutter than the package supports.
+      - run: flutter analyze --no-fatal-infos
       - run: flutter test
+      - run: flutter test
+        working-directory: packages/survey_kit_image_answer
