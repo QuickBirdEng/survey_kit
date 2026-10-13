@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: subosito/flutter-action@v2
         with:
@@ -20,6 +20,14 @@ jobs:
 
       - name: Resolve Workspace Dependencies
         run: flutter pub get
+
+      - name: Check Formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: Verify Generated Code
+        run: |
+          dart run melos exec --depends-on=build_runner -- dart run build_runner build -d
+          git diff --exit-code
 
       - name: Analyze
         run: dart run melos exec -- flutter analyze .
