@@ -28,6 +28,7 @@ void main() {
   testWidgets('completes the Dart health survey and shows the JSON result', (
     tester,
   ) async {
+    final reportedErrors = captureReportedErrors();
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
@@ -136,5 +137,17 @@ void main() {
     await tester.tap(find.text('Restart'));
     await settle();
     expect(find.byType(AlertDialog), findsNothing);
+    expect(
+      reportedErrors.map((details) => details.library),
+      everyElement(isIn(['survey_kit_audio', 'survey_kit_video'])),
+    );
   });
+}
+
+List<FlutterErrorDetails> captureReportedErrors() {
+  final errors = <FlutterErrorDetails>[];
+  final previous = FlutterError.onError;
+  FlutterError.onError = errors.add;
+  addTearDown(() => FlutterError.onError = previous);
+  return errors;
 }

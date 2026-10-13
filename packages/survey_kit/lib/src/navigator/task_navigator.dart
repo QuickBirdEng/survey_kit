@@ -61,6 +61,21 @@ abstract class TaskNavigator {
     history.add(step);
   }
 
+  /// Replaces this navigator's history with the history of [other], mapping
+  /// each visited step to the step with the same id in [task].
+  void restoreHistoryFrom(TaskNavigator other) {
+    history
+      ..clear()
+      ..addAll(
+        other.history.map(
+          (visited) => task.steps.firstWhere(
+            (step) => step.id == visited.id,
+            orElse: () => visited,
+          ),
+        ),
+      );
+  }
+
   /// Total number of steps in the survey.
   int get countSteps => task.steps.length;
 

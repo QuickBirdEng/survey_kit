@@ -99,6 +99,113 @@ void main() {
     expect(surveyResult!.results.map((r) => r.id), ['a', 'c', 'b']);
   });
 
+  testWidgets('going back in a linear survey keeps later answers', (
+    tester,
+  ) async {
+    final controller = SurveyController();
+    SurveyResult? surveyResult;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SurveyKit(
+          surveyController: controller,
+          task: SurveyFlow(
+            id: 'linear',
+            steps: [_step('a'), _step('b'), _step('c')],
+          ),
+          onResult: (result) => surveyResult = result,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    controller.next(stepResult: _result('a', 1));
+    await tester.pumpAndSettle();
+    controller.next(stepResult: _result('b', 2));
+    await tester.pumpAndSettle();
+    controller.stepBack(stepResult: _result('c', 3));
+    await tester.pumpAndSettle();
+    expect(find.text('b'), findsOneWidget);
+    controller.closeSurvey(stepResult: _result('b', 2));
+    await tester.pumpAndSettle();
+
+    expect(surveyResult!.results.map((r) => r.id), ['a', 'b', 'c']);
+  });
+
+  testWidgets('returning along the same path keeps later answers', (
+    tester,
+  ) async {
+    final controller = SurveyController();
+    SurveyResult? surveyResult;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SurveyKit(
+          surveyController: controller,
+          task: SurveyFlow(
+            id: 'revisit',
+            steps: [_step('a'), _step('b'), _step('c')],
+          ),
+          onResult: (result) => surveyResult = result,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    controller.next(stepResult: _result('a', 1));
+    await tester.pumpAndSettle();
+    controller.next(stepResult: _result('b', 2));
+    await tester.pumpAndSettle();
+    controller.stepBack(stepResult: _result('c', 3));
+    await tester.pumpAndSettle();
+    controller.next(stepResult: _result('b', 2));
+    await tester.pumpAndSettle();
+    expect(find.text('c'), findsOneWidget);
+    controller.next();
+    await tester.pumpAndSettle();
+
+    expect(surveyResult!.results.map((r) => r.id), ['a', 'b', 'c']);
+    expect(surveyResult!.results.last.result, 3);
+  });
+
+  testWidgets('a new task with the same steps applies its navigation rules', (
+    tester,
+  ) async {
+    final controller = SurveyController();
+    var target = 'b';
+    late StateSetter rebuildParent;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: StatefulBuilder(
+          builder: (context, setState) {
+            rebuildParent = setState;
+            return SurveyKit(
+              surveyController: controller,
+              task: SurveyFlow(
+                id: 'rules-$target',
+                steps: [_step('a'), _step('b'), _step('c')],
+                navigationRules: {'a': DirectNavigationRule(target)},
+              ),
+              onResult: (_) {},
+            );
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    rebuildParent(() => target = 'c');
+    await tester.pumpAndSettle();
+    controller.next(stepResult: _result('a', 1));
+    await tester.pumpAndSettle();
+    expect(find.text('c'), findsOneWidget);
+
+    controller.stepBack();
+    await tester.pumpAndSettle();
+    expect(find.text('a'), findsOneWidget);
+  });
+
   testWidgets('closing keeps the result of the current step', (tester) async {
     final controller = SurveyController();
     SurveyResult? surveyResult;

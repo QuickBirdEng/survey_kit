@@ -36,16 +36,16 @@ class _DateAnswerViewState extends State<DateAnswerView>
     super.initState();
     _dateAnswerFormat = widget.questionStep.answerFormat! as DateAnswerFormat;
     _firstDate = _dateAnswerFormat.minDate ?? DateTime.utc(1900);
-    _lastDate = (_dateAnswerFormat.maxDate ?? DateTime.now()).add(
-      const Duration(hours: 1),
-    );
-    _result = _clampToRange(
-      widget.result?.result as DateTime? ??
-          _dateAnswerFormat.defaultDate ??
-          DateTime.now(),
-    );
-    initValidation(_result);
+    _lastDate =
+        _dateAnswerFormat.maxDate?.add(const Duration(hours: 1)) ??
+        _latest(DateTime.now(), _firstDate).add(const Duration(hours: 1));
+    final initialAnswer =
+        widget.result?.result as DateTime? ?? _dateAnswerFormat.defaultDate;
+    _result = _clampToRange(initialAnswer ?? DateTime.now());
+    initValidation(initialAnswer == null ? null : _result);
   }
+
+  DateTime _latest(DateTime a, DateTime b) => a.isAfter(b) ? a : b;
 
   DateTime _clampToRange(DateTime date) {
     if (date.isBefore(_firstDate)) {

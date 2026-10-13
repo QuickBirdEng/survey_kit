@@ -47,7 +47,7 @@ class _ScaleAnswerViewState extends State<ScaleAnswerView>
   @override
   Widget build(BuildContext context) {
     final result =
-        QuestionAnswer.of(context).stepResult?.result as double? ??
+        (QuestionAnswer.of(context).stepResult?.result as num?)?.toDouble() ??
         _scaleAnswerFormat.defaultValue;
     final questionText = _scaleAnswerFormat.question;
     final colorScheme = Theme.of(context).colorScheme;

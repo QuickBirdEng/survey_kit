@@ -493,8 +493,9 @@ SurveyStateProvider.of(context).stateStream
 
 ### Answer formats
 
-Built-in answer formats no longer take `answerType:`. Remove the argument;
-custom `AnswerFormat` subclasses still pass it to `super`.
+Passing `answerType:` to a built-in answer format is deprecated; each format
+sets its own type. Remove the argument unless a subclass needs a custom type
+string.
 
 ### Navigation rules
 
@@ -507,7 +508,8 @@ a missing step now throw a `StateError` naming the step.
 
 ### Results
 
-- `SurveyResult.results` only contains visited steps, in visit order.
+- `SurveyResult.results` is ordered by visit. When the user goes back and
+  then takes a different path, answers from the abandoned path are dropped.
 - `StepResult.toJson` encodes typed values and adds a `resultType` field.
   Custom result types need `StepResult.registerResultCodec` to round-trip.
 
@@ -519,8 +521,9 @@ Content `toJson` now writes `type`, and `Content.fromJson` throws a
 ### Theming
 
 `textFieldInputDecoration(context, hint: ...)` now takes a `BuildContext`.
-`SurveyProgressConfiguration.progressbarColor` defaults to the theme's
-primary color when omitted.
+`SurveyProgressConfiguration.progressbarColor` (the track) defaults to the
+theme's `surfaceContainerHighest` when omitted; `valueProgressbarColor`
+defaults to `primary`.
 
 ## Notes
 

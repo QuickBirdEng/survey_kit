@@ -1,5 +1,7 @@
 # Unreleased
 
+- **FIX**: Load failures are reported through `FlutterError.reportError` so
+  host crash reporting sees them.
 - **FIX**: Depends on `survey_kit: ^2.0.0-beta4` instead of an exact version.
 - **FIX**: `VideoContent.toJson()` includes the `type` key.
 - **FIX**: The web player uses `package:web` instead of `universal_html` and

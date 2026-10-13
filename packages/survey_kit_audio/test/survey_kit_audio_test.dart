@@ -85,6 +85,7 @@ void main() {
   testWidgets('shows a retry button when the audio fails to load', (
     tester,
   ) async {
+    final reportedErrors = captureReportedErrors();
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(body: AudioWidget(audioContent: content)),
@@ -97,5 +98,18 @@ void main() {
 
     expect(find.byIcon(Icons.refresh), findsOneWidget);
     expect(find.byType(Slider), findsNothing);
+    expect(reportedErrors, isNotEmpty);
+    expect(
+      reportedErrors.map((details) => details.library),
+      everyElement('survey_kit_audio'),
+    );
   });
+}
+
+List<FlutterErrorDetails> captureReportedErrors() {
+  final errors = <FlutterErrorDetails>[];
+  final previous = FlutterError.onError;
+  FlutterError.onError = errors.add;
+  addTearDown(() => FlutterError.onError = previous);
+  return errors;
 }

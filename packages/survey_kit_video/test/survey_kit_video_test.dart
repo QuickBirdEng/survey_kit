@@ -52,6 +52,7 @@ void main() {
   });
 
   testWidgets('plugin builder renders the video widget', (tester) async {
+    final reportedErrors = captureReportedErrors();
     final builder = SurveyKitVideo().contentWidgetBuilders[VideoContent]!;
 
     await tester.pumpWidget(
@@ -67,11 +68,16 @@ void main() {
       find.text('https://example.com/more', findRichText: true),
       findsOneWidget,
     );
+    expect(
+      reportedErrors.map((details) => details.library),
+      everyElement('survey_kit_video'),
+    );
   });
 
   testWidgets('shows a retry button when the video fails to load', (
     tester,
   ) async {
+    final reportedErrors = captureReportedErrors();
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -85,5 +91,18 @@ void main() {
     await tester.pump();
 
     expect(find.byIcon(Icons.refresh), findsOneWidget);
+    expect(reportedErrors, isNotEmpty);
+    expect(
+      reportedErrors.map((details) => details.library),
+      everyElement('survey_kit_video'),
+    );
   });
+}
+
+List<FlutterErrorDetails> captureReportedErrors() {
+  final errors = <FlutterErrorDetails>[];
+  final previous = FlutterError.onError;
+  FlutterError.onError = errors.add;
+  addTearDown(() => FlutterError.onError = previous);
+  return errors;
 }

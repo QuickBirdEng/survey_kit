@@ -1,13 +1,12 @@
 # Unreleased
 
-- **BREAKING**: Built-in `AnswerFormat` constructors no longer take
-  `answerType:`; custom subclasses still pass it to the base class.
 - **BREAKING**: `StepResult.toJson` emits JSON-safe values plus a `resultType`
   discriminator that `fromJson` uses to restore the typed value. JSON without
   `resultType` still decodes as a raw value. `StepResult.==` ignores the
   generic type.
-- **BREAKING**: `SurveyResult.results` only contains visited steps, in visit
-  order; answers from abandoned branches are dropped.
+- **BREAKING**: `SurveyResult.results` is ordered by visit. Answers from a
+  path the user abandoned by going back and choosing a different branch are
+  dropped; answers on the path ahead are kept when the user only went back.
 - **BREAKING**: `NavigationRule` gained an overridable `resolve`; implementers
   must provide it. `DirectNavigationRule` and `ConditionalNavigationRule` now
   extend it.
@@ -18,7 +17,7 @@
   unknown `type`; content `toJson` includes `type`.
 - **BREAKING**: `textFieldInputDecoration` takes a `BuildContext` first;
   `SurveyProgressConfiguration.progressbarColor` is nullable and defaults to
-  the theme's primary color.
+  the theme's `surfaceContainerHighest`.
 - **BREAKING**: The default `TextAnswerFormat` regex rejects whitespace-only
   input.
 - **FEAT**: `StepResultCodec` / `StepResult.registerResultCodec` for custom
@@ -36,6 +35,8 @@
   recently added matching registration. Map overrides of a built-in type now
   also apply to its subclasses.
 - **FEAT**: German localization; new strings for the "Other" field and search.
+- **DEPRECATED**: Passing `answerType:` to built-in `AnswerFormat`
+  constructors; each format sets its own type.
 - **DEPRECATED**: `SurveyStateProvider.surveyStateStream` → `stateStream`,
   `SurveyController.onCloseSurvey` → `onClose`, `OrderedTaskNavigator` →
   `NavigableTaskNavigator`, `SurveyKitRegistry.registerAnswerViewBuilder` /
@@ -50,11 +51,14 @@
   subclasses are honoured, missing rule targets throw a descriptive
   `StateError`, and Next/Back taps during a back transition are ignored.
 - **FIX**: `SurveyResult`/`SurveyDefinition` hashCode is consistent with `==`.
+- **FIX**: Whole-number results of double and scale steps decode as `double`
+  even when encoded as `int` (as on web).
 - **FIX**: `DoubleAnswerView` no longer crashes and accepts commas as decimal
   separator; the autocomplete multiple-choice view no longer crashes on the
   first tap or mutates previous results.
 - **FIX**: Restored answers and defaults are validated immediately, so Next is
-  enabled when returning to an answered step.
+  enabled when returning to an answered step. Date and time pickers without a
+  default still require a selection on mandatory steps.
 - **FIX**: Deselecting a single choice clears the result; the "Other" field
   adds one entry instead of one per keystroke and is reported in the
   autocomplete view.

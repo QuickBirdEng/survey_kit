@@ -50,7 +50,15 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
     _hasError = false;
     try {
       await controller.initialize();
-    } catch (_) {
+    } catch (error, stackTrace) {
+      FlutterError.reportError(
+        FlutterErrorDetails(
+          exception: error,
+          stack: stackTrace,
+          library: 'survey_kit_video',
+          context: ErrorDescription('while initializing video'),
+        ),
+      );
       if (mounted && controller == _controller) {
         setState(() => _hasError = true);
       }

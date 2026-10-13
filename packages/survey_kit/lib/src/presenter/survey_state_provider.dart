@@ -51,6 +51,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
   late Set<StepResult> _results;
   late DateTime _startDate;
   bool _isStepBackPending = false;
+  final List<String> _steppedBackFromIds = [];
 
   @override
   void initState() {
@@ -164,6 +165,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
       previousResults: _results.toList(),
       questionResult: event.questionResult,
     );
+    _trackForwardNavigation(nextStep);
 
     if (nextStep == null) {
       return _handleSurveyFinished(currentState);
@@ -192,6 +194,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
 
     // If there's no previous step we can't go back further
     if (previousStep != null) {
+      _steppedBackFromIds.add(currentState.currentStep.id);
       final questionResult = _getResultByStepIdentifier(previousStep.id);
 
       return PresentingSurveyState(
@@ -206,6 +209,19 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     }
 
     return _state;
+  }
+
+  void _trackForwardNavigation(Step? nextStep) {
+    if (_steppedBackFromIds.isEmpty) {
+      return;
+    }
+    if (nextStep != null && _steppedBackFromIds.last == nextStep.id) {
+      _steppedBackFromIds.removeLast();
+      return;
+    }
+    final abandonedIds = _steppedBackFromIds.toSet();
+    _results.removeWhere((result) => abandonedIds.contains(result.id));
+    _steppedBackFromIds.clear();
   }
 
   StepResult? _getResultByStepIdentifier(String? identifier) {
@@ -253,12 +269,14 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
   }
 
   List<StepResult> _visitedStepResults(Step currentStep) {
-    final visitedIds = widget.taskNavigator.visitedStepIds(
-      currentStep: currentStep,
-    );
+    final orderedIds = <String>{
+      ...widget.taskNavigator.visitedStepIds(currentStep: currentStep),
+      ..._steppedBackFromIds.reversed,
+    };
+    final resultsById = {for (final result in _results) result.id: result};
     return [
-      for (final id in visitedIds)
-        if (_getResultByStepIdentifier(id) case final result?) result,
+      for (final id in orderedIds)
+        if (resultsById[id] case final result?) result,
     ];
   }
 

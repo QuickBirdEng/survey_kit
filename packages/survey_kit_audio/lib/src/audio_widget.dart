@@ -72,7 +72,15 @@ class _AudioWidgetState extends State<AudioWidget> {
     final generation = ++_loadGeneration;
     try {
       await _player.setUrl(widget.audioContent.url);
-    } catch (_) {
+    } catch (error, stackTrace) {
+      FlutterError.reportError(
+        FlutterErrorDetails(
+          exception: error,
+          stack: stackTrace,
+          library: 'survey_kit_audio',
+          context: ErrorDescription('while loading audio'),
+        ),
+      );
       if (mounted && generation == _loadGeneration) {
         setState(() {
           _isLoading = false;

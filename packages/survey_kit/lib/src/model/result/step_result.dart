@@ -1,4 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:survey_kit/src/model/answer/answer_format.dart';
+import 'package:survey_kit/src/model/answer/double_answer_format.dart';
+import 'package:survey_kit/src/model/answer/integer_answer_format.dart';
+import 'package:survey_kit/src/model/answer/scale_answer_format.dart';
 import 'package:survey_kit/src/model/result/step_result_codec.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/datetime_convert.dart';
@@ -51,19 +55,33 @@ class StepResult<T> {
   /// a `resultType` the raw JSON value is used.
   factory StepResult.fromJson(Map<String, dynamic> json) {
     const dateTimeConverter = CustomDateTimeConverter();
+    final step = Step.fromJson(json['step'] as Map<String, dynamic>);
+    final decoded = StepResultCodec.decodeValue(
+      json['resultType'] as String?,
+      json['result'],
+    );
     return StepResult<T>(
       id: json['id'] as String,
-      step: Step.fromJson(json['step'] as Map<String, dynamic>),
-      result:
-          StepResultCodec.decodeValue(
-                json['resultType'] as String?,
-                json['result'],
-              )
-              as T?,
+      step: step,
+      result: _numberForAnswerFormat(decoded, step.answerFormat) as T?,
       startTime: dateTimeConverter.fromJson(json['startTime'] as String),
       endTime: dateTimeConverter.fromJson(json['endTime'] as String),
       valueIdentifier: json['valueIdentifier'] as String?,
     );
+  }
+
+  static Object? _numberForAnswerFormat(
+    Object? value,
+    AnswerFormat? answerFormat,
+  ) {
+    if (value is! num) {
+      return value;
+    }
+    return switch (answerFormat) {
+      DoubleAnswerFormat() || ScaleAnswerFormat() => value.toDouble(),
+      IntegerAnswerFormat() => value.toInt(),
+      _ => value,
+    };
   }
 
   /// Registers a [StepResultCodec] used by [toJson] and [fromJson] for custom

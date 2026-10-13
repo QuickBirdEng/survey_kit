@@ -34,7 +34,13 @@ import 'package:survey_kit/src/view/widget/content/section_widget.dart';
 import 'package:survey_kit/src/view/widget/content/styled_text_widget.dart';
 import 'package:survey_kit/src/view/widget/content/text_widget.dart';
 
-List<AnswerViewRegistration> getDefaultAnswerViewRegistrations() {
+final List<AnswerViewRegistration> _defaultAnswerViewRegistrations =
+    List.unmodifiable(_buildDefaultAnswerViewRegistrations());
+
+List<AnswerViewRegistration> getDefaultAnswerViewRegistrations() =>
+    _defaultAnswerViewRegistrations;
+
+List<AnswerViewRegistration> _buildDefaultAnswerViewRegistrations() {
   return [
     AnswerViewRegistration<BooleanAnswerFormat>(
       (answerFormat, step, result) =>
@@ -85,7 +91,13 @@ List<AnswerViewRegistration> getDefaultAnswerViewRegistrations() {
   ];
 }
 
-List<ContentWidgetRegistration> getDefaultContentWidgetRegistrations() {
+final List<ContentWidgetRegistration> _defaultContentWidgetRegistrations =
+    List.unmodifiable(_buildDefaultContentWidgetRegistrations());
+
+List<ContentWidgetRegistration> getDefaultContentWidgetRegistrations() =>
+    _defaultContentWidgetRegistrations;
+
+List<ContentWidgetRegistration> _buildDefaultContentWidgetRegistrations() {
   return [
     ContentWidgetRegistration<TextContent>(
       (content) => TextWidget(textContent: content as TextContent),

@@ -340,8 +340,26 @@ void main() {
       );
 
       expect(tester.takeException(), isNull);
-      expect(harness.isValid, isTrue);
-      expect(harness.stepResult!.result, minDate);
+      expect(harness.isValid, isFalse);
+      expect(harness.stepResult?.result, isNull);
+    });
+
+    testWidgets('renders a future minDate without maxDate', (tester) async {
+      final step = Step(
+        content: const [],
+        answerFormat: DateAnswerFormat(
+          minDate: DateTime.now().add(const Duration(days: 10)),
+        ),
+      );
+      await _pumpAnswerView(
+        tester,
+        step: step,
+        builder: (step, result) =>
+            DateAnswerView(questionStep: step, result: result),
+      );
+
+      expect(tester.takeException(), isNull);
+      expect(find.byType(CalendarDatePicker), findsOneWidget);
     });
   });
 
@@ -515,6 +533,28 @@ void main() {
       expect(harness.isValid, isTrue);
       expect(harness.stepResult!.result, 4);
     });
+
+    testWidgets('restores an integer result without crashing', (tester) async {
+      final step = Step(
+        content: const [],
+        answerFormat: const ScaleAnswerFormat(
+          maximumValue: 10,
+          minimumValue: 0,
+          defaultValue: 4,
+          step: 1,
+        ),
+      );
+      final harness = await _pumpAnswerView(
+        tester,
+        step: step,
+        initialAnswer: 7,
+        builder: (step, result) =>
+            ScaleAnswerView(questionStep: step, result: result),
+      );
+
+      expect(tester.takeException(), isNull);
+      expect(harness.stepResult!.result, 7.0);
+    });
   });
 
   group('MultipleDoubleAnswerView', () {
@@ -669,7 +709,8 @@ void main() {
       expect(tester.takeException(), isNull);
       expectCupertinoDatePicker();
       expect(datePicker(tester).initialDateTime, minDate);
-      expect(harness.stepResult!.result, minDate);
+      expect(harness.isValid, isFalse);
+      expect(harness.stepResult?.result, isNull);
     }, variant: ios);
 
     testWidgets('date picker clamps the fallback date to maxDate', (
@@ -693,7 +734,26 @@ void main() {
       expect(tester.takeException(), isNull);
       expectCupertinoDatePicker();
       expect(datePicker(tester).initialDateTime, maxDate);
-      expect(harness.stepResult!.result, maxDate);
+      expect(harness.isValid, isFalse);
+      expect(harness.stepResult?.result, isNull);
+    }, variant: ios);
+
+    testWidgets('time picker without a default is not yet an answer', (
+      tester,
+    ) async {
+      final step = Step(
+        content: const [],
+        answerFormat: const TimeAnswerFormat(),
+      );
+      final harness = await _pumpAnswerView(
+        tester,
+        step: step,
+        builder: (step, result) =>
+            TimeAnswerView(questionStep: step, result: result),
+      );
+
+      expect(harness.isValid, isFalse);
+      expect(harness.stepResult?.result, isNull);
     }, variant: ios);
 
     testWidgets('time picker restores the previous answer', (tester) async {

@@ -45,10 +45,11 @@ class _TimeAnswerViewState extends State<TimeAnswerView>
     _timeAnswerFormat = answer as TimeAnswerFormat;
 
     final defaultTime = _timeAnswerFormat.defaultValue;
-    _initialValue =
+    final initialAnswer =
         widget.result?.result as TimeResult? ??
-        TimeResult(timeOfDay: defaultTime ?? TimeOfDay.now());
-    initValidation(_initialValue);
+        (defaultTime == null ? null : TimeResult(timeOfDay: defaultTime));
+    _initialValue = initialAnswer ?? TimeResult(timeOfDay: TimeOfDay.now());
+    initValidation(initialAnswer);
   }
 
   DateTime _initialDateTime() {

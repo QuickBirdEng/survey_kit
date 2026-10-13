@@ -96,6 +96,37 @@ void main() {
       expect(StepResult<String>.fromJson(json).result, 'legacy');
     });
 
+    test('whole-number results follow the answer format type', () {
+      StepResult<Object> encodedAsInt(AnswerFormat format, int value) {
+        final json = _jsonRoundTrip(
+          StepResult<int>(
+            id: 'number',
+            startTime: DateTime.utc(2022),
+            endTime: DateTime.utc(2022),
+            step: Step(id: 'number', content: const [], answerFormat: format),
+            result: value,
+          ).toJson(),
+        );
+        expect(json['resultType'], 'int');
+        return StepResult<Object>.fromJson(json);
+      }
+
+      expect(encodedAsInt(const DoubleAnswerFormat(), 3).result, isA<double>());
+      expect(
+        encodedAsInt(
+          const ScaleAnswerFormat(
+            maximumValue: 10,
+            minimumValue: 0,
+            defaultValue: 5,
+            step: 1,
+          ),
+          3,
+        ).result,
+        isA<double>(),
+      );
+      expect(encodedAsInt(const IntegerAnswerFormat(), 3).result, 3);
+    });
+
     test('custom codec registered via registerResultCodec', () {
       StepResult.registerResultCodec(
         StepResultCodec.of<_Custom>(

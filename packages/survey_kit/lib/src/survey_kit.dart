@@ -120,8 +120,12 @@ class _SurveyKitState extends State<SurveyKit> {
       _surveyController = widget.surveyController ?? SurveyController();
       _surveyController.navigatorKey = _navigatorKey;
     }
-    if (!_hasSameStepIds(widget.task, oldWidget.task)) {
+    if (!identical(widget.task, oldWidget.task)) {
+      final previousNavigator = _taskNavigator;
       _taskNavigator = _createTaskNavigator();
+      if (_hasSameStepIds(widget.task, oldWidget.task)) {
+        _taskNavigator.restoreHistoryFrom(previousNavigator);
+      }
     }
   }
 
