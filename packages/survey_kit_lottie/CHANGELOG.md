@@ -1,3 +1,11 @@
+# Unreleased
+
+- **FIX**: Depends on `survey_kit: ^2.0.0-beta4` instead of an exact version.
+- **FIX**: `LottieContent.toJson()` includes the `type` key.
+- **FIX**: Shows a placeholder while loading and an error icon when the
+  animation cannot be loaded. `LottieContent.fromJson` throws a
+  `FormatException` when neither `url` nor `asset` is set.
+
 # 2.0.0-beta4
 
 - **CHORE**: Now developed and tested against Flutter 3.47.2 / Dart 3.13.2.

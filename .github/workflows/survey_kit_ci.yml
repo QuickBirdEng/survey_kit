@@ -34,3 +34,21 @@ jobs:
 
       - name: Run Tests
         run: dart run melos exec --dir-exists="test" -- flutter test
+
+  web-wasm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Resolve Workspace Dependencies
+        run: flutter pub get
+
+      - name: Build Example for Web (Wasm)
+        working-directory: packages/survey_kit/example
+        run: flutter build web --wasm

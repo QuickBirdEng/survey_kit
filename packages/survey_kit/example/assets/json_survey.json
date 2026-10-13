@@ -1,0 +1,81 @@
+{
+  "id": "media-json-survey",
+  "type": "flow",
+  "steps": [
+    {
+      "id": "json-intro",
+      "content": [
+        { "type": "styledText", "text": "Loaded from JSON", "fontSize": 28, "bold": true },
+        {
+          "type": "markdown",
+          "text": "This survey is defined in `assets/json_survey.json` and parsed with **SurveyDefinition.fromJson**."
+        }
+      ],
+      "buttonText": "Start"
+    },
+    {
+      "id": "json-section",
+      "content": [
+        {
+          "type": "section",
+          "title": { "text": "Built-in content", "fontSize": 22, "bold": true },
+          "subtitle": { "text": "Section, image and text", "italic": true },
+          "text": { "text": "Every built-in content type can be described in JSON." }
+        },
+        {
+          "type": "image",
+          "url": "https://github.com/QuickBirdEng/survey_kit/raw/a398d48af464597235ea16e19aabd898a5c39c0a/example/assets/surveykit_logo.png",
+          "height": 120,
+          "fit": "contain"
+        },
+        { "type": "text", "text": "What do you think of SurveyKit so far?" }
+      ],
+      "answerFormat": { "type": "text", "hint": "Your answer", "maxLines": 3 },
+      "isMandatory": false,
+      "buttonText": "Continue"
+    },
+    {
+      "id": "json-video",
+      "content": [
+        {
+          "type": "video",
+          "title": "Bee",
+          "url": "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+          "externalLink": "https://flutter.github.io/assets-for-api-docs/"
+        }
+      ],
+      "buttonText": "Next"
+    },
+    {
+      "id": "json-audio",
+      "content": [
+        {
+          "type": "audio",
+          "title": "Gong",
+          "subtitle": "Sample audio",
+          "url": "https://github.com/QuickBirdEng/survey_kit/raw/a398d48af464597235ea16e19aabd898a5c39c0a/assets/gong.mp3"
+        }
+      ],
+      "buttonText": "Next"
+    },
+    {
+      "id": "json-lottie",
+      "content": [
+        { "type": "lottie", "asset": "assets/fancy_checkmark.json", "repeat": true, "width": 180, "height": 180 }
+      ],
+      "answerFormat": {
+        "type": "single",
+        "textChoices": [
+          { "id": "yes", "text": "Yes", "value": "yes" },
+          { "id": "no", "text": "No", "value": "no" }
+        ]
+      },
+      "buttonText": "Finish"
+    },
+    {
+      "id": "json-done",
+      "content": [{ "type": "text", "text": "Thank you!", "fontSize": 32 }],
+      "buttonText": "Submit"
+    }
+  ]
+}

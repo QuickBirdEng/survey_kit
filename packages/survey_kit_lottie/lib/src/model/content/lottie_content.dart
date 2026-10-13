@@ -23,9 +23,18 @@ class LottieContent extends Content {
   }) : assert(url != null || asset != null, 'Either url or asset must be set'),
        super(contentType: type);
 
-  factory LottieContent.fromJson(Map<String, dynamic> json) =>
-      _$LottieContentFromJson(json);
+  factory LottieContent.fromJson(Map<String, dynamic> json) {
+    if (json['url'] == null && json['asset'] == null) {
+      throw const FormatException(
+        'LottieContent requires either "url" or "asset".',
+      );
+    }
+    return _$LottieContentFromJson(json);
+  }
 
   @override
-  Map<String, dynamic> toJson() => _$LottieContentToJson(this);
+  Map<String, dynamic> toJson() => {
+    ..._$LottieContentToJson(this),
+    'type': type,
+  };
 }

@@ -1,4 +1,4 @@
-library survery_kit_video;
+library survey_kit_video;
 
 import 'package:survey_kit/survey_kit.dart';
 import 'package:survey_kit_video/src/video_content.dart';

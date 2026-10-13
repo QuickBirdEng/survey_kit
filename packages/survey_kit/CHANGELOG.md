@@ -1,3 +1,89 @@
+# Unreleased
+
+### Breaking
+
+- **BREAKING**: Built-in `AnswerFormat` constructors no longer accept
+  `answerType:`; each format fixes its own type. Custom subclasses still pass
+  it to the base class.
+- **BREAKING**: `StepResult.toJson` now emits JSON-safe values (ISO dates,
+  enum names, maps for `TextChoice`/`TimeResult`/`MultiDouble`) plus a
+  `resultType` discriminator used by `fromJson` to restore the typed value.
+  JSON without `resultType` still decodes as a raw value. `StepResult.==`
+  ignores the generic type.
+- **BREAKING**: `SurveyResult.results` only contains steps that were actually
+  visited, in visit order. Answers from a branch the user backed out of are
+  dropped.
+- **BREAKING**: `NavigationRule` gained an overridable `resolve`. Classes that
+  `implements NavigationRule` must implement it; `DirectNavigationRule` and
+  `ConditionalNavigationRule` now extend it.
+- **BREAKING**: `SurveyFlow.navigationRules`, `SurveyStateProvider.results` and
+  `PresentingSurveyState.steps`/`questionResults` are read-only.
+  `PresentingSurveyState` is no longer const-constructible.
+- **BREAKING**: `Content.fromJson` throws a `FormatException` for a missing or
+  unknown `type`. Content `toJson` now includes `type`.
+- **BREAKING**: `textFieldInputDecoration` takes a `BuildContext` as its first
+  argument. `SurveyProgressConfiguration.progressbarColor` is nullable and
+  defaults to the theme's primary color.
+- **BREAKING**: The default `TextAnswerFormat` regex now rejects
+  whitespace-only input.
+
+### Added
+
+- `StepResultCodec` and `StepResult.registerResultCodec` for custom result
+  types.
+- `NavigationRule.registerFromJson` for custom rule types.
+- `TaskNavigator.visitedStepIds()`.
+- `SurveyStateProvider.stateStream`.
+- `SurveyController.onClose` and a `context` parameter on `closeSurvey`.
+- `TextAnswerFormat.defaultValidationRegEx`.
+- German localization; new strings for the "Other" field and search.
+
+### Deprecated
+
+- `SurveyStateProvider.surveyStateStream` → `stateStream`.
+- `SurveyController.onCloseSurvey` → `onClose`.
+- `OrderedTaskNavigator` → `NavigableTaskNavigator`.
+- `SurveyKitRegistry.registerAnswerViewBuilder` /
+  `registerContentWidgetBuilder` → pass builders at construction.
+
+### Fixed
+
+- Surveys with content now round-trip through JSON; `image`, `section` and
+  `styledText` content are registered for `Content.fromJson`.
+- JSON conditional rules match `TextChoice`, `BooleanResult`, date and time
+  answers.
+- Back navigation survives a parent rebuild of `SurveyKit`.
+- `initialStep` loaded from JSON no longer yields a negative progress.
+- `OrderedTask.addNavigationRule` no longer throws.
+- `SurveyResult`/`SurveyDefinition` hashCode is consistent with `==`.
+- Custom `NavigationRule` subclasses are honoured; missing rule targets throw
+  a descriptive `StateError`.
+- Next/Back taps during a back transition are ignored.
+- `DoubleAnswerView` no longer crashes on input; commas are accepted as the
+  decimal separator.
+- The autocomplete multiple-choice view no longer crashes on the first tap and
+  no longer mutates previous results.
+- Restored answers and defaults are validated immediately, so Next is enabled
+  when returning to an answered step.
+- Deselecting a single choice clears the result.
+- The "Other" field adds a single entry instead of one per keystroke, and is
+  reported in the autocomplete view.
+- Mandatory text questions reject empty input; `MultipleDoubleAnswerView`
+  requires every field to parse.
+- Clearing an optional number field submits `null` instead of the stale
+  value.
+- Date and time pickers restore the previous answer and clamp to
+  `minDate`/`maxDate`; the question text is shown on iOS.
+- Number fields show signed/decimal keyboards.
+- Colors follow the theme's `ColorScheme`; selection tiles expose selected
+  semantics; `LinkText` disposes its recognizer and exposes link semantics.
+- **FIX**: Removed the stale `video_content.g.dart` left over from the plugin
+  split.
+- **FIX**: The web platform view registry is now selected with
+  `dart.library.js_interop`, so it works when compiled to Wasm.
+- **DOCS**: Fixed the README branching sample (`choices:`), the localization
+  setup, the answer format list and image links.
+
 # 2.0.0-beta4
 
 - **CHORE**: Now developed and tested against Flutter 3.47.2 / Dart 3.13.2.

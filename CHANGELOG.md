@@ -1,10 +1,45 @@
 # Unreleased
 
+- **FIX** (`survey_kit`): Broad correctness pass over answer views, JSON
+  serialization and navigation, with several breaking API changes. See
+  `packages/survey_kit/CHANGELOG.md` and section 16 of `MIGRATION.md`.
 - **CHORE**: Bumped the `.fvmrc` Flutter pin to 3.47.7 and refreshed the
   workspace lockfile to the latest compatible versions. Published constraint
   floors are unchanged.
 - **CHORE**: CI now checks formatting and that generated code is up to date,
   and uses `actions/checkout@v6`.
+- **CHORE**: CI also builds the example for web with `--wasm`. The publish
+  workflow now runs the same format and codegen checks, dry-runs every
+  package before publishing any, and skips versions already on pub.dev so a
+  failed release can be re-run.
+- **CHORE**: Melos scripts moved from the ignored `melos.yaml` into the
+  `melos:` section of the root `pubspec.yaml`.
+- **FIX** (`survey_kit`): Removed the stale `video_content.g.dart` left over
+  from the plugin split. The web platform view registry is now selected with
+  `dart.library.js_interop`, so it works when compiled to Wasm.
+- **FIX** (plugins): `survey_kit_audio`, `survey_kit_lottie` and
+  `survey_kit_video` now depend on `survey_kit: ^2.0.0-beta4` instead of an
+  exact version. `toJson()` on `AudioContent`, `VideoContent` and
+  `LottieContent` now includes the `type` key, so the output can be read back
+  with `Content.fromJson`.
+- **FIX** (`survey_kit_audio`): Shows a loading indicator, and an error state
+  with retry when the audio fails to load. Replays from the start after
+  completion, clamps the seek bar, renders `externalLink` and reloads when the
+  URL changes.
+- **FIX** (`survey_kit_video`): The web player uses `package:web` instead of
+  `universal_html` and no longer reuses a cached platform view for repeated
+  URLs, so it works with Wasm builds and respects per-player settings. The
+  native player reloads when its URL or options change and offers a retry on
+  errors.
+- **FIX** (`survey_kit_lottie`): Shows a placeholder while loading and an
+  error icon instead of failing silently or showing a developer message.
+  `LottieContent.fromJson` throws a `FormatException` when neither `url` nor
+  `asset` is set.
+- **DOCS**: Fixed the README branching sample (`choices:`), the localization
+  setup, the answer format list and image links. `MIGRATION.md` now uses
+  `^2.0.0-beta4` and covers sections 8 and 9.
+- **CHORE**: The example app adds a JSON-defined survey that uses every
+  content type and plugin, and smoke tests for both surveys.
 
 # 2.0.0-beta4
 

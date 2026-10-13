@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/surveykit_logo.png?raw=true" width="500">
+<img src="https://github.com/QuickBirdEng/survey_kit/raw/main/packages/survey_kit/example/assets/surveykit_logo.png" width="500">
 </p>
 
 # SurveyKit: Create beautiful surveys with Flutter (inspired by [iOS ResearchKit Surveys](https://researchkit.org/docs/docs/Survey/CreatingSurveys.html))
@@ -13,7 +13,7 @@ We aim to keep the functionality close to [iOS ResearchKit Surveys](https://rese
 # Examples
 ###### Flow
 <p align="center">
-<img src="https://github.com/quickbirdstudios/survey_kit/blob/main/example/assets/survey-kit-demo.gif?raw=true" width="350">
+<img src="https://github.com/QuickBirdEng/survey_kit/raw/main/packages/survey_kit/example/assets/survey-kit-demo.gif" width="350">
 </p>
 
 
@@ -51,15 +51,15 @@ We aim to keep the functionality close to [iOS ResearchKit Surveys](https://rese
 `pubspec.yaml`
 ```yaml
 dependencies:
-  survey_kit: ^2.0.0-beta1
+  survey_kit: ^2.0.0-beta4
 ```
 
 Add media packages only when you need them:
 ```yaml
 dependencies:
-  survey_kit_audio: ^2.0.0-beta1
-  survey_kit_video: ^2.0.0-beta1
-  survey_kit_lottie: ^2.0.0-beta1
+  survey_kit_audio: ^2.0.0-beta4
+  survey_kit_video: ^2.0.0-beta4
+  survey_kit_lottie: ^2.0.0-beta4
 ```
 
 ## 2. Install it
@@ -107,10 +107,17 @@ final steps = [
 The following answer formats are supported:
 - `TextAnswerFormat`
 - `IntegerAnswerFormat`
+- `DoubleAnswerFormat`
+- `MultipleDoubleAnswerFormat`
 - `ScaleAnswerFormat`
 - `SingleChoiceAnswerFormat`
 - `MultipleChoiceAnswerFormat`
+- `MultipleChoiceAutoCompleteAnswerFormat`
 - `BooleanAnswerFormat`
+- `DateAnswerFormat`
+- `TimeAnswerFormat`
+
+Built-in content types are `TextContent`, `StyledTextContent`, `MarkdownContent`, `ImageContent` and `SectionContent`.
 
 ## Create a survey
 Pass your steps to `SurveyFlow` and render it with the `SurveyKit` widget:
@@ -137,7 +144,7 @@ final task = SurveyFlow(
       id: 'medication',
       content: const [TextContent(text: 'Are you using any medication?')],
       answerFormat: SingleChoiceAnswerFormat(
-        textChoices: [
+        choices: [
           TextChoice(id: 'yes', value: 'yes', text: 'Yes'),
           TextChoice(id: 'no', value: 'no', text: 'No'),
         ],
@@ -179,9 +186,20 @@ SurveyKit(
 Styling is done through Flutter's standard theming. SurveyKit adapts to your `ThemeData` automatically.
 
 ## Localization
-Add `SurveyKitLocalizations.delegate` to your app's localization delegates:
+Add `flutter_localizations` to your dependencies:
+
+```yaml
+dependencies:
+  flutter_localizations:
+    sdk: flutter
+```
+
+Then add `SurveyKitLocalizations.delegate` to your app's localization delegates:
 
 ```dart
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:survey_kit/survey_kit.dart';
+
 MaterialApp(
   localizationsDelegates: const [
     SurveyKitLocalizations.delegate,

@@ -20,44 +20,80 @@ class SurveyKitVideoPlayer extends StatefulWidget {
 }
 
 class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
-  late final VideoPlayerController _controller;
+  final Key _visibilityKey = UniqueKey();
+  VideoPlayerController? _controller;
   ChewieController? _chewieController;
   bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
     _initialize();
   }
 
+  @override
+  void didUpdateWidget(covariant SurveyKitVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.videoUrl != widget.videoUrl ||
+        oldWidget.loop != widget.loop ||
+        oldWidget.autoPlay != widget.autoPlay) {
+      _disposeControllers();
+      _initialize();
+    }
+  }
+
   Future<void> _initialize() async {
+    final controller = VideoPlayerController.networkUrl(
+      Uri.parse(widget.videoUrl),
+    );
+    _controller = controller;
+    _hasError = false;
     try {
-      await _controller.initialize();
+      await controller.initialize();
     } catch (_) {
-      if (mounted) {
+      if (mounted && controller == _controller) {
         setState(() => _hasError = true);
       }
       return;
     }
-    if (!mounted) {
+    if (!mounted || controller != _controller) {
       return;
     }
     setState(() {
       _chewieController = ChewieController(
-        videoPlayerController: _controller,
+        videoPlayerController: controller,
         autoPlay: widget.autoPlay,
         looping: widget.loop,
       );
     });
   }
 
+  void _retry() {
+    setState(_disposeControllers);
+    _initialize();
+  }
+
+  void _disposeControllers() {
+    _chewieController?.dispose();
+    _chewieController = null;
+    _controller?.dispose();
+    _controller = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_hasError) {
-      return const SizedBox(
+      return SizedBox(
         height: 200,
-        child: Center(child: Icon(Icons.videocam_off_outlined, size: 48)),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.videocam_off_outlined, size: 48),
+              IconButton(icon: const Icon(Icons.refresh), onPressed: _retry),
+            ],
+          ),
+        ),
       );
     }
 
@@ -72,10 +108,10 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
     return AspectRatio(
       aspectRatio: chewieController.aspectRatio ?? 16 / 9,
       child: VisibilityDetector(
-        key: Key(widget.videoUrl),
+        key: _visibilityKey,
         onVisibilityChanged: (info) {
           if (info.visibleFraction == 0 && mounted) {
-            _controller.pause();
+            _controller?.pause();
           }
         },
         child: Chewie(controller: chewieController),
@@ -85,8 +121,7 @@ class _SurveyKitVideoPlayerState extends State<SurveyKitVideoPlayer> {
 
   @override
   void dispose() {
-    _chewieController?.dispose();
-    _controller.dispose();
+    _disposeControllers();
     super.dispose();
   }
 }

@@ -1,3 +1,11 @@
+# Unreleased
+
+- **FIX**: Depends on `survey_kit: ^2.0.0-beta4` instead of an exact version.
+- **FIX**: `AudioContent.toJson()` includes the `type` key.
+- **FIX**: Shows a loading indicator, and an error state with retry when the
+  audio fails to load. Replays from the start after completion, clamps the
+  seek bar, renders `externalLink` and reloads when the URL changes.
+
 # 2.0.0-beta4
 
 - **CHORE**: Now developed and tested against Flutter 3.47.2 / Dart 3.13.2.

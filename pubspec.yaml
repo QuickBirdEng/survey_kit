@@ -13,3 +13,29 @@ workspace:
 
 dev_dependencies:
   melos: ^8.9.0
+
+melos:
+  scripts:
+    analyze:
+      exec: flutter analyze .
+      description: Run `flutter analyze` in all packages.
+
+    format:
+      run: dart format --set-exit-if-changed .
+      description: Check formatting across the workspace.
+
+    generate:
+      exec: dart run build_runner build -d
+      packageFilters:
+        dependsOn: build_runner
+      description: Run `build_runner` in all packages that use it.
+
+    test:
+      exec: flutter test
+      packageFilters:
+        dirExists: test
+      description: Run tests in all packages that have a `test` directory.
+
+    clean:
+      exec: flutter clean
+      description: Run `flutter clean` in all packages.

@@ -9,26 +9,58 @@ class LottieWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (lottieContent.url == null && lottieContent.asset == null) {
-      return const Text('Either url or asset must be set');
-    }
+    final url = lottieContent.url;
+    final asset = lottieContent.asset;
 
-    if (lottieContent.url != null) {
+    if (url != null) {
       return Lottie.network(
-        lottieContent.url!,
+        url,
         fit: BoxFit.contain,
         repeat: lottieContent.repeat,
         width: lottieContent.width,
         height: lottieContent.height,
-      );
-    } else {
-      return LottieBuilder.asset(
-        lottieContent.asset!,
-        fit: BoxFit.contain,
-        repeat: lottieContent.repeat,
-        width: lottieContent.width,
-        height: lottieContent.height,
+        frameBuilder: _buildFrame,
+        errorBuilder: _buildError,
       );
     }
+    if (asset != null) {
+      return Lottie.asset(
+        asset,
+        fit: BoxFit.contain,
+        repeat: lottieContent.repeat,
+        width: lottieContent.width,
+        height: lottieContent.height,
+        frameBuilder: _buildFrame,
+        errorBuilder: _buildError,
+      );
+    }
+    return _buildError(context, null, null);
+  }
+
+  Widget _buildFrame(
+    BuildContext context,
+    Widget child,
+    LottieComposition? composition,
+  ) {
+    if (composition != null) {
+      return child;
+    }
+    return SizedBox(
+      width: lottieContent.width,
+      height: lottieContent.height,
+      child: const Center(child: CircularProgressIndicator.adaptive()),
+    );
+  }
+
+  Widget _buildError(
+    BuildContext context,
+    Object? error,
+    StackTrace? stackTrace,
+  ) {
+    return SizedBox(
+      width: lottieContent.width,
+      height: lottieContent.height,
+      child: const Center(child: Icon(Icons.broken_image_outlined)),
+    );
   }
 }

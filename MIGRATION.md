@@ -21,16 +21,17 @@ safely.
 13. Rename `BooleanAnswerFormat.result` → `BooleanAnswerFormat.defaultValue`.
 14. Update `SurveyController` override callbacks to accept a `proceed` parameter.
 15. Update `QuestionAnswer` usage in custom `stepShell` (if applicable).
+16. Coming from 2.0.0-beta4: apply the follow-up changes in section 16.
 
 ## 1) Dependencies
 
 ```yaml
 dependencies:
-  survey_kit: 2.0.0-beta1
+  survey_kit: ^2.0.0-beta4
   # add only what you use:
-  survey_kit_audio: 2.0.0-beta1
-  survey_kit_video: 2.0.0-beta1
-  survey_kit_lottie: 2.0.0-beta1
+  survey_kit_audio: ^2.0.0-beta4
+  survey_kit_video: ^2.0.0-beta4
+  survey_kit_lottie: ^2.0.0-beta4
 ```
 
 ## 2) Task API Rename (Breaking)
@@ -198,6 +199,47 @@ MaterialApp(
 )
 ```
 
+## 8) Prefer `SurveyFlow` over `OrderedTask` / `NavigableTask`
+
+`OrderedTask` and `NavigableTask` still compile but are deprecated wrappers
+around `SurveyFlow`. Replace them directly:
+
+```dart
+// Before
+final task = OrderedTask(id: 'survey', steps: steps);
+final branching = NavigableTask(id: 'survey', steps: steps);
+branching.addNavigationRule(
+  forTriggerStepIdentifier: steps[1].id,
+  navigationRule: ConditionalNavigationRule(...),
+);
+
+// After
+final task = SurveyFlow(id: 'survey', steps: steps);
+final branching = SurveyFlow(
+  id: 'survey',
+  steps: steps,
+  navigationRules: {
+    steps[1].id: ConditionalNavigationRule(...),
+  },
+);
+```
+
+## 9) Prefer `SurveyDefinition.fromJson` over `Task.fromJson`
+
+`Task` is a deprecated alias for `SurveyDefinition`. Deserialize surveys
+through the new entrypoint and type variables as `SurveyDefinition`:
+
+```dart
+// Before
+final Task task = Task.fromJson(payload);
+
+// After
+final SurveyDefinition survey = SurveyDefinition.fromJson(payload);
+```
+
+Register JSON converters for custom and plugin types (section 6) before
+calling `fromJson`.
+
 ## 10) `SurveyController.closeSurvey` — No BuildContext (Breaking)
 
 `closeSurvey` no longer accepts a `BuildContext`. The context is resolved
@@ -348,7 +390,7 @@ SurveyController(
   onStepBack: (context, stepResult) {
     SurveyStateProvider.of(context).onEvent(StepBack(stepResult));
   },
-  onCloseSurvey: (stepResult) {
+  onCloseSurvey: (context, stepResult) {
     SurveyStateProvider.of(context).onEvent(CloseSurvey(stepResult));
   },
 );
@@ -417,8 +459,71 @@ stepShell: (step, answerWidget, context) {
 },
 ```
 
+## 16) Changes after 2.0.0-beta4
+
+### Closing a survey
+
+`closeSurvey` accepts an optional `context` again, and the new `onClose`
+callback receives it. `onCloseSurvey` still works but is deprecated.
+
+```dart
+// Before
+SurveyController(
+  onCloseSurvey: (StepResult? result, void Function() proceed) {
+    proceed();
+  },
+);
+
+// After
+SurveyController(
+  onClose: (BuildContext context, StepResult? result, void Function() proceed) {
+    proceed();
+  },
+);
+```
+
+### State stream
+
+```dart
+// Before
+SurveyStateProvider.of(context).surveyStateStream.stream
+// After
+SurveyStateProvider.of(context).stateStream
+```
+
+### Answer formats
+
+Built-in answer formats no longer take `answerType:`. Remove the argument;
+custom `AnswerFormat` subclasses still pass it to `super`.
+
+### Navigation rules
+
+`NavigationRule` gained `resolve(previousResults, questionResult)`. Custom
+rules should `extend NavigationRule` and override `resolve`. Register custom
+rule types for JSON with `NavigationRule.registerFromJson`. Rules pointing at
+a missing step now throw a `StateError` naming the step.
+
+`SurveyFlow.navigationRules` is read-only; use `addNavigationRule`.
+
+### Results
+
+- `SurveyResult.results` only contains visited steps, in visit order.
+- `StepResult.toJson` encodes typed values and adds a `resultType` field.
+  Custom result types need `StepResult.registerResultCodec` to round-trip.
+
+### Content JSON
+
+Content `toJson` now writes `type`, and `Content.fromJson` throws a
+`FormatException` when it is missing or unknown.
+
+### Theming
+
+`textFieldInputDecoration(context, hint: ...)` now takes a `BuildContext`.
+`SurveyProgressConfiguration.progressbarColor` defaults to the theme's
+primary color when omitted.
+
 ## Notes
 
 - Core package remains focused on survey models + default UI.
 - Media and advanced extension points are now opt-in.
-- For issues, use [GitHub Issues](https://github.com/quickbirdstudios/survey_kit/issues).
+- For issues, use [GitHub Issues](https://github.com/QuickBirdEng/survey_kit/issues).

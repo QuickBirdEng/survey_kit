@@ -1,0 +1,257 @@
+import 'package:flutter/material.dart' hide Step;
+import 'package:survey_kit/survey_kit.dart';
+import 'package:survey_kit_audio/survey_kit_audio.dart';
+import 'package:survey_kit_lottie/survey_kit_lottie.dart';
+import 'package:survey_kit_video/survey_kit_video.dart';
+import 'package:surveykit_example/survey_result_dialog.dart';
+
+final healthSurvey = SurveyFlow(
+  id: 'health-survey',
+  navigationRules: {
+    'medication': ConditionalNavigationRule(
+      resultToStepIdentifierMapper: (_, input) {
+        final answer = input?.result as BooleanResult?;
+        if (answer == BooleanResult.positive) {
+          return const NavigateToStep('age');
+        }
+        return const NavigateToStep('media-intro');
+      },
+    ),
+  },
+  steps: [
+    Step(
+      content: const [
+        TextContent(text: 'Welcome to the\nHealth Survey', fontSize: 32),
+        TextContent(
+          text:
+              'Take a few minutes to complete our survey and help us understand your health profile.',
+          fontSize: 18,
+        ),
+      ],
+      buttonText: "Let's begin",
+    ),
+    Step(
+      id: 'medication',
+      content: const [
+        TextContent(text: 'Medication?', fontSize: 22),
+        TextContent(text: 'Are you using any medication?'),
+      ],
+      answerFormat: const BooleanAnswerFormat(
+        positiveAnswer: 'Yes',
+        negativeAnswer: 'No',
+      ),
+      buttonText: 'Continue',
+    ),
+    Step(
+      id: 'age',
+      content: const [TextContent(text: 'How old are you?')],
+      answerFormat: const IntegerAnswerFormat(
+        defaultValue: 25,
+        hint: 'Please enter your age',
+      ),
+      buttonText: 'Continue',
+    ),
+    Step(
+      content: const [
+        TextContent(text: 'Tell us about you', fontSize: 22),
+        TextContent(
+          text:
+              'Tell us about yourself and why you want to improve your health.',
+        ),
+      ],
+      answerFormat: const TextAnswerFormat(maxLines: 5, hint: 'Your answer'),
+      buttonText: 'Continue',
+    ),
+    Step(
+      content: const [TextContent(text: 'Select your body type')],
+      answerFormat: const ScaleAnswerFormat(
+        maximumValue: 5.0,
+        minimumValue: 1.0,
+        defaultValue: 3.0,
+        step: 1.0,
+        minimumValueDescription: '1',
+        maximumValueDescription: '5',
+      ),
+      buttonText: 'Continue',
+    ),
+    Step(
+      content: const [TextContent(text: 'Known allergies')],
+      answerFormat: MultipleChoiceAnswerFormat(
+        choices: [
+          TextChoice(id: 'penicillin', value: 'Penicillin', text: 'Penicillin'),
+          TextChoice(id: 'latex', value: 'Latex', text: 'Latex'),
+          TextChoice(id: 'pet', value: 'Pet', text: 'Pet'),
+          TextChoice(id: 'pollen', value: 'Pollen', text: 'Pollen'),
+        ],
+        otherField: true,
+      ),
+      buttonText: 'Continue',
+    ),
+    Step(
+      content: const [TextContent(text: 'When did you wake up?')],
+      answerFormat: const TimeAnswerFormat(
+        defaultValue: TimeOfDay(hour: 8, minute: 0),
+      ),
+      buttonText: 'Continue',
+    ),
+    Step(
+      content: const [TextContent(text: 'When was your last holiday?')],
+      answerFormat: DateAnswerFormat(
+        minDate: DateTime(2015),
+        maxDate: DateTime(2028, 12, 31),
+        defaultDate: DateTime(2021, 6, 25),
+      ),
+      buttonText: 'Continue',
+    ),
+    Step(
+      id: 'media-intro',
+      content: const [
+        TextContent(text: 'Thanks! One more section with media examples.'),
+      ],
+      buttonText: 'Continue',
+    ),
+    Step(
+      content: const [
+        TextContent(text: 'Video'),
+        VideoContent(
+          title: 'Bee',
+          url:
+              'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+        ),
+      ],
+      buttonText: 'Next',
+    ),
+    Step(
+      content: const [
+        TextContent(text: 'Audio'),
+        AudioContent(
+          title: 'Gong',
+          subtitle: 'Sample audio',
+          url:
+              'https://github.com/QuickBirdEng/survey_kit/raw/a398d48af464597235ea16e19aabd898a5c39c0a/assets/gong.mp3',
+        ),
+      ],
+      buttonText: 'Next',
+    ),
+    Step(
+      content: const [
+        TextContent(text: 'Lottie'),
+        LottieContent(
+          asset: 'assets/fancy_checkmark.json',
+          repeat: true,
+          width: 180,
+          height: 180,
+        ),
+      ],
+      buttonText: 'Next',
+    ),
+    Step(
+      content: const [TextContent(text: 'Did you enjoy this survey?')],
+      answerFormat: SingleChoiceAnswerFormat(
+        choices: [
+          TextChoice(id: 'yes', value: 'yes', text: 'Yes'),
+          TextChoice(id: 'no', value: 'no', text: 'No'),
+        ],
+      ),
+      buttonText: 'Finish',
+    ),
+    Step(
+      content: const [
+        TextContent(text: 'Thank You!', fontSize: 32),
+        TextContent(
+          text:
+              'Your feedback is incredibly valuable to us. We will be in touch soon.',
+          fontSize: 18,
+        ),
+      ],
+      buttonText: 'Submit Responses',
+    ),
+  ],
+);
+
+class HealthSurveyPage extends StatefulWidget {
+  const HealthSurveyPage({super.key});
+
+  @override
+  State<HealthSurveyPage> createState() => _HealthSurveyPageState();
+}
+
+class _HealthSurveyPageState extends State<HealthSurveyPage> {
+  int _session = 0;
+  late final SurveyController _controller = SurveyController(
+    onNextStep: _onNextStep,
+  );
+
+  void _onNextStep(
+    BuildContext context,
+    StepResult? stepResult,
+    void Function() proceed,
+  ) {
+    final state = SurveyStateProvider.of(context).state;
+    if (state is PresentingSurveyState &&
+        state.currentStep.id == 'medication' &&
+        stepResult?.result == BooleanResult.positive) {
+      Navigator.of(context, rootNavigator: true)
+          .push<void>(
+            MaterialPageRoute<void>(builder: (_) => const IntermissionPage()),
+          )
+          .then((_) => proceed());
+      return;
+    }
+    proceed();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SurveyKit(
+      key: ValueKey<int>(_session),
+      task: healthSurvey,
+      surveyController: _controller,
+      decoration: const BoxDecoration(color: Colors.white),
+      surveyProgressbarConfiguration: SurveyProgressConfiguration(
+        backgroundColor: const Color(0xFFF1F1F5),
+        progressbarColor: const Color(0xFF00C4CC),
+        height: 8,
+      ),
+      registries: [SurveyKitAudio(), SurveyKitVideo(), SurveyKitLottie()],
+      onResult: (result) => _showResult(context, result),
+    );
+  }
+
+  Future<void> _showResult(BuildContext context, SurveyResult result) async {
+    await showSurveyResultDialog(context, result);
+    if (mounted) {
+      setState(() => _session++);
+    }
+  }
+}
+
+class IntermissionPage extends StatelessWidget {
+  const IntermissionPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Intermission')),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Medication answer was "Yes". Continue to age question.',
+            ),
+            const Spacer(),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FilledButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Continue Survey'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

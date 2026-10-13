@@ -22,8 +22,8 @@ Add both packages to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  survey_kit: ^2.0.0-beta1
-  survey_kit_video: ^2.0.0-beta1
+  survey_kit: ^2.0.0-beta4
+  survey_kit_video: ^2.0.0-beta4
 ```
 
 ---
@@ -79,6 +79,12 @@ Step(
 
 ### JSON
 
+Register the JSON factory once before deserializing a survey:
+
+```dart
+Content.registerFromJson(VideoContent.type, VideoContent.fromJson);
+```
+
 ```json
 {
   "type": "video",
@@ -102,8 +108,8 @@ Step(
 | `url` | `String` | ✅ | URL of the video file to play |
 | `autoPlay` | `bool` | | Start playback automatically. Defaults to `false` |
 | `loop` | `bool` | | Loop the video continuously. Defaults to `false` |
-| `width` | `double?` | | Player width in logical pixels |
-| `height` | `double?` | | Player height in logical pixels |
+| `width` | `double?` | | Maximum player width in logical pixels |
+| `height` | `double?` | | Maximum player height in logical pixels. Defaults to `550` |
 | `title` | `String?` | | Title displayed above the player |
 | `subtitle` | `String?` | | Subtitle displayed below the title |
 | `externalLink` | `String?` | | URL shown as a tappable link beneath the player |

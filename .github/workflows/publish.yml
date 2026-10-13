@@ -9,6 +9,9 @@ concurrency:
   group: publish-${{ github.ref_name }}
   cancel-in-progress: false
 
+env:
+  PACKAGES: packages/survey_kit packages/survey_kit_audio packages/survey_kit_lottie packages/survey_kit_video
+
 jobs:
   publish:
     permissions:
@@ -28,6 +31,14 @@ jobs:
       - name: Resolve Workspace Dependencies
         run: flutter pub get
 
+      - name: Check Formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: Verify Generated Code
+        run: |
+          dart run melos exec --depends-on=build_runner -- dart run build_runner build -d
+          git diff --exit-code
+
       - name: Analyze
         run: dart run melos exec -- flutter analyze .
 
@@ -39,12 +50,7 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           TAG_VERSION="${RELEASE_TAG#v}"
-          for package in \
-            packages/survey_kit \
-            packages/survey_kit_audio \
-            packages/survey_kit_lottie \
-            packages/survey_kit_video
-          do
+          for package in $PACKAGES; do
             PACKAGE_VERSION="$(sed -n 's/^version: //p' "$package/pubspec.yaml")"
             if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
               echo "Tag version ($TAG_VERSION) does not match $package version ($PACKAGE_VERSION)."
@@ -52,9 +58,22 @@ jobs:
             fi
           done
 
+      - name: Dry-run all packages
+        run: |
+          for package in $PACKAGES; do
+            dart pub -C "$package" publish --dry-run
+          done
+
       - name: Publish packages
         run: |
-          for package in packages/survey_kit packages/survey_kit_audio packages/survey_kit_lottie packages/survey_kit_video; do
-            echo "Publishing $package..."
+          for package in $PACKAGES; do
+            NAME="$(sed -n 's/^name: //p' "$package/pubspec.yaml")"
+            VERSION="$(sed -n 's/^version: //p' "$package/pubspec.yaml")"
+            STATUS="$(curl -s -o /dev/null -w '%{http_code}' "https://pub.dev/api/packages/$NAME/versions/$VERSION")"
+            if [ "$STATUS" = "200" ]; then
+              echo "$NAME $VERSION is already on pub.dev, skipping."
+              continue
+            fi
+            echo "Publishing $NAME $VERSION..."
             dart pub -C "$package" publish --force
           done

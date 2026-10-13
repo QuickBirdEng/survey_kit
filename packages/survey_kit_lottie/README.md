@@ -22,8 +22,8 @@ Add both packages to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  survey_kit: ^2.0.0-beta1
-  survey_kit_lottie: ^2.0.0-beta1
+  survey_kit: ^2.0.0-beta4
+  survey_kit_lottie: ^2.0.0-beta4
 ```
 
 ---
@@ -89,6 +89,12 @@ Step(
 
 ### JSON
 
+Register the JSON factory once before deserializing a survey:
+
+```dart
+Content.registerFromJson(LottieContent.type, LottieContent.fromJson);
+```
+
 ```json
 {
   "type": "lottie",
@@ -121,7 +127,7 @@ Step(
 | `width` | `double` | | Animation width in logical pixels. Defaults to `100` |
 | `height` | `double` | | Animation height in logical pixels. Defaults to `100` |
 
-> Either `url` or `asset` must be provided — not both.
+> Either `url` or `asset` must be provided. If both are set, `url` is used. `LottieContent.fromJson` throws a `FormatException` when neither is present.
 
 ---
 

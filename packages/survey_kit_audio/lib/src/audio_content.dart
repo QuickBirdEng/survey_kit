@@ -26,5 +26,8 @@ class AudioContent extends Content {
       _$AudioContentFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$AudioContentToJson(this);
+  Map<String, dynamic> toJson() => {
+    ..._$AudioContentToJson(this),
+    'type': type,
+  };
 }

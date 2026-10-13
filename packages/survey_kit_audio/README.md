@@ -21,8 +21,8 @@ Add both packages to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  survey_kit: ^2.0.0-beta1
-  survey_kit_audio: ^2.0.0-beta1
+  survey_kit: ^2.0.0-beta4
+  survey_kit_audio: ^2.0.0-beta4
 ```
 
 ---
@@ -69,6 +69,12 @@ Step(
 
 ### JSON
 
+Register the JSON factory once before deserializing a survey:
+
+```dart
+Content.registerFromJson(AudioContent.type, AudioContent.fromJson);
+```
+
 ```json
 {
   "type": "audio",
@@ -89,7 +95,7 @@ Step(
 | `url` | `String` | ✅ | URL of the audio file to play |
 | `autoPlay` | `bool` | | Start playback automatically. Defaults to `false` |
 | `title` | `String?` | | Title displayed above the player |
-| `subtitle` | `String?` | | Subtitle displayed below the title |
+| `subtitle` | `String?` | | Subtitle displayed below the player |
 | `externalLink` | `String?` | | URL shown as a tappable link beneath the player |
 
 ---

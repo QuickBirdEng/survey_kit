@@ -31,5 +31,8 @@ class VideoContent extends Content {
       _$VideoContentFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$VideoContentToJson(this);
+  Map<String, dynamic> toJson() => {
+    ..._$VideoContentToJson(this),
+    'type': type,
+  };
 }

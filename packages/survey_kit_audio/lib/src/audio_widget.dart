@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:survey_kit/survey_kit.dart';
 import 'package:survey_kit_audio/src/audio_content.dart';
 
 class AudioWidget extends StatefulWidget {
@@ -12,53 +16,104 @@ class AudioWidget extends StatefulWidget {
 }
 
 class _AudioWidgetState extends State<AudioWidget> {
-  late AudioPlayer _player;
+  final AudioPlayer _player = AudioPlayer();
+  final List<StreamSubscription<Object?>> _subscriptions = [];
+  int _loadGeneration = 0;
+  bool _isLoading = true;
+  bool _hasError = false;
   bool _isPlaying = false;
+  bool _isCompleted = false;
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
 
   @override
   void initState() {
     super.initState();
-    _player = AudioPlayer();
-    _initAudio();
-  }
-
-  Future<void> _initAudio() async {
-    try {
-      await _player.setUrl(widget.audioContent.url);
-      _player.playerStateStream.listen((state) {
-        if (mounted) {
+    _subscriptions
+      ..add(
+        _player.playerStateStream.listen((state) {
+          if (!mounted) {
+            return;
+          }
           setState(() {
             _isPlaying = state.playing;
+            _isCompleted = state.processingState == ProcessingState.completed;
           });
-        }
-      });
-      _player.durationStream.listen((d) {
-        if (mounted) {
-          setState(() {
-            _duration = d ?? Duration.zero;
-          });
-        }
-      });
-      _player.positionStream.listen((p) {
-        if (mounted) {
-          setState(() {
-            _position = p;
-          });
-        }
-      });
+        }),
+      )
+      ..add(
+        _player.durationStream.listen((duration) {
+          if (mounted) {
+            setState(() => _duration = duration ?? Duration.zero);
+          }
+        }),
+      )
+      ..add(
+        _player.positionStream.listen((position) {
+          if (mounted) {
+            setState(() => _position = position);
+          }
+        }),
+      );
+    _load();
+  }
 
-      if (widget.audioContent.autoPlay) {
-        await _player.play();
-      }
-    } catch (e) {
-      debugPrint('Error loading audio: $e');
+  @override
+  void didUpdateWidget(covariant AudioWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.audioContent.url != widget.audioContent.url) {
+      _isLoading = true;
+      _hasError = false;
+      _load();
     }
+  }
+
+  Future<void> _load() async {
+    final generation = ++_loadGeneration;
+    try {
+      await _player.setUrl(widget.audioContent.url);
+    } catch (_) {
+      if (mounted && generation == _loadGeneration) {
+        setState(() {
+          _isLoading = false;
+          _hasError = true;
+        });
+      }
+      return;
+    }
+    if (!mounted || generation != _loadGeneration) {
+      return;
+    }
+    setState(() => _isLoading = false);
+    if (widget.audioContent.autoPlay) {
+      unawaited(_player.play());
+    }
+  }
+
+  void _retry() {
+    setState(() {
+      _isLoading = true;
+      _hasError = false;
+    });
+    _load();
+  }
+
+  Future<void> _togglePlayback() async {
+    if (_isPlaying && !_isCompleted) {
+      await _player.pause();
+      return;
+    }
+    if (_isCompleted) {
+      await _player.seek(Duration.zero);
+    }
+    await _player.play();
   }
 
   @override
   void dispose() {
+    for (final subscription in _subscriptions) {
+      subscription.cancel();
+    }
     _player.dispose();
     super.dispose();
   }
@@ -72,21 +127,21 @@ class _AudioWidgetState extends State<AudioWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final title = widget.audioContent.title;
+    final subtitle = widget.audioContent.subtitle;
+    final externalLink = widget.audioContent.externalLink;
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        if (widget.audioContent.title != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              widget.audioContent.title!,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
+        if (title != null) ...[
+          SelectableText(title, style: theme.textTheme.titleLarge),
+          smallVerticalSpacer,
+        ],
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
+            color: theme.cardColor,
             borderRadius: BorderRadius.circular(12),
             boxShadow: const [
               BoxShadow(
@@ -96,56 +151,72 @@ class _AudioWidgetState extends State<AudioWidget> {
               ),
             ],
           ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
+          child: _buildPlayer(),
+        ),
+        if (externalLink != null) ...[
+          smallVerticalSpacer,
+          LinkText(link: externalLink),
+        ],
+        if (subtitle != null) ...[
+          smallVerticalSpacer,
+          SelectableText(subtitle, style: theme.textTheme.bodyMedium),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildPlayer() {
+    if (_hasError) {
+      return Column(
+        children: [
+          const Icon(Icons.music_off_outlined, size: 48),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: _retry),
+        ],
+      );
+    }
+
+    final maxSeconds = _duration.inSeconds.toDouble();
+    final positionSeconds = math.min(
+      _position.inSeconds.toDouble(),
+      maxSeconds,
+    );
+    final showPause = _isPlaying && !_isCompleted;
+
+    return Column(
+      children: [
+        SizedBox(
+          height: 64,
+          child: Center(
+            child: _isLoading
+                ? const CircularProgressIndicator.adaptive()
+                : IconButton(
                     iconSize: 48,
                     icon: Icon(
-                      _isPlaying
+                      showPause
                           ? Icons.pause_circle_filled
                           : Icons.play_circle_filled,
                     ),
-                    onPressed: () {
-                      if (_isPlaying) {
-                        _player.pause();
-                      } else {
-                        _player.play();
-                      }
-                    },
+                    onPressed: _togglePlayback,
                   ),
-                ],
-              ),
-              Slider(
-                value: _position.inSeconds.toDouble(),
-                max: _duration.inSeconds.toDouble(),
-                onChanged: (value) async {
-                  await _player.seek(Duration(seconds: value.toInt()));
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(_formatDuration(_position)),
-                    Text(_formatDuration(_duration)),
-                  ],
-                ),
-              ),
+          ),
+        ),
+        Slider(
+          value: positionSeconds,
+          max: maxSeconds,
+          onChanged: maxSeconds > 0
+              ? (value) => _player.seek(Duration(seconds: value.toInt()))
+              : null,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(_formatDuration(_position)),
+              Text(_formatDuration(_duration)),
             ],
           ),
         ),
-        if (widget.audioContent.subtitle != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              widget.audioContent.subtitle!,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ),
       ],
     );
   }

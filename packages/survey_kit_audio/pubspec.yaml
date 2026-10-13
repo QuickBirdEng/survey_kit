@@ -16,7 +16,7 @@ dependencies:
     sdk: flutter
   json_annotation: ^4.12.0
   just_audio: ^0.10.6
-  survey_kit: 2.0.0-beta4
+  survey_kit: ^2.0.0-beta4
 
 dev_dependencies:
   build_runner: ^2.16.0
