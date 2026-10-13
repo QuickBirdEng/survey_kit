@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/navigator/rules/navigation_rule.dart';
 import 'package:survey_kit/src/task/survey_definition.dart';
@@ -10,32 +12,39 @@ class SurveyFlow extends SurveyDefinition {
   /// JSON type identifier for SurveyFlow.
   static const String type = 'flow';
 
-  /// Maps a step ID to the [NavigationRule] that determines the next step
-  /// after it.
-  final Map<String, NavigationRule> navigationRules;
+  final Map<String, NavigationRule> _navigationRules;
 
   SurveyFlow({
     String? id,
     List<Step> steps = const [],
     Step? initialStep,
     Map<String, NavigationRule>? navigationRules,
-  }) : navigationRules = navigationRules ?? <String, NavigationRule>{},
+  }) : _navigationRules = Map.of(navigationRules ?? const {}),
        super(id: id, steps: steps, initialStep: initialStep);
 
-  /// Adds a [NavigationRule] for the step identified by
-  /// [forTriggerStepIdentifier]. Has no effect if a rule already exists for
-  /// that step.
-  void addNavigationRule({
+  /// An unmodifiable view mapping a step ID to the [NavigationRule] that
+  /// determines the next step after it. Use [addNavigationRule] to add rules.
+  Map<String, NavigationRule> get navigationRules =>
+      UnmodifiableMapView(_navigationRules);
+
+  /// Adds [navigationRule] for the step identified by
+  /// [forTriggerStepIdentifier] unless that step already has a rule. Returns
+  /// whether the rule was added.
+  bool addNavigationRule({
     required String forTriggerStepIdentifier,
     required NavigationRule navigationRule,
   }) {
-    navigationRules.putIfAbsent(forTriggerStepIdentifier, () => navigationRule);
+    if (_navigationRules.containsKey(forTriggerStepIdentifier)) {
+      return false;
+    }
+    _navigationRules[forTriggerStepIdentifier] = navigationRule;
+    return true;
   }
 
   /// Returns the [NavigationRule] for the given step ID, or null if none is
   /// configured.
   NavigationRule? getRuleByStepIdentifier(String? stepIdentifier) {
-    return navigationRules[stepIdentifier];
+    return _navigationRules[stepIdentifier];
   }
 
   factory SurveyFlow.fromJson(Map<String, dynamic> json) {

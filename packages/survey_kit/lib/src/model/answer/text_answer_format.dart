@@ -18,16 +18,19 @@ class TextAnswerFormat extends AnswerFormat {
   /// to allow any type of an answer including an empty one;
   /// set it explicitly to null.
   ///
-  @JsonKey(defaultValue: r'^(?!s*$).+')
+  @JsonKey(defaultValue: defaultValidationRegEx)
   final String? validationRegEx;
+
+  /// The default [validationRegEx], which rejects empty or whitespace-only
+  /// input.
+  static const String defaultValidationRegEx = r'^(?!\s*$).+';
 
   const TextAnswerFormat({
     this.maxLines,
     this.hint = '',
-    this.validationRegEx = r'^(?!s*$).+',
+    this.validationRegEx = defaultValidationRegEx,
     super.question,
-    super.answerType = TextAnswerFormat.type,
-  }) : super();
+  }) : super(answerType: TextAnswerFormat.type);
 
   factory TextAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$TextAnswerFormatFromJson(json);

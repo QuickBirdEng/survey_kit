@@ -17,12 +17,8 @@ class DoubleAnswerFormat extends AnswerFormat {
   /// Placeholder text shown in the input field.
   final String hint;
 
-  const DoubleAnswerFormat({
-    this.defaultValue,
-    this.hint = '',
-    super.question,
-    super.answerType = DoubleAnswerFormat.type,
-  }) : super();
+  const DoubleAnswerFormat({this.defaultValue, this.hint = '', super.question})
+    : super(answerType: DoubleAnswerFormat.type);
 
   factory DoubleAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$DoubleAnswerFormatFromJson(json);

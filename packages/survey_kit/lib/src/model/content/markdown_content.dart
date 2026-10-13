@@ -19,5 +19,8 @@ class MarkdownContent extends Content {
       _$MarkdownContentFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$MarkdownContentToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    ..._$MarkdownContentToJson(this),
+    'type': type,
+  };
 }

@@ -5,7 +5,12 @@ import 'package:survey_kit/src/task/survey_definition.dart';
 
 /// A [TaskNavigator] that advances steps strictly in list order. Does not
 /// evaluate any navigation rules.
+@Deprecated(
+  'SurveyKit always uses NavigableTaskNavigator, which follows list order '
+  'when no navigation rules are defined. Use NavigableTaskNavigator instead.',
+)
 class OrderedTaskNavigator extends TaskNavigator {
+  @Deprecated('Use NavigableTaskNavigator instead.')
   OrderedTaskNavigator(SurveyDefinition task) : super(task);
 
   @override

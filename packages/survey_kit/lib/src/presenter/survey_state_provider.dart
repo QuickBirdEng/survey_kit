@@ -50,11 +50,12 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
   late StreamController<SurveyState> _surveyStateStream;
   late Set<StepResult> _results;
   late DateTime _startDate;
+  bool _isStepBackPending = false;
 
   @override
   void initState() {
     super.initState();
-    _state = LoadingSurveyState();
+    _state = const LoadingSurveyState();
     _surveyStateStream = StreamController<SurveyState>.broadcast();
     _results = {};
     _startDate = DateTime.now();
@@ -90,7 +91,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
         widget.onResult(newState.result);
       }
     } else if (event is NextStep) {
-      if (_state is PresentingSurveyState) {
+      if (_state is PresentingSurveyState && !_isStepBackPending) {
         final currentState = _state as PresentingSurveyState;
         final newState = _handleNextStep(event, currentState);
         if (newState is PresentingSurveyState) {
@@ -99,16 +100,18 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
         _updateState(newState);
       }
     } else if (event is StepBack) {
-      if (_state is PresentingSurveyState) {
+      if (_state is PresentingSurveyState && !_isStepBackPending) {
         final currentState = _state as PresentingSurveyState;
         final newState = _handleStepBack(event, currentState);
 
         if (newState is PresentingSurveyState &&
             newState.currentStep.id != currentState.currentStep.id) {
+          _isStepBackPending = true;
           (widget.navigatorKey.currentState?.maybePop() ??
                   Future<bool>.value(false))
               .whenComplete(() {
-                if (!mounted) {
+                _isStepBackPending = false;
+                if (!mounted || !identical(_state, currentState)) {
                   return;
                 }
                 _updateState(newState);
@@ -214,35 +217,24 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
     PresentingSurveyState currentState,
   ) {
     _addResult(event.questionResult);
-
-    final stepResults = _orderedStepResults();
-
-    final taskResult = SurveyResult(
-      id: widget.taskNavigator.task.id,
-      startTime: _startDate,
-      endTime: DateTime.now(),
-      finishReason: FinishReason.discarded,
-      results: stepResults,
-    );
-    widget.onResult(taskResult);
-    return SurveyResultState(
-      result: taskResult,
-      stepResult: currentState.result,
-      currentStep: currentState.currentStep,
-    );
+    return _finishSurvey(currentState, FinishReason.discarded);
   }
 
-  // Currently we are only handling one question per step
   SurveyState _handleSurveyFinished(PresentingSurveyState currentState) {
-    final stepResults = _orderedStepResults();
+    return _finishSurvey(currentState, FinishReason.completed);
+  }
+
+  SurveyResultState _finishSurvey(
+    PresentingSurveyState currentState,
+    FinishReason finishReason,
+  ) {
     final taskResult = SurveyResult(
       id: widget.taskNavigator.task.id,
       startTime: _startDate,
       endTime: DateTime.now(),
-      finishReason: FinishReason.completed,
-      results: stepResults,
+      finishReason: finishReason,
+      results: _visitedStepResults(currentState.currentStep),
     );
-
     widget.onResult(taskResult);
     return SurveyResultState(
       result: taskResult,
@@ -260,22 +252,14 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
       ..add(questionResult);
   }
 
-  List<StepResult> _orderedStepResults() {
-    final steps = widget.taskNavigator.task.steps;
-    final stepIndexById = <String, int>{
-      for (var i = 0; i < steps.length; i += 1) steps[i].id: i,
-    };
-
-    final ordered = _results.toList()
-      ..sort((a, b) {
-        final aIndex = stepIndexById[a.id] ?? steps.length;
-        final bIndex = stepIndexById[b.id] ?? steps.length;
-        if (aIndex != bIndex) {
-          return aIndex.compareTo(bIndex);
-        }
-        return a.startTime.compareTo(b.startTime);
-      });
-    return ordered;
+  List<StepResult> _visitedStepResults(Step currentStep) {
+    final visitedIds = widget.taskNavigator.visitedStepIds(
+      currentStep: currentStep,
+    );
+    return [
+      for (final id in visitedIds)
+        if (_getResultByStepIdentifier(id) case final result?) result,
+    ];
   }
 
   int get _countSteps => widget.taskNavigator.countSteps;
@@ -295,7 +279,7 @@ class _SurveyStateProviderWidgetState extends State<SurveyStateProviderWidget> {
   Widget build(BuildContext context) {
     return SurveyStateProvider(
       state: _state,
-      results: _results,
+      results: UnmodifiableSetView(_results),
       startDate: _startDate,
       surveyStateStream: _surveyStateStream,
       taskNavigator: widget.taskNavigator,
@@ -326,7 +310,7 @@ class SurveyStateProvider extends InheritedWidget {
     required this.state,
     required this.results,
     required this.startDate,
-    required this.surveyStateStream,
+    required StreamController<SurveyState> surveyStateStream,
     required this.taskNavigator,
     required this.onResult,
     required this.navigatorKey,
@@ -334,27 +318,25 @@ class SurveyStateProvider extends InheritedWidget {
     required this.getStepResultById,
     required super.child,
     this.stepShell,
-  });
+  }) : _surveyStateStream = surveyStateStream;
 
   /// The current state of the survey.
   final SurveyState state;
 
-  /// The results collected so far in the survey.
-  ///
-  /// Note: This exposes the internal set. For better encapsulation,
-  /// consider using this as a read-only reference.
+  /// A read-only view of the results collected so far in the survey.
   final Set<StepResult> results;
 
   /// The date and time when the survey was started.
   final DateTime startDate;
 
-  /// Stream controller for broadcasting survey state changes.
-  ///
-  /// Use `.stream` to listen to state changes:
-  /// ```dart
-  /// SurveyStateProvider.of(context).surveyStateStream.stream
-  /// ```
-  final StreamController<SurveyState> surveyStateStream;
+  final StreamController<SurveyState> _surveyStateStream;
+
+  /// Broadcast stream of survey state changes.
+  Stream<SurveyState> get stateStream => _surveyStateStream.stream;
+
+  /// The controller backing [stateStream].
+  @Deprecated('Use stateStream instead.')
+  StreamController<SurveyState> get surveyStateStream => _surveyStateStream;
 
   /// The navigator that manages the task flow.
   final TaskNavigator taskNavigator;

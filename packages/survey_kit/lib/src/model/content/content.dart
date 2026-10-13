@@ -1,6 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:survey_kit/src/model/content/image_content.dart';
 import 'package:survey_kit/src/model/content/markdown_content.dart';
+import 'package:survey_kit/src/model/content/section_content.dart';
+import 'package:survey_kit/src/model/content/styled_text_content.dart';
 import 'package:survey_kit/src/model/content/text_content.dart';
 
 /// Abstract base for all content types displayed on a [Step]. Content items
@@ -18,7 +21,13 @@ abstract class Content {
   const Content({this.id, required this.contentType});
 
   static final Map<String, Content Function(Map<String, dynamic>)> _converters =
-      {'text': TextContent.fromJson, 'markdown': MarkdownContent.fromJson};
+      {
+        TextContent.type: TextContent.fromJson,
+        MarkdownContent.type: MarkdownContent.fromJson,
+        ImageContent.type: ImageContent.fromJson,
+        SectionContent.type: SectionContent.fromJson,
+        StyledTextContent.type: StyledTextContent.fromJson,
+      };
 
   /// Registers a custom [Content] subtype factory for JSON deserialization.
   static void registerFromJson(
@@ -28,17 +37,23 @@ abstract class Content {
     _converters[type] = factory;
   }
 
-  /// Deserializes a [Content] from [json]. Dispatches based on the 'type' field.
+  /// Deserializes a [Content] from [json]. Dispatches based on the 'type'
+  /// field. Throws a [FormatException] if the type is missing or unknown.
   factory Content.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String?;
-    assert(type != null, 'type is required');
-
-    final converter = _converters[type];
-    if (converter != null) {
-      return converter(json);
+    if (type == null) {
+      throw FormatException('Content JSON is missing the "type" field.', json);
     }
 
-    throw Exception('Unknown type: $type');
+    final converter = _converters[type];
+    if (converter == null) {
+      throw FormatException(
+        'Unknown content type "$type". Register it with '
+        'Content.registerFromJson.',
+        json,
+      );
+    }
+    return converter(json);
   }
 
   /// Serializes this content to a JSON map.

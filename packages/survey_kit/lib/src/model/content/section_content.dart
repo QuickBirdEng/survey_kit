@@ -5,7 +5,7 @@ part 'section_content.g.dart';
 
 /// Content that displays a structured section with a title, subtitle, and body
 /// text, each as a [StyledTextContent]. The JSON type identifier is `'section'`.
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class SectionContent extends Content {
   static const type = 'section';
 
@@ -28,7 +28,10 @@ class SectionContent extends Content {
       _$SectionContentFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$SectionContentToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    ..._$SectionContentToJson(this),
+    'type': type,
+  };
 }
 
 extension SectionContentExt on SectionContent {

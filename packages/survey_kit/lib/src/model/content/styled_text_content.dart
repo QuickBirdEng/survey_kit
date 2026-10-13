@@ -36,5 +36,8 @@ class StyledTextContent extends Content {
       _$StyledTextContentFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$StyledTextContentToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    ..._$StyledTextContentToJson(this),
+    'type': type,
+  };
 }

@@ -1,15 +1,11 @@
-import 'package:flutter/material.dart' hide Step;
-import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter/foundation.dart';
+import 'package:survey_kit/src/model/result/step_result_codec.dart';
 import 'package:survey_kit/src/model/step.dart';
 import 'package:survey_kit/src/util/datetime_convert.dart';
-
-part 'step_result.g.dart';
 
 /// The result produced by a single [Step]. Captures the user's answer together
 /// with timing metadata. The generic type [T] is the answer value type.
 @immutable
-@JsonSerializable(genericArgumentFactories: true, explicitToJson: true)
-@CustomDateTimeConverter()
 class StepResult<T> {
   /// The identifier of the [Step] this result belongs to.
   final String id;
@@ -50,25 +46,73 @@ class StepResult<T> {
     );
   }
 
-  factory StepResult.fromJson(Map<String, dynamic> json) =>
-      _$StepResultFromJson(json, (json) => json as T);
+  /// Deserializes a [StepResult] produced by [toJson]. The `resultType` field
+  /// selects the [StepResultCodec] that restores the typed [result]. Without
+  /// a `resultType` the raw JSON value is used.
+  factory StepResult.fromJson(Map<String, dynamic> json) {
+    const dateTimeConverter = CustomDateTimeConverter();
+    return StepResult<T>(
+      id: json['id'] as String,
+      step: Step.fromJson(json['step'] as Map<String, dynamic>),
+      result:
+          StepResultCodec.decodeValue(
+                json['resultType'] as String?,
+                json['result'],
+              )
+              as T?,
+      startTime: dateTimeConverter.fromJson(json['startTime'] as String),
+      endTime: dateTimeConverter.fromJson(json['endTime'] as String),
+      valueIdentifier: json['valueIdentifier'] as String?,
+    );
+  }
 
-  Map<String, dynamic> toJson() => _$StepResultToJson(this, (result) => result);
+  /// Registers a [StepResultCodec] used by [toJson] and [fromJson] for custom
+  /// result value types.
+  static void registerResultCodec(StepResultCodec codec) =>
+      StepResultCodec.register(codec);
+
+  /// Serializes this result to a JSON-encodable map. The [result] value is
+  /// converted by the matching [StepResultCodec] and its type is written to
+  /// `resultType`.
+  Map<String, dynamic> toJson() {
+    const dateTimeConverter = CustomDateTimeConverter();
+    final encoded = StepResultCodec.encodeValue(result);
+    return <String, dynamic>{
+      'id': id,
+      'step': step.toJson(),
+      'result': encoded.value,
+      'resultType': encoded.type,
+      'startTime': dateTimeConverter.toJson(startTime),
+      'endTime': dateTimeConverter.toJson(endTime),
+      'valueIdentifier': valueIdentifier,
+    };
+  }
 
   @override
   int get hashCode =>
-      Object.hash(id, step, result, startTime, endTime, valueIdentifier);
+      Object.hash(id, step, _resultHash, startTime, endTime, valueIdentifier);
+
+  Object? get _resultHash {
+    final value = result;
+    return value is List ? Object.hashAll(value) : value;
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         other is StepResult &&
-            runtimeType == other.runtimeType &&
             id == other.id &&
             step == other.step &&
-            result == other.result &&
+            _resultEquals(result, other.result) &&
             startTime == other.startTime &&
             endTime == other.endTime &&
             valueIdentifier == other.valueIdentifier;
+  }
+
+  static bool _resultEquals(Object? a, Object? b) {
+    if (a is List && b is List) {
+      return listEquals(a, b);
+    }
+    return a == b;
   }
 }

@@ -26,8 +26,7 @@ class BooleanAnswerFormat extends AnswerFormat {
     required this.negativeAnswer,
     this.defaultValue = BooleanResult.none,
     super.question,
-    super.answerType = BooleanAnswerFormat.type,
-  }) : super();
+  }) : super(answerType: BooleanAnswerFormat.type);
 
   factory BooleanAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$BooleanAnswerFormatFromJson(json);

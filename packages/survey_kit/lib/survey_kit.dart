@@ -29,11 +29,12 @@ export 'src/model/content/markdown_content.dart';
 export 'src/model/content/section_content.dart';
 export 'src/model/content/styled_text_content.dart';
 export 'src/model/content/text_content.dart';
-export 'src/model/predifined/completion_step.dart';
-export 'src/model/predifined/instruction_step.dart';
-export 'src/model/predifined/question_step.dart';
+export 'src/model/predefined/completion_step.dart';
+export 'src/model/predefined/instruction_step.dart';
+export 'src/model/predefined/question_step.dart';
 //Results
 export 'src/model/result/step_result.dart';
+export 'src/model/result/step_result_codec.dart';
 export 'src/model/result/survey_result.dart';
 export 'src/model/step.dart';
 export 'src/navigator/navigable_task_navigator.dart';

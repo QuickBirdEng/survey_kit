@@ -52,12 +52,13 @@ class SurveyResult {
           listEquals(results, other.results);
 
   @override
-  int get hashCode =>
-      id.hashCode ^
-      startTime.hashCode ^
-      endTime.hashCode ^
-      finishReason.hashCode ^
-      results.hashCode;
+  int get hashCode => Object.hash(
+    id,
+    startTime,
+    endTime,
+    finishReason,
+    Object.hashAll(results),
+  );
 }
 
 /// Describes how a survey session ended.

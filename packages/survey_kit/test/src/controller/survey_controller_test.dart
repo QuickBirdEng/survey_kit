@@ -98,4 +98,51 @@ void main() {
     expect(callbackContext, isNotNull);
     expect(find.text('Step 2'), findsOneWidget);
   });
+
+  testWidgets('SurveyController.closeSurvey provides context to onClose', (
+    WidgetTester tester,
+  ) async {
+    BuildContext? callbackContext;
+    StepResult? callbackResult;
+    SurveyResult? surveyResult;
+    final controller = SurveyController(
+      onClose: (context, stepResult, proceed) {
+        callbackContext = context;
+        callbackResult = stepResult;
+        proceed();
+      },
+    );
+    final step = Step(
+      id: 'step-1',
+      content: const <Content>[TextContent(text: 'Step 1')],
+    );
+    final stepResult = StepResult<String>(
+      id: 'step-1',
+      step: step,
+      result: 'answer',
+      startTime: DateTime.utc(2020),
+      endTime: DateTime.utc(2020),
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SurveyKit(
+            task: SurveyFlow(id: 'controller-close-flow', steps: [step]),
+            surveyController: controller,
+            onResult: (result) => surveyResult = result,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    controller.closeSurvey(stepResult: stepResult);
+    await tester.pumpAndSettle();
+
+    expect(callbackContext, isNotNull);
+    expect(callbackResult, stepResult);
+    expect(surveyResult!.finishReason, FinishReason.discarded);
+    expect(surveyResult!.results, [stepResult]);
+  });
 }

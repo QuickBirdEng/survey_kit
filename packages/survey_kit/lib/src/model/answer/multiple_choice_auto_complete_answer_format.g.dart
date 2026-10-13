@@ -24,9 +24,6 @@ _$MultipleChoiceAutoCompleteAnswerFormatFromJson(Map<String, dynamic> json) =>
           [],
       otherField: json['otherField'] as bool? ?? false,
       question: json['question'] as String?,
-      answerType:
-          json['type'] as String? ??
-          MultipleChoiceAutoCompleteAnswerFormat.type,
     );
 
 Map<String, dynamic> _$MultipleChoiceAutoCompleteAnswerFormatToJson(

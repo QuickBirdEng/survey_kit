@@ -35,8 +35,7 @@ class ScaleAnswerFormat extends AnswerFormat {
     this.maximumValueDescription = '',
     this.minimumValueDescription = '',
     super.question,
-    super.answerType = ScaleAnswerFormat.type,
-  }) : super();
+  }) : super(answerType: ScaleAnswerFormat.type);
 
   factory ScaleAnswerFormat.fromJson(Map<String, dynamic> json) =>
       _$ScaleAnswerFormatFromJson(json);

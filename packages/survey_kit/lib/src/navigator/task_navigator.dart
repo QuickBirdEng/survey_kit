@@ -64,8 +64,18 @@ abstract class TaskNavigator {
   /// Total number of steps in the survey.
   int get countSteps => task.steps.length;
 
-  /// Returns the zero-based index of [step] in the survey's step list.
+  /// Returns the zero-based index of the step with the same id as [step] in
+  /// the survey's step list, or -1 if it is not part of the list.
   int currentStepIndex(Step step) {
-    return task.steps.indexOf(step);
+    return task.steps.indexWhere((element) => element.id == step.id);
+  }
+
+  /// The ids of the visited steps in visit order, without duplicates, followed
+  /// by [currentStep] if given and not yet visited.
+  List<String> visitedStepIds({Step? currentStep}) {
+    return <String>{
+      for (final step in history) step.id,
+      if (currentStep != null) currentStep.id,
+    }.toList();
   }
 }

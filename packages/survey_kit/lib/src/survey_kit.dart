@@ -112,10 +112,16 @@ class _SurveyKitState extends State<SurveyKit> {
       _surveyController = widget.surveyController ?? SurveyController();
       _surveyController.navigatorKey = _navigatorKey;
     }
-    if (widget.task != oldWidget.task) {
+    if (!_hasSameStepIds(widget.task, oldWidget.task)) {
       _taskNavigator = _createTaskNavigator();
     }
   }
+
+  bool _hasSameStepIds(SurveyDefinition a, SurveyDefinition b) =>
+      const IterableEquality<String>().equals(
+        a.steps.map((step) => step.id),
+        b.steps.map((step) => step.id),
+      );
 
   TaskNavigator _createTaskNavigator() {
     final task = widget.task;

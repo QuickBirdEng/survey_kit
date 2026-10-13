@@ -17,7 +17,6 @@ _$SingleChoiceAnswerFormatFromJson<T extends TextChoice>(
     fromJsonT,
   ),
   question: json['question'] as String?,
-  answerType: json['type'] as String? ?? SingleChoiceAnswerFormat.type,
 );
 
 Map<String, dynamic> _$SingleChoiceAnswerFormatToJson<T extends TextChoice>(

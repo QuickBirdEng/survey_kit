@@ -22,7 +22,7 @@ abstract class AnswerFormat {
   final String? question;
 
   /// JSON type discriminator used during deserialization.
-  @JsonKey(name: 'type')
+  @JsonKey(name: 'type', includeToJson: true, includeFromJson: false)
   final String? answerType;
 
   static final Map<String, AnswerFormat Function(Map<String, dynamic>)>

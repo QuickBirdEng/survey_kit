@@ -34,5 +34,8 @@ class ImageContent extends Content {
       _$ImageContentFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$ImageContentToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    ..._$ImageContentToJson(this),
+    'type': type,
+  };
 }

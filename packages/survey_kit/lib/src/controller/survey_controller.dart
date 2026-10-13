@@ -30,13 +30,35 @@ class SurveyController {
   )?
   onStepBack;
 
-  /// Called when the survey should be closed.
-  /// Call [proceed] to continue with default close behaviour.
+  /// Called when the survey should be closed. Receives the same arguments as
+  /// [onNextStep]. Call [proceed] to continue with default close behaviour.
+  final void Function(
+    BuildContext context,
+    StepResult? stepResult,
+    void Function() proceed,
+  )?
+  onClose;
 
   final void Function(StepResult? stepResult, void Function() proceed)?
-  onCloseSurvey;
+  _legacyOnCloseSurvey;
 
-  SurveyController({this.onNextStep, this.onStepBack, this.onCloseSurvey});
+  /// Legacy close callback without a [BuildContext].
+  @Deprecated('Use onClose, which also receives a BuildContext.')
+  void Function(StepResult? stepResult, void Function() proceed)?
+  get onCloseSurvey => _legacyOnCloseSurvey;
+
+  SurveyController({
+    this.onNextStep,
+    this.onStepBack,
+    this.onClose,
+    @Deprecated('Use onClose, which also receives a BuildContext.')
+    void Function(StepResult? stepResult, void Function() proceed)?
+    onCloseSurvey,
+  }) : assert(
+         onClose == null || onCloseSurvey == null,
+         'Provide either onClose or onCloseSurvey, not both.',
+       ),
+       _legacyOnCloseSurvey = onCloseSurvey;
 
   GlobalKey<NavigatorState>? _navigatorKey;
 
@@ -92,13 +114,19 @@ class SurveyController {
 
   /// Closes the survey and emits a [SurveyResult] with
   /// [FinishReason.discarded].
-  void closeSurvey({StepResult? stepResult}) {
-    final resolvedContext = _resolveContext(null);
+  void closeSurvey({BuildContext? context, StepResult? stepResult}) {
+    final resolvedContext = _resolveContext(context);
     void proceed() => SurveyStateProvider.of(
       resolvedContext,
     ).onEvent(CloseSurvey(stepResult));
-    if (onCloseSurvey != null) {
-      onCloseSurvey!(stepResult, proceed);
+    final onClose = this.onClose;
+    if (onClose != null) {
+      onClose(resolvedContext, stepResult, proceed);
+      return;
+    }
+    final legacyOnClose = _legacyOnCloseSurvey;
+    if (legacyOnClose != null) {
+      legacyOnClose(stepResult, proceed);
       return;
     }
     proceed();

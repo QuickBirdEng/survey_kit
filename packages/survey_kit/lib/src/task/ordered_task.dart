@@ -22,21 +22,14 @@ class OrderedTask extends SurveyFlow {
        );
 
   @Deprecated('Use SurveyFlow.fromJson instead.')
-  factory OrderedTask.fromJson(Map<String, dynamic> json) => OrderedTask(
-    id: json['id'] as String,
-    steps: json['steps'] != null
-        ? (json['steps'] as List)
-              .map(
-                (dynamic step) => Step.fromJson(step as Map<String, dynamic>),
-              )
-              .toList()
-        : <Step>[],
-    initialStep: json['initialStep'] != null
-        ? Step.fromJson(json['initialStep'] as Map<String, dynamic>)
-        : json['initalStep'] != null
-        ? Step.fromJson(json['initalStep'] as Map<String, dynamic>)
-        : null,
-  );
+  factory OrderedTask.fromJson(Map<String, dynamic> json) {
+    final flow = SurveyFlow.fromJson(json);
+    return OrderedTask(
+      id: flow.id,
+      steps: flow.steps,
+      initialStep: flow.initialStep,
+    );
+  }
 
   @override
   Map<String, dynamic> toJson() => super.toJson()

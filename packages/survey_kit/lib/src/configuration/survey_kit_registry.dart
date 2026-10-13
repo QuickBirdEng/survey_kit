@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:survey_kit/src/model/answer/answer_format.dart';
 import 'package:survey_kit/src/model/content/content.dart';
@@ -39,6 +40,10 @@ class SurveyKitRegistry extends InheritedWidget {
   }
 
   /// Registers a widget builder for the answer format type [T].
+  @Deprecated(
+    'Widgets are immutable and dependents are not notified of changes. Pass '
+    'builders via initialAnswerViewBuilders or SurveyKit.answerViewBuilders.',
+  )
   void registerAnswerViewBuilder<T extends AnswerFormat>(
     AnswerViewBuilder builder,
   ) {
@@ -46,6 +51,11 @@ class SurveyKitRegistry extends InheritedWidget {
   }
 
   /// Registers a widget builder for the content type [T].
+  @Deprecated(
+    'Widgets are immutable and dependents are not notified of changes. Pass '
+    'builders via initialContentWidgetBuilders or '
+    'SurveyKit.contentWidgetBuilders.',
+  )
   void registerContentWidgetBuilder<T extends Content>(
     ContentWidgetBuilder builder,
   ) {
@@ -83,5 +93,7 @@ class SurveyKitRegistry extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(SurveyKitRegistry oldWidget) => false;
+  bool updateShouldNotify(SurveyKitRegistry oldWidget) =>
+      !mapEquals(_answerViewBuilders, oldWidget._answerViewBuilders) ||
+      !mapEquals(_contentWidgetBuilders, oldWidget._contentWidgetBuilders);
 }

@@ -44,5 +44,5 @@ abstract class SurveyDefinition {
   @override
   bool operator ==(Object other) => other is SurveyDefinition && other.id == id;
   @override
-  int get hashCode => id.hashCode ^ steps.hashCode;
+  int get hashCode => id.hashCode;
 }

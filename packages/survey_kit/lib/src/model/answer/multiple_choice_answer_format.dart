@@ -27,8 +27,7 @@ class MultipleChoiceAnswerFormat<T extends TextChoice> extends AnswerFormat {
     this.otherField = false,
     this.defaultSelection,
     super.question,
-    super.answerType = MultipleChoiceAnswerFormat.type,
-  }) : super();
+  }) : super(answerType: MultipleChoiceAnswerFormat.type);
 
   factory MultipleChoiceAnswerFormat.fromJson(
     Map<String, dynamic> json,

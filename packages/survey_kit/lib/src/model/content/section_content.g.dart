@@ -17,7 +17,7 @@ SectionContent _$SectionContentFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$SectionContentToJson(SectionContent instance) =>
     <String, dynamic>{
-      'title': instance.title,
-      'subtitle': instance.subtitle,
-      'text': instance.text,
+      'title': instance.title.toJson(),
+      'subtitle': instance.subtitle.toJson(),
+      'text': instance.text.toJson(),
     };

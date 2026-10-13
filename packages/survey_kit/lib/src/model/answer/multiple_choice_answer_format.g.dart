@@ -18,7 +18,6 @@ _$MultipleChoiceAnswerFormatFromJson<T extends TextChoice>(
     fromJsonT,
   ),
   question: json['question'] as String?,
-  answerType: json['type'] as String? ?? MultipleChoiceAnswerFormat.type,
 );
 
 Map<String, dynamic> _$MultipleChoiceAnswerFormatToJson<T extends TextChoice>(

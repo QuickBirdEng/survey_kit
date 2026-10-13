@@ -30,5 +30,8 @@ class TextContent extends Content {
       _$TextContentFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$TextContentToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    ..._$TextContentToJson(this),
+    'type': type,
+  };
 }
