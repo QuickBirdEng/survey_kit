@@ -53,7 +53,7 @@
           "type": "audio",
           "title": "Gong",
           "subtitle": "Sample audio",
-          "url": "https://github.com/QuickBirdEng/survey_kit/raw/a398d48af464597235ea16e19aabd898a5c39c0a/assets/gong.mp3"
+          "url": "https://github.com/QuickBirdEng/survey_kit/raw/main/packages/survey_kit/example/assets/gong.mp3"
         }
       ],
       "buttonText": "Next"

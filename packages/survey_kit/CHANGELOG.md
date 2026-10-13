@@ -1,86 +1,75 @@
 # Unreleased
 
-### Breaking
-
-- **BREAKING**: Built-in `AnswerFormat` constructors no longer accept
-  `answerType:`; each format fixes its own type. Custom subclasses still pass
-  it to the base class.
-- **BREAKING**: `StepResult.toJson` now emits JSON-safe values (ISO dates,
-  enum names, maps for `TextChoice`/`TimeResult`/`MultiDouble`) plus a
-  `resultType` discriminator used by `fromJson` to restore the typed value.
-  JSON without `resultType` still decodes as a raw value. `StepResult.==`
-  ignores the generic type.
-- **BREAKING**: `SurveyResult.results` only contains steps that were actually
-  visited, in visit order. Answers from a branch the user backed out of are
-  dropped.
-- **BREAKING**: `NavigationRule` gained an overridable `resolve`. Classes that
-  `implements NavigationRule` must implement it; `DirectNavigationRule` and
-  `ConditionalNavigationRule` now extend it.
+- **BREAKING**: Built-in `AnswerFormat` constructors no longer take
+  `answerType:`; custom subclasses still pass it to the base class.
+- **BREAKING**: `StepResult.toJson` emits JSON-safe values plus a `resultType`
+  discriminator that `fromJson` uses to restore the typed value. JSON without
+  `resultType` still decodes as a raw value. `StepResult.==` ignores the
+  generic type.
+- **BREAKING**: `SurveyResult.results` only contains visited steps, in visit
+  order; answers from abandoned branches are dropped.
+- **BREAKING**: `NavigationRule` gained an overridable `resolve`; implementers
+  must provide it. `DirectNavigationRule` and `ConditionalNavigationRule` now
+  extend it.
 - **BREAKING**: `SurveyFlow.navigationRules`, `SurveyStateProvider.results` and
-  `PresentingSurveyState.steps`/`questionResults` are read-only.
+  `PresentingSurveyState.steps`/`questionResults` are read-only;
   `PresentingSurveyState` is no longer const-constructible.
 - **BREAKING**: `Content.fromJson` throws a `FormatException` for a missing or
-  unknown `type`. Content `toJson` now includes `type`.
-- **BREAKING**: `textFieldInputDecoration` takes a `BuildContext` as its first
-  argument. `SurveyProgressConfiguration.progressbarColor` is nullable and
-  defaults to the theme's primary color.
-- **BREAKING**: The default `TextAnswerFormat` regex now rejects
-  whitespace-only input.
-
-### Added
-
-- `StepResultCodec` and `StepResult.registerResultCodec` for custom result
-  types.
-- `NavigationRule.registerFromJson` for custom rule types.
-- `TaskNavigator.visitedStepIds()`.
-- `SurveyStateProvider.stateStream`.
-- `SurveyController.onClose` and a `context` parameter on `closeSurvey`.
-- `TextAnswerFormat.defaultValidationRegEx`.
-- `SurveyFlow.addNavigationRule` returns whether the rule was added.
-- German localization; new strings for the "Other" field and search.
-
-### Deprecated
-
-- `SurveyStateProvider.surveyStateStream` → `stateStream`.
-- `SurveyController.onCloseSurvey` → `onClose`.
-- `OrderedTaskNavigator` → `NavigableTaskNavigator`.
-- `SurveyKitRegistry.registerAnswerViewBuilder` /
+  unknown `type`; content `toJson` includes `type`.
+- **BREAKING**: `textFieldInputDecoration` takes a `BuildContext` first;
+  `SurveyProgressConfiguration.progressbarColor` is nullable and defaults to
+  the theme's primary color.
+- **BREAKING**: The default `TextAnswerFormat` regex rejects whitespace-only
+  input.
+- **FEAT**: `StepResultCodec` / `StepResult.registerResultCodec` for custom
+  result types and `NavigationRule.registerFromJson` for custom rule types.
+- **FEAT**: `TaskNavigator.visitedStepIds()`,
+  `SurveyStateProvider.stateStream`, `SurveyController.onClose`, a `context`
+  parameter on `closeSurvey` and `TextAnswerFormat.defaultValidationRegEx`.
+- **FEAT**: `SurveyFlow.addNavigationRule` returns whether the rule was added.
+- **FEAT**: Answer view and content widget builders match subtypes.
+  Subclasses of built-in formats/content and generic choice formats such as
+  `MultipleChoiceAnswerFormat<MyChoice>` now get the built-in view. New
+  `AnswerViewRegistration<T>` / `ContentWidgetRegistration<T>` passed via
+  `answerViewRegistrations` / `contentWidgetRegistrations` on `SurveyKit`
+  and `SurveyKitRegistry`; an exact type match wins, otherwise the most
+  recently added matching registration. Map overrides of a built-in type now
+  also apply to its subclasses.
+- **FEAT**: German localization; new strings for the "Other" field and search.
+- **DEPRECATED**: `SurveyStateProvider.surveyStateStream` → `stateStream`,
+  `SurveyController.onCloseSurvey` → `onClose`, `OrderedTaskNavigator` →
+  `NavigableTaskNavigator`, `SurveyKitRegistry.registerAnswerViewBuilder` /
   `registerContentWidgetBuilder` → pass builders at construction.
-
-### Fixed
-
-- Surveys with content now round-trip through JSON; `image`, `section` and
-  `styledText` content are registered for `Content.fromJson`.
-- JSON conditional rules match `TextChoice`, `BooleanResult`, date and time
-  answers.
-- Back navigation survives a parent rebuild of `SurveyKit`.
-- `initialStep` loaded from JSON no longer yields a negative progress.
-- `OrderedTask.addNavigationRule` no longer throws.
-- `SurveyResult`/`SurveyDefinition` hashCode is consistent with `==`.
-- Custom `NavigationRule` subclasses are honoured; missing rule targets throw
-  a descriptive `StateError`.
-- Next/Back taps during a back transition are ignored.
-- `DoubleAnswerView` no longer crashes on input; commas are accepted as the
-  decimal separator.
-- The autocomplete multiple-choice view no longer crashes on the first tap and
-  no longer mutates previous results.
-- Restored answers and defaults are validated immediately, so Next is enabled
-  when returning to an answered step.
-- Deselecting a single choice clears the result.
-- The "Other" field adds a single entry instead of one per keystroke, and is
-  reported in the autocomplete view.
-- Mandatory text questions reject empty input; `MultipleDoubleAnswerView`
-  requires every field to parse.
-- Clearing an optional number field submits `null` instead of the stale
-  value.
-- Date and time pickers restore the previous answer and clamp to
-  `minDate`/`maxDate`; the question text is shown on iOS.
-- Number fields show signed/decimal keyboards.
-- Colors follow the theme's `ColorScheme`; selection tiles expose selected
-  semantics; `LinkText` disposes its recognizer and exposes link semantics.
+- **FIX**: Surveys with content round-trip through JSON; `image`, `section`
+  and `styledText` content are registered for `Content.fromJson`.
+- **FIX**: JSON conditional rules match `TextChoice`, `BooleanResult`, date and
+  time answers.
+- **FIX**: Navigation: back navigation survives a parent rebuild of
+  `SurveyKit`, JSON `initialStep` no longer yields negative progress,
+  `OrderedTask.addNavigationRule` no longer throws, custom `NavigationRule`
+  subclasses are honoured, missing rule targets throw a descriptive
+  `StateError`, and Next/Back taps during a back transition are ignored.
+- **FIX**: `SurveyResult`/`SurveyDefinition` hashCode is consistent with `==`.
+- **FIX**: `DoubleAnswerView` no longer crashes and accepts commas as decimal
+  separator; the autocomplete multiple-choice view no longer crashes on the
+  first tap or mutates previous results.
+- **FIX**: Restored answers and defaults are validated immediately, so Next is
+  enabled when returning to an answered step.
+- **FIX**: Deselecting a single choice clears the result; the "Other" field
+  adds one entry instead of one per keystroke and is reported in the
+  autocomplete view.
+- **FIX**: Mandatory text questions reject empty input,
+  `MultipleDoubleAnswerView` requires every field to parse, and clearing an
+  optional number field submits `null`.
+- **FIX**: Date and time pickers restore the previous answer and clamp to
+  `minDate`/`maxDate`; the question text is shown on iOS. Number fields show
+  signed/decimal keyboards.
+- **FIX**: Colors follow the theme's `ColorScheme`; selection tiles expose
+  selected semantics; `LinkText` disposes its recognizer and exposes link
+  semantics.
 - **FIX**: Removed the stale `video_content.g.dart` left over from the plugin
   split.
-- **FIX**: The web platform view registry is now selected with
+- **FIX**: The web platform view registry is selected with
   `dart.library.js_interop`, so it works when compiled to Wasm.
 - **DOCS**: Fixed the README branching sample (`choices:`), the localization
   setup, the answer format list and image links.

@@ -37,6 +37,7 @@ settings.local.json
 .packages
 .pub-cache/
 .pub/
+coverage/
 /build/
 **/build/
 **/.gradle/

@@ -31,7 +31,7 @@ melos:
       description: Run `build_runner` in all packages that use it.
 
     test:
-      exec: flutter test
+      exec: flutter test --coverage
       packageFilters:
         dirExists: test
       description: Run tests in all packages that have a `test` directory.
