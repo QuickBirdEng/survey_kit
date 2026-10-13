@@ -8,21 +8,7 @@ Future<void> showSurveyResultDialog(
   SurveyResult result, {
   String actionLabel = 'Restart',
 }) {
-  Object? toEncodable(Object? obj) {
-    if (obj is Enum) return obj.name;
-    final dynamic d = obj;
-    try {
-      // ignore: avoid_dynamic_calls
-      return d.toJson();
-    } catch (_) {
-      return obj.toString();
-    }
-  }
-
-  final json = JsonEncoder.withIndent(
-    '  ',
-    toEncodable,
-  ).convert(result.toJson());
+  final json = const JsonEncoder.withIndent('  ').convert(result.toJson());
   return showDialog<void>(
     context: context,
     builder: (dialogContext) => AlertDialog(
